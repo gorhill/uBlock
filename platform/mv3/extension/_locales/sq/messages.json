@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Zhvilloni",
+    "message": "Zhvillimi",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,11 +36,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "Në këtë faqe interneti",
+    "message": "Në këtë uebsajt",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Raportoj problemin me uebsajtin",
+    "message": "Raportoj problemin",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -68,7 +68,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domenet e dëmshme",
+    "message": "Domenet e dëmshme, siguria",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -244,7 +244,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Modaliteti i zhvilluesit",
+    "message": "Këndi i zhvilluesit",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Aktivizoj asgjësuesin e elementeve",
+    "message": "Heq elementin",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -300,11 +300,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Krijo filtër të personalizuar",
+    "message": "Krijoj filtër të personalizuar",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Hiq një filtër të personalizuar",
+    "message": "Heq filtrin e personalizuar",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -312,7 +312,7 @@
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Detalet e mënyrës së filtërimit",
+    "message": "Detajet e mënyrës së filtrimit",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
@@ -320,7 +320,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "Rregullat DNR të ...",
+    "message": "Rregullat DNR të…",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
@@ -328,11 +328,11 @@
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Rregullat e sesionit",
+    "message": "Rregullat e seancës",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Ruaj",
+    "message": "Regjistroj",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
@@ -348,7 +348,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Mos shtoni filtra nga burime të pabesueshme.",
+    "message": "Mos shtoni materiale nga burime të pabesueshme",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
@@ -356,15 +356,15 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Lëvizni rrëshqitësin për të zgjedhur përputhjen më të mirë",
+    "message": "Lëvizeni për të zgjedhur pikën më të përshtatshme",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Përzgjedh",
+    "message": "Zgjedh",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Parapamje",
+    "message": "Parashikoj",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Zgjidh një filtër më poshtë për të nxjerrë në pah elementët që përputhen në faqen e internetit. Klikoni te koshi për të hequr një filtër.",
+    "message": "Zgjidhni ndër filtrat më poshtë për të parë elementin që i korrespondon në faqe. Filtrat hiqen duke klikuar koshin.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

@@ -1252,7 +1252,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Στοιχείο μπλοκ στο πλαίσιο...",
+    "message": "Αποκλεισμός στοιχείου σε frame…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

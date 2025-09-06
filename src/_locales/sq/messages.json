@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domenet e rrezikshme, siguria",
+    "message": "Domenet e dëmshme, siguria",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -1196,11 +1196,11 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Arsye:",
+    "message": "Arsyeja:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Me qëllim të keq",
+    "message": "Dëmtuese",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
@@ -1208,7 +1208,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "I papërshtatshëm",
+    "message": "Joserioze",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

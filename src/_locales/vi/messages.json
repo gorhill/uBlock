@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Chặn phần tử...",
+    "message": "Chặn phần tử…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Không thêm các bộ lọc từ các nguồn không đáng tin cậy. ",
+    "message": "Không thêm các bộ lọc từ các nguồn không đáng tin cậy.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Nhập và thêm vào",
+    "message": "Nhập và thêm vào…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Xuất",
+    "message": "Xuất…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Xuất ra tập tin",
+    "message": "Xuất ra tập tin…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Nhập và thêm vào",
+    "message": "Nhập và thêm vào…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Xuất",
+    "message": "Xuất…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Báo cáo lỗi cho uBlock Origin cho <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Cần tài khoản GitHub</u> ",
+    "message": "Báo cáo lỗi cho uBlock Origin cho <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Cần tài khoản GitHub</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -980,7 +980,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Trang web...",
+    "message": "Trang web…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1016,7 +1016,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Đánh dấu \"NFSW\" - Not Safe For Work cho trang web. <a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">Tìm hiểu về \"Not Safe For Work\"</a>",
+    "message": "Đánh dấu \"NFSW\" - Not Safe For Work cho trang web.( <a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">Tìm hiểu về \"Not Safe For Work\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1068,7 +1068,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Sao lưu vào tập tin...",
+    "message": "Sao lưu vào tập tin…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1076,11 +1076,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Khôi phục từ tập tin...",
+    "message": "Khôi phục từ tập tin…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Đặt lại cấu hình mặc định...",
+    "message": "Đặt lại cấu hình mặc định…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1252,11 +1252,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Chặn phần tử trong khung ...",
+    "message": "Chặn phần tử trong khung…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Đăng ký danh sách bộ lọc ...",
+    "message": "Đăng ký danh sách bộ lọc…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1264,7 +1264,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Xem mã nguồn...",
+    "message": "Xem mã nguồn…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {

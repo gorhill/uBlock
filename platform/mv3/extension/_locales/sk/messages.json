@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Nahlásiť problém na tejto webovej stránke",
+    "message": "Nahlásiť problém",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -68,7 +68,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domény malvéru",
+    "message": "Ochrana pred škodlivým softvérom, bezpečnosť",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -128,7 +128,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Vyhľadať podobné hlásenia",
+    "message": "Vyhľadať podobné hlásenia na Githube",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -176,7 +176,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Vytvoriť nové hlásenie",
+    "message": "Vytvoriť nové hlásenie na Githube",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -248,7 +248,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Povoliť prístup k funkciám vhodným pre technických používateľov.",
+    "message": "Umožňuje prístup k funkciám vhodným pre technických používateľov.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Prejsť do režimu dočasného skrytia prvkov",
+    "message": "Odstrániť prvok",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
