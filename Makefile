@@ -156,7 +156,7 @@ publish-dev-firefox:
 		ghasset=firefox \
 		storeid=uBlock0@raymondhill.net \
 		channel=unlisted \
-		updatepath=./dist/firefox.updates.json
+		updatepath=./dist/firefox/updates.json
 
 # Usage: make upload-firefox version=?
 upload-firefox:
@@ -177,7 +177,7 @@ upload-dev-firefox:
 		ghasset=firefox \
 		storeid=uBlock0@raymondhill.net \
 		channel=unlisted \
-		updatepath=./dist/firefox.updates.json
+		updatepath=./dist/firefox/updates.json
 
 # Not real targets, just convenient for auto-completion at shell prompt
 compare:
