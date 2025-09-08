@@ -1,4 +1,5 @@
 - [Fix version snafu](https://github.com/gorhill/uBlock/commit/50cb780107)
+- [Allow generic exception for `replace=` option](https://github.com/gorhill/uBlock/commit/52dba4116e)
 
 ----------
 
