@@ -166,7 +166,9 @@ vAPI.webextFlavor = {
     soup.add('ipaddress');
 
     // Whether this is a dev build.
-    if ( /^\d+\.\d+\.\d+\D/.test(browser.runtime.getManifest().version) ) {
+    const manifest = browser.runtime.getManifest();
+    const version = manifest.version_name || manifest.version;
+    if ( /^\d+\.\d+\.\d+\D/.test(version) ) {
         soup.add('devbuild');
     }
 
