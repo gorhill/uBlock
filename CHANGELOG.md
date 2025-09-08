@@ -1,7 +1,14 @@
-- [Fix version snafu](https://github.com/gorhill/uBlock/commit/50cb780107)
 - [Allow generic exception for `replace=` option](https://github.com/gorhill/uBlock/commit/52dba4116e)
 
 ----------
+
+# 1.66.2
+
+- [Fix version snafu](https://github.com/gorhill/uBlock/commit/50cb780107)
+
+----------
+
+# 1.66.0
 
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/d2bce26e7d)
 - [Add support to strict-block from `ipaddress=` option](https://github.com/gorhill/uBlock/commit/6327aae56c)
