@@ -29,7 +29,6 @@ jobs:
         run: |
           tools/make-chromium.sh ${{ env.VERSION }}
           tools/make-firefox.sh ${{ env.VERSION }}
-          tools/make-thunderbird.sh ${{ env.VERSION }}
       - name: Assemble release notes
         run: |
           > release.body.txt
@@ -49,4 +48,3 @@ jobs:
           files: |
             dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
-            dist/build/uBlock0_${{ env.VERSION }}.thunderbird.xpi
