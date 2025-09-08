@@ -1245,7 +1245,7 @@ export class AstFilterParser {
         let modifierType = 0;
         let requestTypeCount = 0;
         let unredirectableTypeCount = 0;
-        let badfilter = false;
+        let isBadfilter = false;
         for ( let i = 0, n = this.nodeTypeRegisterPtr; i < n; i++ ) {
             const type = this.nodeTypeRegister[i];
             const targetNode = this.nodeTypeLookupTable[type];
@@ -1269,7 +1269,7 @@ export class AstFilterParser {
                 realBad = hasValue;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_BADFILTER:
-                badfilter = true;
+                isBadfilter = true;
                 /* falls through */
             case NODE_TYPE_NET_OPTION_NAME_NOOP:
                 realBad = isNegated || hasValue;
@@ -1423,9 +1423,6 @@ export class AstFilterParser {
                 this.addFlags(AST_FLAG_HAS_ERROR);
             }
         }
-        const requiresTrustedSource = ( ) =>
-            this.options.trustedSource !== true &&
-            isException === false && badfilter === false;
         switch ( modifierType ) {
         case NODE_TYPE_NET_OPTION_NAME_CNAME:
             realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
@@ -1453,7 +1450,8 @@ export class AstFilterParser {
         case NODE_TYPE_NET_OPTION_NAME_REPLACE: {
             realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
             if ( realBad ) { break; }
-            if ( requiresTrustedSource() ) {
+            if ( isException || isBadfilter ) { break; }
+            if ( this.options.trustedSource !== true ) {
                 this.astError = AST_ERROR_UNTRUSTED_SOURCE;
                 realBad = true;
                 break;
@@ -1468,7 +1466,8 @@ export class AstFilterParser {
         case NODE_TYPE_NET_OPTION_NAME_URLSKIP: {
             realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
             if ( realBad ) { break; }
-            if ( requiresTrustedSource() ) {
+            if ( isException || isBadfilter ) { break; }
+            if ( this.options.trustedSource !== true ) {
                 this.astError = AST_ERROR_UNTRUSTED_SOURCE;
                 realBad = true;
                 break;
@@ -1483,7 +1482,8 @@ export class AstFilterParser {
         case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM: {
             realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
             if ( realBad ) { break; }
-            if ( requiresTrustedSource() ) {
+            if ( isException || isBadfilter ) { break; }
+            if ( this.options.trustedSource !== true ) {
                 this.astError = AST_ERROR_UNTRUSTED_SOURCE;
                 realBad = true;
                 break;
