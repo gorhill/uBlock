@@ -1200,7 +1200,7 @@ export class AstFilterParser {
             prev = this.linkRight(prev, next);
             patternBeg += 2;
         }
-        let anchorBeg = this.indexOfNetAnchor(parentStr, patternBeg);
+        let anchorBeg = this.indexOfNetAnchor(parentStr);
         if ( anchorBeg === -1 ) { return 0; }
         anchorBeg += parentBeg;
         if ( anchorBeg !== parentEnd ) {
@@ -1508,9 +1508,9 @@ export class AstFilterParser {
         }
     }
 
-    indexOfNetAnchor(s, start = 0) {
+    indexOfNetAnchor(s) {
         const end = s.length;
-        if ( end === start ) { return end; }
+        if ( end === 0 ) { return end; }
         let j = s.lastIndexOf('$');
         if ( j === -1 ) { return end; }
         if ( (j+1) === end ) { return end; }
@@ -1518,7 +1518,7 @@ export class AstFilterParser {
             const before = s.charAt(j-1);
             if ( before === '$' ) { return -1; }
             if ( this.reNetOptionTokens.test(s.slice(j+1)) ) { return j; }
-            if ( j === start ) { break; }
+            if ( j === 0 ) { break; }
             j = s.lastIndexOf('$', j-1);
             if ( j === -1 ) { break; }
         }
