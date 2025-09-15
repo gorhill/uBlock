@@ -1,3 +1,4 @@
+- [Fix potential  infinite loop when scanning for `$` anchor](https://github.com/gorhill/uBlock/commit/889c0eb208)
 - [Allow generic exception for `replace=` option](https://github.com/gorhill/uBlock/commit/52dba4116e)
 
 ----------
