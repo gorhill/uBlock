@@ -103,6 +103,7 @@
     "name": "AdGuard URL Tracking Protection",
     "group": "privacy",
     "enabled": false,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://filters.adtidy.org/extension/ublock/filters/17.txt"
     ],
