@@ -19,38 +19,53 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+function patchRule(rule, out) {
+    const copy = structuredClone(rule);
+    const condition = copy.condition;
+    if ( copy.action.type === 'modifyHeaders' ) { return; }
+    if ( Array.isArray(copy.condition.responseHeaders) ) { return; }
+    if ( Array.isArray(condition.requestMethods) ) { return; }
+    if ( Array.isArray(condition.excludedRequestMethods) ) { return; }
+    // https://github.com/uBlockOrigin/uBOL-home/issues/476#issuecomment-3299309478
+    if ( copy.action.redirect?.transform?.queryTransform?.removeParams ) {
+        const resourceTypes = condition.resourceTypes;
+        if ( resourceTypes?.includes('main_frame') ) {
+            condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame');
+            if ( condition.resourceTypes.length === 0 ) { return; }
+        }
+    }
+    if ( Array.isArray(condition.initiatorDomains) ) {
+        condition.domains = condition.initiatorDomains;
+        delete condition.initiatorDomains;
+    }
+    if ( Array.isArray(condition.excludedInitiatorDomains) ) {
+        condition.excludedDomains = condition.excludedInitiatorDomains;
+        delete condition.excludedInitiatorDomains;
+    }
+    // https://github.com/uBlockOrigin/uBOL-home/issues/434
+    let { urlFilter } = condition;
+    if ( urlFilter?.endsWith('^') ) {
+        urlFilter = urlFilter.slice(0, -1);
+        const match = /^(.*?\/\/|\|\|)/.exec(urlFilter);
+        const pattern = match
+            ? urlFilter.slice(match[0].length)
+            : urlFilter;
+        if ( /[^\w.%*-]/.test(pattern) ) {
+            const extra = structuredClone(copy);
+            extra.condition.urlFilter = `${urlFilter}|`;
+            out.push(extra);
+            console.log(`\tAdd ${extra.condition.urlFilter}`);
+        }
+    }
+    out.push(copy);
+    return copy;
+}
+
 export function patchRuleset(ruleset) {
     const out = [];
     for ( const rule of ruleset ) {
-        const condition = rule.condition;
-        if ( rule.action.type === 'modifyHeaders' ) { continue; }
-        if ( Array.isArray(rule.condition.responseHeaders) ) { continue; }
-        if ( Array.isArray(condition.requestMethods) ) { continue; }
-        if ( Array.isArray(condition.excludedRequestMethods) ) { continue; }
-        if ( Array.isArray(condition.initiatorDomains) ) {
-            condition.domains = condition.initiatorDomains;
-            delete condition.initiatorDomains;
-        }
-        if ( Array.isArray(condition.excludedInitiatorDomains) ) {
-            condition.excludedDomains = condition.excludedInitiatorDomains;
-            delete condition.excludedInitiatorDomains;
-        }
-        // https://github.com/uBlockOrigin/uBOL-home/issues/434
-        let { urlFilter } = condition;
-        if ( urlFilter?.endsWith('^') ) {
-            urlFilter = urlFilter.slice(0, -1);
-            const match = /^(.*?\/\/|\|\|)/.exec(urlFilter);
-            const pattern = match
-                ? urlFilter.slice(match[0].length)
-                : urlFilter;
-            if ( /[^\w.%*-]/.test(pattern) ) {
-                const extra = structuredClone(rule);
-                extra.condition.urlFilter = `${urlFilter}|`;
-                out.push(extra);
-                console.log(`Patching to ${extra.condition.urlFilter}`);
-            }
-        }
-        out.push(rule);
+        if ( patchRule(rule, out) ) { continue; }
+        console.log(`\tReject ${JSON.stringify(rule)}`);
     }
     return out;
 }
