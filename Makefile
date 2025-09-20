@@ -55,15 +55,6 @@ init: node_modules
 lint: init
 	npm run lint
 
-test: npm
-	cd dist/build/uBlock0.npm && npm run test
-
-test-full-battery: npm
-	cd dist/build/uBlock0.npm && npm run test-full-battery
-
-check-leaks: npm
-	cd dist/build/uBlock0.npm && npm run check-leaks
-
 dist/build/uBlock0.dig: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-dig.sh
 
@@ -126,7 +117,7 @@ publish-edge:
 		ghasset=chromium \
 		datebasedmajor=1 \
 		storeid=odfafepnkmbhccpbejgmiehpchacaeak \
-		productid=$(UBO_EDGE_ID)
+		productid=$(shell secret-tool lookup token ubo_edge_id)
 
 # Usage: make publish-firefox version=?
 publish-firefox:
