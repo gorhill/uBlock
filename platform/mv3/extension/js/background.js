@@ -109,18 +109,6 @@ function getCurrentVersion() {
     return runtime.getManifest().version;
 }
 
-// The goal is just to be able to find out whether a specific version is older
-// than another one.
-
-function intFromVersion(version) {
-    const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
-    if ( match === null ) { return 0; }
-    const year = parseInt(match[1], 10);
-    const monthday = parseInt(match[2], 10);
-    const min = parseInt(match[3], 10);
-    return (year - 2022) * (1232 * 2400) + monthday * 2400 + min;
-}
-
 /******************************************************************************/
 
 async function onPermissionsRemoved() {
@@ -566,13 +554,6 @@ async function startSession() {
     // obsolete ruleset to remove.
     if ( isNewVersion ) {
         ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
-        // https://github.com/uBlockOrigin/uBOL-home/issues/428#issuecomment-3172663563
-        if ( webextFlavor === 'safari' && rulesetConfig.strictBlockMode ) {
-            const before = intFromVersion(rulesetConfig.version);
-            if ( before <= intFromVersion('2025.804.2359') ) {
-                rulesetConfig.strictBlockMode = false;
-            }
-        }
         rulesetConfig.version = currentVersion;
         await patchDefaultRulesets();
         saveRulesetConfig();

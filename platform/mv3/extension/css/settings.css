@@ -86,6 +86,10 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
     text-transform: capitalize;
     }
 
+body[data-platform="safari"] [data-platform-exclude="safari"] {
+    display: none;
+    }
+
 body:not(.committing) #commit-spinner {
     display: none;
     }

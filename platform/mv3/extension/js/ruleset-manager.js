@@ -24,6 +24,7 @@ import {
     localRead, localRemove, localWrite,
     runtime,
     sessionRead, sessionRemove, sessionWrite,
+    webextFlavor,
 } from './ext.js';
 
 import {
@@ -236,6 +237,11 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
     }
 
     if ( rulesetConfig.strictBlockMode === false ) { return; }
+
+    // https://github.com/uBlockOrigin/uBOL-home/issues/428#issuecomment-3172663563
+    // https://bugs.webkit.org/show_bug.cgi?id=298199
+    // https://developer.apple.com/forums/thread/756214
+    if ( webextFlavor === 'safari' ) { return; }
 
     const [
         hasOmnipotence,

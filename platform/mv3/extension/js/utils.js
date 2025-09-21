@@ -195,6 +195,20 @@ const strArrayEq = (a = [], b = [], sort = true) => {
 
 /******************************************************************************/
 
+// The goal is just to be able to find out whether a specific version is older
+// than another one.
+
+export function intFromVersion(version) {
+    const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
+    if ( match === null ) { return 0; }
+    const year = parseInt(match[1], 10);
+    const monthday = parseInt(match[2], 10);
+    const min = parseInt(match[3], 10);
+    return (year - 2022) * (1232 * 2400) + monthday * 2400 + min;
+}
+
+/******************************************************************************/
+
 export {
     broadcastMessage,
     parsedURLromOrigin,

@@ -26,9 +26,12 @@ import {
     localWrite,
     runtime,
     sendMessage,
+    webextFlavor,
 } from './ext.js';
 
 /******************************************************************************/
+
+dom.body.dataset.platform = webextFlavor;
 
 {
     const manifest = runtime.getManifest();
