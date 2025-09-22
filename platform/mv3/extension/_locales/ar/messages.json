@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "أداة لحظر المحتوى دون إذن. يحظر الإعلانات وأدوات التتبع وأدوات التعدين وغيرها فور التثبيت.",
+    "message": "أداة فعالة لحجب المحتوى. تحجب الإعلانات والمتتبعين والمعدنين وغير ذلك فور تثبيتها.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} قواعد، محولة من {{filterCount}} مرشحات الشبكة",
+    "message": "{{ruleCount}} قواعد، محولة من {{filterCount}} فلاتر الشبكة",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -68,7 +68,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "نطاقات البرامج الضارة",
+    "message": "الحماية من البرامج الضارة، الأمان",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -88,7 +88,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "شفرة المصدر (GPLv3)",
+    "message": "كود المصدر (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -96,7 +96,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "شيفرة المصدر",
+    "message": "كود المصدر",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -104,7 +104,7 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "قوائم التصفية",
+    "message": "قوائم الفلاتر",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -112,11 +112,11 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "الإبلاغ عن مشكلة في عوامل التصفية",
+    "message": "الإبلاغ عن مشكلة في الفلاتر",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "الإبلاغ عن مشكلات الفلترة الخاصة بمواقع الويب المحددة إلى<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code></span>متتبع المشكلة</span>يتطلب حساب GitHub</u>",
+    "message": "الإبلاغ عن مشكلات التصفية الخاصة بمواقع الويب المحددة إلى<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code></span>متتبع المشكلة</span>يتطلب حساب GitHub</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -132,11 +132,11 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "عنوان صفحة الويب",
+    "message": "عنوان صفحة الويب:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "صفحة الويب...",
+    "message": "صفحة الويب…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "يحتوي على تراكبات أو إزعاجات أخرى.",
+    "message": "يحتوي على تراكبات أو إزعاجات أخرى",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -160,15 +160,15 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "تعطل عند تفعيل uBO Lite.",
+    "message": "تعطل عند تفعيل uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "يفتح علامات تبويب أو نوافذ غير مرغوب فيها.",
+    "message": "يفتح علامات تبويب أو نوافذ غير مرغوب فيها",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "يؤدي إلى البرامج الضارة والإحتيال",
+    "message": "يؤدي إلى برامج ضارة وتصيد احتيالي",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -176,7 +176,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "إنشاء تقرير جديد",
+    "message": "إنشاء تقرير جديد علي GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -184,7 +184,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "سيتم تجاوز وضع التصفية الافتراضي بواسطة أوضاع التصفية لكل موقع ويب. يمكنك ضبط وضع التصفية على أي موقع ويب معين وفقًا للوضع الذي يعمل بشكل أفضل على موقع الويب هذا. كل وضع له مزاياه وعيوبه.",
+    "message": "سيتم تجاوز وضع التصفية الافتراضي بواسطة أوضاع التصفية الخاصة بكل موقع ويب. يمكنك ضبط وضع التصفية على أي موقع ويب وفقًا للوضع الذي يعمل بشكل أفضل على ذلك الموقع. لكل وضع مزاياه وعيوبه.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -216,11 +216,11 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "قائمة بأسماء المضيفين التي لن تتم أي تصفية لها",
+    "message": "قائمة المواقع الإلكترونية التي لن يتم تصفية محتواها.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[أسماء النطاقات الرئيسية فقط]\nexample.com\ngames.example",
+    "message": "[أسماء النطاقات الرئيسية فقط]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -240,7 +240,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "سيتم حظر التنقل إلى المواقع غير المرغوب فيها، وسيتم تقديم خيار لك للمتابعة.",
+    "message": "سيتم حظر الانتقال إلى المواقع غير المرغوب فيها، وسيُعرض عليك خيار المتابعة.",
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
@@ -248,7 +248,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "يمكن الوصول إلى الميزات المناسبة للمستخدمين التقنيين.",
+    "message": "يتيح الوصول إلى الميزات المناسبة للمستخدمين التقنيين.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -292,11 +292,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "دخول وضع تحديد العناصر السريع",
+    "message": "إزالة عنصر",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "الخروج من وضع تحديد العناصر السريع",
+    "message": "خروج من وضع مزيل العناصر",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
@@ -340,11 +340,11 @@
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "استيراد واضافة…",
+    "message": "استيراد وإلحاق…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "تصدير...",
+    "message": "تصدير…",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {

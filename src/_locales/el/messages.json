@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ - Πίνακας ελέγχου",
+    "message": "uBlock₀ — Πίνακας ελέγχου",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
