@@ -18,6 +18,7 @@
  * 
  * Related issue:
  * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
+ * - https://github.com/uBlockOrigin/uAssets/issues/30134
  * 
 **/
  
@@ -388,21 +389,23 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getVersion() {
       return VERSION;
     }
-    requestAds(/*r, c*/) {
+    requestAds(_r, _c) {
       // If autoplay is disabled and the page is trying to autoplay a tracking
       // ad, then IMA fails with an error, and the page is expected to request
       // ads again later when the user clicks to play.
       CheckCanAutoplay().then(
         () => {
           const { ADS_MANAGER_LOADED } = AdsManagerLoadedEvent.Type;
-          this._dispatch(new ima.AdsManagerLoadedEvent(ADS_MANAGER_LOADED));
+          this._dispatch(new ima.AdsManagerLoadedEvent(ADS_MANAGER_LOADED, _r, _c));
         },
         () => {
           const e = new ima.AdError(
             "adPlayError",
             1205,
             1205,
-            "The browser prevented playback initiated without user interaction."
+            "The browser prevented playback initiated without user interaction.",
+            _r,
+            _c
           );
           this._dispatch(new ima.AdErrorEvent(e));
         }
@@ -638,10 +641,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   }
 
   class AdError {
-    constructor(type, code, vast, message) {
+    constructor(type, code, vast, message, request, context) {
       this.errorCode = code;
       this.message = message;
       this.type = type;
+      this.adsRequest = request;
+      this.userRequestContext = context;
       this.vastErrorCode = vast;
     }
     getErrorCode() {
@@ -738,7 +743,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return this.error;
     }
     getUserRequestContext() {
-      return {};
+      return this.error?.userRequestContext || {};
     }
   }
   AdErrorEvent.Type = {
@@ -748,8 +753,10 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   const manager = new AdsManager();
 
   class AdsManagerLoadedEvent {
-    constructor(type) {
+    constructor(type, request, context) {
       this.type = type;
+      this.adsRequest = request;
+      this.userRequestContext = context;
     }
     getAdsManager(c, settings) {
       if (settings && settings.enablePreloading) {
@@ -758,7 +765,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return manager;
     }
     getUserRequestContext() {
-      return {};
+      return this.userRequestContext || {};
     }
   }
   AdsManagerLoadedEvent.Type = {
