@@ -1,3 +1,11 @@
+- [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/9aa91ba111)
+- [Improve `google-ima` shim](https://github.com/gorhill/uBlock/commit/8de47f250d)
+- [Add back a uBO-specific version of "CERT.PL's Warning List"](https://github.com/gorhill/uBlock/commit/87dddb7d78)
+
+----------
+
+# 1.66.4
+
 - [Fix potential  infinite loop when scanning for `$` anchor](https://github.com/gorhill/uBlock/commit/889c0eb208)
 - [Allow generic exception for `replace=` option](https://github.com/gorhill/uBlock/commit/52dba4116e)
 
