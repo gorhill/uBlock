@@ -230,9 +230,9 @@ async function onCreateClicked() {
     if ( selector === undefined ) { return; }
     await toolOverlay.postMessage({ what: 'terminateCustomFilters' });
     await toolOverlay.sendMessage({
-        what: 'addCustomFilter',
+        what: 'addCustomFilters',
         hostname: toolOverlay.url.hostname,
-        selector,
+        selectors: [ selector ],
     });
     await toolOverlay.postMessage({ what: 'startCustomFilters' });
     qs$('textarea').value = '';

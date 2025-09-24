@@ -19,6 +19,10 @@
     "message": "Axustes",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Filtros persoais",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Desenvolvemento",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "Protección contra malware, seguridade",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Rexións, linguas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importar/Exportar",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Pega aquí os filtros cosméticos a engadir",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Rexistro de cambios",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Reverter",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Engadir",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Importar e engadir…",

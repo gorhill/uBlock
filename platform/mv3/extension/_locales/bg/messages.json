@@ -19,6 +19,10 @@
     "message": "Настройки",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Персонализирани филтри",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Разработка",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Региони, езици",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Импортиране / експортиране",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Поставете тук конкретни козметични филтри, които искате да добавите",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Списък с промени",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Връщане",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Добавяне",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Импортиране и добавяне…",

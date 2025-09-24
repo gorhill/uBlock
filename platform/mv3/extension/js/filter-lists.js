@@ -20,9 +20,9 @@
 */
 
 import { dom, qs$, qsa$ } from './dom.js';
+import { hashFromIterable, nodeFromTemplate } from './dashboard.js';
 import { i18n, i18n$ } from './i18n.js';
 import { localRead, localWrite, sendMessage } from './ext.js';
-import { hashFromIterable } from './dashboard.js';
 
 /******************************************************************************/
 
@@ -162,16 +162,16 @@ export function renderFilterLists(rulesetData) {
 
     const createListEntry = (listDetails, depth) => {
         if ( listDetails.lists === undefined ) {
-            return dom.clone('#templates .listEntry[data-role="leaf"]');
+            return nodeFromTemplate('listEntryLeaf', '.listEntry');
         }
         if ( depth !== 0 ) {
-            return dom.clone('#templates .listEntry[data-role="node"]');
+            return nodeFromTemplate('listEntryNode', '.listEntry');
         }
-        return dom.clone('#templates .listEntry[data-role="rootnode"]');
+        return nodeFromTemplate('listEntryRoot', '.listEntry');
     };
 
     const createListEntries = (parentkey, listTree, depth = 0) => {
-        const listEntries = dom.clone('#templates .listEntries');
+        const listEntries = nodeFromTemplate('listEntries', '.listEntries');
         const treeEntries = Object.entries(listTree);
         if ( depth !== 0 ) {
             const reEmojis = /\p{Emoji}+/gu;

@@ -19,6 +19,10 @@
     "message": "Iestatījumi",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Pielāgoti atsijātāji",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Izstrādāt",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Apgabali, valodas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Ievietot/izgūt",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Šeit ir ielīmējami noteikti kosmētiskie aizturētāji, kurus pievienot",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Izmaiņu žurnāls",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Atjaunot",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Pievienot",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Ievietot un pievienot…",

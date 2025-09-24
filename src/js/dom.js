@@ -156,6 +156,16 @@ class dom {
             elem.removeEventListener(type, callback, options);
         }
     }
+
+    static onFirstShown(fn, elem) {
+        let observer = new IntersectionObserver(entries => {
+            if ( entries.every(a => a.isIntersecting === false) ) { return; }
+            try { fn(); } catch { }
+            observer.disconnect();
+            observer = undefined;
+        });
+        observer.observe(elem);
+    }
 }
 
 dom.cl = class {

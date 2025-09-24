@@ -19,6 +19,10 @@
     "message": "Einstellungen",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Eigene Filter",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Entwickeln",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Regionen, Sprachen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importieren und exportieren",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Kosmetische Filter zum Hinzufügen einfügen",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Rückgängig machen",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Hinzufügen",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Importieren und ergänzen …",

@@ -38,15 +38,41 @@ import { ubolErr } from './debug.js';
 
 /******************************************************************************/
 
-const perSitePendingIO = new Map();
+async function flushWrites() {
+    while ( pendingWrites.length !== 0 ) {
+        const promises = pendingWrites;
+        pendingWrites.length = 0;
+        await Promise.all(promises);
+    }
+}
+
+async function keysFromStorage() {
+    await flushWrites();
+    return localKeys();
+}
+
+async function readFromStorage(key) {
+    await flushWrites();
+    return localRead(key);
+}
+
+async function writeToStorage(key, value) {
+    pendingWrites.push(localWrite(key, value));
+}
+
+async function removeFromStorage(key) {
+    pendingWrites.push(localRemove(key));
+}
+
+const pendingWrites = [];
 
 /******************************************************************************/
 
-export async function selectorsFromCustomFilters(hostname) {
+export async function customFiltersFromHostname(hostname) {
     const promises = [];
     let hn = hostname;
     while ( hn !== '' ) {
-        promises.push(localRead(`site.${hn}`));
+        promises.push(readFromStorage(`site.${hn}`));
         const pos = hn.indexOf('.');
         if ( pos === -1 ) { break; }
         hn = hn.slice(pos + 1);
@@ -66,15 +92,27 @@ export async function selectorsFromCustomFilters(hostname) {
 /******************************************************************************/
 
 export async function hasCustomFilters(hostname) {
-    const selectors = await selectorsFromCustomFilters(hostname);
+    const selectors = await customFiltersFromHostname(hostname);
     return selectors?.length ?? 0;
 }
 
 /******************************************************************************/
 
 async function getAllCustomFilterKeys() {
-    const storageKeys = await localKeys() || [];
+    const storageKeys = await keysFromStorage() || [];
     return storageKeys.filter(a => a.startsWith('site.'));
+}
+
+/******************************************************************************/
+
+export async function getAllCustomFilters() {
+    const collect = async key => {
+        const selectors = await readFromStorage(key);
+        return [ key.slice(5), selectors.map(a => a.startsWith('0') ? a.slice(1) : a) ];
+    };
+    const keys = await getAllCustomFilterKeys();
+    const promises = keys.map(k => collect(k));
+    return Promise.all(promises);
 }
 
 /******************************************************************************/
@@ -102,7 +140,7 @@ export function terminateCustomFilters(tabId, frameId) {
 /******************************************************************************/
 
 export async function injectCustomFilters(tabId, frameId, hostname) {
-    const selectors = await selectorsFromCustomFilters(hostname);
+    const selectors = await customFiltersFromHostname(hostname);
     if ( selectors.length === 0 ) { return; }
     const promises = [];
     const plainSelectors = selectors.filter(a => a.startsWith('{') === false);
@@ -136,9 +174,6 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
 /******************************************************************************/
 
 export async function registerCustomFilters(context) {
-    if ( perSitePendingIO.size !== 0 ) {
-        await Promise.all(Array.from(perSitePendingIO.values()));
-    }
     const siteKeys = await getAllCustomFilterKeys();
     if ( siteKeys.length === 0 ) { return; }
 
@@ -174,37 +209,35 @@ export async function registerCustomFilters(context) {
 
 /******************************************************************************/
 
-export async function addCustomFilter(hostname, selector) {
-    const pending = perSitePendingIO.get(hostname);
-    const promise = pending
-        ? pending.then(( ) => addCustomFilterByHostname(hostname, selector))
-        : addCustomFilterByHostname(hostname, selector);
-    perSitePendingIO.set(hostname, promise);
-    promise.then(( ) => {
-        if ( promise !== perSitePendingIO.get(hostname) ) { return; }
-        perSitePendingIO.delete(hostname);
-    });
-    return promise;
-}
-
-async function addCustomFilterByHostname(hostname, selector) {
+export async function addCustomFilters(hostname, toAdd) {
     if ( hostname === '' ) { return false; }
     const key = `site.${hostname}`;
-    const selectors = await localRead(key) || [];
-    if ( selectors.includes(selector) ) { return false; }
-    selectors.push(selector);
+    const selectors = await readFromStorage(key) || [];
+    const countBefore = selectors.length;
+    for ( const selector of toAdd ) {
+        if ( selectors.includes(selector) ) { continue; }
+        selectors.push(selector);
+    }
+    if ( selectors.length === countBefore ) { return false; }
     selectors.sort();
-    await localWrite(key, selectors);
+    writeToStorage(key, selectors);
     return true;
 }
 
 /******************************************************************************/
 
-export async function removeCustomFilter(hostname, selector) {
+export async function removeAllCustomFilters(hostname) {
+    const key = `site.${hostname}`;
+    const selectors = await readFromStorage(key) || [];
+    removeFromStorage(key);
+    return selectors.length !== 0;
+}
+
+export async function removeCustomFilters(hostname, selectors) {
     const promises = [];
     let hn = hostname;
     while ( hn !== '' ) {
-        promises.push(removeCustomFilterByHostname(hn, selector));
+        promises.push(removeCustomFiltersByKey(`site.${hn}`, selectors));
         const pos = hn.indexOf('.');
         if ( pos === -1 ) { break; }
         hn = hn.slice(pos + 1);
@@ -213,33 +246,24 @@ export async function removeCustomFilter(hostname, selector) {
     return results.some(a => a);
 }
 
-async function removeCustomFilterByHostname(hostname, selector) {
-    const pending = perSitePendingIO.get(hostname);
-    const key = `site.${hostname}`;
-    const promise = pending
-        ? pending.then(( ) => removeCustomFilterByKey(key, selector))
-        : removeCustomFilterByKey(key, selector);
-    perSitePendingIO.set(hostname, promise);
-    promise.then(( ) => {
-        if ( promise !== perSitePendingIO.get(hostname) ) { return; }
-        perSitePendingIO.delete(hostname);
-    });
-    return promise;
-}
-
-async function removeCustomFilterByKey(key, selector) {
-    const selectors = await localRead(key);
+async function removeCustomFiltersByKey(key, toRemove) {
+    const selectors = await readFromStorage(key);
     if ( selectors === undefined ) { return false; }
-    let i = selectors.indexOf(selector);
-    if ( i === -1 ) {
-        i = selectors.indexOf(`0${selector}`);
-        if ( i === -1 ) { return false; }
+    const beforeCount = selectors.length;
+    for ( const selector of toRemove ) {
+        let i = selectors.indexOf(selector);
+        if ( i === -1 ) {
+            i = selectors.indexOf(`0${selector}`);
+            if ( i === -1 ) { continue; }
+        }
+        selectors.splice(i, 1);
     }
-    selectors.splice(i, 1);
-    if ( selectors.length !== 0 ) {
-        await localWrite(key, selectors);
+    const afterCount = selectors.length;
+    if ( afterCount === beforeCount ) { return false; }
+    if ( afterCount !== 0 ) {
+        writeToStorage(key, selectors);
     } else {
-        await localRemove(key);
+        removeFromStorage(key);
     }
     return true;
 }

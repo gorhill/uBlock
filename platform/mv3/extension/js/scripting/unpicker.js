@@ -35,10 +35,10 @@ function onMessage(msg) {
         return ubolOverlay.sendMessage({ what: 'startCustomFilters' });
     case 'terminateCustomFilters':
         return ubolOverlay.sendMessage({ what: 'terminateCustomFilters' });
-    case 'removeCustomFilter':
-        return ubolOverlay.sendMessage({ what: 'removeCustomFilter',
+    case 'removeCustomFilters':
+        return ubolOverlay.sendMessage({ what: 'removeCustomFilters',
             hostname: ubolOverlay.url.hostname,
-            selector: msg.selector,
+            selectors: [ msg.selector ],
         });
     default:
         break;

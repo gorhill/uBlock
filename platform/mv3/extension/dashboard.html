@@ -25,6 +25,7 @@
             <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
          --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
          --><button class="tabButton" type="button" data-pane="rulesets" data-i18n="aboutFilterLists" tabindex="0"></button><!--
+         --><button class="tabButton" type="button" data-pane="filters" data-i18n="customFiltersPageName"tabindex="0"></button><!--
          --><button class="tabButton" type="button" data-pane="develop" data-i18n="developPageName"tabindex="0"></button><!--
          --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
         </nav>
@@ -103,6 +104,20 @@
         <div id="lists"></div>
     </section>
     <!-- -------- -->
+    <section data-pane="filters">
+        <ul class="hostnames"></ul>
+        <aside>
+            <details class="importFromText"><summary data-i18n="customFiltersImportExportLabel">_</summary>
+                <div><textarea spellcheck="false" placeholder="customFiltersImportTextareaPlaceholder"></textarea></div>
+                <p>
+                    <button class="iconified dontshrink" type="button"><span class="fa-icon">check</span><span data-i18n="addButton">_</span><span class="hover"></span></button>
+                    <button class="iconified dontshrink" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
+                    <button class="iconified dontshrink" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="text/plain">
+                </p>
+            </details>
+        </aside>
+    </section>
+    <!-- -------- -->
     <section data-pane="develop">
         <div>
             <p>
@@ -150,8 +165,7 @@
         </div>
     </section>
     <!-- -------- -->
-    <div id="templates">
-        <div class="listEntries"></div>
+    <template id="listEntryLeaf">
         <div class="listEntry" data-role="leaf">
             <span class="detailbar">
                 <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span>
@@ -161,6 +175,8 @@
                 </span>
             </span>
         </div>
+    </template>
+    <template id="listEntryNode">
         <div class="listEntry expandable" data-role="node">
             <span class="detailbar">
                 <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span></label>
@@ -168,6 +184,8 @@
                 <span class="fa-icon listExpander">angle-up</span>
             </span>
         </div>
+    </template>
+    <template id="listEntryRoot">
         <div class="listEntry expandable" data-role="rootnode">
             <div class="detailbar">
                 <h3 class="listname"></h3>
@@ -175,7 +193,18 @@
                 <span class="fa-icon listExpander">angle-up</span>
             </div>
         </div>
-    </div>
+    </template>
+    <template id="listEntries">
+        <div class="listEntries"></div>
+    </template>
+    <template id="customFiltersHostname">
+        <li class="hostname"><div><span class="hostname" spellcheck="false" contenteditable="plaintext-only" data-pretty="" data-ugly=""></span><span class="remove fa-icon">trash-o</span><span class="undo fa-icon">undo</span></div>
+        <ul class="selectors"></ul>
+        </li>
+    </template>
+    <template id="customFiltersSelector">
+        <li class="selector"><div><span class="selector" spellcheck="false" contenteditable="plaintext-only" data-pretty="" data-ugly=""></span><span class="remove fa-icon">trash-o</span><span class="undo fa-icon">undo</span></div></li>
+    </template>
     <template class="io-panel">
         <span class="io-panel">
             <button id="apply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
@@ -209,6 +238,7 @@
 <script src="js/i18n.js" type="module"></script>
 <script src="js/dashboard.js" type="module"></script>
 <script src="js/settings.js" type="module"></script>
+<script src="js/filter-manager-ui.js" type="module"></script>
 <script src="js/develop.js" type="module"></script>
 
 </body>

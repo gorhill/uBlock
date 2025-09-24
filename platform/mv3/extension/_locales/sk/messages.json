@@ -19,6 +19,10 @@
     "message": "Nastavenia",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Vlastné filtre",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Vývoj",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Regióny, jazyky",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Import/export",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Sem vložte špecifické kozmetické filtre, ktoré chcete pridať",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Zoznam zmien",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Vrátiť späť",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Pridať",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Importovať a pripojiť…",

@@ -19,6 +19,10 @@
     "message": "Beállítások",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Saját szűrők",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Fejlesztés",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Régiók, nyelvek",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importálás/exportálás",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Illessze be ide a hozzáadandó kozmetikai szűrőket",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Változások listája",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Visszaállítás",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Hozzáadás",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Importálás és hozzáadás…",

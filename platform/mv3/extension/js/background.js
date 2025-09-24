@@ -32,11 +32,13 @@ import {
 } from './mode-manager.js';
 
 import {
-    addCustomFilter,
+    addCustomFilters,
+    customFiltersFromHostname,
+    getAllCustomFilters,
     hasCustomFilters,
     injectCustomFilters,
-    removeCustomFilter,
-    selectorsFromCustomFilters,
+    removeAllCustomFilters,
+    removeCustomFilters,
     startCustomFilters,
     terminateCustomFilters,
 } from './filter-manager.js';
@@ -475,8 +477,8 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
-    case 'addCustomFilter':
-        addCustomFilter(request.hostname, request.selector).then(modified => {
+    case 'addCustomFilters':
+        addCustomFilters(request.hostname, request.selectors).then(modified => {
             if ( modified !== true ) { return; }
             return registerInjectables();
         }).then(( ) => {
@@ -484,8 +486,8 @@ function onMessage(request, sender, callback) {
         })
         return true;
 
-    case 'removeCustomFilter':
-        removeCustomFilter(request.hostname, request.selector).then(modified => {
+    case 'removeCustomFilters':
+        removeCustomFilters(request.hostname, request.selectors).then(modified => {
             if ( modified !== true ) { return; }
             return registerInjectables();
         }).then(( ) => {
@@ -493,9 +495,24 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
-    case 'selectorsFromCustomFilters':
-        selectorsFromCustomFilters(request.hostname).then(selectors => {
+    case 'removeAllCustomFilters':
+        removeAllCustomFilters(request.hostname).then(modified => {
+            if ( modified !== true ) { return; }
+            return registerInjectables();
+        }).then(( ) => {
+            callback();
+        });
+        return true;
+
+    case 'customFiltersFromHostname':
+        customFiltersFromHostname(request.hostname).then(selectors => {
             callback(selectors);
+        });
+        return true;
+
+    case 'getAllCustomFilters':
+        getAllCustomFilters().then(data => {
+            callback(data);
         });
         return true;
 

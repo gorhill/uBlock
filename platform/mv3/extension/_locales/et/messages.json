@@ -19,6 +19,10 @@
     "message": "Sätted",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Isetehtud filtrid",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Arendajale",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,14 @@
   "3pGroupRegions": {
     "message": "Regioonid, keeled",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Impordi/ekspordi",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Kindlate kosmeetiliste filtrite lisamiseks asetage need siia",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
     "message": "Muudatuste logi",
@@ -338,6 +350,10 @@
   "revertButton": {
     "message": "Taasta",
     "description": "Text for buttons used to revert changes"
+  },
+  "addButton": {
+    "message": "Lisa",
+    "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
     "message": "Impordi ja lisa…",

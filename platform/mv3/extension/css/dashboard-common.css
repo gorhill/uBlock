@@ -3,7 +3,6 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 0 var(--default-gap-xxsmall);
     }
 body > * {
     width: min(640px, 100%);

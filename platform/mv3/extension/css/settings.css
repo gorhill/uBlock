@@ -227,8 +227,104 @@ body.noMoreRuleset .listEntry:has(> .detailbar input:not(:checked)) {
     margin-top: 0.2em;
     }
 
-#templates {
+body section[data-pane="filters"] {
+    padding-inline: 0;
+    }
+body section[data-pane="filters"] .hostnames {
+    border-bottom: 1px solid var(--border-1);
+    margin-block-start: 1em;
+    }
+body section[data-pane="filters"] .hostnames:empty {
     display: none;
+    }
+body.busy section[data-pane="filters"] .hostnames {
+    pointer-events: none;
+    }
+section[data-pane="filters"] ul {
+    list-style: none;
+    margin: 0;
+    padding-inline-start: 0;
+    }
+section[data-pane="filters"] .hostnames > li.hostname > div {
+    background-color: var(--surface-2);
+    padding-inline-start: 0.5em;
+    }
+section[data-pane="filters"] ul ul {
+    padding-block-end: 1em;
+    padding-inline-start: 0.5em;
+    }
+section[data-pane="filters"] li > div {
+    display: flex;
+    padding-block: 4px;
+    }
+section[data-pane="filters"] li [contenteditable] {
+    flex-grow: 1;
+    word-break: break-all;
+    }
+section[data-pane="filters"] li [contenteditable]:focus {
+    background-color: var(--surface-0);
+    }
+section[data-pane="filters"] li .fa-icon {
+    align-self: baseline;
+    font-size: calc(var(--font-size) + 2px);
+    padding: 0 0.5em;
+    top: 2px;
+    }
+section[data-pane="filters"] li.selector:not(:first-of-type) {
+    border-top: 1px dotted var(--border-1);
+    }
+section[data-pane="filters"] li.hostname:not(:has(li.selector:not(.removed))) > div [contenteditable],
+section[data-pane="filters"] li.selector.removed [contenteditable] {
+    color: red;
+    text-decoration-line: line-through;
+    }
+section[data-pane="filters"] li.hostname:not(:has(li.selector:not(.removed))) > div span.remove,
+section[data-pane="filters"] li.selector.removed > div span.remove,
+section[data-pane="filters"] li.hostname:has(li.selector:not(.removed)) > div span.undo,
+section[data-pane="filters"] li.selector:not(.removed) > div span.undo {
+    display: none;
+    }
+html.desktop section[data-pane="filters"] li > div:hover {
+    background-color: var(--surface-0);
+    }
+html.desktop section[data-pane="filters"] li > div span.fa-icon:hover {
+    transform: scale(1.3);
+    }
+section[data-pane="filters"] aside {
+    padding: 1em 0.5em;
+    }
+section[data-pane="filters"] aside details {
+    padding: 0;
+    }
+section[data-pane="filters"] aside summary {
+    cursor: default;
+    line-height: 2;
+    }
+section[data-pane="filters"] aside .importFromText {
+    color: var(--ink-2);
+    }
+section[data-pane="filters"] aside .importFromText textarea {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-1);
+    box-sizing: border-box;
+    min-height: 6em;
+    resize: vertical;
+    width: 100%;
+    }
+section[data-pane="filters"] aside .importFromText textarea:focus {
+    background-color: var(--surface-0);
+    }
+section[data-pane="filters"] aside .importFromText:has(textarea:placeholder-shown) button:has([data-i18n="addButton"]) {
+    display: none;
+    }
+section[data-pane="filters"] aside .importFromText:not(:has(textarea:placeholder-shown)) button:has([data-i18n="importAndAppendButton"]),
+section[data-pane="filters"] aside .importFromText:not(:has(textarea:placeholder-shown)) button:has([data-i18n="exportButton"]) {
+    display: none;
+    }
+section[data-pane="filters"] aside p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
     }
 
 @media (max-width: 480px) {

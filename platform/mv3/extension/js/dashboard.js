@@ -28,6 +28,8 @@ import {
     sendMessage,
     webextFlavor,
 } from './ext.js';
+import { faIconsInit } from './fa-icons.js';
+import { i18n } from './i18n.js';
 
 /******************************************************************************/
 
@@ -66,7 +68,21 @@ tsinfoObserver.observe(qs$('[data-i18n="supportS5H"] + pre'));
 
 /******************************************************************************/
 
+export function nodeFromTemplate(templateId, nodeSelector) {
+    const template = qs$(`template#${templateId}`);
+    const fragment = template.content.cloneNode(true);
+    const node = nodeSelector !== undefined
+        ? qs$(fragment, nodeSelector)
+        : fragment.firstElementChild;
+    faIconsInit(node);
+    i18n.render(node);
+    return node;
+}
+
+/******************************************************************************/
+
 export function hashFromIterable(iter) {
+    if ( Boolean(iter) === false ) { return ''; }
     return Array.from(iter).sort().join('\n');
 }
 
