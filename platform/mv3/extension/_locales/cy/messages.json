@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "Ar y wefan hon",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -256,7 +256,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Modd datblygwr",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
@@ -348,11 +348,11 @@
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Dychwelwch",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Ychwanegwch",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
@@ -360,7 +360,7 @@
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Allforio",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {

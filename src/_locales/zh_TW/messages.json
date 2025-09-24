@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於有一款高效能的封鎖工具。對 CPU 和記憶體的佔用極低。",
+    "message": "終於有一款高效能的封鎖工具。對 CPU 和記憶體的占用極低。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {

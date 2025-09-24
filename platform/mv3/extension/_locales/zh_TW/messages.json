@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "自訂過濾規則",
+    "message": "自訂篩選規則",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "在此貼上要新增的元素隱藏過濾規則",
+    "message": "在這裡貼上要新增的元素隱藏篩選規則",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
