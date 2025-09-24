@@ -441,7 +441,7 @@ function importFromFile() {
 function exportToFile() {
     const lines = [];
     for ( const hostnameNode of qsa$('.hostnames li.hostname') ) {
-        const hostname = hostnameFromNode(hostnameNode);
+        const hostname = punycode.toUnicode(hostnameFromNode(hostnameNode));
         const selectors = selectorsFromNode(hostnameNode);
         for ( const selector of selectors ) {
             lines.push(`${hostname}##${toPrettySelector(selector)}`);
