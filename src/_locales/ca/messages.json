@@ -1200,7 +1200,7 @@
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Maliciós",
+    "message": "Perjudicial",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
@@ -1208,7 +1208,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "De mala reputació",
+    "message": "Mala reputació",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

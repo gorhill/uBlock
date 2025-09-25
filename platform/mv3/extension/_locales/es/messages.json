@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Pega aquí los filtros cosméticos específicos a agregar",
+    "message": "Pega aquí los filtros cosméticos específicos a añadir",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -352,7 +352,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Agregar",
+    "message": "Añadir",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {

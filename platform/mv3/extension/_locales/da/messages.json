@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Tilpassede filtre",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -44,7 +44,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Anmeld et problem på dette websted",
+    "message": "Anmeld et problem",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware-domæner",
+    "message": "Malware-beskyttelse, sikkerhed",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Import/ Eksport",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Indsæt bestemte kosmetiske filtre hér for at tilføje",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -304,7 +304,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Gå til elementdræber­tilstand",
+    "message": "Fjern et element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -352,7 +352,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Tilføj",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {

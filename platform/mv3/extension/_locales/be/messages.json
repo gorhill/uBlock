@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Уласныя фільтры",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -88,7 +88,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Імпартаваць/экспартаваць",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
@@ -352,7 +352,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Дадаць",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
