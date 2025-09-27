@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Επικολλήστε εδώ για προσθέσετε φίλτρα για συγκεκριμένα διακοσμητικά",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {

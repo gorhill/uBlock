@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Egendefinerte filtre",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Utvikle",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "På denne nettsiden",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Importér/Eksportér",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Lim inn her spesifikke kosmetiske filtre som skal legges til",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -312,35 +312,35 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "Lag et egendefinert filter",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "Fjern et egendefinert filter",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Vis:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Filtreringsmodusdetaljer",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Egendefinerte DNR-regler",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "DNR-regler for …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "Dynamisk regelsett",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "Regelsett for økter",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -352,7 +352,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Legg til",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
@@ -364,31 +364,31 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "Ikke legg til innhold fra upålitelige kilder",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Antall registrerte regler: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Flytt glidebryteren for å velge den beste matchen",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Velg",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Forhåndsvis",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Opprett",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Velg et filter nedenfor for å fremheve samsvarende elementer på nettsiden. Klikk på papirkurven for å fjerne et filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

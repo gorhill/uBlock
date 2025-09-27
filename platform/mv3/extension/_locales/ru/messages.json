@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Импорт и экспорт",
+    "message": "Импорт / Экспорт",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Вставьте сюда специальные косметические фильтры для добавления",
+    "message": "Вставьте сюда отдельные косметические фильтры для добавления",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
