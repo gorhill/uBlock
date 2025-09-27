@@ -37,6 +37,8 @@ export const rulesetConfig = {
     hasBroadHostPermissions: true,
 };
 
+export const defaultConfig = Object.assign({}, rulesetConfig);
+
 export const process = {
     firstRun: false,
     wakeupRun: false,

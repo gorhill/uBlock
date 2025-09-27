@@ -53,6 +53,13 @@ export const    MODE_BASIC = 1;
 export const  MODE_OPTIMAL = 2;
 export const MODE_COMPLETE = 3;
 
+export const defaultFilteringModes = {
+    none: [],
+    basic: [],
+    optimal: [ 'all-urls' ],
+    complete: [],
+};
+
 /******************************************************************************/
 
 const pruneDescendantHostnamesFromSet = (hostname, hnSet) => {
@@ -225,7 +232,7 @@ export async function readFilteringModeDetails(bypassCache = false) {
         }
     }
     let [
-        userModes = { optimal: [ 'all-urls' ] },
+        userModes = structuredClone(defaultFilteringModes),
         adminDefaultFiltering,
         adminNoFiltering,
     ] = await Promise.all([

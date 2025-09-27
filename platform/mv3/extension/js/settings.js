@@ -132,6 +132,49 @@ dom.on(
 
 /******************************************************************************/
 
+async function backupSettings() {
+    const api = await import('./backup-restore.js');
+    const data = await api.backupToObject(cachedRulesetData);
+    if ( data instanceof Object === false ) { return; }
+    const json = JSON.stringify(data, null, 2)  + '\n';
+    const a = document.createElement('a');
+    a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(json)}`;
+    dom.attr(a, 'download', 'my-ubol-settings.json');
+    dom.attr(a, 'type', 'application/json');
+    a.click();
+}
+
+async function restoreSettings() {
+    const input = qs$('section[data-pane="settings"] input[type="file"]');
+    input.onchange = ev => {
+        input.onchange = null;
+        const file = ev.target.files[0];
+        if ( file === undefined || file.name === '' ) { return; }
+        const fr = new FileReader();
+        fr.onload = ( ) => {
+            fr.onload = null;
+            if ( typeof fr.result !== 'string' ) { return; }
+            let data;
+            try {
+                data = JSON.parse(fr.result);
+            } catch {
+            }
+            if ( data instanceof Object === false ) { return; }
+            import('./backup-restore.js').then(api => {
+                api.restoreFromObject(data);
+            });
+        };
+        fr.readAsText(file);
+    };
+    // Reset to empty string, this will ensure a change event is properly
+    // triggered if the user pick a file, even if it's the same as the last
+    // one picked.
+    input.value = '';
+    input.click();
+}
+
+/******************************************************************************/
+
 dom.on('#autoReload input[type="checkbox"]', 'change', ev => {
     sendMessage({
         what: 'setAutoReload',
@@ -157,6 +200,14 @@ dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
     const state = ev.target.checked;
     sendMessage({ what: 'setDeveloperMode', state });
     dom.body.dataset.develop = `${state}`;
+});
+
+dom.on('section[data-pane="settings"] [data-i18n="backupButton"]', 'click', ( ) => {
+    backupSettings();
+});
+
+dom.on('section[data-pane="settings"] [data-i18n="restoreButton"]', 'click', ( ) => {
+    restoreSettings();
 });
 
 /******************************************************************************/

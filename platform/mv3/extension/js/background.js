@@ -22,6 +22,7 @@
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
+    defaultFilteringModes,
     getDefaultFilteringMode,
     getFilteringMode,
     getFilteringModeDetails,
@@ -64,8 +65,17 @@ import {
 } from './ext.js';
 
 import {
+    defaultConfig,
+    loadRulesetConfig,
+    process,
+    rulesetConfig,
+    saveRulesetConfig,
+} from './config.js';
+
+import {
     enableRulesets,
     excludeFromStrictBlock,
+    getDefaultRulesetsFromEnv,
     getEffectiveDynamicRules,
     getEffectiveSessionRules,
     getEffectiveUserRules,
@@ -84,13 +94,6 @@ import {
     ubolErr,
     ubolLog,
 } from './debug.js';
-
-import {
-    loadRulesetConfig,
-    process,
-    rulesetConfig,
-    saveRulesetConfig,
-} from './config.js';
 
 import { dnr } from './ext-compat.js';
 import { getTroubleshootingInfo } from './troubleshooting.js';
@@ -271,6 +274,19 @@ function onMessage(request, sender, callback) {
         });
         return true;
     }
+
+    case 'getDefaultConfig':
+        getDefaultRulesetsFromEnv().then(rulesets => {
+            callback({
+                autoReload: defaultConfig.autoReload,
+                developerMode: defaultConfig.developerMode,
+                showBlockedCount: defaultConfig.showBlockedCount,
+                strictBlockMode: defaultConfig.strictBlockMode,
+                rulesets,
+                filteringModes: Object.assign(defaultFilteringModes),
+            });
+        });
+        return true;
 
     case 'getOptionsPageData':
         Promise.all([

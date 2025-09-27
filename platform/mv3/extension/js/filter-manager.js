@@ -227,6 +227,14 @@ export async function addCustomFilters(hostname, toAdd) {
 /******************************************************************************/
 
 export async function removeAllCustomFilters(hostname) {
+    if ( hostname === '*' ) {
+        const keys = await getAllCustomFilterKeys();
+        if ( keys.length === 0 ) { return false; }
+        for ( const key of keys ) {
+            removeFromStorage(key);
+        }
+        return true;
+    }
     const key = `site.${hostname}`;
     const selectors = await readFromStorage(key) || [];
     removeFromStorage(key);

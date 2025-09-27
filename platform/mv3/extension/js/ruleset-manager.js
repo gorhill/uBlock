@@ -75,12 +75,11 @@ function getRulesetDetails() {
     if ( getRulesetDetails.rulesetDetailsPromise !== undefined ) {
         return getRulesetDetails.rulesetDetailsPromise;
     }
-    getRulesetDetails.rulesetDetailsPromise = fetchJSON('/rulesets/ruleset-details').then(entries => {
-        const rulesMap = new Map(
-            entries.map(entry => [ entry.id, entry ])
-        );
-        return rulesMap;
-    });
+    getRulesetDetails.rulesetDetailsPromise =
+        fetchJSON('/rulesets/ruleset-details').then(entries => {
+            const rulesMap = new Map(entries.map(entry => [ entry.id, entry ]));
+            return rulesMap;
+        });
     return getRulesetDetails.rulesetDetailsPromise;
 }
 
@@ -410,7 +409,7 @@ async function filteringModesToDNR(modes) {
 
 /******************************************************************************/
 
-async function defaultRulesetsFromEnv() {
+export async function getDefaultRulesetsFromEnv() {
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
         if ( pos === -1 ) { return lang; }
@@ -466,7 +465,7 @@ async function patchDefaultRulesets() {
         staticRulesetIds,
     ] = await Promise.all([
         localRead('defaultRulesetIds'),
-        defaultRulesetsFromEnv(),
+        getDefaultRulesetsFromEnv(),
         getStaticRulesets().then(r => r.map(a => a.id)),
     ]);
     const toAdd = [];
