@@ -264,16 +264,16 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup / Restore",
-    "description": "The header text for the backup/restore section"
+    "message": "Respaldar / Restaurar",
+    "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Backup your custom settings to a file, or restore your custom settings from a file.",
-    "description": "A summary description of the backup/restore section."
+    "message": "Respalda tus ajustes personalizados a un archivo, o restaura tus ajustes personalizados desde un archivo.",
+    "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
-    "description": "Important information about the backup/restore section."
+    "message": "Al restaurar se sobrescribirán todos tus ajustes personalizados actuales.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "Encontrar listas",
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Backup…",
-    "description": "Text for buttons used to backup content"
+    "message": "Respaldar…",
+    "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Restaurar…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

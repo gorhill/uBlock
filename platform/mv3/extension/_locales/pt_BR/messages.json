@@ -88,7 +88,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Importar / Exportar",
+    "message": "Importação e exportação",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
@@ -264,16 +264,16 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup / Restore",
-    "description": "The header text for the backup/restore section"
+    "message": "Backup e restauração",
+    "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Backup your custom settings to a file, or restore your custom settings from a file.",
-    "description": "A summary description of the backup/restore section."
+    "message": "Faça backup das suas configurações personalizadas para um arquivo, ou restaure suas configurações personalizadas de um arquivo.",
+    "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
-    "description": "Important information about the backup/restore section."
+    "message": "Ao restaurar, todas as suas configurações personalizadas atuais serão sobrescritas.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "Procurar listas",
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Backup…",
-    "description": "Text for buttons used to backup content"
+    "message": "Fazer backup…",
+    "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Restaurar…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

@@ -264,16 +264,16 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup / Restore",
-    "description": "The header text for the backup/restore section"
+    "message": "גיבוי / שחזור",
+    "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Backup your custom settings to a file, or restore your custom settings from a file.",
-    "description": "A summary description of the backup/restore section."
+    "message": "גיבוי של ההגדרות האישיות לקובץ, או שחזור של ההגדרות האישיות מקובץ.",
+    "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
-    "description": "Important information about the backup/restore section."
+    "message": "השחזור יחליף את כל ההגדרות האישיות הנוכחיות.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "חיפוש רשימות",
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Backup…",
-    "description": "Text for buttons used to backup content"
+    "message": "גיבוי…",
+    "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "שחזור…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

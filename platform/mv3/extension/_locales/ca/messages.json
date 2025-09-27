@@ -264,16 +264,16 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup / Restore",
-    "description": "The header text for the backup/restore section"
+    "message": "Còpia de seguretat / Restaura",
+    "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Backup your custom settings to a file, or restore your custom settings from a file.",
-    "description": "A summary description of the backup/restore section."
+    "message": "Feu una còpia de seguretat de la vostra configuració personalitzada a un fitxer o restaureu la vostra configuració personalitzada des d'un fitxer.",
+    "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
-    "description": "Important information about the backup/restore section."
+    "message": "La restauració sobreescriurà tots els paràmetres personalitzats actuals.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "Cerca llistes",
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Backup…",
-    "description": "Text for buttons used to backup content"
+    "message": "Còpia de seguretat…",
+    "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Restaura…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
