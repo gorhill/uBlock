@@ -189,27 +189,27 @@ dom.on(
     }
 );
 
-dom.on(
-    '.filteringModeSlider',
-    'mouseenter',
-    '.filteringModeSlider span[data-level]',
-    ev => {
-        const span = ev.target;
-        const level = parseInt(span.dataset.level, 10);
-        dom.text('#filteringModeText > span:nth-of-type(2)',
-            i18n$(`filteringMode${level}Name`)
-        );
-    }
-);
+if ( dom.cl.has(dom.html, 'mobile') === false ) {
+    dom.on('.filteringModeSlider',
+        'mouseenter',
+        '.filteringModeSlider span[data-level]',
+        ev => {
+            const span = ev.target;
+            const level = parseInt(span.dataset.level, 10);
+            dom.text('#filteringModeText > span:nth-of-type(2)',
+                i18n$(`filteringMode${level}Name`)
+            );
+        }
+    );
 
-dom.on(
-    '.filteringModeSlider',
-    'mouseleave',
-    '.filteringModeSlider span[data-level]',
-    ( ) => {
-        dom.text('#filteringModeText > span:nth-of-type(2)', '');
-    }
-);
+    dom.on('.filteringModeSlider',
+        'mouseleave',
+        '.filteringModeSlider span[data-level]',
+        ( ) => {
+            dom.text('#filteringModeText > span:nth-of-type(2)', '');
+        }
+    );
+}
 
 /******************************************************************************/
 
