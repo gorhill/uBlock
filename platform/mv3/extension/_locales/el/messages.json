@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Back up / Restore",
+    "message": "Αντίγραφα ασφαλείας",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Δημιουργήστε ένα αντίγραφο ασφαλείας των προσαρμοσμένων ρυθμίσεών σας ή επαναφέρετε τις προσαρμοσμένες ρυθμίσεις από ένα αρχείο αντιγράφου ασφαλείας.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Η επαναφορά θα έχει ως αποτέλεσμα την αντικατάσταση των τρεχόντων προσαρμοσμένων ρυθμίσεών σας.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Δημιουργία αντιγράφου ασφαλείας…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Επαναφορά ρυθμίσεων…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Sichern / Wiederherstellen",
+    "message": "Sichern und wiederherstellen",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Sichern Sie Ihre benutzerdefinierten Einstellungen in einer Datei oder stellen Sie Ihre benutzerdefinierten Einstellungen aus einer Datei wieder her.",
+    "message": "Alle angepassten Einstellungen können in eine Datei gesichert oder aus einer Datei wiederhergestellt werden.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Durch das Wiederherstellen werden alle Ihre aktuellen benutzerdefinierten Einstellungen überschrieben.",
+    "message": "Durch das Wiederherstellen werden alle angepassten Einstellungen überschrieben.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Sichern …",
+    "message": "Sichern …",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Wiederherstellen …",
+    "message": "Wiederherstellen …",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

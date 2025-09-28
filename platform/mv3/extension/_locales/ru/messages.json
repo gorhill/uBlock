@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Копирование/Восстановление",
+    "message": "Резервные копии / восстановление",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Создайте резервную копию ваших пользовательских настроек в файле или восстановите ваши пользовательские настройки из файла.",
+    "message": "Создайте резервную копию ваших пользовательских настроек в файле или восстановите их из файла.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Восстановление приведет к перезаписыванию всех ваших текущих пользовательских настроек.",
+    "message": "Восстановление перезапишет все ваши текущие пользовательские настройки.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {

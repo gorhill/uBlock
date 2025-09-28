@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Back up / Restore",
+    "message": "Sigurnosna kopija",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Napravite sigurnosnu kopiju prilagođenih postavki u datoteku ili ih vratite iz datoteke.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Vraćanje će prebrisati sve vaše trenutne prilagođene postavke.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Sigurnosno kopiranje…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Vraćanje…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

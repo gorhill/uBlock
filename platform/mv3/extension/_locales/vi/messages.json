@@ -264,11 +264,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Back up / Restore",
+    "message": "Sao lưu",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Sao lưu cài đặt tùy chỉnh của bạn vào một tệp hoặc khôi phục cài đặt tùy chỉnh từ một tệp.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Sao lưu…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Khôi phục…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

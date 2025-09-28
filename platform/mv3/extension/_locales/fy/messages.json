@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Ymportearje / Eksportearje",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Plak hjir spesifike kosmetyske filters om ta te foegjen",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Back up / Restore",
+    "message": "Reservekopy",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Meitsje i reservekopy fan jo oanpaste ynstellingen neiei bestân, of set jo oanpaste ynstellingen werom fan in bestân út.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Weromsette oerskriuwt al jo aktuele oanpaste ynstellingen.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -364,7 +364,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Tafoegje",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Reservekopy meitje…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Weromsette…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

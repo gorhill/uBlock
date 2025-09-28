@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Varundamine / Taastamine",
+    "message": "Varundamine / taastamine",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Varunda oma eriseadistused või taasta oma eriseadistused failist.",
+    "message": "Varunda eriseadistused faili või taasta need failist.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Taastamine kirjutab üle olemasolevad seadistused.",
+    "message": "Taastamine asendab olemasolevad seadistused.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {

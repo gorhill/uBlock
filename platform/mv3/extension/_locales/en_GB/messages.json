@@ -264,11 +264,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Back up / Restore",
+    "message": "Backup",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Backup your custom settings to a file, or restore your custom settings from a file.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
@@ -376,7 +376,7 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Backup…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
