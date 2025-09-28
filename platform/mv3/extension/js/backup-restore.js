@@ -20,7 +20,7 @@
 */
 
 import {
-    localRead, localWrite,
+    localRead, localRemove, localWrite,
     runtime,
     sendMessage,
 } from './ext.js';
@@ -101,7 +101,7 @@ export async function restoreFromObject(targetConfig) {
     });
 
     const enabledRulesets = new Set(defaultConfig.rulesets);
-    for ( const entry of targetConfig.rulesets ) {
+    for ( const entry of targetConfig.rulesets || [] ) {
         const id = entry.slice(1);
         if ( entry.startsWith('+') ) {
             enabledRulesets.add(id);
@@ -143,7 +143,11 @@ export async function restoreFromObject(targetConfig) {
     await Promise.all(promises);
 
     const dnrRules = targetConfig.dnrRules ?? [];
-    await localWrite('userDnrRules', dnrRules.join('\n'));
+    if ( dnrRules.length !== 0 ) {
+        await localWrite('userDnrRules', dnrRules.join('\n'));
+    } else {
+        await localRemove('userDnrRules');
+    }
     await sendMessage({ what: 'updateUserDnrRules' });
 
 }
