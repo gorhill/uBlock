@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup / Ripristino",
+    "message": "Backup",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {

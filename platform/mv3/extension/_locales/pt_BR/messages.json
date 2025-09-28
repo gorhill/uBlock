@@ -268,11 +268,11 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Faça backup das suas configurações personalizadas para um arquivo, ou restaure suas configurações personalizadas de um arquivo.",
+    "message": "Faça backup das suas configurações personalizadas em um arquivo ou restaure suas configurações personalizadas de um arquivo.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Ao restaurar, todas as suas configurações personalizadas atuais serão sobrescritas.",
+    "message": "A restauração sobrescreverá todas as suas configurações personalizadas atuais.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
