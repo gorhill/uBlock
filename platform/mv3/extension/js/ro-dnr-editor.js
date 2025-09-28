@@ -19,10 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { runtime, sendMessage } from './ext.js';
 import { DNREditor } from './dnr-editor.js';
 import { i18n$ } from './i18n.js';
 import { normalizeDNRRules } from './ext-compat.js';
-import { sendMessage } from './ext.js';
 import { textFromRules } from './dnr-parser.js';
 
 /******************************************************************************/
@@ -49,18 +49,22 @@ export class ReadOnlyDNREditor extends DNREditor {
         const allRulesetDetails = await sendMessage({ what: 'getRulesetDetails' });
         const rulesetDetails = allRulesetDetails.find(a => a.id === this.id);
         if ( rulesetDetails === undefined ) { return; }
+        const manifestRulesets = runtime.getManifest().declarative_net_request.rule_resources;
+        const mainPathMap = new Map(
+            manifestRulesets.map(({ id, path }) => [ id, path ])
+        );
         const realms = {
             plain: 'main',
             regex: 'regex',
-            redirect: 'redirect',
-            modifyHeaders: 'modify-headers',
-            removeparam: 'removeparam',
         };
         const promises = [];
         for ( const [ realm, dir ] of Object.entries(realms) ) {
             if ( Boolean(rulesetDetails.rules?.[realm]) === false ) { continue; }
+            const url = dir === 'main'
+                ? mainPathMap.get(this.id)
+                : `./rulesets/${dir}/${this.id}.json`;
             promises.push(
-                fetch(`./rulesets/${dir}/${this.id}.json`).then(response =>
+                fetch(url).then(response =>
                     response.json()
                 ).then(rules =>
                     normalizeDNRRules(rules)
