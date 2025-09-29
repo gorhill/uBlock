@@ -20,6 +20,7 @@
 */
 
 import { dom, qs$ } from './dom.js';
+import { getTroubleshootingInfo } from './troubleshooting.js';
 import { sendMessage } from './ext.js';
 
 /******************************************************************************/
@@ -92,10 +93,7 @@ async function reportSpecificFilterIssue() {
 
 /******************************************************************************/
 
-sendMessage({
-    what: 'getTroubleshootingInfo',
-    siteMode: reportedPage.mode,
-}).then(config => {
+getTroubleshootingInfo(reportedPage.mode).then(config => {
     qs$('[data-i18n="supportS5H"] + pre').textContent = config;
 
     dom.on('[data-url]', 'click', ev => {

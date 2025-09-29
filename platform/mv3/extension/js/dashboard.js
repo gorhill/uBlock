@@ -21,11 +21,8 @@
 
 import { dom, qs$ } from './dom.js';
 import {
-    localRead,
-    localRemove,
-    localWrite,
+    localRead, localRemove, localWrite,
     runtime,
-    sendMessage,
     webextFlavor,
 } from './ext.js';
 import { faIconsInit } from './fa-icons.js';
@@ -60,7 +57,9 @@ localRead('dashboard.activePane').then(pane => {
 // Update troubleshooting on-demand
 const tsinfoObserver = new IntersectionObserver(entries => {
     if ( entries.every(a => a.isIntersecting === false) ) { return; }
-    sendMessage({ what: 'getTroubleshootingInfo' }).then(config => {
+    import('./troubleshooting.js').then(module => {
+        return module.getTroubleshootingInfo();
+    }).then(config => {
         qs$('[data-i18n="supportS5H"] + pre').textContent = config;
     });
 });

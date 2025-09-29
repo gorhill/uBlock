@@ -88,6 +88,7 @@ import {
 } from './ruleset-manager.js';
 
 import {
+    getConsoleOutput,
     getMatchedRules,
     isSideloaded,
     toggleDeveloperMode,
@@ -96,7 +97,6 @@ import {
 } from './debug.js';
 
 import { dnr } from './ext-compat.js';
-import { getTroubleshootingInfo } from './troubleshooting.js';
 import { registerInjectables } from './scripting-manager.js';
 import { toggleToolbarIcon } from './action.js';
 
@@ -325,6 +325,12 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'getEnabledRulesets':
+        dnr.getEnabledRulesets().then(rulesets => {
+            callback(rulesets);
+        });
+        return true;
+
     case 'getRulesetDetails':
         getRulesetDetails().then(rulesetDetails => {
             callback(Array.from(rulesetDetails.values()));
@@ -532,11 +538,9 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
-    case 'getTroubleshootingInfo':
-        getTroubleshootingInfo(request.siteMode).then(info => {
-            callback(info);
-        });
-        return true;
+    case 'getConsoleOutput':
+        callback(getConsoleOutput());
+        break;
 
     default:
         break;

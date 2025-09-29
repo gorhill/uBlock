@@ -19,11 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dnr } from './ext-compat.js';
-import { getConsoleOutput } from './debug.js';
-import { getDefaultFilteringMode } from './mode-manager.js';
-import { getEffectiveUserRules } from './ruleset-manager.js';
-import { runtime } from './ext.js';
+import { runtime, sendMessage } from './ext.js';
 
 /******************************************************************************/
 
@@ -57,36 +53,43 @@ export async function getTroubleshootingInfo(siteMode) {
     const manifest = runtime.getManifest();
     const [
         platformInfo,
-        rulesets,
+        defaultConfig,
+        enabledRulesets,
         defaultMode,
         userRules,
+        consoleOutput,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
-        dnr.getEnabledRulesets(),
-        getDefaultFilteringMode(),
-        getEffectiveUserRules(),
+        sendMessage({ what: 'getDefaultConfig' }),
+        sendMessage({ what: 'getEnabledRulesets' }),
+        sendMessage({ what: 'getDefaultFilteringMode' }),
+        sendMessage({ what: 'getEffectiveUserRules' }),
+        sendMessage({ what: 'getConsoleOutput' }),
     ]);
     const browser = (( ) => {
         const extURL = runtime.getURL('');
-        let agent = '';
+        let agent = '', version = '?';
         if ( extURL.startsWith('moz-extension:') ) {
             agent = 'Firefox';
+            const match = /\bFirefox\/(\d+\.\d+)\b/.exec(navigator.userAgent);
+            version = match && match[1] || '?';
         } else if ( extURL.startsWith('safari-web-extension:') ) {
             agent = 'Safari';
+            const match = /\bVersion\/(\d+\.\d+)\b/.exec(navigator.userAgent);
+            version = match && match[1] || '?';
         } else if ( /\bEdg\/\b/.test(navigator.userAgent) ) {
             agent = 'Edge';
+            const match = /\bEdg\/(\d+)\b/.exec(navigator.userAgent);
+            version = match && match[1] || '?';
         } else {
             agent = 'Chrome';
+            const match = /\bChrome\/(\d+)\b/.exec(navigator.userAgent);
+            version = match && match[1] || '?';
         }
         if ( /\bMobile\b/.test(navigator.userAgent) ) {
             agent += ' Mobile';
         }
-        const reVersion = new RegExp(`\\b${agent.slice(0,3)}[^/]*/(\\d+)`);
-        const match = reVersion.exec(navigator.userAgent);
-        if ( match ) {
-            agent += ` ${match[1]}`;
-        }
-        agent += ` (${platformInfo.os})`
+        agent += ` ${version} (${platformInfo.os})`
         return agent;
     })();
     const modes = [ 'no filtering', 'basic', 'optimal', 'complete' ];
@@ -104,8 +107,17 @@ export async function getTroubleshootingInfo(siteMode) {
     if ( userRules.length !== 0 ) {
         config['user rules'] = userRules.length;
     }
-    config.rulesets = rulesets;
-    const consoleOutput = getConsoleOutput();
+    const defaultRulesets = defaultConfig.rulesets;
+    for ( let i = 0; i < enabledRulesets.length; i++ ) {
+        const id = enabledRulesets[i];
+        if ( defaultRulesets.includes(id) ) { continue; }
+        enabledRulesets[i] = `+${id}`;
+    }
+    for ( const id of defaultRulesets ) {
+        if ( enabledRulesets.includes(id) ) { continue; }
+        enabledRulesets.push(`-${id}`);
+    }
+    config.rulesets = enabledRulesets.sort();
     if ( consoleOutput.length !== 0 ) {
         config.console = siteMode
             ? consoleOutput.slice(-8)
