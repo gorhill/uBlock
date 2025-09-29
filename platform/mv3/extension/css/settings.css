@@ -90,6 +90,12 @@ body[data-platform="safari"] [data-platform-exclude="safari"] {
     display: none;
     }
 
+section[data-pane="settings"] p:has(button) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    }
+
 body:not(.committing) #commit-spinner {
     display: none;
     }
