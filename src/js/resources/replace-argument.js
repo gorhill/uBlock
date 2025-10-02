@@ -48,6 +48,8 @@ import { validateConstantFn } from './set-constant.js';
  * json-parsed string after `json:`.
  * If the replacement value matches `repl:/.../.../`, the target argument will
  * be replaced according the regex-replacement directive following `repl:`
+ * If the replacement value matches `add:number`, number will be added to the
+ * target argument.
  * 
  * @param [, condition, pattern]
  * Optional. The replacement will occur only when pattern matches the target
