@@ -65,10 +65,19 @@ export function trustedReplaceArgument(
     const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
     const argoffset = parseInt(argposRaw, 10) || 0;
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const replacer = argraw.startsWith('repl:/') &&
-        parseReplaceFn(argraw.slice(5)) || undefined;
-    const value = replacer === undefined &&
-        validateConstantFn(true, argraw, extraArgs);
+    let replacer;
+    if ( argraw.startsWith('repl:/') ) {
+        const parsed = parseReplaceFn(argraw.slice(5));
+        if ( parsed === undefined ) { return; }
+        replacer = arg => `${arg}`.replace(replacer.re, replacer.replacement);
+    } else if ( argraw.startsWith('add:') ) {
+        const delta = parseFloat(argraw.slice(4));
+        if ( isNaN(delta) ) { return; }
+        replacer = arg => Number(arg) + delta;
+    } else {
+        const value = validateConstantFn(true, argraw, extraArgs);
+        replacer = ( ) => value;
+    }
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
@@ -100,9 +109,7 @@ export function trustedReplaceArgument(
                 return context.reflect();
             }
         }
-        const argAfter = replacer && typeof argBefore === 'string'
-            ? argBefore.replace(replacer.re, replacer.replacement)
-            : value;
+        const argAfter = replacer(argBefore);
         if ( argAfter !== argBefore ) {
             setArg(context, argAfter);
             safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${argAfter}`);
