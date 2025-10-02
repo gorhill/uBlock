@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "Gwared",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
@@ -376,7 +376,7 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Gwarediñ…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {

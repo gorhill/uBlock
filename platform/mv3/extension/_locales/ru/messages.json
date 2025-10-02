@@ -264,11 +264,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Резервные копии / восстановление",
+    "message": "Резервная копия",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Создайте резервную копию ваших пользовательских настроек в файле или восстановите их из файла.",
+    "message": "Создайте резервную копию пользовательских настроек в файле, или восстановите настройки из файла.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
@@ -376,7 +376,7 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Создать резервную копию…",
+    "message": "Создать рез. копию…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {

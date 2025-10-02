@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Copia de seg.",
+    "message": "Respaldar",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Haz una copia de seguridad de tus ajustes personalizados en un archivo o restaura tus ajustes personalizados desde uno.",
+    "message": "Haz un respaldo de tu configuración personalizada en un archivo o restaura tu configuración personalizada desde uno.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Al restaurar se sobrescribirán todos tus ajustes personalizados actuales.",
+    "message": "La restauración sobrescribirá toda tu configuración personalizada actual.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,7 +376,7 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Hacer copia…",
+    "message": "Respaldar…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
