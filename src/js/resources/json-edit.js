@@ -216,11 +216,11 @@ function editInboundObjectFn(
         return objAfter;
     };
     proxyApplyFn(propChain, function(context) {
-        const i = getArgPos(context.args);
+        const i = getArgPos(context.callArgs);
         if ( i !== undefined ) {
-            const obj = editObj(context.args[i]);
+            const obj = editObj(context.callArgs[i]);
             if ( obj ) {
-                context.args[i] = obj;
+                context.callArgs[i] = obj;
             }
         }
         return context.reflect();
