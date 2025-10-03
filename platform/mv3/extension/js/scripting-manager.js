@@ -310,11 +310,14 @@ function registerProcedural(context) {
     js.push('/js/scripting/css-procedural.js');
 
     const excludeMatches = [];
-    if ( none.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(none));
-    }
-    if ( basic.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(basic));
+    if ( none.has('all-urls') === false && basic.has('all-urls') === false ) {
+        const toExclude = [
+            ...ut.matchesFromHostnames(none),
+            ...ut.matchesFromHostnames(basic),
+        ];
+        for ( const hn of toExclude ) {
+            excludeMatches.push(hn);
+        }
     }
 
     const registered = before.get('css-procedural');
