@@ -97,7 +97,7 @@ function hrefSanitizer(
         }
         if ( source === 'text' ) {
             return elem.textContent
-                .replace(/^[^\x21-\x7e]+|/, '') // remove leading invalid characters
+                .replace(/^[^\x21-\x7e]+/, '')  // remove leading invalid characters
                 .replace(/[^\x21-\x7e]+$/, ''); // remove trailing invalid characters
         }
         const steps = source.replace(/(\S)\?/g, '\\1 ?').split(/\s+/);
