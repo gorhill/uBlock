@@ -757,7 +757,7 @@ const hashFromStr = (type, s) => {
     for ( let i = 0; i < len; i += step ) {
         hash = (hash << 5) + hash ^ s.charCodeAt(i);
     }
-    return hash & 0xFFFFFF;
+    return hash & 0xFFF;
 };
 
 /******************************************************************************/

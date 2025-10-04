@@ -61,7 +61,7 @@ const hashFromStr = (type, s) => {
     for ( let i = 0; i < len; i += step ) {
         hash = (hash << 5) + hash ^ s.charCodeAt(i);
     }
-    return hash & 0xFFFFFF;
+    return hash & 0xFFF;
 };
 
 /******************************************************************************/
@@ -224,7 +224,7 @@ const uBOL_injectCSS = css => {
 
 /******************************************************************************/
 
-const stopAll = reason => {
+const stopAll = ( ) => {
     if ( domChangeTimer !== undefined ) {
         self.clearTimeout(domChangeTimer);
         domChangeTimer = undefined;
