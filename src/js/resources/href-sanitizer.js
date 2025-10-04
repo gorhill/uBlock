@@ -91,35 +91,17 @@ function hrefSanitizer(
         }
         return '';
     };
-    const extractParam = (href, source) => {
-        if ( Boolean(source) === false ) { return href; }
-        const recursive = source.includes('?', 1);
-        const end = recursive ? source.indexOf('?', 1) : source.length;
-        try {
-            const url = new URL(href, document.location);
-            let value = url.searchParams.get(source.slice(1, end));
-            if ( value === null ) { return href }
-            if ( recursive ) { return extractParam(value, source.slice(end)); }
-            return value;
-        } catch {
-        }
-        return href;
-    };
     const extractURL = (elem, source) => {
         if ( /^\[.*\]$/.test(source) ) {
             return elem.getAttribute(source.slice(1,-1).trim()) || '';
         }
         if ( source === 'text' ) {
             return elem.textContent
-                .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
-                .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
-            ;
+                .replace(/^[^\x21-\x7e]+|/, '') // remove leading invalid characters
+                .replace(/[^\x21-\x7e]+$/, ''); // remove trailing invalid characters
         }
-        if ( source.startsWith('?') === false ) { return ''; }
-        const steps = source.replace(/(\S)\?/g, '\\1?').split(/\s+/);
-        const url = steps.length === 1
-            ? extractParam(elem.href, source)
-            : urlSkip(elem.href, false, steps);
+        const steps = source.replace(/(\S)\?/g, '\\1 ?').split(/\s+/);
+        const url = urlSkip(elem.href, false, steps);
         if ( url === undefined ) { return; }
         return url.replace(/ /g, '%20');
     };
