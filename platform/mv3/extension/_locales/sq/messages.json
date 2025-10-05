@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Rezervoj",
+    "message": "Kopja rezervë",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Krijoni kopje rezervë të parametrave të personalizuara në një skedar ose restauroni parametrat e personalizuara nga një skedar.",
+    "message": "Mbani një kopje rezervë të parametrave që keni personalizuar ose riktheni parametrat e mëparshëm.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restaurimi do të mbishkruajë të gjitha parametrat tuaja aktuale të personalizuara.",
+    "message": "Rikthimi do të fshijë gjithë parametrat që keni personalizuar.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -380,7 +380,7 @@
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Rivendos…",
+    "message": "Rikthej…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

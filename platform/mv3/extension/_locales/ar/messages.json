@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "النسخ الاحتياطي",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "قم بنسخ الإعدادات المخصصة احتياطيًا إلى ملف، أو استعادة الإعدادات المخصصة من ملف.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "ستؤدي عملية الاستعادة إلى استبدال جميع إعداداتك المخصصة الحالية.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "نسخ احتياطي…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "استعادة…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
