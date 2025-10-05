@@ -29,6 +29,7 @@
   "host_permissions": [
     "<all_urls>"
   ],
+  "incognito": "split",
   "icons": {
     "16": "img/icon_16.png",
     "32": "img/icon_32.png",
