@@ -24,8 +24,6 @@ function patchRule(rule, out) {
     const condition = copy.condition;
     if ( copy.action.type === 'modifyHeaders' ) { return; }
     if ( Array.isArray(copy.condition.responseHeaders) ) { return; }
-    if ( Array.isArray(condition.requestMethods) ) { return; }
-    if ( Array.isArray(condition.excludedRequestMethods) ) { return; }
     // https://github.com/uBlockOrigin/uBOL-home/issues/476#issuecomment-3299309478
     if ( copy.action.redirect?.transform?.queryTransform?.removeParams ) {
         const resourceTypes = condition.resourceTypes;
