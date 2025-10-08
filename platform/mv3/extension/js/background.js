@@ -337,6 +337,12 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'hasBroadHostPermissions':
+        hasBroadHostPermissions().then(result => {
+            callback(result);
+        });
+        return true;
+
     case 'setAutoReload':
         rulesetConfig.autoReload = request.state && true || false;
         saveRulesetConfig().then(( ) => {

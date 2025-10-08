@@ -58,6 +58,7 @@ export async function getTroubleshootingInfo(siteMode) {
         defaultMode,
         userRules,
         consoleOutput,
+        hasOmnipotence,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
         sendMessage({ what: 'getDefaultConfig' }),
@@ -65,6 +66,7 @@ export async function getTroubleshootingInfo(siteMode) {
         sendMessage({ what: 'getDefaultFilteringMode' }),
         sendMessage({ what: 'getEffectiveUserRules' }),
         sendMessage({ what: 'getConsoleOutput' }),
+        sendMessage({ what: 'hasBroadHostPermissions' }),
     ]);
     const browser = (( ) => {
         const extURL = runtime.getURL('');
@@ -103,6 +105,7 @@ export async function getTroubleshootingInfo(siteMode) {
         version: manifest.version,
         browser,
         filtering,
+        permission: hasOmnipotence ? 'all' : 'ask',
     };
     if ( userRules.length !== 0 ) {
         config['user rules'] = userRules.length;
