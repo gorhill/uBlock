@@ -2197,6 +2197,9 @@ function trustedClickElement(
         if ( typeof steps[i-1] !== 'string' ) { continue; }
         steps.splice(i, 0, clickDelay);
     }
+    if ( steps.length === 1 && delay !== '' ) {
+        steps.unshift(clickDelay);
+    }
     if ( typeof steps.at(-1) !== 'number' ) {
         steps.push(10000);
     }
