@@ -39,19 +39,16 @@ if ( details?.proceduralSelectors?.length ) {
     }
 }
 
-const inserted = new Set();
-
-if ( Array.isArray(details?.plainSelectors) ) {
-    inserted.add(`${details.plainSelectors.join(',\n')}{display:none!important;}`);
-}
-
-self.addEventListener('pageshow', ( ) => {
-    chrome.runtime.sendMessage({
-        what: 'insertCSS',
-        css: Array.from(inserted).join('\n'),
-    }).catch(( ) => {
+if ( details?.plainSelectors?.length ) {
+    const selectors = details.plainSelectors;
+    self.addEventListener('pageshow', ( ) => {
+        chrome.runtime.sendMessage({
+            what: 'insertCSS',
+            css: `${selectors.join(',\n')}{display:none!important;}`,
+        }).catch(( ) => {
+        });
     });
-});
+}
 
 self.customFilters = details;
 
