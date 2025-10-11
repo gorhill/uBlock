@@ -103,11 +103,7 @@ if ( declaratives.length !== 0 ) {
         sheetText.push(ruleText);
     }
     if ( sheetText.length !== 0 ) {
-        chrome.runtime.sendMessage({
-            what: 'insertCSS',
-            css: sheetText.join('\n'),
-        }).catch(( ) => {
-        });
+        self.cssAPI.insert(sheetText.join('\n'));
     }
 }
 

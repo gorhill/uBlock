@@ -188,7 +188,7 @@ const uBOL_processNodes = ( ) => {
     if ( styleSheetTimer !== undefined ) { return; }
     styleSheetTimer = self.requestAnimationFrame(( ) => {
         styleSheetTimer = undefined;
-        uBOL_injectCSS(`${styleSheetSelectors.join(',')}{display:none!important;}`);
+        self.cssAPI.insert(`${styleSheetSelectors.join(',')}{display:none!important;}`);
         styleSheetSelectors.length = 0;
     });
 };
@@ -210,16 +210,6 @@ const uBOL_processChanges = mutations => {
         processTimer = undefined;
         uBOL_processNodes();
     }, 64);
-};
-
-/******************************************************************************/
-
-const uBOL_injectCSS = css => {
-    chrome.runtime.sendMessage({
-        what: 'insertCSS',
-        css,
-    }).catch(( ) => {
-    });
 };
 
 /******************************************************************************/

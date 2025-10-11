@@ -65,11 +65,7 @@ const exceptedSelectors = exceptions.length !== 0
     : selectors;
 if ( exceptedSelectors.length === 0 ) { return; }
 
-chrome.runtime.sendMessage({
-    what: 'insertCSS',
-    css: `${exceptedSelectors.join(',')}{display:none!important;}`,
-}).catch(( ) => {
-});
+self.cssAPI.insert(`${exceptedSelectors.join(',')}{display:none!important;}`);
 
 /******************************************************************************/
 

@@ -29,14 +29,6 @@ if ( self.ProceduralFiltererAPI !== undefined ) {
 
 /******************************************************************************/
 
-const uBOL_injectCSS = css => {
-    chrome.runtime.sendMessage({
-        what: 'insertCSS',
-        css,
-    }).catch(( ) => {
-    });
-};
-
 const nonVisualElements = {
     head: true,
     link: true,
@@ -688,7 +680,7 @@ class ProceduralFilterer {
         if ( styleToken !== undefined ) { return styleToken; }
         styleToken = randomToken();
         this.styleTokenMap.set(style, styleToken);
-        uBOL_injectCSS(`[${styleToken}]\n{${style}}\n`);
+        self.cssAPI.insert(`[${styleToken}]\n{${style}}\n`);
         return styleToken;
     }
 
