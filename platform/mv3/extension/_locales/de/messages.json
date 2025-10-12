@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Sichern und wiederherstellen",
+    "message": "Sicherung",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {

@@ -124,7 +124,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Reportar un problema de filtro",
+    "message": "Reportar un problema del filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {

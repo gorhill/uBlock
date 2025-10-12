@@ -44,7 +44,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Rapporter et problem på dette nettstedet",
+    "message": "Rapporter et problem",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domener med skadelig programvare",
+    "message": "Beskyttelse mot skadelig programvare, sikkerhet",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "Sikkerhetskopi",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Sikkerhetskopier dine egendefinerte regler, eller gjenopprett dine egendefinerte regler fra en fil.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Gjenoppretting vil overskrive dine nåværende egendefinerte regler.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Sikkerhetskopier…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Gjenopprett…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {

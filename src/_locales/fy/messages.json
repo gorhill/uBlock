@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Whitelist",
+    "message": "Fertroude websites",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -268,7 +268,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} fan de {{total}}",
+    "message": "{{count}} fan {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} gebrûk fan {{total}}",
+    "message": "{{used}} fan de {{total}} brûkt",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -808,7 +808,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "type “{{type}}”",
+    "message": "type ‘{{type}}’",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
@@ -816,7 +816,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "fan “{{origin}}”",
+    "message": "fan ‘{{origin}}’",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
