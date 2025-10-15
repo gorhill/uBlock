@@ -197,6 +197,7 @@ const ALL_REALMS = NORMAL_REALM | PRIVATE_REALM;
 let seenRealms = 0b00;
 
 async function forceEnableRulesets(windowId) {
+    await seenRealmsReady;
     if ( seenRealms === ALL_REALMS ) { return; }
     if ( windowId === windows.WINDOW_ID_NONE ) { return; }
     const details = await windows.get(windowId, { windowTypes: [ 'normal' ] });
@@ -205,7 +206,7 @@ async function forceEnableRulesets(windowId) {
     const currentRealm = incognito ? PRIVATE_REALM : NORMAL_REALM;
     if ( (seenRealms & currentRealm) !== 0 ) { return; }
     seenRealms |= currentRealm;
-    webext.storage.session.set({ __seenRealms: seenRealms });
+    webext.storage.session.set({ 'safari.seenRealms': seenRealms });
     const ids = await nativeDNR.getEnabledRulesets();
     if ( ids.length === 0 ) { return; }
     nativeDNR.updateEnabledRulesets({
@@ -216,8 +217,8 @@ async function forceEnableRulesets(windowId) {
 
 windows.onFocusChanged.addListener(forceEnableRulesets);
 
-webext.storage.session.get('__seenRealms').then(bin => {
-    seenRealms |= bin?.__seenRealms ?? 0;
+const seenRealmsReady = webext.storage.session.get('safari.seenRealms').then(bin => {
+    seenRealms |= bin?.['safari.seenRealms'] ?? 0;
 }).catch(( ) => {
 });
 
