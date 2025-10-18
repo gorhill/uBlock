@@ -154,6 +154,17 @@ async function onPermissionsAdded(permissions) {
     }
 }
 
+async function onPermissionsChanged(op, permissions) {
+    await isFullyInitialized;
+    const { pending } = onPermissionsChanged;
+    await Promise.all(pending);
+    const promise = op === 'removed'
+        ? onPermissionsRemoved()
+        : onPermissionsAdded(permissions);
+    pending.push(promise);
+}
+onPermissionsChanged.pending = [];
+
 /******************************************************************************/
 
 function setDeveloperMode(state) {
@@ -698,13 +709,13 @@ runtime.onMessage.addListener((request, sender, callback) => {
 
 browser.permissions.onRemoved.addListener((...args) => {
     isFullyInitialized.then(( ) => {
-        onPermissionsRemoved(...args);
+        onPermissionsChanged('removed', ...args);
     });
 });
 
 browser.permissions.onAdded.addListener((...args) => {
     isFullyInitialized.then(( ) => {
-        onPermissionsAdded(...args);
+        onPermissionsChanged('added', ...args);
     });
 });
 

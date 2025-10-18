@@ -105,10 +105,10 @@ const subtractHostnameIters = (itera, iterb) => {
 
 /******************************************************************************/
 
-const matchFromHostname = hn =>
+export const matchFromHostname = hn =>
     hn === '*' || hn === 'all-urls' ? '<all_urls>' : `*://*.${hn}/*`;
 
-const matchesFromHostnames = hostnames => {
+export const matchesFromHostnames = hostnames => {
     const out = [];
     for ( const hn of hostnames ) {
         out.push(matchFromHostname(hn));
@@ -116,19 +116,24 @@ const matchesFromHostnames = hostnames => {
     return out;
 };
 
-const hostnamesFromMatches = origins => {
+export const hostnameFromMatch = origin => {
+    if ( origin === '<all_urls>' || origin === '*://*/*' ) { return 'all-urls'; }
+    const match = reOriginToHostname.exec(origin);
+    if ( match === null ) { return ''; }
+    return match[1];
+};
+
+export const hostnamesFromMatches = origins => {
     const out = [];
     for ( const origin of origins ) {
-        if ( origin === '<all_urls>' || origin === '*://*/*' ) {
-            out.push('all-urls');
-            continue;
-        }
-        const match = /^\*:\/\/(?:\*\.)?([^/]+)\/\*/.exec(origin);
-        if ( match === null ) { continue; }
-        out.push(match[1]);
+        const hn = hostnameFromMatch(origin);
+        if ( hn === '' ) { continue; }
+        out.push(hn);
     }
     return out;
 };
+
+const reOriginToHostname = /^\*:\/\/(?:\*\.)?([^/]+)\/\*/;
 
 /******************************************************************************/
 
@@ -217,9 +222,6 @@ export {
     isDescendantHostnameOfIter,
     intersectHostnameIters,
     subtractHostnameIters,
-    matchFromHostname,
-    matchesFromHostnames,
-    hostnamesFromMatches,
     hasBroadHostPermissions,
     gotoURL,
     strArrayEq,

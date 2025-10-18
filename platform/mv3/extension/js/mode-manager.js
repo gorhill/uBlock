@@ -365,17 +365,15 @@ export async function syncWithBrowserPermissions() {
     if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
     const filteringModes = await getFilteringModeDetails();
     if ( allowedHostnames.has('all-urls') === false ) {
-        const { optimal, complete } = filteringModes;
-        for ( const hn of optimal ) {
-            if ( allowedHostnames.has(hn) ) { continue; }
-            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
-            optimal.delete(hn);
+        const { none, basic, optimal, complete } = filteringModes;
+        for ( const hn of new Set([ ...optimal, ...complete ]) ) {
+            applyFilteringMode(filteringModes, hn, afterMode);
             modified = true;
         }
-        for ( const hn of complete ) {
-            if ( allowedHostnames.has(hn) ) { continue; }
-            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
-            complete.delete(hn);
+        for ( const hn of allowedHostnames ) {
+            if ( optimal.has(hn) || complete.has(hn) ) { continue; }
+            if ( basic.has(hn) || none.has(hn) ) { continue; }
+            applyFilteringMode(filteringModes, hn, MODE_OPTIMAL);
             modified = true;
         }
         if ( modified ) {
