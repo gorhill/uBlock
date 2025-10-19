@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Filtre proprii",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Dezvoltă",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "Pe acest website",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Importă / Exportă",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Lipește aici filtre cosmetice specifice",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -132,7 +132,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "Informații depanare",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -256,11 +256,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Mod dezvoltator",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "Permite accesul la funcții adecvate pentru utilizatorii tehnici.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
@@ -268,11 +268,11 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Copiați setările personalizate într-un fișier sau restaurați setările personalizate dintr-un fișier.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Restaurarea va suprascrie toate setările personalizate actuale.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -316,63 +316,63 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "Elimina unui element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "Ieșire din modul zapper element",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "Creați un filtru personalizat",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "Șterge un filtru personalizat",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Vezi:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Detalii privind modul de filtrare",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Reguli DNR personalizate",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "Regulile DNR privind …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "Set de reguli dinamice",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "Set de reguli pentru sesiune",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "Salvați",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Reveniţi",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Adaugă",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "Importați și adăugați…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Exportă…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
@@ -380,31 +380,31 @@
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Restaurați…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "Nu adăugați conținut din surse nesigure",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Număr de reguli înregistrate: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Mutați cursorul pentru a selecta cea mai bună potrivire",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Alege",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Previzualizare",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Creează",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {

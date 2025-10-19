@@ -848,7 +848,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "در هر سربرگ حداقل {{input}} ورودی نگه دار",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -1192,7 +1192,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "صفحه مسدود شده می‌خواد به سایت دیگری شما را هدایت کند. در صورت قبول کردن، شما مستقیم به {{url}} وارد خواهید شد",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
@@ -1200,7 +1200,7 @@
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "مخرب",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {

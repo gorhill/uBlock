@@ -132,7 +132,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "اطلاعات مشکل‌گشایی",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -144,7 +144,7 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "آدرس صفحه‌ی وب:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
@@ -152,15 +152,15 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- یک گزینه را انتخاب کنید --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "تبلیغات یا باقی‌مانده‌هایی از آن نشان می‌دهد",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "دارای لایه‌های اضافی یا مشکلات مزاحم دیگر",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -168,7 +168,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "دارای ایراد مربوط به حریم خصوصی است",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -176,11 +176,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "تب یا پنجره‌ی ناخواسته باز می‌کند",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "منجر به بدافزار یا فیشینگ می‌شود",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
