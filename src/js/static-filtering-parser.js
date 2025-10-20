@@ -1371,7 +1371,9 @@ export class AstFilterParser {
                 realBad = hasValue;
                 if ( realBad ) { break; }
                 requestTypeCount += 1;
-                unredirectableTypeCount += 1;
+                if ( (flags & NODE_FLAG_IS_NEGATED) === 0 ) {
+                    unredirectableTypeCount += 1;
+                }
                 break;
             case NODE_TYPE_NET_OPTION_NAME_POPUNDER:
             case NODE_TYPE_NET_OPTION_NAME_POPUP:
