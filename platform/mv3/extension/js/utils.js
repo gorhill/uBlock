@@ -118,7 +118,7 @@ export const matchesFromHostnames = hostnames => {
 
 export const hostnameFromMatch = origin => {
     if ( origin === '<all_urls>' || origin === '*://*/*' ) { return 'all-urls'; }
-    const match = reOriginToHostname.exec(origin);
+    const match = /^\*:\/\/(?:\*\.)?([^/]+)\/\*/.exec(origin);
     if ( match === null ) { return ''; }
     return match[1];
 };
@@ -132,8 +132,6 @@ export const hostnamesFromMatches = origins => {
     }
     return out;
 };
-
-const reOriginToHostname = /^\*:\/\/(?:\*\.)?([^/]+)\/\*/;
 
 /******************************************************************************/
 
