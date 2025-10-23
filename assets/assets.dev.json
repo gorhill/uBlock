@@ -616,8 +616,8 @@
 		"title": "🇪🇪ee: Eesti saitidele kohandatud filter",
 		"tags": "ads estonian",
 		"lang": "et",
-		"contentURL": "https://adblock.ee/list.txt",
-		"supportURL": "https://adblock.ee"
+		"contentURL": "https://ubo-et.lepik.io/list.txt",
+		"supportURL": "https://github.com/sander85/uBO-et"
 	},
 	"FIN-0": {
 		"content": "filters",
