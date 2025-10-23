@@ -1,3 +1,10 @@
+- [Fix regex-matching in `JSONPath`](https://github.com/gorhill/uBlock/commit/8491e9c476)
+- [Ignore negated request types when validating `redirect` option](https://github.com/gorhill/uBlock/commit/50e898b847)
+
+----------
+
+# 1.67.0
+
 - [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/a43d1d8c42)
 - [Fix `editInboundObjectFn` utility scriptlet](https://github.com/gorhill/uBlock/commit/d376adaae8)
 - [Improve `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/52bc354bce)
