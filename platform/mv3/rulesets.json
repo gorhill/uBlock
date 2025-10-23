@@ -268,9 +268,9 @@
     "name": "🇪🇪ee: Eesti saitidele kohandatud filter",
     "enabled": false,
     "urls": [
-      "https://ubol-et.adblock.ee/list.txt"
+      "https://ubo-et.lepik.io/list.txt"
     ],
-    "homeURL": "https://github.com/sander85/uBOL-et"
+    "homeURL": "https://github.com/sander85/uBO-et"
   },
   {
     "id": "fin-0",
