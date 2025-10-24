@@ -15,6 +15,7 @@
  * - Corrected typo in `UniversalAdIdInfo.getAdIdValue()` method name
  * - Corrected dispatch of LOAD event when preloading is enabled
  * - Corrected dispatch of CONTENT_PAUSE/RESUME_REQUESTED events
+ * - Added missing `AdsRequest.omidAccessModeRules` property
  * 
  * Related issue:
  * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
@@ -491,6 +492,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   class AdsRenderingSettings {}
 
   class AdsRequest {
+    constructor() {
+      this.omidAccessModeRules = {};
+    }
     setAdWillAutoPlay() {}
     setAdWillPlayMuted() {}
     setContinuousPlayback() {}
