@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Brīdinājums! Veiktās izmaiņas nav saglabātas",
+    "message": "Uzmanību! Ir nesaglabātas izmaiņas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {

@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Bộ lọc tự tạo",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Nhập / Xuất",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Dán vào đây các bộ lọc cụ thể",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -272,7 +272,7 @@
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Khôi phục sẽ ghi đè lên những tùy chọn hiện tại của bạn.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -364,7 +364,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Thêm",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一个不需要权限的内容屏蔽工具。安装即可屏蔽广告、跟踪器、挖矿脚本等网页内容。",
+    "message": "一款高效的内容屏蔽工具。安装即可屏蔽广告、跟踪器、挖矿脚本等网页内容。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -140,7 +140,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "找到相似报告",
+    "message": "在 GitHub 上寻找相似报告",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -280,7 +280,7 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "被拦截的页面",
+    "message": "页面已被拦截",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
@@ -308,7 +308,7 @@
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "不要再警告我有关此网站",
+    "message": "不再针对此网站作出警告",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
@@ -320,19 +320,19 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "退出临时元素移除模式",
+    "message": "退出临时移除元素模式",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "创建自定义过滤器",
+    "message": "创建自定义过滤规则",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "移除自定义过滤器",
+    "message": "移除自定义过滤规则",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "视图:",
+    "message": "查看：",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {

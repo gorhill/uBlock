@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "Користувацькі фільтри",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Імпорт / Експорт",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Вставте сюди конкретні косметичні фільтри, які потрібно додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "Резервне копіювання",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Створіть резервну копію власних налаштувань у файлі або відновіть власні налаштування з файлу.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Відновлення призведе до перезапису всіх ваших поточних налаштувань.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -364,7 +364,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "Додати",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "Створити…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Відновити…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
