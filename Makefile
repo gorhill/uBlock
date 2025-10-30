@@ -117,7 +117,8 @@ publish-edge:
 		ghasset=chromium \
 		datebasedmajor=1 \
 		storeid=odfafepnkmbhccpbejgmiehpchacaeak \
-		productid=$(shell secret-tool lookup token ubo_edge_id)
+		productid=$(shell secret-tool lookup token ubo_edge_id) \
+		notes="See release notes at https://github.com/gorhill/uBlock/releases"
 
 # Usage: make publish-firefox version=?
 publish-firefox:
