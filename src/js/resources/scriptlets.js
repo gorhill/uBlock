@@ -1589,6 +1589,7 @@ builtinScriptlets.push({
     name: 'm3u-prune.js',
     fn: m3uPrune,
     dependencies: [
+        'proxy-apply.fn',
         'safe-self.fn',
     ],
 });
@@ -1704,28 +1705,30 @@ function m3uPrune(
         if ( arg instanceof Request ) { return arg.url; }
         return String(arg);
     };
-    const realFetch = self.fetch;
-    self.fetch = new Proxy(self.fetch, {
-        apply: function(target, thisArg, args) {
-            if ( reUrl.test(urlFromArg(args[0])) === false ) {
-                return Reflect.apply(target, thisArg, args);
-            }
-            return realFetch(...args).then(realResponse =>
-                realResponse.text().then(text => {
-                    const response = new Response(pruner(text), {
-                        status: realResponse.status,
-                        statusText: realResponse.statusText,
-                        headers: realResponse.headers,
-                    });
-                    if ( toLog.length !== 0 ) {
-                        toLog.unshift(logPrefix);
-                        safe.uboLog(toLog.join('\n'));
-                    }
-                    return response;
-                })
-            );
+    proxyApplyFn('fetch', async function fetch(context) {
+        const args = context.callArgs;
+        const fetchPromise = context.reflect();
+        if ( reUrl.test(urlFromArg(args[0])) === false ) { return fetchPromise; }
+        const responseBefore = await fetchPromise;
+        const responseClone = responseBefore.clone();
+        const textBefore = await responseClone.text();
+        const textAfter = pruner(textBefore);
+        if ( textAfter === textBefore ) { return responseBefore; }
+        const responseAfter = new Response(textAfter, {
+            status: responseBefore.status,
+            statusText: responseBefore.statusText,
+            headers: responseBefore.headers,
+        });
+        Object.defineProperties(responseAfter, {
+            url: { value: responseBefore.url },
+            type: { value: responseBefore.type },
+        });
+        if ( toLog.length !== 0 ) {
+            toLog.unshift(logPrefix);
+            safe.uboLog(toLog.join('\n'));
         }
-    });
+        return responseAfter;
+    })
     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open, {
         apply: async (target, thisArg, args) => {
             if ( reUrl.test(urlFromArg(args[1])) === false ) {
