@@ -1,3 +1,4 @@
+- [Improve `m3u-prune` scriptlet](https://github.com/gorhill/uBlock/commit/53d60ac36c)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/60e15cb6e1)
 - [Fix regex-matching in `JSONPath`](https://github.com/gorhill/uBlock/commit/8491e9c476)
 - [Ignore negated request types when validating `redirect` option](https://github.com/gorhill/uBlock/commit/50e898b847)
