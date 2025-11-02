@@ -190,4 +190,7 @@ export default new Map([
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
     } ],
+    [ 'sensors-analytics.js', {
+        data: 'text',
+    } ],
 ]);
