@@ -228,7 +228,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Filtreleme yapılmayacak alan alarının listesi",
+    "message": "Filtreleme yapılmayacak web sitelerinin listesi.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {

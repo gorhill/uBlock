@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Widget sosial",
+    "message": "Gawai sosial",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Mengarah ke perangkat lunak jahat, phishing",
+    "message": "Mengarah ke perangkat lunak jahat, pengelabuan",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {

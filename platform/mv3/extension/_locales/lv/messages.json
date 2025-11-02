@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Bezatļauju satura aizturētājs. Aiztur reklāmas, izsekotājus, kriptoracējus un daudz ko citu uzreiz pēc uzstādīšanas.",
+    "message": "Iedarbīgs satura aizturētājs. Aiztur reklāmas, izsekotājus, kriptoracējus un vēl uzreiz pēc uzstādīšanas.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
