@@ -193,6 +193,7 @@ function editInboundObjectFn(
     const argPos = parseInt(argPosRaw, 10);
     if ( isNaN(argPos) ) { return; }
     const getArgPos = args => {
+        if ( Array.isArray(args) === false ) { return; }
         if ( argPos >= 0 ) {
             if ( args.length <= argPos ) { return; }
             return argPos;
