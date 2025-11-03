@@ -23,11 +23,17 @@ label + legend {
 body[data-forbid~="dashboard"] #dashboard-nav [data-pane="settings"],
 body[data-forbid~="dashboard"] section[data-pane="settings"],
 body[data-forbid~="dashboard"] #dashboard-nav [data-pane="rulesets"],
-body[data-forbid~="dashboard"] section[data-pane="rulesets"] {
+body[data-forbid~="dashboard"] section[data-pane="rulesets"],
+body[data-forbid~="dashboard"] #dashboard-nav [data-pane="filters"],
+body[data-forbid~="dashboard"] section[data-pane="filters"] {
     display: none;
     }
 body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[data-i18n="defaultFilteringModeSectionLabel"]),
 body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[data-i18n="filteringMode0Name"]) {
+    display: none;
+    }
+body[data-forbid~="picker"] #dashboard-nav [data-pane="filters"],
+body[data-forbid~="picker"] section[data-pane="filters"] {
     display: none;
     }
 body[data-forbid~="develop"] #developerMode {
