@@ -19,6 +19,26 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+// https://github.com/uBlockOrigin/uBOL-home/issues/539
+function patchRuleForIssue539(rule) {
+    const { condition } = rule;
+    if ( Array.isArray(condition.requestDomains) === false ) { return; }
+    if ( Array.isArray(condition.initiatorDomains) ) { return; }
+    if ( Array.isArray(condition.excludedRequestDomains) ) {
+        if ( Array.isArray(condition.excludedInitiatorDomains) ) { return; }
+    }
+    if ( Array.isArray(condition.resourceTypes) === false ) { return; }
+    if ( condition.resourceTypes.length !== 1 ) { return; }
+    if ( condition.resourceTypes.includes('main_frame') === false ) { return; }
+    if ( condition.regexFilter === undefined ) { return; }
+    condition.initiatorDomains = condition.requestDomains;
+    delete condition.requestDomains;
+    if ( Array.isArray(condition.excludedRequestDomains) ) {
+        condition.excludedInitiatorDomains = condition.excludedRequestDomains;
+        delete condition.excludedRequestDomains;
+    }
+}
+
 function patchRule(rule, out) {
     const copy = structuredClone(rule);
     const condition = copy.condition;
@@ -40,6 +60,7 @@ function patchRule(rule, out) {
         condition.excludedDomains = condition.excludedInitiatorDomains;
         delete condition.excludedInitiatorDomains;
     }
+    patchRuleForIssue539(copy);
     // https://github.com/uBlockOrigin/uBOL-home/issues/434
     let { urlFilter } = condition;
     if ( urlFilter?.endsWith('^') ) {
