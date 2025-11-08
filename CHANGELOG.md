@@ -1,3 +1,4 @@
+- [Fix regression in `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/2e509d42fc)
 - [Add web-accessible resource for sensors analytics](https://github.com/gorhill/uBlock/commit/cd0f5be12c)
 - [Fix custom prefixes unduly assigning trust to external lists](https://github.com/gorhill/uBlock/commit/b5f74456a4)
 - [Improve `m3u-prune` scriptlet](https://github.com/gorhill/uBlock/commit/53d60ac36c)
