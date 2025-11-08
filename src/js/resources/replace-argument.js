@@ -72,6 +72,7 @@ export function trustedReplaceArgument(
         const parsed = parseReplaceFn(argraw.slice(5));
         if ( parsed === undefined ) { return; }
         replacer = arg => `${arg}`.replace(replacer.re, replacer.replacement);
+        Object.assign(replacer, parsed);
     } else if ( argraw.startsWith('add:') ) {
         const delta = parseFloat(argraw.slice(4));
         if ( isNaN(delta) ) { return; }
