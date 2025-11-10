@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "커스텀 필터",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "이 웹사이트에서는",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -88,7 +88,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "가져오기 / 내보내기",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
@@ -264,15 +264,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "백업",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "사용자 지정 설정을 파일에 백업하거나 파일에서 사용자 지정 설정을 복원합니다.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "복원 시 현재 설정이 모두 덮어씌워집니다.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -324,11 +324,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "커스텀 필터 생성",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "커스텀 필터 삭제",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -364,7 +364,7 @@
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "추가",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
@@ -376,11 +376,11 @@
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "백업…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "복원…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
@@ -392,23 +392,23 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "슬라이더를 움직여 가장 적합한 항목을 선택하세요",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "선택",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "미리보기",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "생성",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "아래의 필터를 선택하면 웹페이지의 일치하는 요소가 강조 표시됩니다. 필터를 삭제하려면 휴지통을 클릭합니다.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
