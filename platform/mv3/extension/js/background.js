@@ -54,6 +54,7 @@ import {
     broadcastMessage,
     gotoURL,
     hasBroadHostPermissions,
+    hostnameFromMatch,
     hostnamesFromMatches,
 } from './utils.js';
 
@@ -116,42 +117,75 @@ function getCurrentVersion() {
 
 /******************************************************************************/
 
-async function onPermissionsRemoved() {
-    const modified = await syncWithBrowserPermissions();
-    if ( modified === false ) { return false; }
-    registerInjectables();
-    return true;
+async function reloadTab(tabId, url = '') {
+    return new Promise(resolve => {
+        self.setTimeout(( ) => {
+            if ( url !== '' ) {
+                browser.tabs.update(tabId, { url });
+            } else {
+                browser.tabs.reload(tabId);
+            }
+            resolve();
+        }, 437);
+    });
 }
 
-// https://github.com/uBlockOrigin/uBOL-home/issues/280
-async function onPermissionsAdded(permissions) {
-    const details = pendingPermissionRequest;
-    pendingPermissionRequest = undefined;
-    if ( details === undefined ) {
-        const modified = await syncWithBrowserPermissions();
-        if ( modified === false ) { return; }
-        return Promise.all([
-            updateSessionRules(),
-            registerInjectables(),
-        ]);
-    }
+// When a new host permission is granted through the popup panel
+async function onPermissionGrantedThruExtension(details, origins) {
     const defaultMode = await getDefaultFilteringMode();
     if ( defaultMode >= MODE_OPTIMAL ) { return; }
-    if ( Array.isArray(permissions.origins) === false ) { return; }
-    const hostnames = hostnamesFromMatches(permissions.origins);
+    if ( Array.isArray(origins) === false ) { return; }
+    const hostnames = hostnamesFromMatches(origins);
     if ( hostnames.includes(details.hostname) === false ) { return; }
     const beforeLevel = await getFilteringMode(details.hostname);
     if ( beforeLevel === details.afterLevel ) { return; }
     const afterLevel = await setFilteringMode(details.hostname, details.afterLevel);
     if ( afterLevel !== details.afterLevel ) { return; }
     await registerInjectables();
-    if ( rulesetConfig.autoReload ) {
-        self.setTimeout(( ) => {
-            browser.tabs.update(details.tabId, {
-                url: details.url,
-            });
-        }, 437);
+    if ( rulesetConfig.autoReload !== true ) { return; }
+    await reloadTab(details.tabId, details.url);
+}
+
+// When a new host permission is granted through the browser
+async function onPermissionGrantedThruBrowser(origins) {
+    const modified = await syncWithBrowserPermissions();
+    if ( modified === false ) { return; }
+    await Promise.all([ updateSessionRules(), registerInjectables() ]);
+    if ( origins.length !== 1 ) { return; }
+    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+    const tabId = tabs?.[0]?.id;
+    if ( typeof tabId !== 'number' || tabId === -1 ) { return; }
+    const results = await browser.scripting.executeScript({
+        target: { tabId, frameIds: [ 0 ] },
+        func: ( ) => document.location.hostname,
+    }).catch(reason => {
+        ubolErr(`executeScript/${reason}`);
+    });
+    const tabHostname = results?.[0]?.result;
+    if ( typeof tabHostname !== 'string' ) { return; }
+    const hostname = hostnameFromMatch(origins[0]);
+    if ( tabHostname.endsWith(hostname) === false ) { return; }
+    const pos = tabHostname.length - hostname.length;
+    if ( pos !== 0 && tabHostname.charAt(pos-1) !== '.' ) { return; }
+    await reloadTab(tabId);
+}
+
+// https://github.com/uBlockOrigin/uBOL-home/issues/280
+async function onPermissionsAdded(permissions) {
+    const details = pendingPermissionRequest;
+    pendingPermissionRequest = undefined;
+    const { origins = [] } = permissions;
+    if ( details !== undefined ) {
+        return onPermissionGrantedThruExtension(details, origins);
     }
+    onPermissionGrantedThruBrowser(origins);
+}
+
+async function onPermissionsRemoved() {
+    const modified = await syncWithBrowserPermissions();
+    if ( modified === false ) { return false; }
+    registerInjectables();
+    return true;
 }
 
 async function onPermissionsChanged(op, permissions) {
