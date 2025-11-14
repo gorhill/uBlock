@@ -150,7 +150,8 @@ async function onPermissionGrantedThruExtension(details, origins) {
 async function onPermissionGrantedThruBrowser(origins) {
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return; }
-    await Promise.all([ updateSessionRules(), registerInjectables() ]);
+    await registerInjectables();
+    if ( rulesetConfig.autoReload !== true ) { return; }
     if ( origins.length !== 1 ) { return; }
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
     const tabId = tabs?.[0]?.id;
@@ -175,10 +176,9 @@ async function onPermissionsAdded(permissions) {
     const details = pendingPermissionRequest;
     pendingPermissionRequest = undefined;
     const { origins = [] } = permissions;
-    if ( details !== undefined ) {
-        return onPermissionGrantedThruExtension(details, origins);
-    }
-    onPermissionGrantedThruBrowser(origins);
+    return details !== undefined
+        ? onPermissionGrantedThruExtension(details, origins)
+        : onPermissionGrantedThruBrowser(origins);
 }
 
 async function onPermissionsRemoved() {
