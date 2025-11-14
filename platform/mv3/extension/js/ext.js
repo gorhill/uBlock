@@ -33,6 +33,8 @@ export const webextFlavor = (( ) => {
     return extURL.startsWith('moz-extension:') ? 'firefox' : 'chromium';
 })();
 
+const notAnObject = a => typeof a !== 'object' || a === null;
+
 /******************************************************************************/
 
 // The extension's service worker can be evicted at any time, so when we
@@ -47,72 +49,64 @@ export function sendMessage(msg) {
 /******************************************************************************/
 
 export async function localRead(key) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.local instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.local) ) { return; }
     try {
         const bin = await browser.storage.local.get(key);
-        if ( bin instanceof Object === false ) { return; }
+        if ( notAnObject(bin) ) { return; }
         return bin[key] ?? undefined;
     } catch {
     }
 }
 
 export async function localWrite(key, value) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.local instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.local) ) { return; }
     return browser.storage.local.set({ [key]: value });
 }
 
 export async function localRemove(key) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.local instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.local) ) { return; }
     return browser.storage.local.remove(key);
 }
 
 export async function localKeys() {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.local instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.local) ) { return; }
     if ( browser.storage.local.getKeys ) {
         return browser.storage.local.getKeys();
     }
     const bin = await browser.storage.local.get(null);
-    if ( bin instanceof Object === false ) { return; }
+    if ( notAnObject(bin) ) { return; }
     return Object.keys(bin);
 }
 
 /******************************************************************************/
 
 export async function sessionRead(key) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.session instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.session) ) { return; }
     try {
         const bin = await browser.storage.session.get(key);
-        if ( bin instanceof Object === false ) { return; }
+        if ( notAnObject(bin) ) { return; }
         return bin[key] ?? undefined;
     } catch {
     }
 }
 
 export async function sessionWrite(key, value) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.session instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.session) ) { return; }
     return browser.storage.session.set({ [key]: value });
 }
 
 export async function sessionRemove(key) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.session instanceof Object === false ) { return; }
+    if ( notAnObject(browser?.storage?.session) ) { return; }
     return browser.storage.session.remove(key);
 }
 
 /******************************************************************************/
 
 export async function adminRead(key) {
-    if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.managed instanceof Object === false ) { return; }
+    if ( browser?.storage?.managed instanceof Object === false ) { return; }
     try {
         const bin = await browser.storage.managed.get(key);
-        if ( bin instanceof Object === false ) { return; }
+        if ( notAnObject(bin) ) { return; }
         return bin[key] ?? undefined;
     } catch {
     }

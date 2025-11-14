@@ -38,6 +38,7 @@
 #ubol-picker textarea {
     border: 0;
     box-sizing: border-box;
+    font-size: var(--monospace-size);
     min-height: 5em;
     resize: none;
     width: 100%;
@@ -49,7 +50,7 @@
     color: var(--ink-2);
     display: flex;
     flex-direction: column;
-    font-size: small;
+    font-size: var(--monospace-size);
     gap: 0.25em;
 }
 #ubol-picker .resultsetWidgets > span:first-of-type {
@@ -75,7 +76,7 @@
 
 #ubol-picker #candidateFilters {
     font-family: monospace;
-    font-size: small;
+    font-size: var(--monospace-size);
     max-height: min(20em, 30vh);
     min-height: 6em;
     overflow-y: auto;
@@ -111,7 +112,7 @@
     color: var(--ink-2);
     column-gap: 0;
     display: grid;
-    font-size: small;
+    font-size: var(--font-size-smaller);
     grid-template: auto / 1fr 1fr;
     justify-items: stretch;
     user-select: none;
