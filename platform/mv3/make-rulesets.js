@@ -118,7 +118,7 @@ const logProgress = text => {
 /******************************************************************************/
 
 async function fetchText(url, cacheDir) {
-    logProgress(`Reading locally cached ${url}`);
+    logProgress(`Reading locally cached ${path.basename(url)}`);
     const fname = url
         .replace(/^https?:\/\//, '')
         .replace(/\//g, '_');(url);
@@ -130,7 +130,7 @@ async function fetchText(url, cacheDir) {
         log(`\tFetched local ${url}`);
         return { url, content };
     }
-    logProgress(`Fetching remote ${url}`);
+    logProgress(`Fetching remote ${path.basename(url)}`);
     log(`\tFetching remote ${url}`);
     const response = await fetch(url).catch(( ) => { });
     if ( response === undefined ) {
@@ -152,7 +152,7 @@ async function fetchText(url, cacheDir) {
 async function fallbackFetchText(url) {
     const match = /^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/master\/([^?]+)/.exec(url);
     if ( match === null ) { return; }
-    logProgress(`\tGitHub CLI-fetching remote ${url}`);
+    logProgress(`\tGitHub CLI-fetching remote ${path.basename(url)}`);
     // https://docs.github.com/en/rest/repos/contents
     const content = execSync(`gh api \
         -H "Accept: application/vnd.github.raw+json" \
