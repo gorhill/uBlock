@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "여기에 추가하려는 표면 필터 붙여넣기",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
