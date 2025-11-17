@@ -20,7 +20,11 @@
 
 */
 
-import { generateContentFn } from './utils.js';
+import {
+    generateContentFn,
+    matchObjectPropertiesFn,
+    parsePropertiesToMatchFn,
+} from './utils.js';
 import { proxyApplyFn } from './proxy-apply.js';
 import { registerScriptlet } from './base.js';
 import { safeSelf } from './safe-self.js';
@@ -43,20 +47,7 @@ function preventFetchFn(
         responseType
     );
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
-    const needles = [];
-    for ( const condition of safe.String_split.call(propsToMatch, /\s+/) ) {
-        if ( condition === '' ) { continue; }
-        const pos = condition.indexOf(':');
-        let key, value;
-        if ( pos !== -1 ) {
-            key = condition.slice(0, pos);
-            value = condition.slice(pos + 1);
-        } else {
-            key = 'url';
-            value = condition;
-        }
-        needles.push({ key, pattern: safe.initPattern(value, { canNegate: true }) });
-    }
+    const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
     const validResponseProps = {
         ok: [ false, true ],
         statusText: [ '', 'Not Found' ],
@@ -86,41 +77,38 @@ function preventFetchFn(
     }
     proxyApplyFn('fetch', function fetch(context) {
         const { callArgs } = context;
-        const details = callArgs[0] instanceof self.Request
-            ? callArgs[0]
-            : Object.assign({ url: callArgs[0] }, callArgs[1]);
-        let proceed = true;
-        try {
-            const props = new Map();
-            for ( const prop in details ) {
-                let v = details[prop];
-                if ( typeof v !== 'string' ) {
-                    try { v = safe.JSON_stringify(v); }
-                    catch { }
+        const details = (( ) => {
+            const fetchProps = (src, out) => {
+                if ( typeof src !== 'object' || src === null ) { return; }
+                const props = [
+                    'body', 'cache', 'credentials', 'duplex', 'headers',
+                    'integrity', 'keepalive', 'method', 'mode', 'priority',
+                    'redirect', 'referrer', 'referrerPolicy', 'signal',
+                ];
+                for ( const prop of props ) {
+                    if ( src[prop] === undefined ) { continue; }
+                    out[prop] = src[prop];
                 }
-                if ( typeof v !== 'string' ) { continue; }
-                props.set(prop, v);
+            };
+            const out = {};
+            if ( callArgs[0] instanceof self.Request ) {
+                out.url = `${callArgs[0].url}`;
+                fetchProps(callArgs[0], out);
+            } else {
+                out.url = `${callArgs[0]}`;
             }
-            if ( safe.logLevel > 1 || propsToMatch === '' && responseBody === '' ) {
-                const out = Array.from(props).map(a => `${a[0]}:${a[1]}`);
-                safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
-            }
-            if ( propsToMatch === '' && responseBody === '' ) {
-                return context.reflect();
-            }
-            proceed = needles.length === 0;
-            for ( const { key, pattern } of needles ) {
-                if (
-                    pattern.expect && props.has(key) === false ||
-                    safe.testPattern(pattern, props.get(key)) === false
-                ) {
-                    proceed = true;
-                    break;
-                }
-            }
-        } catch {
+            fetchProps(callArgs[1], out);
+            return out;
+        })();
+        if ( safe.logLevel > 1 || propsToMatch === '' && responseBody === '' ) {
+            const out = Array.from(details).map(a => `${a[0]}:${a[1]}`);
+            safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
         }
-        if ( proceed ) {
+        if ( propsToMatch === '' && responseBody === '' ) {
+            return context.reflect();
+        }
+        const matched = matchObjectPropertiesFn(propNeedles, details);
+        if ( matched === undefined ) {
             return context.reflect();
         }
         return Promise.resolve(generateContentFn(trusted, responseBody)).then(text => {
@@ -148,6 +136,8 @@ registerScriptlet(preventFetchFn, {
     name: 'prevent-fetch.fn',
     dependencies: [
         generateContentFn,
+        matchObjectPropertiesFn,
+        parsePropertiesToMatchFn,
         proxyApplyFn,
         safeSelf,
     ],
