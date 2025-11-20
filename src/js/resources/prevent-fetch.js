@@ -108,7 +108,7 @@ function preventFetchFn(
             return context.reflect();
         }
         const matched = matchObjectPropertiesFn(propNeedles, details);
-        if ( matched === undefined ) {
+        if ( matched === undefined || matched.length === 0 ) {
             return context.reflect();
         }
         return Promise.resolve(generateContentFn(trusted, responseBody)).then(text => {
