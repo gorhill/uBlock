@@ -21,7 +21,9 @@
 
 function patchRule(rule, out) {
     const { condition } = rule;
-    if ( Array.isArray(condition.responseHeaders) ) { return; }
+    if ( Array.isArray(condition.responseHeaders) ) {
+        if ( condition.regexFilter === undefined ) { return; }
+    }
     out.push(rule);
     return rule;
 }
