@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Bảo mật, bảo vệ khỏi phần mềm độc hại",
+    "message": "Bảo vệ phần mềm độc hại, bảo mật",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Một URL cho mỗi dòng. URL không hợp lệ sẽ âm thầm bị bỏ qua.",
+    "message": "Một URL mỗi dòng. URL không hợp lệ sẽ âm thầm bị bỏ qua.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -1068,7 +1068,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Sao lưu vào tập tin…",
+    "message": "Sao lưu vào tệp…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1080,7 +1080,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Đặt lại cấu hình mặc định…",
+    "message": "Đặt lại cài đặt mặc định…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {

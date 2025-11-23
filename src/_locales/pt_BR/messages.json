@@ -1080,7 +1080,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Redefinir pras configurações padrão…",
+    "message": "Reconfigurar tudo para o padrão…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1092,7 +1092,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nRedefinir o uBlock₀ para as configurações de fábrica?",
+    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nReconfigurar o uBlock₀ para as configurações de fábrica?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
