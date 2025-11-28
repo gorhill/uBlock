@@ -168,19 +168,20 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
 
 async function updateDynamicRules() {
     const currentRules = await dnr.getDynamicRules();
-    const addRules = [];
-    const removeRuleIds = [];
 
     // Remove potentially left-over rules from previous version
+    const removeRuleIds = [];
     for ( const rule of currentRules ) {
         if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         removeRuleIds.push(rule.id);
         rule.id = 0;
     }
 
+    const addRules = [];
     await updateRegexRules(currentRules, addRules, removeRuleIds);
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
+    const dynamicRegexCountBefore = dynamicRegexCount;
     dynamicRegexCount = 0;
     let ruleId = 1;
     for ( const rule of addRules ) {
@@ -189,6 +190,11 @@ async function updateDynamicRules() {
     }
     if ( dynamicRegexCount !== 0 ) {
         ubolLog(`Using ${dynamicRegexCount}/${dnr.MAX_NUMBER_OF_REGEX_RULES} dynamic regex-based DNR rules`);
+    }
+    // If we increase the number of dynamic regex rules, reset session rules to
+    // reduce risk of hitting maximum regex count
+    if ( dynamicRegexCount > dynamicRegexCountBefore ) {
+        await clearSessionRules();
     }
 
     const response = {};
@@ -339,8 +345,11 @@ async function updateSessionRules() {
     let regexCount = dynamicRegexCount;
     let ruleId = 1;
     for ( const rule of addRulesUnfiltered ) {
-        if ( rule?.condition.regexFilter ) { regexCount += 1; }
-        rule.id = regexCount < maxRegexCount ? ruleId++ : 0;
+        rule.id = ruleId++;
+        if ( Boolean(rule?.condition.regexFilter) === false ) { continue; }
+        regexCount += 1;
+        if ( regexCount < maxRegexCount ) { continue; }
+        rule.id = 0;
     }
     sessionRegexCount = regexCount - dynamicRegexCount;
     const addRules = addRulesUnfiltered.filter(a => a.id !== 0);
@@ -365,6 +374,13 @@ async function updateSessionRules() {
         response.error = `${reason}`;
     }
     return response;
+}
+
+async function clearSessionRules() {
+    const currentRules = await dnr.getSessionRules();
+    if ( currentRules.length === 0 ) { return; }
+    const removeRuleIds = currentRules.map(a => a.id);
+    return dnr.updateSessionRules({ removeRuleIds });
 }
 
 /******************************************************************************/
