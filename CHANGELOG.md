@@ -1,3 +1,10 @@
+- [Add `prevent-dialog` scriptlet](https://github.com/gorhill/uBlock/commit/fd12d01928)
+- [[firefox] Change minimum required version to 128](https://github.com/gorhill/uBlock/commit/015ddcde29)
+
+----------
+
+# 1.68.0
+
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/b46572e938)
 - [Fix regression in `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/2e509d42fc)
 - [Add web-accessible resource for sensors analytics](https://github.com/gorhill/uBlock/commit/cd0f5be12c)
