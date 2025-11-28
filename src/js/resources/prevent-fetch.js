@@ -75,33 +75,34 @@ function preventFetchFn(
             responseProps.type = { value: responseType };
         }
     }
+    const fetchProps = (src, out) => {
+        if ( typeof src !== 'object' || src === null ) { return; }
+        const props = [
+            'body', 'cache', 'credentials', 'duplex', 'headers',
+            'integrity', 'keepalive', 'method', 'mode', 'priority',
+            'redirect', 'referrer', 'referrerPolicy', 'signal',
+        ];
+        for ( const prop of props ) {
+            if ( src[prop] === undefined ) { continue; }
+            out[prop] = src[prop];
+        }
+    };
+    const fetchDetails = args => {
+        const out = {};
+        if ( args[0] instanceof self.Request ) {
+            out.url = `${args[0].url}`;
+            fetchProps(args[0], out);
+        } else {
+            out.url = `${args[0]}`;
+        }
+        fetchProps(args[1], out);
+        return out;
+    };
     proxyApplyFn('fetch', function fetch(context) {
         const { callArgs } = context;
-        const details = (( ) => {
-            const fetchProps = (src, out) => {
-                if ( typeof src !== 'object' || src === null ) { return; }
-                const props = [
-                    'body', 'cache', 'credentials', 'duplex', 'headers',
-                    'integrity', 'keepalive', 'method', 'mode', 'priority',
-                    'redirect', 'referrer', 'referrerPolicy', 'signal',
-                ];
-                for ( const prop of props ) {
-                    if ( src[prop] === undefined ) { continue; }
-                    out[prop] = src[prop];
-                }
-            };
-            const out = {};
-            if ( callArgs[0] instanceof self.Request ) {
-                out.url = `${callArgs[0].url}`;
-                fetchProps(callArgs[0], out);
-            } else {
-                out.url = `${callArgs[0]}`;
-            }
-            fetchProps(callArgs[1], out);
-            return out;
-        })();
+        const details = fetchDetails(callArgs);
         if ( safe.logLevel > 1 || propsToMatch === '' && responseBody === '' ) {
-            const out = Array.from(details).map(a => `${a[0]}:${a[1]}`);
+            const out = Array.from(Object.entries(details)).map(a => `${a[0]}:${a[1]}`);
             safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
         }
         if ( propsToMatch === '' && responseBody === '' ) {
