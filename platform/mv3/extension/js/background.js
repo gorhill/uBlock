@@ -26,6 +26,7 @@ import {
     getDefaultFilteringMode,
     getFilteringMode,
     getFilteringModeDetails,
+    persistHostPermissions,
     setDefaultFilteringMode,
     setFilteringMode,
     setFilteringModeDetails,
@@ -132,6 +133,7 @@ async function reloadTab(tabId, url = '') {
 
 // When a new host permission is granted through the popup panel
 async function onPermissionGrantedThruExtension(details, origins) {
+    await persistHostPermissions();
     const defaultMode = await getDefaultFilteringMode();
     if ( defaultMode >= MODE_OPTIMAL ) { return; }
     if ( Array.isArray(origins) === false ) { return; }
@@ -159,8 +161,7 @@ async function onPermissionGrantedThruBrowser(origins) {
     const results = await browser.scripting.executeScript({
         target: { tabId, frameIds: [ 0 ] },
         func: ( ) => document.location.hostname,
-    }).catch(reason => {
-        ubolErr(`executeScript/${reason}`);
+    }).catch(( ) => {
     });
     const tabHostname = results?.[0]?.result;
     if ( typeof tabHostname !== 'string' ) { return; }

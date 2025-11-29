@@ -29,7 +29,7 @@ import {
 
 import {
     browser,
-    localRead, localWrite,
+    localRead, localRemove, localWrite,
     sessionRead, sessionWrite,
 } from './ext.js';
 
@@ -337,16 +337,33 @@ export function setDefaultFilteringMode(afterLevel) {
 
 /******************************************************************************/
 
+export async function persistHostPermissions(iter) {
+    if ( iter === undefined ) {
+        const permissions = await browser.permissions.getAll();
+        iter = hostnamesFromMatches(permissions.origins) || [];
+    }
+    const hostnames = Array.from(iter);
+    return hostnames.length !== 0
+        ? localWrite('permissions.hostnames', hostnames)
+        : localRemove('permissions.hostnames');
+}
+
+/******************************************************************************/
+
 export async function syncWithBrowserPermissions() {
     const [
-        permissions,
+        beforePermissions,
+        afterPermissions,
         beforeMode,
     ] = await Promise.all([
+        localRead('permissions.hostnames'),
         browser.permissions.getAll(),
         getDefaultFilteringMode(),
     ]);
-    const allowedHostnames = new Set(hostnamesFromMatches(permissions.origins || []));
-    const hasBroadHostPermissions = allowedHostnames.has('all-urls');
+    const beforeAllowedHostnames = new Set(beforePermissions);
+    const afterAllowedHostnames = new Set(hostnamesFromMatches(afterPermissions.origins || []));
+    await persistHostPermissions(afterAllowedHostnames);
+    const hasBroadHostPermissions = afterAllowedHostnames.has('all-urls');
     const broadHostPermissionsToggled =
         hasBroadHostPermissions !== rulesetConfig.hasBroadHostPermissions;
     let modified = false;
@@ -364,13 +381,15 @@ export async function syncWithBrowserPermissions() {
     const afterMode = await getDefaultFilteringMode();
     if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
     const filteringModes = await getFilteringModeDetails();
-    if ( allowedHostnames.has('all-urls') === false ) {
+    if ( afterAllowedHostnames.has('all-urls') === false ) {
         const { none, basic, optimal, complete } = filteringModes;
         for ( const hn of new Set([ ...optimal, ...complete ]) ) {
+            if ( afterAllowedHostnames.has(hn) ) { continue; } 
             applyFilteringMode(filteringModes, hn, afterMode);
             modified = true;
         }
-        for ( const hn of allowedHostnames ) {
+        for ( const hn of afterAllowedHostnames ) {
+            if ( beforeAllowedHostnames.has(hn) ) { continue; }
             if ( optimal.has(hn) || complete.has(hn) ) { continue; }
             if ( basic.has(hn) || none.has(hn) ) { continue; }
             applyFilteringMode(filteringModes, hn, MODE_OPTIMAL);
