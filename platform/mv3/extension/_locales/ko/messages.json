@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "실험적이고 권한이 적은 콘텐츠 차단기. 광고, 추적기, 채굴기 등을 설치 직후 차단합니다.",
+    "message": "효율적인 콘텐츠 차단기입니다. 설치 직후 광고, 추적기, 채굴기 등을 즉시 차단합니다.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -136,11 +136,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 이슈가 이미 신고되지는 않았는지 확인해주시기 바랍니다.",
+    "message": "자원봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 이슈가 이미 신고되지는 않았는지 확인해 주시기 바랍니다.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "유사한 신고 탐색",
+    "message": "비슷한 신고 내역 찾기",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -172,7 +172,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "uBO Lite를 켜면 깨집니다",
+    "message": "uBO Lite를 켜면 오작동합니다",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
