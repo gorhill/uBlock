@@ -434,29 +434,24 @@ function registerScriptlet(context, scriptletDetails) {
     ];
 
     for ( const rulesetId of rulesetsDetails.map(v => v.id) ) {
-        const scriptletList = scriptletDetails.get(rulesetId);
-        if ( scriptletList === undefined ) { continue; }
-
-        for ( const [ token, details ] of scriptletList ) {
-            const id = `${rulesetId}.${token}`;
-            const registered = before.get(id);
+        const worlds = scriptletDetails.get(rulesetId);
+        if ( worlds === undefined ) { continue; }
+        for ( const world of Object.keys(worlds) ) {
+            const id = `${rulesetId}.${world.toLowerCase()}`;
 
             const matches = [];
             const excludeMatches = [];
+            const hostnames = worlds[world];
             let targetHostnames = [];
             if ( hasBroadHostPermission ) {
                 excludeMatches.push(...permissionRevokedMatches);
-                if ( details.hostnames.length > 100 ) {
-                    targetHostnames = [ '*' ];
-                } else {
-                    targetHostnames = details.hostnames;
-                }
+                targetHostnames = hostnames;
             } else if ( permissionGrantedHostnames.length !== 0 ) {
-                if ( details.hostnames.includes('*') ) {
+                if ( hostnames.includes('*') ) {
                     targetHostnames = permissionGrantedHostnames;
                 } else {
                     targetHostnames = ut.intersectHostnameIters(
-                        details.hostnames,
+                        hostnames,
                         permissionGrantedHostnames
                     );
                 }
@@ -465,16 +460,17 @@ function registerScriptlet(context, scriptletDetails) {
             matches.push(...ut.matchesFromHostnames(targetHostnames));
             normalizeMatches(matches);
 
+            const registered = before.get(id);
             before.delete(id); // Important!
 
             const directive = {
                 id,
-                js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
+                js: [ `/rulesets/scripting/scriptlet/${world.toLowerCase()}/${rulesetId}.js` ],
                 matches,
                 allFrames: true,
                 matchOriginAsFallback: true,
                 runAt: 'document_start',
-                world: details.world,
+                world,
             };
             if ( excludeMatches.length !== 0 ) {
                 directive.excludeMatches = excludeMatches;

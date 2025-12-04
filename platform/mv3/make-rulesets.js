@@ -101,6 +101,7 @@ const consoleLog = console.log;
 const stdOutput = [];
 
 const log = (text, silent = true) => {
+    silent = silent && text.startsWith('!!!') === false;
     stdOutput.push(text);
     if ( silent === false ) {
         consoleLog(text);

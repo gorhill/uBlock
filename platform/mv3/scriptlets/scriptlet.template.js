@@ -26,53 +26,30 @@
 // Isolate from global scope
 
 // Start of local scope
-(function uBOL_$scriptletName$() {
+(function uBOL_scriptlets() {
 
 /******************************************************************************/
 
-function $scriptletName$(){}
+function $scriptletCode$(){} // eslint-disable-line
 
 /******************************************************************************/
 
 const scriptletGlobals = {}; // eslint-disable-line
-const argsList = self.$argsList$;
-const hostnamesMap = new Map(self.$hostnamesMap$);
-const exceptionsMap = new Map(self.$exceptionsMap$);
-const hasEntities = self.$hasEntities$;
-const hasAncestors = self.$hasAncestors$;
 
-const collectArgIndices = (hn, map, out) => {
-    let argsIndices = map.get(hn);
-    if ( argsIndices === undefined ) { return; }
-    if ( typeof argsIndices !== 'number' ) {
-        for ( const argsIndex of argsIndices ) {
-            out.add(argsIndex);
-        }
-    } else {
-        out.add(argsIndices);
-    }
-};
+const $scriptletFunctions$ = [];
 
-const indicesFromHostname = (hostname, suffix = '') => {
-    const hnParts = hostname.split('.');
-    const hnpartslen = hnParts.length;
-    if ( hnpartslen === 0 ) { return; }
-    for ( let i = 0; i < hnpartslen; i++ ) {
-        const hn = `${hnParts.slice(i).join('.')}${suffix}`;
-        collectArgIndices(hn, hostnamesMap, todoIndices);
-        collectArgIndices(hn, exceptionsMap, tonotdoIndices);
-    }
-    if ( hasEntities ) {
-        const n = hnpartslen - 1;
-        for ( let i = 0; i < n; i++ ) {
-            for ( let j = n; j > i; j-- ) {
-                const en = `${hnParts.slice(i,j).join('.')}.*${suffix}`;
-                collectArgIndices(en, hostnamesMap, todoIndices);
-                collectArgIndices(en, exceptionsMap, tonotdoIndices);
-            }
-        }
-    }
-};
+const $scriptletArgs$ = [];
+
+const $scriptletArglists$ = [];
+
+const $scriptletArglistRefs$ = [];
+
+const $scriptletHostnames$ = [];
+
+const $hasEntities$ = false;
+const $hasAncestors$ = false;
+
+/******************************************************************************/
 
 const entries = (( ) => {
     const docloc = document.location;
@@ -81,31 +58,107 @@ const entries = (( ) => {
         origins.push(...docloc.ancestorOrigins);
     }
     return origins.map((origin, i) => {
-        const beg = origin.lastIndexOf('://');
+        const beg = origin.indexOf('://');
         if ( beg === -1 ) { return; }
-        const hn = origin.slice(beg+3)
-        const end = hn.indexOf(':');
-        return { hn: end === -1 ? hn : hn.slice(0, end), i };
+        const hn1 = origin.slice(beg+3)
+        const end = hn1.indexOf(':');
+        const hn2 = end === -1 ? hn1 : hn1.slice(0, end);
+        const hnParts = hn2.split('.');
+        if ( hn2.length === 0 ) { return; }
+        const hns = [];
+        for ( let i = 0; i < hnParts.length; i++ ) {
+            hns.push(`${hnParts.slice(i).join('.')}`);
+        }
+        const ens = [];
+        if ( $hasEntities$ ) {
+            const n = hnParts.length - 1;
+            for ( let i = 0; i < n; i++ ) {
+                for ( let j = n; j > i; j-- ) {
+                    ens.push(`${hnParts.slice(i,j).join('.')}.*`);
+                }
+            }
+            ens.sort((a, b) => {
+                const d = b.length - a.length;
+                if ( d !== 0 ) { return d; }
+                return a > b ? -1 : 1;
+            });
+        }
+        return { hns, ens, i };
     }).filter(a => a !== undefined);
 })();
 if ( entries.length === 0 ) { return; }
 
-const todoIndices = new Set();
-const tonotdoIndices = new Set();
+const collectArglistRefIndices = (out, hn, r) => {
+    let l = 0, i = 0, d = 0;
+    let candidate = '';
+    while ( l < r ) {
+        i = l + r >>> 1;
+        candidate = $scriptletHostnames$[i];
+        d = hn.length - candidate.length;
+        if ( d === 0 ) {
+            if ( hn === candidate ) {
+                out.add(i); break;
+            }
+            d = hn < candidate ? -1 : 1;
+        }
+        if ( d < 0 ) {
+            r = i;
+        } else {
+            l = i + 1;
+        }
+    }
+    return i;
+};
 
-indicesFromHostname(entries[0].hn);
-if ( hasAncestors ) {
+const indicesFromHostname = (out, hnDetails, suffix = '') => {
+    if ( hnDetails.hns.length === 0 ) { return; }
+    let r = $scriptletHostnames$.length;
+    for ( const hn of hnDetails.hns ) {
+        r = collectArglistRefIndices(out, `${hn}${suffix}`, r);
+    }
+    if ( $hasEntities$ ) {
+        let r = $scriptletHostnames$.length;
+        for ( const en of hnDetails.ens ) {
+            r = collectArglistRefIndices(out, `${en}${suffix}`, r);
+        }
+    }
+};
+
+const todoIndices = new Set();
+indicesFromHostname(todoIndices, entries[0]);
+if ( $hasAncestors$ ) {
     for ( const entry of entries ) {
         if ( entry.i === 0 ) { continue; }
-        indicesFromHostname(entry.hn, '>>');
+        indicesFromHostname(todoIndices, entry, '>>');
+    }
+}
+$scriptletHostnames$.length = 0;
+
+if ( todoIndices.size === 0 ) { return; }
+
+// Collect arglist references
+const todo = new Set();
+{
+    const arglistRefs = $scriptletArglistRefs$.split(';');
+    for ( const i of todoIndices ) {
+        for ( const ref of JSON.parse(`[${arglistRefs[i]}]`) ) {
+            todo.add(ref);
+        }
     }
 }
 
-// Apply scriplets
-for ( const i of todoIndices ) {
-    if ( tonotdoIndices.has(i) ) { continue; }
-    try { $scriptletName$(...argsList[i]); }
-    catch { }
+// Execute scriplets
+{
+    const arglists = $scriptletArglists$.split(';');
+    const args = $scriptletArgs$.split('\n');
+    for ( const ref of todo ) {
+        if ( ref < 0 ) { continue; }
+        if ( todo.has(~ref) ) { continue; }
+        const arglist = JSON.parse(`[${arglists[ref]}]`);
+        const fn = $scriptletFunctions$[arglist[0]];
+        try { fn(...arglist.slice(1).map(a => args[a])); }
+        catch { }
+    }
 }
 
 /******************************************************************************/
