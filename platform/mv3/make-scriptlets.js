@@ -173,40 +173,30 @@ export async function commit(rulesetId, path, writeFn) {
             return a[0] < b[0] ? -1 : 1;
         }).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
         let content = safeReplace(scriptletTemplate, /\$rulesetId\$/, rulesetId, 0);
-        if ( worldDetails.hasEntities ) {
-            content = safeReplace(content,
-                'const $hasEntities$ = false;',
-                'const $hasEntities$ = true;'
-            );
-        }
-        if ( worldDetails.hasAncestors ) {
-            content = safeReplace(content,
-                'const $hasAncestors$ = false;',
-                'const $hasAncestors$ = true;'
-            );
-        };
+        content = safeReplace(content, 'self.$hasEntities$', 'true');
+        content = safeReplace(content, 'self.$hasAncestors$', 'true');
         content = safeReplace(content,
-            'const $scriptletHostnames$ = [];',
-            `const $scriptletHostnames$ = /* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[0]))};`
+            'self.$scriptletHostnames$',
+            `/* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[0]))}`
         );
         content = safeReplace(content,
-            'const $scriptletArglistRefs$ = [];',
-            `const $scriptletArglistRefs$ = /* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[1]).join(';'))};`
+            'self.$scriptletArglistRefs$',
+            `/* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[1]).join(';'))}`
         );
         content = safeReplace(content,
-            'const $scriptletArglists$ = [];',
-            `const $scriptletArglists$ = /* ${arglists.size} */ ${JSON.stringify(Array.from(arglists.keys()).join(';'))};`
+            'self.$scriptletArglists$',
+            `/* ${arglists.size} */ ${JSON.stringify(Array.from(arglists.keys()).join(';'))}`
         );
         content = safeReplace(content,
-            'const $scriptletArgs$ = [];',
-            `const $scriptletArgs$ = /* ${args.size} */ ${JSON.stringify(Array.from(args.keys()).join('\n'))};`
+            'self.$scriptletArgs$',
+            `/* ${args.size} */ ${JSON.stringify(Array.from(args.keys()))}`
         );
         content = safeReplace(content,
-            'const $scriptletFunctions$ = [];',
-            `const $scriptletFunctions$ = /* ${scriptletFunctions.size} */\n[${Array.from(scriptletFunctions.keys()).join(',')}];`
+            'self.$scriptletFunctions$',
+            `/* ${scriptletFunctions.size} */\n[${Array.from(scriptletFunctions.keys()).join(',')}]`
         );
         content = safeReplace(content,
-            'function $scriptletCode$(){} // eslint-disable-line',
+            'self.$scriptletCode$',
             Array.from(allFunctions.values()).join('\n\n')
         );
         writeFn(`${path}/${world.toLowerCase()}/${rulesetId}.js`, content);

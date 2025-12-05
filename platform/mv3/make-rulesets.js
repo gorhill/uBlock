@@ -90,11 +90,6 @@ const jsonSetMapReplacer = (k, v) => {
     return v;
 };
 
-const uidint32 = (s) => {
-    const h = createHash('sha256').update(s).digest('hex').slice(0,8);
-    return parseInt(h,16) & 0x7FFFFFFF;
-};
-
 /******************************************************************************/
 
 const consoleLog = console.log;
@@ -812,84 +807,6 @@ const globalHighlyGenericExceptionSet = new Set();
 
 /******************************************************************************/
 
-// This merges selectors which are used by the same hostnames
-
-function groupSelectorsByHostnames(mapin) {
-    if ( mapin === undefined ) { return []; }
-    const merged = new Map();
-    for ( const [ selector, details ] of mapin ) {
-        if ( details.rejected ) { continue; }
-        const json = JSON.stringify(details);
-        let entries = merged.get(json);
-        if ( entries === undefined ) {
-            entries = new Set();
-            merged.set(json, entries);
-        }
-        entries.add(selector);
-    }
-    const out = [];
-    for ( const [ json, entries ] of merged ) {
-        const details = JSON.parse(json);
-        details.selectors = Array.from(entries).sort();
-        out.push(details);
-    }
-    return out;
-}
-
-// This merges hostnames which have the same set of selectors.
-//
-// Also, we sort the hostnames to increase likelihood that selector with
-// same hostnames will end up in same generated scriptlet.
-
-function groupHostnamesBySelectors(arrayin) {
-    const contentMap = new Map();
-    for ( const entry of arrayin ) {
-        const id = uidint32(JSON.stringify(entry.selectors));
-        let details = contentMap.get(id);
-        if ( details === undefined ) {
-            details = { a: entry.selectors };
-            contentMap.set(id, details);
-        }
-        if ( entry.matches !== undefined ) {
-            if ( details.y === undefined ) {
-                details.y = new Set();
-            }
-            for ( const hn of entry.matches ) {
-                details.y.add(hn);
-            }
-        }
-        if ( entry.excludeMatches !== undefined ) {
-            if ( details.n === undefined ) {
-                details.n = new Set();
-            }
-            for ( const hn of entry.excludeMatches ) {
-                details.n.add(hn);
-            }
-        }
-    }
-    const out = Array.from(contentMap).map(a => [
-        a[0], {
-            a: a[1].a,
-            y: a[1].y ? Array.from(a[1].y) : undefined,
-            n: a[1].n ? Array.from(a[1].n) : undefined,
-        }
-    ]);
-    return out;
-}
-
-const scriptletHostnameToIdMap = (hostnames, id, map) => {
-    for ( const hn of hostnames ) {
-        const existing = map.get(hn);
-        if ( existing === undefined ) {
-            map.set(hn, id);
-        } else if ( Array.isArray(existing) ) {
-            existing.push(id);
-        } else {
-            map.set(hn, [ existing, id ]);
-        }
-    }
-};
-
 const scriptletJsonReplacer = (k, v) => {
     if ( k === 'n' ) {
         if ( v === undefined || v.size === 0 ) { return; }
@@ -904,175 +821,86 @@ const scriptletJsonReplacer = (k, v) => {
 
 /******************************************************************************/
 
-function argsMap2List(argsMap, hostnamesMap) {
-    const argsList = [ '' ];
-    const indexMap = new Map();
-    for ( const [ id, details ] of argsMap ) {
-        indexMap.set(id, argsList.length);
-        argsList.push(details);
-    }
-    const argsSeqs = [ 0 ];
-    const argsSeqsIndices = new Map();
-    for ( const [ hn, ids ] of hostnamesMap ) {
-        const seqKey = JSON.stringify(ids);
-        if ( argsSeqsIndices.has(seqKey) ) {
-            hostnamesMap.set(hn, argsSeqsIndices.get(seqKey));
-            continue;
-        }
-        const seqIndex = argsSeqs.length;
-        argsSeqsIndices.set(seqKey, seqIndex);
-        hostnamesMap.set(hn, seqIndex);
-        if ( typeof ids === 'number' ) {
-            argsSeqs.push(indexMap.get(ids));
-            continue;
-        }
-        for ( let i = 0; i < ids.length; i++ ) {
-            argsSeqs.push(-indexMap.get(ids[i]));
-        }
-        argsSeqs[argsSeqs.length-1] = -argsSeqs[argsSeqs.length-1];
-    }
-    return { argsList, argsSeqs };
-}
-
-/******************************************************************************/
-
-async function processCosmeticFilters(assetDetails, mapin) {
+async function processCosmeticFilters(assetDetails, realm, mapin) {
     if ( mapin === undefined ) { return 0; }
     if ( mapin.size === 0 ) { return 0; }
 
-    const domainBasedEntries = groupHostnamesBySelectors(
-        groupSelectorsByHostnames(mapin)
-    );
-    // We do not want more than n CSS files per subscription, so we will
-    // group multiple unrelated selectors in the same file, and distinct
-    // css declarations will be injected programmatically according to the
-    // hostname of the current document.
-    //
+    // Collate all distinct selectors
+    const allSelectors = new Map();
+    const allHostnames = new Map();
+    let hasEntities = false;
+    for ( const [ selector, details ] of mapin ) {
+        if ( details.rejected ) { continue; }
+        if ( allSelectors.has(selector) === false ) {
+            allSelectors.set(selector, allSelectors.size);
+        }
+        const iSelector = allSelectors.get(selector);
+        if ( details.matches ) {
+            for ( const hn of details.matches ) {
+                if ( allHostnames.has(hn) === false ) {
+                    allHostnames.set(hn, new Set());
+                }
+                allHostnames.get(hn).add(iSelector);
+                hasEntities ||= hn.endsWith('.*');
+            }
+        }
+        if ( details.excludeMatches ) {
+            for ( const hn of details.excludeMatches ) {
+                if ( allHostnames.has(hn) === false ) {
+                    allHostnames.set(hn, new Set());
+                }
+                allHostnames.get(hn).add(~iSelector);
+                hasEntities ||= hn.endsWith('.*');
+            }
+        }
+    }
+    const allSelectorLists = new Map();
+    for ( const [ hn, selectorSet ] of allHostnames ) {
+        const list = JSON.stringify(Array.from(selectorSet).sort()).slice(1, -1);
+        if ( allSelectorLists.has(list) === false ) {
+            allSelectorLists.set(list, allSelectorLists.size);
+        }
+        allHostnames.set(hn, allSelectorLists.get(list));
+    }
+
     // The cosmetic filters will be injected programmatically as content
     // script and the decisions to activate the cosmetic filters will be
     // done at injection time according to the document's hostname.
-    const generatedFiles = [];
-
-    const argsMap = domainBasedEntries.map(entry => [
-        entry[0],
-        entry[1].a ? entry[1].a.join('\n') : undefined,
-    ]);
-    const hostnamesMap = new Map();
-    let hasEntities = false;
-    for ( const [ id, details ] of domainBasedEntries ) {
-        if ( details.y ) {
-            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-            hasEntities ||= details.y.some(a => a.endsWith('.*'));
-        }
-        if ( details.n ) {
-            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
-            hasEntities ||= details.n.some(a => a.endsWith('.*'));
-        }
-    }
-    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
-
     const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get('css-specific').replace(
+    let patchedScriptlet = originalScriptletMap.get(`css-${realm}`).replace(
         '$rulesetId$',
         assetDetails.id
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsList\$/,
-        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
+        /\bself\.\$selectors\$/,
+        `/* ${allSelectors.size} */ ${JSON.stringify(Array.from(allSelectors.keys()))}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsSeqs\$/,
-        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
+        /\bself\.\$selectorLists\$/,
+        `/* ${allSelectorLists.size} */ ${JSON.stringify(Array.from(allSelectorLists.keys()).join(';'))}`
     );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$hostnamesMap\$/,
-        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        'self.$hasEntities$',
-        JSON.stringify(hasEntities)
-    );
-    writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`, patchedScriptlet);
-    generatedFiles.push(`${assetDetails.id}`);
-
-    if ( generatedFiles.length !== 0 ) {
-        log(`CSS-specific: ${mapin.size} distinct filters`);
-        log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-    }
-
-    return hostnamesMap.size;
-}
-
-/******************************************************************************/
-
-async function processProceduralCosmeticFilters(assetDetails, mapin) {
-    if ( mapin === undefined ) { return 0; }
-    if ( mapin.size === 0 ) { return 0; }
-
-    const procedurals = new Map();
-    mapin.forEach((details, jsonSelector) => {
-        procedurals.set(jsonSelector, details);
+    const sortedHostnames = Array.from(allHostnames.keys()).toSorted((a, b) => {
+        const d = a.length - b.length;
+        if ( d !== 0 ) { return d; }
+        return a < b ? -1 : 1;
     });
-    if ( procedurals.size === 0 ) { return 0; }
-
-    const contentArray = groupHostnamesBySelectors(
-        groupSelectorsByHostnames(procedurals)
-    );
-
-    const argsMap = contentArray.map(entry => [
-        entry[0],
-        entry[1].a,
-    ]);
-    const hostnamesMap = new Map();
-    let hasEntities = false;
-    for ( const [ id, details ] of contentArray ) {
-        if ( details.y ) {
-            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-            hasEntities ||= details.y.some(a => a.endsWith('.*'));
-        }
-        if ( details.n ) {
-            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
-            hasEntities ||= details.n.some(a => a.endsWith('.*'));
-        }
-    }
-    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
-    const argsListAfter = [];
-    for ( const a of argsList ) {
-        const aAfter = [];
-        for ( let b of a ) {
-            aAfter.push(JSON.parse(b));
-        }
-        argsListAfter.push(JSON.stringify(aAfter));
-    }
-    const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get('css-procedural').replace(
-        '$rulesetId$',
-        assetDetails.id
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$selectorListRefs\$/,
+        `/* ${sortedHostnames.length} */ "${JSON.stringify(sortedHostnames.map(a => allHostnames.get(a))).slice(1, -1)}"`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsList\$/,
-        `${JSON.stringify(argsListAfter, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsSeqs\$/,
-        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$hostnamesMap\$/,
-        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
+        /\bself\.\$hostnames\$/,
+        `/* ${sortedHostnames.length} */ ${JSON.stringify(sortedHostnames)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
         'self.$hasEntities$',
         JSON.stringify(hasEntities)
     );
-    writeFile(`${scriptletDir}/procedural/${assetDetails.id}.js`, patchedScriptlet);
+    writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.js`, patchedScriptlet);
 
-    if ( contentArray.length !== 0 ) {
-        log(`Procedural-related distinct filters: ${procedurals.size} distinct combined selectors`);
-        log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-    }
+    log(`CSS-${realm}: ${allSelectors.size} distinct filters for ${allHostnames.size} distinct hostnames`);
 
-    return hostnamesMap.size;
+    return sortedHostnames.length;
 }
 
 /******************************************************************************/
@@ -1213,10 +1041,13 @@ async function rulesetFromURLs(assetDetails) {
     );
     const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,
+        'specific',
         declarativeCosmetic
     );
-    const proceduralStats = await processProceduralCosmeticFilters(
+
+    const proceduralStats = await processCosmeticFilters(
         assetDetails,
+        'procedural',
         proceduralCosmetic
     );
     const scriptletStats = await processScriptletFilters(

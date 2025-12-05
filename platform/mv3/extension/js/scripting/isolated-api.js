@@ -73,6 +73,28 @@
             if ( r !== undefined ) { return r; }
         }
     };
+
+    isolatedAPI.binarySearch = (sorted, target) => {
+        let l = 0, i = 0, d = 0;
+        let r = sorted.length;
+        let candidate;
+        while ( l < r ) {
+            i = l + r >>> 1;
+            candidate = sorted[i];
+            d = target.length - candidate.length;
+            if ( d === 0 ) {
+                if ( target === candidate ) { return i; }
+                d = target < candidate ? -1 : 1;
+            }
+            if ( d < 0 ) {
+                r = i;
+            } else {
+                l = i + 1;
+            }
+        }
+        return -1;
+    };
+
 })(self.isolatedAPI);
 
 /******************************************************************************/

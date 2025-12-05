@@ -30,42 +30,47 @@ self.proceduralImports = undefined;
 
 /******************************************************************************/
 
-const selectors = [];
-const exceptions = [];
+const isolatedAPI = self.isolatedAPI;
+const selectors = new Set();
+const exceptions = new Set();
 
-const lookupHostname = (hostname, details, out) => {
-    let seqi = details.hostnamesMap.get(hostname);
-    if ( seqi === undefined ) { return; }
-    const { argsList, argsSeqs } = details;
-    for (;;) {
-        const argi = argsSeqs[seqi++];
-        const done = argi > 0;
-        out.push(...JSON.parse(argsList[done ? argi : -argi]));
-        if ( done ) { break; }
+const lookupHostname = (hostname, details) => {
+    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
+    if ( listref === -1 ) { return; }
+    if ( Array.isArray(details.selectorLists) === false ) {
+        details.selectorLists = details.selectorLists.split(';');
+        details.selectorListRefs = JSON.parse(`[${details.selectorListRefs}]`);
+    }
+    const ilist = details.selectorListRefs[listref];
+    const list = JSON.parse(`[${details.selectorLists[ilist]}]`);
+    for ( const iselector of list ) {
+        if ( iselector >= 0 ) {
+            selectors.add(details.selectors[iselector]);
+        } else {
+            exceptions.add(details.selectors[~iselector]);
+        }
     }
 };
 
 const lookupAll = hostname => {
     for ( const details of proceduralImports ) {
-        lookupHostname(hostname, details, selectors);
-        const matches = [];
-        lookupHostname(`~${hostname}`, details, matches);
-        if ( matches.length === 0 ) { continue; }
-        exceptions.push(...matches.map(a => JSON.stringify(a)));
+        lookupHostname(hostname, details);
     }
 };
 
-self.isolatedAPI.forEachHostname(lookupAll, {
+isolatedAPI.forEachHostname(lookupAll, {
     hasEntities: proceduralImports.some(a => a.hasEntities)
 });
+
 proceduralImports.length = 0;
 
-if ( selectors.length === 0 ) { return; }
+for ( const selector of exceptions ) {
+    selectors.delete(selector);
+}
 
-const exceptedSelectors = exceptions.length !== 0
-    ? selectors.filter(a => exceptions.includes(JSON.stringify(a)) === false)
-    : selectors;
-if ( exceptedSelectors.length === 0 ) { return; }
+if ( selectors.size === 0 ) { return; }
+
+const exceptedSelectors = Array.from(selectors).map(a => JSON.parse(a));
 
 const declaratives = exceptedSelectors.filter(a => a.cssable);
 if ( declaratives.length !== 0 ) {

@@ -30,24 +30,24 @@
 
 /******************************************************************************/
 
-function $scriptletCode$(){} // eslint-disable-line
+self.$scriptletCode$
 
 /******************************************************************************/
 
 const scriptletGlobals = {}; // eslint-disable-line
 
-const $scriptletFunctions$ = [];
+const $scriptletFunctions$ = self.$scriptletFunctions$;
 
-const $scriptletArgs$ = [];
+const $scriptletArgs$ = self.$scriptletArgs$;
 
-const $scriptletArglists$ = [];
+const $scriptletArglists$ = self.$scriptletArglists$;
 
-const $scriptletArglistRefs$ = [];
+const $scriptletArglistRefs$ = self.$scriptletArglistRefs$;
 
-const $scriptletHostnames$ = [];
+const $scriptletHostnames$ = self.$scriptletHostnames$;
 
-const $hasEntities$ = false;
-const $hasAncestors$ = false;
+const $hasEntities$ = self.$hasEntities$;
+const $hasAncestors$ = self.$hasAncestors$;
 
 /******************************************************************************/
 
@@ -150,7 +150,7 @@ const todo = new Set();
 // Execute scriplets
 {
     const arglists = $scriptletArglists$.split(';');
-    const args = $scriptletArgs$.split('\n');
+    const args = $scriptletArgs$;
     for ( const ref of todo ) {
         if ( ref < 0 ) { continue; }
         if ( todo.has(~ref) ) { continue; }

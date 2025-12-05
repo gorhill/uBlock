@@ -30,42 +30,48 @@ self.specificImports = undefined;
 
 /******************************************************************************/
 
-const selectors = [];
-const exceptions = [];
+const isolatedAPI = self.isolatedAPI;
+const selectors = new Set();
+const exceptions = new Set();
 
-const lookupHostname = (hostname, details, out) => {
-    let seqi = details.hostnamesMap.get(hostname);
-    if ( seqi === undefined ) { return; }
-    const { argsList, argsSeqs } = details;
-    for (;;) {
-        const argi = argsSeqs[seqi++];
-        const done = argi > 0;
-        out.push(...argsList[done ? argi : -argi].split('\n'));
-        if ( done ) { break; }
+const lookupHostname = (hostname, details) => {
+    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
+    if ( listref === -1 ) { return; }
+    if ( Array.isArray(details.selectorLists) === false ) {
+        details.selectorLists = details.selectorLists.split(';');
+        details.selectorListRefs = JSON.parse(`[${details.selectorListRefs}]`);
+    }
+    const ilist = details.selectorListRefs[listref];
+    const list = JSON.parse(`[${details.selectorLists[ilist]}]`);
+    for ( const iselector of list ) {
+        if ( iselector >= 0 ) {
+            selectors.add(details.selectors[iselector]);
+        } else {
+            exceptions.add(details.selectors[~iselector]);
+        }
     }
 };
 
 const lookupAll = hostname => {
     for ( const details of specificImports ) {
-        lookupHostname(hostname, details, selectors);
-        lookupHostname(`~${hostname}`, details, exceptions);
+        lookupHostname(hostname, details);
     }
 };
 
-self.isolatedAPI.forEachHostname(lookupAll, {
+isolatedAPI.forEachHostname(lookupAll, {
     hasEntities: specificImports.some(a => a.hasEntities)
 });
 
 specificImports.length = 0;
 
-if ( selectors.length === 0 ) { return; }
+for ( const selector of exceptions ) {
+    selectors.delete(selector);
+}
 
-const exceptedSelectors = exceptions.length !== 0
-    ? selectors.filter(a => exceptions.includes(a) === false)
-    : selectors;
-if ( exceptedSelectors.length === 0 ) { return; }
+if ( selectors.size === 0 ) { return; }
 
-self.cssAPI.insert(`${exceptedSelectors.join(',')}{display:none!important;}`);
+const css = `${Array.from(selectors).join(',\n')}{display:none!important;}`;
+self.cssAPI.insert(css);
 
 /******************************************************************************/
 

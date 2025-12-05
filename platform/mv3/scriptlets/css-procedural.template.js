@@ -27,13 +27,15 @@
 
 /******************************************************************************/
 
-const argsList = self.$argsList$;
-const argsSeqs = self.$argsSeqs$;
-const hostnamesMap = new Map(self.$hostnamesMap$);
+
+const selectors = self.$selectors$;
+const selectorLists = self.$selectorLists$;
+const selectorListRefs = self.$selectorListRefs$;
+const hostnames = self.$hostnames$;
 const hasEntities = self.$hasEntities$;
 
 self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ argsList, argsSeqs, hostnamesMap, hasEntities });
+self.proceduralImports.push({ selectors, selectorLists, selectorListRefs, hostnames, hasEntities });
 
 /******************************************************************************/
 
