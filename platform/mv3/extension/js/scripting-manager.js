@@ -21,7 +21,11 @@
 
 import * as ut from './utils.js';
 
-import { browser, localRemove } from './ext.js';
+import {
+    browser,
+    localKeys, localRemove, localWrite,
+    sessionRemove,
+} from './ext.js';
 import { ubolErr, ubolLog } from './debug.js';
 
 import { fetchJSON } from './fetch.js';
@@ -286,16 +290,25 @@ function registerGeneric(context, genericDetails) {
 
 /******************************************************************************/
 
-function registerProcedural(context) {
+async function registerProcedural(context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
-    const js = [];
+    {
+        const keys = await localKeys();
+        for ( const key of keys ) {
+            if ( key.startsWith('css.procedural.data.') === false ) { continue; }
+            sessionRemove(key);
+            localRemove(key);
+        }
+    }
+
+    const rulesetIds = [];
     for ( const rulesetDetails of rulesetsDetails ) {
         const count = rulesetDetails.css?.procedural || 0;
         if ( count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/procedural/${rulesetDetails.id}.js`);
+        rulesetIds.push(rulesetDetails.id);
     }
-    if ( js.length === 0 ) { return; }
+    if ( rulesetIds.length === 0 ) { return; }
 
     const { none, basic, optimal, complete } = filteringModeDetails;
     const matches = [
@@ -304,8 +317,21 @@ function registerProcedural(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    {
+        const promises = [];
+        for ( const id of rulesetIds ) {
+            promises.push(
+                fetchJSON(`/rulesets/scripting/procedural/data/${id}`).then(data => {
+                    return localWrite(`css.procedural.data.${id}`, data);
+                })
+            );
+        }
+        await Promise.all(promises);
+    }
+
     normalizeMatches(matches);
 
+    const js = rulesetIds.map(id => `/rulesets/scripting/procedural/${id}.js`);
     js.unshift('/js/scripting/css-api.js', '/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-procedural.js');
 
@@ -353,16 +379,25 @@ function registerProcedural(context) {
 
 /******************************************************************************/
 
-function registerSpecific(context) {
+async function registerSpecific(context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
-    const js = [];
+    {
+        const keys = await localKeys();
+        for ( const key of keys ) {
+            if ( key.startsWith('css.specific.data.') === false ) { continue; }
+            sessionRemove(key);
+            localRemove(key);
+        }
+    }
+
+    const rulesetIds = [];
     for ( const rulesetDetails of rulesetsDetails ) {
         const count = rulesetDetails.css?.specific || 0;
         if ( count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/specific/${rulesetDetails.id}.js`);
+        rulesetIds.push(rulesetDetails.id);
     }
-    if ( js.length === 0 ) { return; }
+    if ( rulesetIds.length === 0 ) { return; }
 
     const { none, basic, optimal, complete } = filteringModeDetails;
     const matches = [
@@ -371,8 +406,21 @@ function registerSpecific(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    {
+        const promises = [];
+        for ( const id of rulesetIds ) {
+            promises.push(
+                fetchJSON(`/rulesets/scripting/specific/data/${id}`).then(data => {
+                    return localWrite(`css.specific.data.${id}`, data);
+                })
+            );
+        }
+        await Promise.all(promises);
+    }
+
     normalizeMatches(matches);
 
+    const js = rulesetIds.map(id => `/rulesets/scripting/specific/${id}.js`);
     js.unshift('/js/scripting/css-api.js', '/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-specific.js');
 
@@ -533,9 +581,9 @@ async function registerInjectables() {
     };
 
     await Promise.all([
-        registerProcedural(context),
-        registerScriptlet(context, scriptletDetails),
         registerSpecific(context),
+        registerScriptlet(context, scriptletDetails),
+        registerProcedural(context),
         registerGeneric(context, genericDetails),
         registerHighGeneric(context, genericDetails),
         registerCustomFilters(context),

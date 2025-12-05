@@ -21,7 +21,7 @@
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssProcedural() {
+(async function uBOL_cssProcedural() {
 
 /******************************************************************************/
 
@@ -31,25 +31,12 @@ self.proceduralImports = undefined;
 /******************************************************************************/
 
 const isolatedAPI = self.isolatedAPI;
-const selectors = new Set();
-const exceptions = new Set();
 
 const lookupHostname = (hostname, details) => {
     const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
     if ( listref === -1 ) { return; }
-    if ( Array.isArray(details.selectorLists) === false ) {
-        details.selectorLists = details.selectorLists.split(';');
-        details.selectorListRefs = JSON.parse(`[${details.selectorListRefs}]`);
-    }
-    const ilist = details.selectorListRefs[listref];
-    const list = JSON.parse(`[${details.selectorLists[ilist]}]`);
-    for ( const iselector of list ) {
-        if ( iselector >= 0 ) {
-            selectors.add(details.selectors[iselector]);
-        } else {
-            exceptions.add(details.selectors[~iselector]);
-        }
-    }
+    details.listrefs ||= [];
+    details.listrefs.push(listref);
 };
 
 const lookupAll = hostname => {
@@ -61,6 +48,38 @@ const lookupAll = hostname => {
 isolatedAPI.forEachHostname(lookupAll, {
     hasEntities: proceduralImports.some(a => a.hasEntities)
 });
+
+const toLookup = proceduralImports.filter(a => Array.isArray(a.listrefs));
+if ( toLookup.length === 0 ) { return; }
+
+const selectors = new Set();
+const exceptions = new Set();
+
+const lookupSelectors = async details => {
+    const { rulesetId } = details;
+    const key = `css.procedural.data.${rulesetId}`;
+    const data = await isolatedAPI.storageGet(key);
+    if ( Boolean(data) === false ) { return; }
+    if ( data.signature !== details.signature ) { return; }
+    for ( const listref of details.listrefs ) {
+        const ilist = data.selectorListRefs[listref];
+        const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
+        for ( const iselector of list ) {
+            if ( iselector >= 0 ) {
+                selectors.add(data.selectors[iselector]);
+            } else {
+                exceptions.add(data.selectors[~iselector]);
+            }
+        }
+    }
+};
+
+const promises = [];
+for ( const details of toLookup ) {
+    promises.push(lookupSelectors(details));
+}
+
+await Promise.all(promises);
 
 proceduralImports.length = 0;
 

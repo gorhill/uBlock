@@ -63,6 +63,7 @@ import {
     browser,
     localRead, localRemove, localWrite,
     runtime,
+    sessionAccessLevel,
     webextFlavor,
 } from './ext.js';
 
@@ -666,6 +667,8 @@ async function startSession() {
     // after we quit the browser. For now uBOL will check unconditionally at
     // launch time whether content css/scripts are properly registered.
     registerInjectables();
+
+    sessionAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest
     //   Firefox API does not support `dnr.setExtensionActionOptions`

@@ -19,23 +19,21 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// ruleset: $rulesetId$
-
 // Important!
 // Isolate from global scope
 (function uBOL_cssProceduralImport() {
 
+if ( Boolean(chrome?.storage?.local) === false ) { return; }
+
 /******************************************************************************/
 
-
-const selectors = self.$selectors$;
-const selectorLists = self.$selectorLists$;
-const selectorListRefs = self.$selectorListRefs$;
+const rulesetId = self.$rulesetId$;
+const signature = self.$signature$;
 const hostnames = self.$hostnames$;
 const hasEntities = self.$hasEntities$;
 
 self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ selectors, selectorLists, selectorListRefs, hostnames, hasEntities });
+self.proceduralImports.push({ rulesetId, signature, hostnames, hasEntities });
 
 /******************************************************************************/
 

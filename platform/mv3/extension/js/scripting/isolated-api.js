@@ -95,6 +95,47 @@
         return -1;
     };
 
+    const sessionGet = async function(key) {
+        let data;
+        try {
+            const bin = await chrome.storage.session.get(key);
+            data = bin?.[key] ?? undefined;
+        } catch (error) {
+            console.trace(error);
+        }
+        return data;
+    };
+
+    const sessionSet = function(key, data) {
+        try {
+            chrome.storage.session.set({ [key]: data });
+        } catch (error) {
+            console.trace(error);
+        }
+    };
+
+    const localGet = async function(key) {
+        let data;
+        try {
+            const bin = await chrome.storage.local.get(key);
+            data = bin?.[key] ?? undefined;
+        } catch (error) {
+            console.trace(error);
+        }
+        return data;
+    };
+
+    isolatedAPI.storageGet = async function(key) {
+        let data = await sessionGet(key);
+        if ( data === undefined ) {
+            data = await localGet(key);
+            if ( data !== undefined ) {
+                sessionSet(key, data);
+            }
+        }
+        return data;
+    };
+
 })(self.isolatedAPI);
 
 /******************************************************************************/
