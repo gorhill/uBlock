@@ -78,7 +78,7 @@ self.ubolOverlay = {
             `:root > [${this.secretAttr}-loaded] { visibility: visible !important; }`,
             `:root > [${this.secretAttr}-click] { pointer-events: none !important; }`,
         ].join('\n');
-        this.sendMessage({ what: 'insertCSS', css: this.pickerCSS });
+        this.sendMessage({ what: 'updateCSS', insert: this.pickerCSS });
         self.addEventListener('scroll', this.onViewportChanged, { passive: true });
         self.addEventListener('resize', this.onViewportChanged, { passive: true });
         self.addEventListener('keydown', this.onKeyPressed, true);
@@ -86,7 +86,7 @@ self.ubolOverlay = {
 
     stop() {
         if ( this.pickerCSS ) {
-            this.sendMessage({ what: 'removeCSS', css: this.pickerCSS });
+            this.sendMessage({ what: 'updateCSS', remove: this.pickerCSS });
             this.pickerCSS = undefined;
         }
         self.removeEventListener('scroll', this.onViewportChanged, { passive: true });

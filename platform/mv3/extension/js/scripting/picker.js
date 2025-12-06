@@ -246,7 +246,7 @@ async function previewSelector(selector) {
             }
         }
         if ( previewedCSS !== '' ) {
-            await ubolOverlay.sendMessage({ what: 'removeCSS', css: previewedCSS });
+            await ubolOverlay.sendMessage({ what: 'updateCSS', remove: previewedCSS });
             previewedCSS = '';
         }
     }
@@ -261,7 +261,7 @@ async function previewSelector(selector) {
         return;
     }
     previewedCSS = `${selector}{display:none!important;}`;
-    await ubolOverlay.sendMessage({ what: 'insertCSS', css: previewedCSS });
+    await ubolOverlay.sendMessage({ what: 'updateCSS', insert: previewedCSS });
 }
 
 let previewedSelector = '';

@@ -22,10 +22,11 @@
 (api => {
     if ( typeof api === 'object' ) { return; }
     self.cssAPI = {
-        insert(css) {
+        update(insert, remove) {
             chrome.runtime.sendMessage({
-                what: 'insertCSS',
-                css,
+                what: 'updateCSS',
+                insert,
+                remove
             }).catch(( ) => {
             });
         },

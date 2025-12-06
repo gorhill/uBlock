@@ -29,6 +29,7 @@
 
     const hostnameStack = (( ) => {
         const docloc = document.location;
+        isolatedAPI.docHostname = docloc.hostname;
         const origins = [ docloc.origin ];
         if ( docloc.ancestorOrigins ) {
             origins.push(...docloc.ancestorOrigins);
@@ -95,45 +96,54 @@
         return -1;
     };
 
-    const sessionGet = async function(key) {
-        let data;
+    isolatedAPI.sessionGet = async function(key) {
         try {
             const bin = await chrome.storage.session.get(key);
-            data = bin?.[key] ?? undefined;
-        } catch (error) {
-            console.trace(error);
+            return bin?.[key] ?? undefined;
+        } catch {
         }
-        return data;
     };
 
-    const sessionSet = function(key, data) {
+    isolatedAPI.sessionSet = function(key, data) {
         try {
             chrome.storage.session.set({ [key]: data });
-        } catch (error) {
-            console.trace(error);
+        } catch {
         }
     };
 
-    const localGet = async function(key) {
-        let data;
+    isolatedAPI.localGet = async function(key) {
         try {
             const bin = await chrome.storage.local.get(key);
-            data = bin?.[key] ?? undefined;
-        } catch (error) {
-            console.trace(error);
+            return bin?.[key] ?? undefined;
+        } catch {
         }
-        return data;
     };
 
-    isolatedAPI.storageGet = async function(key) {
-        let data = await sessionGet(key);
-        if ( data === undefined ) {
-            data = await localGet(key);
-            if ( data !== undefined ) {
-                sessionSet(key, data);
+    isolatedAPI.getSelectors = async function(realm, details) {
+        const selectors = new Set();
+        const exceptions = new Set();
+        const lookupHostname = (hostname, data) => {
+            const listref = isolatedAPI.binarySearch(data.hostnames, hostname);
+            if ( listref === -1 ) { return; }
+            const ilist = data.selectorListRefs[listref];
+            const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
+            for ( const iselector of list ) {
+                if ( iselector >= 0 ) {
+                    selectors.add(data.selectors[iselector]);
+                } else {
+                    exceptions.add(data.selectors[~iselector]);
+                }
             }
+        };
+        const selectorsFromRuleset = async rulesetId => {
+            const data = await isolatedAPI.localGet(`css.${realm}.json.${rulesetId}`);
+            isolatedAPI.forEachHostname(lookupHostname, data);
+        };
+        await Promise.all(details.map(a => selectorsFromRuleset(a.rulesetId)));
+        for ( const selector of exceptions ) {
+            selectors.delete(selector);
         }
-        return data;
+        return Array.from(selectors);
     };
 
 })(self.isolatedAPI);

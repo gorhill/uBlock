@@ -224,29 +224,28 @@ function onMessage(request, sender, callback) {
 
     switch ( request.what ) {
 
-    case 'insertCSS': {
+    case 'updateCSS': {
         if ( frameId === false ) { return false; }
         // https://bugs.webkit.org/show_bug.cgi?id=262491
         if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
-        browser.scripting.insertCSS({
-            css: request.css,
-            origin: 'USER',
-            target: { tabId, frameIds: [ frameId ] },
-        }).catch(reason => {
-            ubolErr(`insertCSS/${reason}`);
-        });
-        return false;
-    }
-
-    case 'removeCSS': {
-        if ( frameId === false ) { return false; }
-        browser.scripting.removeCSS({
-            css: request.css,
-            origin: 'USER',
-            target: { tabId, frameIds: [ frameId ] },
-        }).catch(reason => {
-            ubolErr(`removeCSS/${reason}`);
-        });
+        if ( request.insert ) {
+            browser.scripting.insertCSS({
+                css: request.insert,
+                origin: 'USER',
+                target: { tabId, frameIds: [ frameId ] },
+            }).catch(reason => {
+                ubolErr(`insertCSS/${reason}`);
+            });
+        }
+        if ( request.remove ) {
+            browser.scripting.removeCSS({
+                css: request.remove,
+                origin: 'USER',
+                target: { tabId, frameIds: [ frameId ] },
+            }).catch(reason => {
+                ubolErr(`removeCSS/${reason}`);
+            });
+        }
         return false;
     }
 
@@ -668,6 +667,8 @@ async function startSession() {
     // launch time whether content css/scripts are properly registered.
     registerInjectables();
 
+    // Cosmetic filtering-related content scripts cache fitlering data in
+    // session storage.
     sessionAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest

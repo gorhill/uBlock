@@ -28,12 +28,9 @@ if ( Boolean(chrome?.storage?.local) === false ) { return; }
 /******************************************************************************/
 
 const rulesetId = self.$rulesetId$;
-const signature = self.$signature$;
-const hostnames = self.$hostnames$;
-const hasEntities = self.$hasEntities$;
 
 self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ rulesetId, signature, hostnames, hasEntities });
+self.proceduralImports.push({ rulesetId });
 
 /******************************************************************************/
 

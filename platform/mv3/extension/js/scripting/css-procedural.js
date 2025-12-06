@@ -32,66 +32,21 @@ self.proceduralImports = undefined;
 
 const isolatedAPI = self.isolatedAPI;
 
-const lookupHostname = (hostname, details) => {
-    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
-    if ( listref === -1 ) { return; }
-    details.listrefs ||= [];
-    details.listrefs.push(listref);
-};
+const selectors = [];
 
-const lookupAll = hostname => {
-    for ( const details of proceduralImports ) {
-        lookupHostname(hostname, details);
-    }
-};
-
-isolatedAPI.forEachHostname(lookupAll, {
-    hasEntities: proceduralImports.some(a => a.hasEntities)
-});
-
-const toLookup = proceduralImports.filter(a => Array.isArray(a.listrefs));
-if ( toLookup.length === 0 ) { return; }
-
-const selectors = new Set();
-const exceptions = new Set();
-
-const lookupSelectors = async details => {
-    const { rulesetId } = details;
-    const key = `css.procedural.data.${rulesetId}`;
-    const data = await isolatedAPI.storageGet(key);
-    if ( Boolean(data) === false ) { return; }
-    if ( data.signature !== details.signature ) { return; }
-    for ( const listref of details.listrefs ) {
-        const ilist = data.selectorListRefs[listref];
-        const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
-        for ( const iselector of list ) {
-            if ( iselector >= 0 ) {
-                selectors.add(data.selectors[iselector]);
-            } else {
-                exceptions.add(data.selectors[~iselector]);
-            }
-        }
-    }
-};
-
-const promises = [];
-for ( const details of toLookup ) {
-    promises.push(lookupSelectors(details));
+const cachedCSS = await isolatedAPI.sessionGet('css.procedural.cache') || {};
+if ( cachedCSS[isolatedAPI.docHostname] ) {
+    selectors.push(...cachedCSS[isolatedAPI.docHostname]);
+} else {
+    selectors.push(...await isolatedAPI.getSelectors('procedural', proceduralImports));
+    cachedCSS[isolatedAPI.docHostname] = selectors;
+    isolatedAPI.sessionSet('css.procedural.cache', cachedCSS);
 }
-
-await Promise.all(promises);
+if ( selectors.length === 0 ) { return; }
 
 proceduralImports.length = 0;
 
-for ( const selector of exceptions ) {
-    selectors.delete(selector);
-}
-
-if ( selectors.size === 0 ) { return; }
-
-const exceptedSelectors = Array.from(selectors).map(a => JSON.parse(a));
-
-const declaratives = exceptedSelectors.filter(a => a.cssable);
+const declaratives = selectors.filter(a => a.cssable);
 if ( declaratives.length !== 0 ) {
     const cssRuleFromProcedural = details => {
         const { tasks, action } = details;
@@ -127,11 +82,11 @@ if ( declaratives.length !== 0 ) {
         sheetText.push(ruleText);
     }
     if ( sheetText.length !== 0 ) {
-        self.cssAPI.insert(sheetText.join('\n'));
+        self.cssAPI.update(sheetText.join('\n'));
     }
 }
 
-const procedurals = exceptedSelectors.filter(a => a.cssable === undefined);
+const procedurals = selectors.filter(a => a.cssable === undefined);
 if ( procedurals.length !== 0 ) {
     const addSelectors = selectors => {
         if ( self.listsProceduralFiltererAPI instanceof Object === false ) { return; }

@@ -188,7 +188,7 @@ const uBOL_processNodes = ( ) => {
     if ( styleSheetTimer !== undefined ) { return; }
     styleSheetTimer = self.requestAnimationFrame(( ) => {
         styleSheetTimer = undefined;
-        self.cssAPI.insert(`${styleSheetSelectors.join(',')}{display:none!important;}`);
+        self.cssAPI.update(`${styleSheetSelectors.join(',')}{display:none!important;}`);
         styleSheetSelectors.length = 0;
     });
 };

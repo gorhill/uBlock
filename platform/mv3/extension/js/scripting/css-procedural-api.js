@@ -608,9 +608,11 @@ class ProceduralFilterer {
             for ( const elem of this.styledNodes ) {
                 elem.removeAttribute(token);
             }
-            const css = `[${token}]\n{${style}}\n`;
             promises.push(
-                chrome.runtime.sendMessage({ what: 'removeCSS', css }).catch(( ) => { })
+                chrome.runtime.sendMessage({
+                    what: 'updateCSS',
+                    remove: `[${token}]\n{${style}}\n`,
+                }).catch(( ) => { })
             );
         }
         this.styleTokenMap.clear();
@@ -680,7 +682,7 @@ class ProceduralFilterer {
         if ( styleToken !== undefined ) { return styleToken; }
         styleToken = randomToken();
         this.styleTokenMap.set(style, styleToken);
-        self.cssAPI.insert(`[${styleToken}]\n{${style}}\n`);
+        self.cssAPI.update(`[${styleToken}]\n{${style}}\n`);
         return styleToken;
     }
 

@@ -32,63 +32,22 @@ self.specificImports = undefined;
 
 const isolatedAPI = self.isolatedAPI;
 
-const lookupHostname = (hostname, details) => {
-    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
-    if ( listref === -1 ) { return; }
-    details.listrefs ||= [];
-    details.listrefs.push(listref);
-};
+const selectors = [];
 
-const lookupAll = hostname => {
-    for ( const details of specificImports ) {
-        lookupHostname(hostname, details);
-    }
-};
+self.cssAPI.update('*{visibility:hidden!important;}');
 
-isolatedAPI.forEachHostname(lookupAll, {
-    hasEntities: specificImports.some(a => a.hasEntities)
-});
-
-const toLookup = specificImports.filter(a => Array.isArray(a.listrefs));
-if ( toLookup.length === 0 ) { return; }
-
-const selectors = new Set();
-const exceptions = new Set();
-
-const lookupSelectors = async details => {
-    const { rulesetId } = details;
-    const key = `css.specific.data.${rulesetId}`;
-    const data = await isolatedAPI.storageGet(key);
-    if ( Boolean(data) === false ) { return; }
-    if ( data.signature !== details.signature ) { return; }
-    for ( const listref of details.listrefs ) {
-        const ilist = data.selectorListRefs[listref];
-        const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
-        for ( const iselector of list ) {
-            if ( iselector >= 0 ) {
-                selectors.add(data.selectors[iselector]);
-            } else {
-                exceptions.add(data.selectors[~iselector]);
-            }
-        }
-    }
-};
-
-const promises = [];
-for ( const details of toLookup ) {
-    promises.push(lookupSelectors(details));
+const cachedCSS = await isolatedAPI.sessionGet('css.specific.cache') || {};
+if ( cachedCSS[isolatedAPI.docHostname] ) {
+    selectors.push(...cachedCSS[isolatedAPI.docHostname]);
+} else {
+    selectors.push(...await isolatedAPI.getSelectors('specific', specificImports));
+    cachedCSS[isolatedAPI.docHostname] = selectors;
+    isolatedAPI.sessionSet('css.specific.cache', cachedCSS);
 }
-
-await Promise.all(promises);
-
-for ( const selector of exceptions ) {
-    selectors.delete(selector);
-}
-
-if ( selectors.size === 0 ) { return; }
-
-const css = `${Array.from(selectors).join(',\n')}{display:none!important;}`;
-self.cssAPI.insert(css);
+const insert = selectors.length !== 0
+    ? `${Array.from(selectors).join(',\n')}{display:none!important;}`
+    : undefined;
+self.cssAPI.update(insert, '*{visibility:hidden!important;}');
 
 /******************************************************************************/
 

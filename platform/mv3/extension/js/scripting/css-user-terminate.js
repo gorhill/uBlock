@@ -26,8 +26,8 @@
 const plainSelectors = self.customFilters?.plainSelectors;
 if ( plainSelectors ) {
     chrome.runtime.sendMessage({
-        what: 'removeCSS',
-        css: `${plainSelectors.join(',\n')}{display:none!important;}`,
+        what: 'updateCSS',
+        remove: `${plainSelectors.join(',\n')}{display:none!important;}`,
     }).catch(( ) => {
     });
 }

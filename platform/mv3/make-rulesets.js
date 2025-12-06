@@ -870,12 +870,13 @@ async function processCosmeticFilters(assetDetails, realm, mapin) {
     });
 
     const data = JSON.stringify({
-        signature: secret,
         selectors: Array.from(allSelectors.keys()),
         selectorLists: Array.from(allSelectorLists.keys()),
         selectorListRefs: sortedHostnames.map(a => allHostnames.get(a)),
+        hostnames: sortedHostnames,
+        hasEntities,
     });
-    writeFile(`${scriptletDir}/${realm}/data/${assetDetails.id}.json`, data);
+    writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.json`, data);
 
     // The cosmetic filters will be injected programmatically as content
     // script and the decisions to activate the cosmetic filters will be
@@ -884,18 +885,6 @@ async function processCosmeticFilters(assetDetails, realm, mapin) {
     let patchedScriptlet = originalScriptletMap.get(`css-${realm}`).replace(
         'self.$rulesetId$',
         JSON.stringify(assetDetails.id)
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        'self.$signature$',
-        JSON.stringify(secret)
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$hostnames\$/,
-        `/* ${sortedHostnames.length} */ ${JSON.stringify(sortedHostnames)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        'self.$hasEntities$',
-        JSON.stringify(hasEntities)
     );
     writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.js`, patchedScriptlet);
 

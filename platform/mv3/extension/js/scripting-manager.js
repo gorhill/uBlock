@@ -296,7 +296,7 @@ async function registerProcedural(context) {
     {
         const keys = await localKeys();
         for ( const key of keys ) {
-            if ( key.startsWith('css.procedural.data.') === false ) { continue; }
+            if ( key.startsWith('css.procedural.') === false ) { continue; }
             sessionRemove(key);
             localRemove(key);
         }
@@ -321,8 +321,8 @@ async function registerProcedural(context) {
         const promises = [];
         for ( const id of rulesetIds ) {
             promises.push(
-                fetchJSON(`/rulesets/scripting/procedural/data/${id}`).then(data => {
-                    return localWrite(`css.procedural.data.${id}`, data);
+                fetchJSON(`/rulesets/scripting/procedural/${id}`).then(data => {
+                    return localWrite(`css.procedural.json.${id}`, data);
                 })
             );
         }
@@ -385,7 +385,7 @@ async function registerSpecific(context) {
     {
         const keys = await localKeys();
         for ( const key of keys ) {
-            if ( key.startsWith('css.specific.data.') === false ) { continue; }
+            if ( key.startsWith('css.specific.') === false ) { continue; }
             sessionRemove(key);
             localRemove(key);
         }
@@ -410,8 +410,8 @@ async function registerSpecific(context) {
         const promises = [];
         for ( const id of rulesetIds ) {
             promises.push(
-                fetchJSON(`/rulesets/scripting/specific/data/${id}`).then(data => {
-                    return localWrite(`css.specific.data.${id}`, data);
+                fetchJSON(`/rulesets/scripting/specific/${id}`).then(data => {
+                    return localWrite(`css.specific.json.${id}`, data);
                 })
             );
         }
