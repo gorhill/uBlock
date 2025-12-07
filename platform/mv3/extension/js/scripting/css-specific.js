@@ -30,24 +30,10 @@ self.specificImports = undefined;
 
 /******************************************************************************/
 
-const isolatedAPI = self.isolatedAPI;
-
-const selectors = [];
-
-self.cssAPI.update('*{visibility:hidden!important;}');
-
-const cachedCSS = await isolatedAPI.sessionGet('css.specific.cache') || {};
-if ( cachedCSS[isolatedAPI.docHostname] ) {
-    selectors.push(...cachedCSS[isolatedAPI.docHostname]);
-} else {
-    selectors.push(...await isolatedAPI.getSelectors('specific', specificImports));
-    cachedCSS[isolatedAPI.docHostname] = selectors;
-    isolatedAPI.sessionSet('css.specific.cache', cachedCSS);
-}
-const insert = selectors.length !== 0
-    ? `${Array.from(selectors).join(',\n')}{display:none!important;}`
-    : undefined;
-self.cssAPI.update(insert, '*{visibility:hidden!important;}');
+const selectors = await self.cosmeticAPI.getSelectors('specific', specificImports);
+self.cosmeticAPI.release();
+if ( selectors.length === 0 ) { return; }
+self.cssAPI.update(`${selectors.join(',\n')}{display:none!important;}`);
 
 /******************************************************************************/
 

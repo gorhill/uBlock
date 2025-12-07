@@ -30,7 +30,7 @@ if ( Boolean(chrome?.storage?.local) === false ) { return; }
 const rulesetId = self.$rulesetId$;
 
 self.specificImports = self.specificImports || [];
-self.specificImports.push({ rulesetId });
+self.specificImports.push(rulesetId);
 
 /******************************************************************************/
 

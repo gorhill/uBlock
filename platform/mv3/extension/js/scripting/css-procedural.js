@@ -30,18 +30,8 @@ self.proceduralImports = undefined;
 
 /******************************************************************************/
 
-const isolatedAPI = self.isolatedAPI;
-
-const selectors = [];
-
-const cachedCSS = await isolatedAPI.sessionGet('css.procedural.cache') || {};
-if ( cachedCSS[isolatedAPI.docHostname] ) {
-    selectors.push(...cachedCSS[isolatedAPI.docHostname]);
-} else {
-    selectors.push(...await isolatedAPI.getSelectors('procedural', proceduralImports));
-    cachedCSS[isolatedAPI.docHostname] = selectors;
-    isolatedAPI.sessionSet('css.procedural.cache', cachedCSS);
-}
+const selectors = await self.cosmeticAPI.getSelectors('procedural', proceduralImports);
+self.cosmeticAPI.release();
 if ( selectors.length === 0 ) { return; }
 
 proceduralImports.length = 0;

@@ -43,8 +43,8 @@ if ( details?.plainSelectors?.length ) {
     const selectors = details.plainSelectors;
     self.addEventListener('pageshow', ( ) => {
         chrome.runtime.sendMessage({
-            what: 'insertCSS',
-            css: `${selectors.join(',\n')}{display:none!important;}`,
+            what: 'updateCSS',
+            insert: `${selectors.join(',\n')}{display:none!important;}`,
         }).catch(( ) => {
         });
     });

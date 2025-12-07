@@ -25,20 +25,22 @@
     const inserted = new Set();
 
     self.cssAPI = {
-        insert(css) {
+        update(insert, remove) {
             chrome.runtime.sendMessage({
-                what: 'insertCSS',
-                css,
+                what: 'updateCSS',
+                insert,
+                remove,
             }).catch(( ) => {
             });
-            inserted.add(css);
+            inserted.add(insert);
+            inserted.delete(remove);
         },
     };
 
     self.addEventListener('pageshow', ( ) => {
         chrome.runtime.sendMessage({
-            what: 'insertCSS',
-            css: Array.from(inserted).join('\n'),
+            what: 'updateCSS',
+            insert: Array.from(inserted).join('\n'),
         }).catch(( ) => {
         });
     });

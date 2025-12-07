@@ -24,7 +24,7 @@ import * as ut from './utils.js';
 import {
     browser,
     localKeys, localRemove, localWrite,
-    sessionRemove,
+    sessionKeys, sessionRead, sessionRemove, sessionWrite,
 } from './ext.js';
 import { ubolErr, ubolLog } from './debug.js';
 
@@ -91,6 +91,15 @@ const normalizeRegisteredContentScripts = registered => {
     }
     return registered;
 };
+
+/******************************************************************************/
+
+async function resetCSSCache() {
+    const keys = await sessionKeys();
+    return Promise.all(
+        keys.filter(a => a.startsWith('cache.css.')).map(a => sessionRemove(a))
+    );
+}
 
 /******************************************************************************/
 
@@ -297,7 +306,6 @@ async function registerProcedural(context) {
         const keys = await localKeys();
         for ( const key of keys ) {
             if ( key.startsWith('css.procedural.') === false ) { continue; }
-            sessionRemove(key);
             localRemove(key);
         }
     }
@@ -322,7 +330,7 @@ async function registerProcedural(context) {
         for ( const id of rulesetIds ) {
             promises.push(
                 fetchJSON(`/rulesets/scripting/procedural/${id}`).then(data => {
-                    return localWrite(`css.procedural.json.${id}`, data);
+                    return localWrite(`css.procedural.${id}`, data);
                 })
             );
         }
@@ -386,7 +394,6 @@ async function registerSpecific(context) {
         const keys = await localKeys();
         for ( const key of keys ) {
             if ( key.startsWith('css.specific.') === false ) { continue; }
-            sessionRemove(key);
             localRemove(key);
         }
     }
@@ -411,7 +418,7 @@ async function registerSpecific(context) {
         for ( const id of rulesetIds ) {
             promises.push(
                 fetchJSON(`/rulesets/scripting/specific/${id}`).then(data => {
-                    return localWrite(`css.specific.json.${id}`, data);
+                    return localWrite(`css.specific.${id}`, data);
                 })
             );
         }
@@ -547,7 +554,7 @@ function registerScriptlet(context, scriptletDetails) {
 // Issue: Safari appears to completely ignore excludeMatches
 // https://github.com/radiolondra/ExcludeMatches-Test
 
-async function registerInjectables() {
+export async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }
 
     if ( registerInjectables.barrier ) { return true; }
@@ -612,6 +619,8 @@ async function registerInjectables() {
         }
     }
 
+    await resetCSSCache();
+
     registerInjectables.barrier = false;
 
     return true;
@@ -619,6 +628,25 @@ async function registerInjectables() {
 
 /******************************************************************************/
 
-export {
-    registerInjectables
-};
+export async function onWakeupRun() {
+    const cleanupTime = await sessionRead('scripting.manager.cleanup.time') || 0;
+    const now = Date.now();
+    const since = now - cleanupTime;
+    if ( since < (15 * 60 * 1000) ) { return; } // 15 minutes
+    const MAX_CACHE_ENTRY_LOW = 256;
+    const MAX_CACHE_ENTRY_HIGH = MAX_CACHE_ENTRY_LOW +
+        Math.min(Math.round(MAX_CACHE_ENTRY_LOW + MAX_CACHE_ENTRY_LOW / 8), 1);
+    const keys = await sessionKeys() || [];
+    const cacheKeys = keys.filter(a => a.startsWith('cache.css.'));
+    if ( cacheKeys.length < MAX_CACHE_ENTRY_HIGH ) { return; }
+    const entries = await Promise.all(cacheKeys.map(async a => {
+        const entry = await sessionRead(a) || {};
+        entry.key = a;
+        return entry;
+    }));
+    entries.sort((a, b) => b.t - a.t);
+    entries.slice(MAX_CACHE_ENTRY_LOW).map(a => sessionRemove(a.key));
+    sessionWrite('scripting.manager.cleanup.time', now)
+}
+
+/******************************************************************************/

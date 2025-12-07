@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import * as scrmgr from './scripting-manager.js';
+
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
@@ -100,14 +102,13 @@ import {
 } from './debug.js';
 
 import { dnr } from './ext-compat.js';
-import { registerInjectables } from './scripting-manager.js';
 import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
-
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
+const { registerInjectables } = scrmgr;
 
 let pendingPermissionRequest;
 
@@ -710,6 +711,8 @@ async function start() {
 
     if ( process.wakeupRun === false ) {
         await startSession();
+    } else {
+        scrmgr.onWakeupRun();
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
