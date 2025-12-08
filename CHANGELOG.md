@@ -1,3 +1,4 @@
+- [Improve google-ima shim](https://github.com/gorhill/uBlock/commit/3fc281adf1)
 - [[firefox] Change minimum required version to 115](https://github.com/gorhill/uBlock/commit/d5793b83f2)
 - [Fix regression in `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/be78200c2f)
 - [Add `prevent-dialog` scriptlet](https://github.com/gorhill/uBlock/commit/fd12d01928)
