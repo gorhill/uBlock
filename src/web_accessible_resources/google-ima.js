@@ -15,10 +15,13 @@
  * - Corrected typo in `UniversalAdIdInfo.getAdIdValue()` method name
  * - Corrected dispatch of LOAD event when preloading is enabled
  * - Corrected dispatch of CONTENT_PAUSE/RESUME_REQUESTED events
+ * - Remove test for auto-play in requestAds(): always behave as if auto-play
+ *   is disabled
  * 
  * Related issue:
  * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
  * - https://github.com/uBlockOrigin/uAssets/issues/30134
+ * - https://github.com/uBlockOrigin/uAssets/issues/31018
  * 
 **/
  
@@ -39,204 +42,6 @@
 
 if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   const VERSION = "3.517.2";
-
-  const CheckCanAutoplay = (function() {
-    // Sourced from: https://searchfox.org/mozilla-central/source/dom/media/gtest/negative_duration.mp4
-    const TEST_VIDEO = new Blob(
-      [
-        new Uint32Array([
-          469762048,
-          1887007846,
-          1752392036,
-          0,
-          913273705,
-          1717987696,
-          828601953,
-          -1878917120,
-          1987014509,
-          1811939328,
-          1684567661,
-          0,
-          0,
-          0,
-          -402456576,
-          0,
-          256,
-          1,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          64,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          33554432,
-          -201261056,
-          1801548404,
-          1744830464,
-          1684564852,
-          251658241,
-          0,
-          0,
-          0,
-          0,
-          16777216,
-          0,
-          -1,
-          -1,
-          0,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          64,
-          5,
-          53250,
-          -2080309248,
-          1634296941,
-          738197504,
-          1684563053,
-          1,
-          0,
-          0,
-          0,
-          0,
-          -2137614336,
-          -1,
-          -1,
-          50261,
-          754974720,
-          1919706216,
-          0,
-          0,
-          1701079414,
-          0,
-          0,
-          0,
-          1701079382,
-          1851869295,
-          1919249508,
-          16777216,
-          1852402979,
-          102,
-          1752004116,
-          100,
-          1,
-          0,
-          0,
-          1852400676,
-          102,
-          1701995548,
-          102,
-          0,
-          1,
-          1819440396,
-          32,
-          1,
-          1651799011,
-          108,
-          1937011607,
-          100,
-          0,
-          1,
-          1668702599,
-          49,
-          0,
-          1,
-          0,
-          0,
-          0,
-          33555712,
-          4718800,
-          4718592,
-          0,
-          65536,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          16776984,
-          1630601216,
-          21193590,
-          -14745500,
-          1729626337,
-          -1407254428,
-          89161945,
-          1049019,
-          9453056,
-          -251611125,
-          27269507,
-          -379058688,
-          -1329024392,
-          268435456,
-          1937011827,
-          0,
-          0,
-          268435456,
-          1668510835,
-          0,
-          0,
-          335544320,
-          2054386803,
-          0,
-          0,
-          0,
-          268435456,
-          1868788851,
-          0,
-          0,
-          671088640,
-          2019915373,
-          536870912,
-          2019914356,
-          0,
-          16777216,
-          16777216,
-          0,
-          0,
-          0,
-        ]),
-      ],
-      { type: "video/mp4" }
-    );
-
-    let testVideo;
-
-    return function() {
-      if (!testVideo) {
-        testVideo = document.createElement("video");
-        testVideo.style =
-          "position:absolute; width:0; height:0; left:0; right:0; z-index:-1; border:0";
-        testVideo.setAttribute("muted", "muted");
-        testVideo.setAttribute("playsinline", "playsinline");
-        testVideo.src = URL.createObjectURL(TEST_VIDEO);
-        document.body.appendChild(testVideo);
-      }
-      return testVideo.play();
-    };
-  })();
-
   const ima = {};
 
   class AdDisplayContainer {
@@ -390,26 +195,20 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return VERSION;
     }
     requestAds(_r, _c) {
-      // If autoplay is disabled and the page is trying to autoplay a tracking
-      // ad, then IMA fails with an error, and the page is expected to request
-      // ads again later when the user clicks to play.
-      CheckCanAutoplay().then(
-        () => {
-          const { ADS_MANAGER_LOADED } = AdsManagerLoadedEvent.Type;
-          this._dispatch(new ima.AdsManagerLoadedEvent(ADS_MANAGER_LOADED, _r, _c));
-        },
-        () => {
-          const e = new ima.AdError(
-            "adPlayError",
-            1205,
-            1205,
-            "The browser prevented playback initiated without user interaction.",
-            _r,
-            _c
-          );
-          this._dispatch(new ima.AdErrorEvent(e));
-        }
+      requestAnimationFrame(() => {
+        const { ADS_MANAGER_LOADED } = AdsManagerLoadedEvent.Type;
+        const event = new ima.AdsManagerLoadedEvent(ADS_MANAGER_LOADED, _r, _c);
+        this._dispatch(event);
+      });
+      const error = new ima.AdError(
+        "adPlayError",
+        1205, 1205,
+        "The browser prevented playback initiated without user interaction.",
+        _r, _c
       );
+      requestAnimationFrame( () => {
+        this._dispatch(new ima.AdErrorEvent(error));
+      });
     }
   }
 
