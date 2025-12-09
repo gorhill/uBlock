@@ -21,7 +21,7 @@
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssProcedural() {
+(async function uBOL_cssProcedural() {
 
 /******************************************************************************/
 
@@ -30,49 +30,13 @@ self.proceduralImports = undefined;
 
 /******************************************************************************/
 
-const isolatedAPI = self.isolatedAPI;
-const selectors = new Set();
-const exceptions = new Set();
-
-const lookupHostname = (hostname, details) => {
-    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
-    if ( listref === -1 ) { return; }
-    if ( Array.isArray(details.selectorLists) === false ) {
-        details.selectorLists = details.selectorLists.split(';');
-        details.selectorListRefs = JSON.parse(`[${details.selectorListRefs}]`);
-    }
-    const ilist = details.selectorListRefs[listref];
-    const list = JSON.parse(`[${details.selectorLists[ilist]}]`);
-    for ( const iselector of list ) {
-        if ( iselector >= 0 ) {
-            selectors.add(details.selectors[iselector]);
-        } else {
-            exceptions.add(details.selectors[~iselector]);
-        }
-    }
-};
-
-const lookupAll = hostname => {
-    for ( const details of proceduralImports ) {
-        lookupHostname(hostname, details);
-    }
-};
-
-isolatedAPI.forEachHostname(lookupAll, {
-    hasEntities: proceduralImports.some(a => a.hasEntities)
-});
+const selectors = await self.cosmeticAPI.getSelectors('procedural', proceduralImports);
+self.cosmeticAPI.release();
+if ( selectors.length === 0 ) { return; }
 
 proceduralImports.length = 0;
 
-for ( const selector of exceptions ) {
-    selectors.delete(selector);
-}
-
-if ( selectors.size === 0 ) { return; }
-
-const exceptedSelectors = Array.from(selectors).map(a => JSON.parse(a));
-
-const declaratives = exceptedSelectors.filter(a => a.cssable);
+const declaratives = selectors.filter(a => a.cssable);
 if ( declaratives.length !== 0 ) {
     const cssRuleFromProcedural = details => {
         const { tasks, action } = details;
@@ -112,7 +76,7 @@ if ( declaratives.length !== 0 ) {
     }
 }
 
-const procedurals = exceptedSelectors.filter(a => a.cssable === undefined);
+const procedurals = selectors.filter(a => a.cssable === undefined);
 if ( procedurals.length !== 0 ) {
     const addSelectors = selectors => {
         if ( self.listsProceduralFiltererAPI instanceof Object === false ) { return; }

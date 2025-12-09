@@ -21,7 +21,7 @@
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssSpecific() {
+(async function uBOL_cssSpecific() {
 
 /******************************************************************************/
 
@@ -30,48 +30,10 @@ self.specificImports = undefined;
 
 /******************************************************************************/
 
-const isolatedAPI = self.isolatedAPI;
-const selectors = new Set();
-const exceptions = new Set();
-
-const lookupHostname = (hostname, details) => {
-    const listref = isolatedAPI.binarySearch(details.hostnames, hostname);
-    if ( listref === -1 ) { return; }
-    if ( Array.isArray(details.selectorLists) === false ) {
-        details.selectorLists = details.selectorLists.split(';');
-        details.selectorListRefs = JSON.parse(`[${details.selectorListRefs}]`);
-    }
-    const ilist = details.selectorListRefs[listref];
-    const list = JSON.parse(`[${details.selectorLists[ilist]}]`);
-    for ( const iselector of list ) {
-        if ( iselector >= 0 ) {
-            selectors.add(details.selectors[iselector]);
-        } else {
-            exceptions.add(details.selectors[~iselector]);
-        }
-    }
-};
-
-const lookupAll = hostname => {
-    for ( const details of specificImports ) {
-        lookupHostname(hostname, details);
-    }
-};
-
-isolatedAPI.forEachHostname(lookupAll, {
-    hasEntities: specificImports.some(a => a.hasEntities)
-});
-
-specificImports.length = 0;
-
-for ( const selector of exceptions ) {
-    selectors.delete(selector);
-}
-
-if ( selectors.size === 0 ) { return; }
-
-const css = `${Array.from(selectors).join(',\n')}{display:none!important;}`;
-self.cssAPI.insert(css);
+const selectors = await self.cosmeticAPI.getSelectors('specific', specificImports);
+self.cosmeticAPI.release();
+if ( selectors.length === 0 ) { return; }
+self.cssAPI.insert(`${selectors.join(',\n')}{display:none!important;}`);
 
 /******************************************************************************/
 

@@ -21,7 +21,11 @@
 
 import * as ut from './utils.js';
 
-import { browser, localRemove } from './ext.js';
+import {
+    browser,
+    localKeys, localRemove, localWrite,
+    sessionKeys, sessionRead, sessionRemove, sessionWrite,
+} from './ext.js';
 import { ubolErr, ubolLog } from './debug.js';
 
 import { fetchJSON } from './fetch.js';
@@ -87,6 +91,15 @@ const normalizeRegisteredContentScripts = registered => {
     }
     return registered;
 };
+
+/******************************************************************************/
+
+async function resetCSSCache() {
+    const keys = await sessionKeys();
+    return Promise.all(
+        keys.filter(a => a.startsWith('cache.css.')).map(a => sessionRemove(a))
+    );
+}
 
 /******************************************************************************/
 
@@ -286,16 +299,24 @@ function registerGeneric(context, genericDetails) {
 
 /******************************************************************************/
 
-function registerProcedural(context) {
+async function registerCosmetic(realm, context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
-    const js = [];
-    for ( const rulesetDetails of rulesetsDetails ) {
-        const count = rulesetDetails.css?.procedural || 0;
-        if ( count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/procedural/${rulesetDetails.id}.js`);
+    {
+        const keys = await localKeys();
+        for ( const key of keys ) {
+            if ( key.startsWith(`css.${realm}.`) === false ) { continue; }
+            localRemove(key);
+        }
     }
-    if ( js.length === 0 ) { return; }
+
+    const rulesetIds = [];
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const count = rulesetDetails.css?.[realm] || 0;
+        if ( count === 0 ) { continue; }
+        rulesetIds.push(rulesetDetails.id);
+    }
+    if ( rulesetIds.length === 0 ) { return; }
 
     const { none, basic, optimal, complete } = filteringModeDetails;
     const matches = [
@@ -304,10 +325,24 @@ function registerProcedural(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    {
+        const promises = [];
+        for ( const id of rulesetIds ) {
+            promises.push(
+                fetchJSON(`/rulesets/scripting/${realm}/${id}`).then(data => {
+                    return localWrite(`css.${realm}.${id}`, data);
+                })
+            );
+        }
+        await Promise.all(promises);
+    }
+
     normalizeMatches(matches);
 
+    const realmid = `css-${realm}`;
+    const js = rulesetIds.map(id => `/rulesets/scripting/${realm}/${id}.js`);
     js.unshift('/js/scripting/css-api.js', '/js/scripting/isolated-api.js');
-    js.push('/js/scripting/css-procedural.js');
+    js.push(`/js/scripting/${realmid}.js`);
 
     const excludeMatches = [];
     if ( none.has('all-urls') === false && basic.has('all-urls') === false ) {
@@ -320,11 +355,11 @@ function registerProcedural(context) {
         }
     }
 
-    const registered = before.get('css-procedural');
-    before.delete('css-procedural'); // Important!
+    const registered = before.get(realmid);
+    before.delete(realmid); // Important!
 
     const directive = {
-        id: 'css-procedural',
+        id: realmid,
         js,
         matches,
         allFrames: true,
@@ -346,71 +381,7 @@ function registerProcedural(context) {
         ut.strArrayEq(registered.matches, matches) === false ||
         ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
     ) {
-        context.toRemove.push('css-procedural');
-        context.toAdd.push(directive);
-    }
-}
-
-/******************************************************************************/
-
-function registerSpecific(context) {
-    const { before, filteringModeDetails, rulesetsDetails } = context;
-
-    const js = [];
-    for ( const rulesetDetails of rulesetsDetails ) {
-        const count = rulesetDetails.css?.specific || 0;
-        if ( count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/specific/${rulesetDetails.id}.js`);
-    }
-    if ( js.length === 0 ) { return; }
-
-    const { none, basic, optimal, complete } = filteringModeDetails;
-    const matches = [
-        ...ut.matchesFromHostnames(optimal),
-        ...ut.matchesFromHostnames(complete),
-    ];
-    if ( matches.length === 0 ) { return; }
-
-    normalizeMatches(matches);
-
-    js.unshift('/js/scripting/css-api.js', '/js/scripting/isolated-api.js');
-    js.push('/js/scripting/css-specific.js');
-
-    const excludeMatches = [];
-    if ( none.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(none));
-    }
-    if ( basic.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(basic));
-    }
-
-    const registered = before.get('css-specific');
-    before.delete('css-specific'); // Important!
-
-    const directive = {
-        id: 'css-specific',
-        js,
-        matches,
-        allFrames: true,
-        runAt: 'document_start',
-    };
-    if ( excludeMatches.length !== 0 ) {
-        directive.excludeMatches = excludeMatches;
-    }
-
-    // register
-    if ( registered === undefined ) {
-        context.toAdd.push(directive);
-        return;
-    }
-
-    // update
-    if (
-        ut.strArrayEq(registered.js, js, false) === false ||
-        ut.strArrayEq(registered.matches, matches) === false ||
-        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
-    ) {
-        context.toRemove.push('css-specific');
+        context.toRemove.push(realmid);
         context.toAdd.push(directive);
     }
 }
@@ -499,7 +470,7 @@ function registerScriptlet(context, scriptletDetails) {
 // Issue: Safari appears to completely ignore excludeMatches
 // https://github.com/radiolondra/ExcludeMatches-Test
 
-async function registerInjectables() {
+export async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }
 
     if ( registerInjectables.barrier ) { return true; }
@@ -533,9 +504,9 @@ async function registerInjectables() {
     };
 
     await Promise.all([
-        registerProcedural(context),
         registerScriptlet(context, scriptletDetails),
-        registerSpecific(context),
+        registerCosmetic('specific', context),
+        registerCosmetic('procedural', context),
         registerGeneric(context, genericDetails),
         registerHighGeneric(context, genericDetails),
         registerCustomFilters(context),
@@ -564,6 +535,8 @@ async function registerInjectables() {
         }
     }
 
+    await resetCSSCache();
+
     registerInjectables.barrier = false;
 
     return true;
@@ -571,6 +544,25 @@ async function registerInjectables() {
 
 /******************************************************************************/
 
-export {
-    registerInjectables
-};
+export async function onWakeupRun() {
+    const cleanupTime = await sessionRead('scripting.manager.cleanup.time') || 0;
+    const now = Date.now();
+    const since = now - cleanupTime;
+    if ( since < (15 * 60 * 1000) ) { return; } // 15 minutes
+    const MAX_CACHE_ENTRY_LOW = 256;
+    const MAX_CACHE_ENTRY_HIGH = MAX_CACHE_ENTRY_LOW +
+        Math.min(Math.round(MAX_CACHE_ENTRY_LOW + MAX_CACHE_ENTRY_LOW / 8), 1);
+    const keys = await sessionKeys() || [];
+    const cacheKeys = keys.filter(a => a.startsWith('cache.css.'));
+    if ( cacheKeys.length < MAX_CACHE_ENTRY_HIGH ) { return; }
+    const entries = await Promise.all(cacheKeys.map(async a => {
+        const entry = await sessionRead(a) || {};
+        entry.key = a;
+        return entry;
+    }));
+    entries.sort((a, b) => b.t - a.t);
+    entries.slice(MAX_CACHE_ENTRY_LOW).map(a => sessionRemove(a.key));
+    sessionWrite('scripting.manager.cleanup.time', now)
+}
+
+/******************************************************************************/

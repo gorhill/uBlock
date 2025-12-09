@@ -19,23 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// ruleset: $rulesetId$
-
 // Important!
 // Isolate from global scope
 (function uBOL_cssProceduralImport() {
 
 /******************************************************************************/
 
-
-const selectors = self.$selectors$;
-const selectorLists = self.$selectorLists$;
-const selectorListRefs = self.$selectorListRefs$;
-const hostnames = self.$hostnames$;
-const hasEntities = self.$hasEntities$;
+const rulesetId = self.$rulesetId$;
 
 self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ selectors, selectorLists, selectorListRefs, hostnames, hasEntities });
+self.proceduralImports.push(rulesetId);
 
 /******************************************************************************/
 

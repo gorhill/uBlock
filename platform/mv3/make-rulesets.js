@@ -863,38 +863,28 @@ async function processCosmeticFilters(assetDetails, realm, mapin) {
         allHostnames.set(hn, allSelectorLists.get(list));
     }
 
-    // The cosmetic filters will be injected programmatically as content
-    // script and the decisions to activate the cosmetic filters will be
-    // done at injection time according to the document's hostname.
-    const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get(`css-${realm}`).replace(
-        '$rulesetId$',
-        assetDetails.id
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$selectors\$/,
-        `/* ${allSelectors.size} */ ${JSON.stringify(Array.from(allSelectors.keys()))}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$selectorLists\$/,
-        `/* ${allSelectorLists.size} */ ${JSON.stringify(Array.from(allSelectorLists.keys()).join(';'))}`
-    );
     const sortedHostnames = Array.from(allHostnames.keys()).toSorted((a, b) => {
         const d = a.length - b.length;
         if ( d !== 0 ) { return d; }
         return a < b ? -1 : 1;
     });
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$selectorListRefs\$/,
-        `/* ${sortedHostnames.length} */ "${JSON.stringify(sortedHostnames.map(a => allHostnames.get(a))).slice(1, -1)}"`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$hostnames\$/,
-        `/* ${sortedHostnames.length} */ ${JSON.stringify(sortedHostnames)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        'self.$hasEntities$',
-        JSON.stringify(hasEntities)
+
+    const data = JSON.stringify({
+        selectors: Array.from(allSelectors.keys()),
+        selectorLists: Array.from(allSelectorLists.keys()),
+        selectorListRefs: sortedHostnames.map(a => allHostnames.get(a)),
+        hostnames: sortedHostnames,
+        hasEntities,
+    });
+    writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.json`, data);
+
+    // The cosmetic filters will be injected programmatically as content
+    // script and the decisions to activate the cosmetic filters will be
+    // done at injection time according to the document's hostname.
+    const originalScriptletMap = await loadAllSourceScriptlets();
+    let patchedScriptlet = originalScriptletMap.get(`css-${realm}`).replace(
+        'self.$rulesetId$',
+        JSON.stringify(assetDetails.id)
     );
     writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.js`, patchedScriptlet);
 

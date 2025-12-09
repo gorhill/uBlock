@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import * as scrmgr from './scripting-manager.js';
+
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
@@ -63,6 +65,7 @@ import {
     browser,
     localRead, localRemove, localWrite,
     runtime,
+    sessionAccessLevel,
     webextFlavor,
 } from './ext.js';
 
@@ -99,14 +102,13 @@ import {
 } from './debug.js';
 
 import { dnr } from './ext-compat.js';
-import { registerInjectables } from './scripting-manager.js';
 import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
-
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
+const { registerInjectables } = scrmgr;
 
 let pendingPermissionRequest;
 
@@ -223,7 +225,7 @@ function onMessage(request, sender, callback) {
 
     switch ( request.what ) {
 
-    case 'insertCSS': {
+    case 'insertCSS':
         if ( frameId === false ) { return false; }
         // https://bugs.webkit.org/show_bug.cgi?id=262491
         if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
@@ -235,10 +237,11 @@ function onMessage(request, sender, callback) {
             ubolErr(`insertCSS/${reason}`);
         });
         return false;
-    }
 
-    case 'removeCSS': {
+    case 'removeCSS':
         if ( frameId === false ) { return false; }
+        // https://bugs.webkit.org/show_bug.cgi?id=262491
+        if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
         browser.scripting.removeCSS({
             css: request.css,
             origin: 'USER',
@@ -247,7 +250,6 @@ function onMessage(request, sender, callback) {
             ubolErr(`removeCSS/${reason}`);
         });
         return false;
-    }
 
     case 'toggleToolbarIcon': {
         if ( tabId ) {
@@ -667,6 +669,10 @@ async function startSession() {
     // launch time whether content css/scripts are properly registered.
     registerInjectables();
 
+    // Cosmetic filtering-related content scripts cache fitlering data in
+    // session storage.
+    sessionAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
+
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest
     //   Firefox API does not support `dnr.setExtensionActionOptions`
     if ( canShowBlockedCount ) {
@@ -706,6 +712,8 @@ async function start() {
 
     if ( process.wakeupRun === false ) {
         await startSession();
+    } else {
+        scrmgr.onWakeupRun();
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);

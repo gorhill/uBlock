@@ -100,6 +100,24 @@ export async function sessionRemove(key) {
     return browser.storage.session.remove(key);
 }
 
+export async function sessionKeys() {
+    if ( notAnObject(browser?.storage?.session) ) { return; }
+    if ( browser.storage.session.getKeys ) {
+        return browser.storage.session.getKeys();
+    }
+    const bin = await browser.storage.session.get(null);
+    if ( notAnObject(bin) ) { return; }
+    return Object.keys(bin);
+}
+
+export async function sessionAccessLevel(level) {
+    try {
+        browser.storage.session.setAccessLevel(level);
+    } catch {
+    }
+    
+}
+
 /******************************************************************************/
 
 export async function adminRead(key) {
