@@ -62,6 +62,44 @@ registerScriptlet(getExceptionTokenFn, {
 
 /******************************************************************************/
 
+export function collateFetchArgumentsFn(resource, options) {
+    const safe = safeSelf();
+    const props = [
+        'body', 'cache', 'credentials', 'duplex', 'headers',
+        'integrity', 'keepalive', 'method', 'mode', 'priority',
+        'redirect', 'referrer', 'referrerPolicy', 'signal',
+    ];
+    const out = {};
+    if ( collateFetchArgumentsFn.collateKnownProps === undefined ) {
+        collateFetchArgumentsFn.collateKnownProps = (src, out) => {
+            for ( const prop of props ) {
+                if ( src[prop] === undefined ) { continue; }
+                out[prop] = src[prop];
+            }
+        };
+    }
+    if (
+        typeof resource !== 'object' ||
+        safe.Object_toString.call(resource) !== '[object Request]'
+    ) {
+        out.url = `${resource}`;
+    } else {
+        collateFetchArgumentsFn.collateKnownProps(resource, out);
+    }
+    if ( typeof options === 'object' && options !== null ) {
+        collateFetchArgumentsFn.collateKnownProps(options, out);
+    }
+    return out;
+}
+registerScriptlet(collateFetchArgumentsFn, {
+    name: 'collate-fetch-arguments.fn',
+    dependencies: [
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+
 export function parsePropertiesToMatchFn(propsToMatch, implicit = '') {
     const safe = safeSelf();
     const needles = new Map();

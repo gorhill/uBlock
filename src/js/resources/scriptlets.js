@@ -35,6 +35,7 @@ import './replace-argument.js';
 import './spoof-css.js';
 
 import {
+    collateFetchArgumentsFn,
     generateContentFn,
     getExceptionTokenFn,
     getRandomTokenFn,
@@ -314,6 +315,7 @@ builtinScriptlets.push({
     name: 'replace-fetch-response.fn',
     fn: replaceFetchResponseFn,
     dependencies: [
+        'collate-fetch-arguments.fn',
         'match-object-properties.fn',
         'parse-properties-to-match.fn',
         'safe-self.fn',
@@ -338,19 +340,8 @@ function replaceFetchResponseFn(
             const fetchPromise = Reflect.apply(target, thisArg, args);
             if ( pattern === '' ) { return fetchPromise; }
             if ( propNeedles.size !== 0 ) {
-                const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-                if ( objs[0] instanceof Request ) {
-                    try {
-                        objs[0] = safe.Request_clone.call(objs[0]);
-                    }
-                    catch(ex) {
-                        safe.uboErr(logPrefix, ex);
-                    }
-                }
-                if ( args[1] instanceof Object ) {
-                    objs.push(args[1]);
-                }
-                const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+                const props = collateFetchArgumentsFn(...args);
+                const matched = matchObjectPropertiesFn(propNeedles, props);
                 if ( matched === undefined ) { return fetchPromise; }
                 if ( safe.logLevel > 1 ) {
                     safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);

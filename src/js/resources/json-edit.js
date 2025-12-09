@@ -21,6 +21,7 @@
 */
 
 import {
+    collateFetchArgumentsFn,
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
 } from './utils.js';
@@ -569,18 +570,8 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
         const args = context.callArgs;
         const fetchPromise = context.reflect();
         if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(...args);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return fetchPromise; }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -618,6 +609,7 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
 registerScriptlet(jsonEditFetchResponseFn, {
     name: 'json-edit-fetch-response.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
@@ -716,17 +708,8 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
             return context.reflect();
         }
         if ( propNeedles.size !== 0 ) {
-            const objs = [
-                resource instanceof Object ? resource : { url: `${resource}` }
-            ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(resource, options);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return context.reflect(); }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -745,6 +728,7 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
 registerScriptlet(jsonEditFetchRequestFn, {
     name: 'json-edit-fetch-request.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
@@ -986,18 +970,8 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '') {
         const args = context.callArgs;
         const fetchPromise = context.reflect();
         if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(...args);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return fetchPromise; }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -1039,6 +1013,7 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '') {
 registerScriptlet(jsonlEditFetchResponseFn, {
     name: 'jsonl-edit-fetch-response.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         jsonlEditFn,
         matchObjectPropertiesFn,

@@ -21,6 +21,7 @@
 */
 
 import {
+    collateFetchArgumentsFn,
     generateContentFn,
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
@@ -75,32 +76,9 @@ function preventFetchFn(
             responseProps.type = { value: responseType };
         }
     }
-    const fetchProps = (src, out) => {
-        if ( typeof src !== 'object' || src === null ) { return; }
-        const props = [
-            'body', 'cache', 'credentials', 'duplex', 'headers',
-            'integrity', 'keepalive', 'method', 'mode', 'priority',
-            'redirect', 'referrer', 'referrerPolicy', 'signal',
-        ];
-        for ( const prop of props ) {
-            if ( src[prop] === undefined ) { continue; }
-            out[prop] = src[prop];
-        }
-    };
-    const fetchDetails = args => {
-        const out = {};
-        if ( args[0] instanceof self.Request ) {
-            out.url = `${args[0].url}`;
-            fetchProps(args[0], out);
-        } else {
-            out.url = `${args[0]}`;
-        }
-        fetchProps(args[1], out);
-        return out;
-    };
     proxyApplyFn('fetch', function fetch(context) {
         const { callArgs } = context;
-        const details = fetchDetails(callArgs);
+        const details = collateFetchArgumentsFn(...callArgs);
         if ( safe.logLevel > 1 || propsToMatch === '' && responseBody === '' ) {
             const out = Array.from(Object.entries(details)).map(a => `${a[0]}:${a[1]}`);
             safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
@@ -136,6 +114,7 @@ function preventFetchFn(
 registerScriptlet(preventFetchFn, {
     name: 'prevent-fetch.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         generateContentFn,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
