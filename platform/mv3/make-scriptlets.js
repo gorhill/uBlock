@@ -197,7 +197,7 @@ export async function commit(rulesetId, path, writeFn) {
         );
         content = safeReplace(content,
             'self.$scriptletCode$',
-            Array.from(allFunctions.values()).join('\n\n')
+            Array.from(allFunctions.values()).sort().join('\n\n')
         );
         writeFn(`${path}/${world.toLowerCase()}/${rulesetId}.js`, content);
         stats[world] = Array.from(worldDetails.matches).sort();
