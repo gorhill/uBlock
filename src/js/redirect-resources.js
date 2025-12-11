@@ -112,6 +112,9 @@ export default new Map([
     } ],
     [ 'hd-main.js', {
     } ],
+    [ 'nitropay_ads.js', {
+        data: 'text',
+    } ],
     [ 'nobab.js', {
         alias: [ 'bab-defuser.js', 'prevent-bab.js' ],
         data: 'text',
