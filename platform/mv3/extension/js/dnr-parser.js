@@ -515,7 +515,7 @@ export function rulesFromText(text) {
         if ( indices.length === 0 ) { continue; }
         const result = ruleFromLines(lines, indices);
         if ( result.bad ) {
-            bad.push(...result.bad.slice(4));
+            bad.push(...result.bad.slice(0, 4));
         } else if ( result.rule ) {
             rules.push(result.rule);
         }

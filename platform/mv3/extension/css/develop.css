@@ -60,7 +60,7 @@ section[data-pane="develop"] > div > * {
 :root.dark #cm-container .cm-editor .cm-line .ubol-literal {
     color: #1dae74;
     }
-#cm-container .cm-editor .cm-line.badline:not(.cm-activeLine) {
+#cm-container .cm-editor .cm-line.badline {
     background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     }
 

@@ -89,8 +89,20 @@ const perScopeParsers = {
 };
 
 const addHostnameToMode = (modes, mode, node) => {
-    if ( node.list !== true ) { return false; }
-    modes[mode].push(punycode.toASCII(node.val));
+    if ( node.list !== true ) { return node.val === '-'; }
+    if ( node.key !== undefined ) { return false; }
+    if ( node.val === undefined ) { return false; }
+    const hn = punycode.toASCII(node.val.toLowerCase());
+    if ( hn.length > 253 ) { return false; }
+    if ( hn.split('.').some(isInvalidLabel) ) { return false; }
+    modes[mode].push(hn);
+};
+
+const isInvalidLabel = label => {
+    if ( label.length === 0 ) { return true; }
+    if ( label.length > 63 ) { return true; }
+    if ( /^[^\da-z]|[^\da-z]$|[^\da-z-]/.test(label) ) { return true; }
+    return false;
 };
 
 /******************************************************************************/
