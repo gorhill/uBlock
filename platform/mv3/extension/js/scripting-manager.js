@@ -551,7 +551,7 @@ export async function onWakeupRun() {
     if ( since < (15 * 60 * 1000) ) { return; } // 15 minutes
     const MAX_CACHE_ENTRY_LOW = 256;
     const MAX_CACHE_ENTRY_HIGH = MAX_CACHE_ENTRY_LOW +
-        Math.min(Math.round(MAX_CACHE_ENTRY_LOW + MAX_CACHE_ENTRY_LOW / 8), 1);
+        Math.max(Math.round(MAX_CACHE_ENTRY_LOW / 8), 8);
     const keys = await sessionKeys() || [];
     const cacheKeys = keys.filter(a => a.startsWith('cache.css.'));
     if ( cacheKeys.length < MAX_CACHE_ENTRY_HIGH ) { return; }
