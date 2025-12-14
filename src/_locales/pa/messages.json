@@ -1060,7 +1060,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO ਦੀਆਂ ਆਪਣੀਆਂ ਫਿਲਟਰ ਸੂਚੀਆਂ <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> ਉੱਤੇ ਆਜ਼ਾਦ ਰੂਪ ਵਿੱਚ ਹੋਸਟ ਕੀਤੀਆਂ ਹਨ:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1196,7 +1196,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "ਕਾਰਨ:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
@@ -1204,7 +1204,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ਟੋਹੀ",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {

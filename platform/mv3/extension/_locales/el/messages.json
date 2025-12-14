@@ -280,11 +280,11 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Αποκλησμένη σελίδα",
+    "message": "Αποκλεισμένη σελίδα",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "Το uBO Lite εμπόδισε τη φόρτωση στης παρακάτω σελίδας:",
+    "message": "Το uBO Lite εμπόδισε τη φόρτωση της παρακάτω σελίδας:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -292,7 +292,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "Η αποκλεισμένη σελίδα θέλει να κάνει ανακατεύθυνση σε άλλο ιστότοπο. Αν επιλέξετε να συνεχίσετε, θα μεταβείτε απευθείας στο: {{url}}",
+    "message": "Η αποκλεισμένη σελίδα θέλει να κάνει ανακατεύθυνση σε άλλον ιστότοπο. Αν επιλέξετε να συνεχίσετε, θα μεταβείτε απευθείας στο: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {

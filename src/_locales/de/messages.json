@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Endlich ein effizienter Blocker, der wenig Prozessorleistung und Arbeitsspeicher verbraucht.",
+    "message": "Ein effizienter Blocker mit geringer CPU- und Speicherauslastung.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Allgemeine kosmetische Filter sind kosmetische Filter, die auf alle Websites angewendet werden sollen. Das Aktivieren dieser Option verhindert die Mehrbelastung des Arbeitsspeichers und der CPU, die durch das Verarbeiten allgemeiner kosmetischer Filter auf Websites entsteht.\n\nEs wird empfohlen, diese Option auf weniger leistungsfähigen Geräten zu aktivieren.",
+    "message": "Allgemeine kosmetische Filter können auf alle Websites angewendet werden. Diese Option reduziert die CPU- und Speicherauslastung, die durch das Verarbeiten allgemeiner kosmetischer Filter auf Websites entsteht.\n\nEs wird empfohlen, diese Option auf weniger leistungsfähigen Geräten zu aktivieren.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {

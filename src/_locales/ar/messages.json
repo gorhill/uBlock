@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "إسترجاع…",
+    "message": "استرجاع…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {

@@ -136,7 +136,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "لتجنب تحميل المتطوعين بتقارير مكررة، يرجى التأكد من أن المشكلة لم يتم الإبلاغ عنها بالفعل.",
+    "message": "لتجنب تحميل المتطوعين بتقارير مكررة، يرجى التأكد من أن المشكلة لم يتم الإبلاغ عنها بالفعل. ملحوظة: النقر على الزر سيؤدي إلى إرسال أصل الصفحة إلى موقع GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

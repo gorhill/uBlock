@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Креирај нови извештај",
+    "message": "Креирај нови извештај на ГитХабу",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Пронађи сличне извештаје",
+    "message": "Пронађи сличне извештаје на ГитХабу",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
