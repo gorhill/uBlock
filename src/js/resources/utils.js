@@ -67,7 +67,7 @@ export function collateFetchArgumentsFn(resource, options) {
     const props = [
         'body', 'cache', 'credentials', 'duplex', 'headers',
         'integrity', 'keepalive', 'method', 'mode', 'priority',
-        'redirect', 'referrer', 'referrerPolicy', 'signal',
+        'redirect', 'referrer', 'referrerPolicy', 'signal', 'url'
     ];
     const out = {};
     if ( collateFetchArgumentsFn.collateKnownProps === undefined ) {
