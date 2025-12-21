@@ -384,7 +384,8 @@ export async function syncWithBrowserPermissions() {
     if ( afterAllowedHostnames.has('all-urls') === false ) {
         const { none, basic, optimal, complete } = filteringModes;
         for ( const hn of new Set([ ...optimal, ...complete ]) ) {
-            if ( afterAllowedHostnames.has(hn) ) { continue; } 
+            if ( afterAllowedHostnames.has(hn) ) { continue; }
+            if ( isDescendantHostnameOfIter(hn, afterAllowedHostnames) ) { continue; }
             applyFilteringMode(filteringModes, hn, afterMode);
             modified = true;
         }
