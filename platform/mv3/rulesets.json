@@ -100,14 +100,14 @@
   },
   {
     "id": "adguard-spyware-url",
-    "name": "AdGuard URL Tracking Protection",
+    "name": "AdGuard/uBO – URL Tracking Protection",
     "group": "privacy",
     "enabled": false,
     "excludedPlatforms": [ "safari" ],
     "urls": [
-      "https://filters.adtidy.org/extension/ublock/filters/17.txt"
+      "https://ublockorigin.github.io/uAssets/filters/privacy-removeparam.txt"
     ],
-    "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+    "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
     "id": "annoyances-cookies",
