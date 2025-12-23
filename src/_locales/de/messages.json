@@ -1064,7 +1064,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Ein zufällig ausgewähltes CDN wird verwendet, wenn eine Filterliste aktualisiert werden muss.",
+    "message": "Es wird ein zufällig ausgewähltes CDN verwendet, wenn eine Filterliste aktualisiert werden muss.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

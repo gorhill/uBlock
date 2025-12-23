@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Een efficiënte inhoudsblokkeerder. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
+    "message": "Een efficiënte inhoudsblokker. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
