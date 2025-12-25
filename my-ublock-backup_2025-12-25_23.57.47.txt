@@ -1,0 +1,36 @@
+{
+  "timeStamp": 1766681867818,
+  "version": "1.68.0",
+  "userSettings": {
+    "advancedUserEnabled": true,
+    "cloudStorageEnabled": true,
+    "colorBlindFriendly": true,
+    "uiAccentCustom": true,
+    "importedLists": [],
+    "popupPanelSections": 31,
+    "tooltipsDisabled": true
+  },
+  "selectedFilterLists": [
+    "user-filters",
+    "ublock-filters",
+    "ublock-badware",
+    "ublock-privacy",
+    "ublock-unbreak",
+    "ublock-quick-fixes",
+    "adguard-mobile",
+    "easylist",
+    "easyprivacy",
+    "urlhaus-1",
+    "plowe-0",
+    "THA-0"
+  ],
+  "hiddenSettings": {},
+  "whitelist": [
+    "chrome-extension-scheme",
+    "moz-extension-scheme"
+  ],
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
+  "urlFilteringString": "",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-cosmetic-filtering: * true\nno-remote-fonts: * true\nno-large-media: * true\nno-csp-reports: * true\nno-scripting: * true",
+  "userFilters": ""
+}
