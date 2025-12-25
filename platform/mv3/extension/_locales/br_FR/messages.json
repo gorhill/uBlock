@@ -272,7 +272,7 @@
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Ar gwared a erlec'hio an holl arventennoù personelaet a-vremañ.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -380,7 +380,7 @@
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "Adsevel…",
     "description": "Text for buttons used to restore content"
   },
   "dnrRulesWarning": {
