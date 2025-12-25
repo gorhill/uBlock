@@ -46,8 +46,11 @@ const $scriptletArglistRefs$ = self.$scriptletArglistRefs$;
 
 const $scriptletHostnames$ = self.$scriptletHostnames$;
 
+const $scriptletFromRegexes$ = self.$scriptletFromRegexes$;
+
 const $hasEntities$ = self.$hasEntities$;
 const $hasAncestors$ = self.$hasAncestors$;
+const $hasRegexes$ = self.$hasRegexes$;
 
 /******************************************************************************/
 
@@ -134,11 +137,9 @@ if ( $hasAncestors$ ) {
 }
 $scriptletHostnames$.length = 0;
 
-if ( todoIndices.size === 0 ) { return; }
-
 // Collect arglist references
 const todo = new Set();
-{
+if ( todoIndices.size !== 0 ) {
     const arglistRefs = $scriptletArglistRefs$.split(';');
     for ( const i of todoIndices ) {
         for ( const ref of JSON.parse(`[${arglistRefs[i]}]`) ) {
@@ -146,6 +147,19 @@ const todo = new Set();
         }
     }
 }
+if ( $hasRegexes$ ) {
+    const { hns } = entries[0];
+    for ( let i = 0, n = $scriptletFromRegexes$.length; i < n; i += 2 ) {
+        const regex = new RegExp($scriptletFromRegexes$[i+0]);
+        for ( const hn of hns ) {
+            if ( regex.test(hn) === false ) { continue; }
+            for ( const ref of JSON.parse(`[${$scriptletFromRegexes$[i+1]}]`) ) {
+                todo.add(ref);
+            }
+        }
+    }
+}
+if ( todo.size === 0 ) { return; }
 
 // Execute scriplets
 {

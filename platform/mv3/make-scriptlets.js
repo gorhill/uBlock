@@ -33,6 +33,7 @@ const worldTemplate = {
     args: new Map(),
     arglists: new Map(),
     hostnames: new Map(),
+    regexesOrPaths: new Map(),
     matches: new Set(),
     hasEntities: false,
     hasAncestors: false,
@@ -126,6 +127,15 @@ export function compile(assetDetails, details) {
     const arglistIndex = worldDetails.arglists.get(arglistKey);
     if ( details.matches ) {
         for ( const hn of details.matches ) {
+            if ( hn.includes('/') ) {
+                worldDetails.matches.clear();
+                worldDetails.matches.add('*');
+                if ( worldDetails.regexesOrPaths.has(hn) === false ) {
+                    worldDetails.regexesOrPaths.set(hn, new Set());
+                }
+                worldDetails.regexesOrPaths.get(hn).add(arglistIndex);
+                continue;
+            }
             const isEntity = hn.endsWith('.*') || hn.endsWith('.*>>');
             worldDetails.hasEntities ||= isEntity;
             const isAncestor = hn.endsWith('>>')
@@ -147,6 +157,13 @@ export function compile(assetDetails, details) {
     }
     if ( details.excludeMatches ) {
         for ( const hn of details.excludeMatches ) {
+            if ( hn.includes('/') ) {
+                if ( worldDetails.regexesOrPaths.has(hn) === false ) {
+                    worldDetails.regexesOrPaths.set(hn, new Set());
+                }
+                worldDetails.regexesOrPaths.get(hn).add(~arglistIndex);
+                continue;
+            }
             if ( worldDetails.hostnames.has(hn) === false ) {
                 worldDetails.hostnames.set(hn, new Set());
             }
@@ -172,9 +189,17 @@ export async function commit(rulesetId, path, writeFn) {
             if ( d !== 0 ) { return d; }
             return a[0] < b[0] ? -1 : 1;
         }).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
-        let content = safeReplace(scriptletTemplate, /\$rulesetId\$/, rulesetId, 0);
-        content = safeReplace(content, 'self.$hasEntities$', 'true');
-        content = safeReplace(content, 'self.$hasAncestors$', 'true');
+        const scriptletFromRegexes = Array.from(worldDetails.regexesOrPaths)
+            .filter(a => a[0].startsWith('/') && a[0].endsWith('/'))
+            .map(a => [ a[0].slice(1, -1), JSON.stringify(Array.from(a[1])).slice(1,-1) ])
+            .flat();
+        let content = safeReplace(scriptletTemplate, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
+        content = safeReplace(content, 'self.$hasAncestors$', JSON.stringify(worldDetails.hasAncestors));
+        content = safeReplace(content, 'self.$hasRegexes$', JSON.stringify(scriptletFromRegexes.length !== 0));
+        content = safeReplace(content,
+            'self.$scriptletFromRegexes$',
+            `/* ${worldDetails.regexesOrPaths.size} */ ${JSON.stringify(scriptletFromRegexes)}`
+        );
         content = safeReplace(content,
             'self.$scriptletHostnames$',
             `/* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[0]))}`
@@ -199,6 +224,7 @@ export async function commit(rulesetId, path, writeFn) {
             'self.$scriptletCode$',
             Array.from(allFunctions.values()).sort().join('\n\n')
         );
+        content = safeReplace(content, /\$rulesetId\$/, rulesetId, 0);
         writeFn(`${path}/${world.toLowerCase()}/${rulesetId}.js`, content);
         stats[world] = Array.from(worldDetails.matches).sort();
     }

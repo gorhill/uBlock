@@ -131,10 +131,7 @@
         return -1;
     };
 
-    const lookupHostname = (hostname, data) => {
-        const listref = binarySearch(data.hostnames, hostname);
-        if ( listref === -1 ) { return; }
-        const ilist = data.selectorListRefs[listref];
+    const selectorsFromListIndex = (data, ilist) => {
         const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
         const { result } = data;
         for ( const iselector of list ) {
@@ -143,6 +140,21 @@
             } else {
                 result.exceptions.add(data.selectors[~iselector]);
             }
+        }
+    };
+
+    const lookupHostname = (hostname, data) => {
+        const listref = binarySearch(data.hostnames, hostname);
+        if ( listref !== -1 ) {
+            selectorsFromListIndex(data, data.selectorListRefs[listref]);
+        }
+        const { fromRegexes } = data;
+        for ( let i = 0, n = fromRegexes.length; i < n; i += 2 ) {
+            if ( typeof fromRegexes[i+0] === 'string' ) {
+                fromRegexes[i+0] = new RegExp(fromRegexes[i+0]);
+            }
+            if ( fromRegexes[i+0].test(hostname) === false ) { continue; }
+            selectorsFromListIndex(data, fromRegexes[i+1]);
         }
     };
 
