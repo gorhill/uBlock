@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { browser, sendMessage } from './ext.js';
+import { browser, i18n, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
 import { hashFromIterable } from './dashboard.js';
 import { renderFilterLists } from './filter-lists.js';
@@ -173,6 +173,13 @@ async function restoreSettings() {
     input.click();
 }
 
+async function resetSettings() {
+    const response = self.confirm(i18n.getMessage('resetToDefaultConfirm'));
+    if ( response !== true ) { return; }
+    const api = await import('./backup-restore.js');
+    await api.restoreFromObject({});
+}
+
 /******************************************************************************/
 
 dom.on('#autoReload input[type="checkbox"]', 'change', ev => {
@@ -208,6 +215,10 @@ dom.on('section[data-pane="settings"] [data-i18n="backupButton"]', 'click', ( ) 
 
 dom.on('section[data-pane="settings"] [data-i18n="restoreButton"]', 'click', ( ) => {
     restoreSettings();
+});
+
+dom.on('section[data-pane="settings"] [data-i18n="resetToDefaultButton"]', 'click', ( ) => {
+    resetSettings();
 });
 
 /******************************************************************************/
