@@ -383,6 +383,14 @@
     "message": "복원…",
     "description": "Text for buttons used to restore content"
   },
+  "resetToDefaultButton": {
+    "message": "Reset to default settings…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "description": "Message asking user to confirm reset to default settings"
+  },
   "dnrRulesWarning": {
     "message": "신뢰할 수 없는 출처의 콘텐츠를 추가하지 마십시오",
     "description": "Short description of the DNR rules editor pane"

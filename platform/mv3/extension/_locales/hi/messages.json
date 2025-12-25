@@ -383,6 +383,14 @@
     "message": "Restore…",
     "description": "Text for buttons used to restore content"
   },
+  "resetToDefaultButton": {
+    "message": "Reset to default settings…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "description": "Message asking user to confirm reset to default settings"
+  },
   "dnrRulesWarning": {
     "message": "अविश्वसनीय स्रोतों से सामग्री न जोड़ें",
     "description": "Short description of the DNR rules editor pane"
