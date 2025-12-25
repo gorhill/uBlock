@@ -1993,7 +1993,7 @@ function trustedReplaceXhrResponse(
  * trusted-click-element.js
  * 
  * Reference API:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-click-element.js
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-click-element.ts
  * 
  **/
 
