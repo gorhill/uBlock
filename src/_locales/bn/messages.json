@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "খুলুন",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "নতুন অভিযোগ",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "একই রকম অভিযোগ দেখুন",
@@ -1019,14 +1019,6 @@
     "message": "ওয়েব পৃষ্ঠাটিকে “NSFW” হিসাবে লেবেল করুন (<a href=\"https://bn.wikipedia.org/wiki/নট_সেফ_ফর_ওয়ার্ক\">“কাজের জন্য নিরাপদ নয়”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "গোপনীয়তার নীতি",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "{{url}} -এ সংযোগ করতে অক্ষম",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: আপনার নিজস্ব ফিল্টার তালিকায় নিম্নলিখিত URL যোগ করবেন?\n\nশিরোনাম: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "সদস্যতা নাও",

@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Luo GitHubiin uusi ilmoitus",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Oletusarvoinen suodatustila",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Sivu estettiin",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite on estänyt seuraavan sivun latauksen:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Palaa takaisin",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Sulje tämä ikkuna",

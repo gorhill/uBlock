@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Abrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Criar novo relatório no GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Encontrar relatórios semelhantes no GitHub",
@@ -1019,14 +1019,6 @@
     "message": "Rotular a página web como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Não seguro para o trabalho”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Redigir",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Não redigir",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Política de privacidade",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Erro de rede: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Adicionar o seguinte URL à sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subscrever",

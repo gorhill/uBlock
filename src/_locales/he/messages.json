@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "לפתוח",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "צור דוח חדש",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "חיפוש דוחות דומים",
@@ -1019,14 +1019,6 @@
     "message": "תיוג דף האינטרנט כ- לב\"ל (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">'לא בטוח לעבודה'</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "הסר מידע פרטי או רגיש",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "שחזר מידע פרטי או רגיש",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "מדיניות פרטיות",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "בעיית רשת: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "הירשם כמנוי",

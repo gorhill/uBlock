@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Открыть",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Создать новый отчёт в GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Найти похожие отчёты в GitHub",
@@ -1019,14 +1019,6 @@
     "message": "Пометить веб-страницу как “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Редактировать",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Отменить редактирование",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Политика конфиденциальности",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Ошибка сети: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Добавить следующий адрес к пользовательским спискам фильтров?\n\nЗаголовок: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Подписаться",

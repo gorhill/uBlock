@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "తెరవండి",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "కొత్త నివేదికను సృష్టించండి",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "సారూప్య నివేదికలను కనుగొనండి",
@@ -972,7 +972,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Verify that the issue still exists after reloading the problematic web page.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1018,14 +1018,6 @@
   "supportS6Checkbox1": {
     "message": "వెబ్ పేజీని “NSFW”గా లేబుల్ చేయండి (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“పని కోసం సురక్షితం కాదు”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "గోప్యతా విధానం",
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "అనుసంధాన వైఫల్యం: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: ఈ URLని మీ నిర్దేశిత ఫిల్టర్ పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "సభ్యత్వాన్ని పొందండి",

@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "GitHub'da yeni rapor oluştur",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Varsayılan filtreleme modu",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Sayfa engellendi",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBo Lite aşağıdaki sayfaların yüklenmesini engelledi:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Geri git",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Bu pencereyi kapat",

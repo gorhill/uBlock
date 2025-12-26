@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Vytvořit nové hlášení",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Výchozí filtrovací režim",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Stránka zablokována",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite zabránil načtení následující stránky:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Zpět",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Zavřít okno",

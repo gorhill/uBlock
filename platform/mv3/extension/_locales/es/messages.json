@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Crear nuevo reporte en GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Modo de filtrado predeterminado",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Página bloqueada",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite impidió la carga de la página:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Regresar",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Cerrar esta ventana",

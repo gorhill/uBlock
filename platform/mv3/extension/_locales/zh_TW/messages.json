@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "建立新報告",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "預設過濾模式",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "已封鎖頁面",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite 已防止下列頁面載入：",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "返回",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "關閉此視窗",

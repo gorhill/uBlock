@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Креирај нови извештај",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Подразумевани режим филтрирања",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Страница је блокирана",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite је спречио учитавање следеће странице:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Иди назад",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Затвори овај прозор",

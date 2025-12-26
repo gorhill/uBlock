@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Ouvrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Créer un nouveau rapport sur GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Trouver des rapports similaires sur GitHub",
@@ -1019,14 +1019,6 @@
     "message": "Marquer le site Web en tant que \"NSFW\" (<a href=\"https://fr.wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe For Work\", c'est-à-dire pour public averti/inapproprié au travail</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Retirer les informations potentiellement privées ou sensibles",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Restaurer les informations potentiellement privées ou sensibles",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Politique de confidentialité",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Erreur réseau : {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Ajouter le lien suivant à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nLien : {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Souscrire",

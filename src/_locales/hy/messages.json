@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Բացել",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Նոր զեկույց ստեղծել",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Գտնել նման զեկույցներ",
@@ -1019,14 +1019,6 @@
     "message": "Նշել վեբ էջը որպես «NSFW» (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">«Աշխատանքի համար անվտանգ չէ»</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Խմբագրել",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Չեղարկել խմբագրումը",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Գաղտնիության քաղաքականություն",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Ցանցի սխալ՝ {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Ավելացնե՞լ հետևյալ հասցեն զտիչների օգտվողային ցանկին։\n\nՎերնագիր՝ «{{title}}»\nURL՝ {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Բաժանորդագրվել",

@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Buat laporan baru",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mode filter bawaan",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Halaman diblokir",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite telah mencegah pemuatan halaman berikut:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Kembali",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Tutup jendela ini",

@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Ava",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Loo GitHubis uus aruanne",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Leia GitHubist sarnaseid aruandeid",
@@ -1019,14 +1019,6 @@
     "message": "Sildista veebileht kui „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;tööks sobimatu&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Kata info",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Ära kata infot",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Privaatsusteatis",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Võrgu viga: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Kas lisada järgnev URL sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Telli",

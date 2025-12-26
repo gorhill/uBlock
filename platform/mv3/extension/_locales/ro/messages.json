@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Creează o nouă sesizare",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mod de filtrare implicit",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Pagină blocată",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite a împiedicat încărcarea următoarei pagini:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Înapoi",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Închide fereastra",

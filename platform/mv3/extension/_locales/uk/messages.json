@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Створити новий звіт",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Типовий режим фільтрування",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Сторінку заблоковано",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite заблокував завантаження таких сторінок:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Повернутися",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Закрити це вікно",

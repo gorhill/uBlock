@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "เปิด",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "สร้างรายงานใหม่",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "ค้นหารายงานคล้ายกันบน GitHub",
@@ -1019,14 +1019,6 @@
     "message": "ติดป้ายเว็บเพจว่าเป็น “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ไม่ปลอดภัยกับงาน (Not Safe For Work)”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "นโยบายความเป็นส่วนตัว",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "เครือข่ายผิดพลาด: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: เพิ่ม URL ต่อไปนี้ในรายการตัวกรองแบบกำหนดเองของคุณหรือไม่ ?\n\nชื่อ: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "สมัครสมาชิก",

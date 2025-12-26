@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "開啟",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "建立新報告",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "尋找類似報告",
@@ -1019,14 +1019,6 @@
     "message": "將網頁標記為「NSFW」（<a href=\"https://zh.wikipedia.org/wiki/NSFW\">工作場所不宜</a>）",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "替換",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "不要替換",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "隱私權條款",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "網路錯誤：{{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "確定要新增下列網址至自訂過濾規則清單？\n\n標題：「{{title}}」\n網址：{{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "訂閱",

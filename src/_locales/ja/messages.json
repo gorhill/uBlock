@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "開く",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "新しい報告を作成",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "似た報告を探す",
@@ -1019,14 +1019,6 @@
     "message": "ウェブページに“NSFW” (閲覧注意、<a href=\"https://ja.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>) とラベルをつける",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "編集済にする",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "無編集にする",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "プライバシーポリシー",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "ネットワークエラー: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "以下の URL をカスタムフィルターリストに追加しますか？\n\nフィルター名: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "購読",

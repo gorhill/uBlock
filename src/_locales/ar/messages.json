@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "افتح",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "إنشاء تقرير جديد",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "العثور على تقارير مماثلة",
@@ -1019,14 +1019,6 @@
     "message": "ضع علامة على صفحة الويب بـ ”NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">”غير آمن للعمل“</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "تنقيح",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "غير منقح",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "سياسة الخصوصية",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "خطأ في الشبكة: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "µBlock : أضف الرابط التالي لقائمة الفلترة الخاصة بك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "اشترك",

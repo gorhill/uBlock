@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Vytvoriť nové hlásenie na Githube",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Predvolený režim filtrovania",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Zablokovaná stránka",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite zabránil načítaniu nasledujúcej stránky:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Naspäť",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Zatvoriť toto okno",

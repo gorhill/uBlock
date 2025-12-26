@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Kreiraj novi izvještaj na GitHubu",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Zadani način filtriranja",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Stranica je blokirana",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite je spriječio učitavanje sljedeće stranice:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Nazad",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Zatvori ovaj prozor",

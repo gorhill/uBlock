@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "새 신고 생성",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "기본 필터링 모드",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "페이지 차단됨",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite가 다음 페이지를 불러오지 못하게 했습니다.",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "뒤로",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "창 닫기",

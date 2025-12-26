@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Krijoj raport të ri në GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mënyra standarde e filtrimit",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Faqe e bllokuar",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite pengoi hapjen e faqes vijuese:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Kthehem",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Mbyll dritaren",

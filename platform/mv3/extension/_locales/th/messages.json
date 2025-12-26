@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "สร้างรายงานใหม่",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "โหมดการกรองเริ่มต้น",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "บล๊อกเพจ",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite ได้ป้องกันเพจเหล่านี้จากการโหลด:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "ย้อนกลับ",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "ปิดหน้าต่างนี้",

@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Tạo báo cáo mới",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Chế độ bộ lọc mặc định",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Trang bị chặn",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite đã ngăn tải trang sau:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Quay lại",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Đóng cửa sổ này",

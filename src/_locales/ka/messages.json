@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "გახსნა",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "შექმენით ახალი მოსხენება",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "იპოვეთ მსგავსი მოხსენებები",
@@ -1019,14 +1019,6 @@
     "message": "გვერდი მოინიშნოს, როგორც „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„შეუსაბამო“</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "შეკვეცილი",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "შეუკვეცელი",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "პირადულობის დებულება",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "ქსელის შეცდომა: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: გსურთ შემდეგი URL ბმულის საკუთარ ფილტრის წესებში ჩამატება?\n\nდასახელება: „{{title}}“\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "გამოწერა",

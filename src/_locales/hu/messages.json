@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Megnyitás",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Hiba bejelentése",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Hasonló hibák keresése",
@@ -1019,14 +1019,6 @@
     "message": "A weboldal megjelölése felnőtt tartalomként",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Elrejtés",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Megjelenítés",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Adatvédelmi irányelvek",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1098,10 +1090,6 @@
   "errorCantConnectTo": {
     "message": "Hálózati hiba: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Hozzáadja a következő webcímet a saját szűrőlistáihoz?\n\nNév: „{{title}}”\nWebcím: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Feliratkozás",

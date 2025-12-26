@@ -189,7 +189,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Gumawa ng bagong ulat sa Github",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Default na mode sa pagfi-filter",
@@ -281,7 +281,7 @@
   },
   "strictblockTitle": {
     "message": "Nakaharang na page",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "Hindi pinayagan ng uBO Lite ang pagpunta sa page dahil:",
@@ -301,7 +301,7 @@
   },
   "strictblockBack": {
     "message": "Bumalik",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Isara ang window na ito",
@@ -416,7 +416,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
