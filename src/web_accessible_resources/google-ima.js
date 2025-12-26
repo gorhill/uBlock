@@ -659,3 +659,11 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
 
   window.google.ima = ima;
 }
+
+/*
+ad.doubleclick.net bid.g.doubleclick.net ggpht.com google.co.uk google.com
+googleads.g.doubleclick.net googleads4.g.doubleclick.net googleadservices.com
+googlesyndication.com googleusercontent.com gstatic.com gvt1.com prod.google.com
+pubads.g.doubleclick.net s0.2mdn.net static.doubleclick.net
+surveys.g.doubleclick.net youtube.com ytimg.com
+*/
