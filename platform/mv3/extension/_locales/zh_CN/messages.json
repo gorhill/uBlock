@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "重置为默认设置…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "您的自定义设置将被清除。是否确定要重置为默认设置？",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Repor as definições predefinidas…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Todas as suas definições personalizadas serão removidas. Pretende mesmo repor as definições predefinidas?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

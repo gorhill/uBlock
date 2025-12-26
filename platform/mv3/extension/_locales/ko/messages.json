@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "효율적인 콘텐츠 차단기입니다. 설치 직후 광고, 추적기, 채굴기 등을 즉시 차단합니다.",
+    "message": "효율적인 콘텐츠 차단기입니다. 설치 즉시 광고, 추적기, 암호화폐 채굴기 등을 차단합니다.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "개인정보취급방침",
+    "message": "개인정보 처리방침",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -68,7 +68,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "개인 정보 보호",
+    "message": "개인정보 보호",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "여기에 추가하려는 표면 필터 붙여넣기",
+    "message": "여기에 추가하려는 요소 숨김 필터 붙여넣기",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -136,7 +136,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "자원봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 이슈가 이미 신고되지는 않았는지 확인해 주시기 바랍니다.",
+    "message": "자원봉사자들의 중복 업무를 방지하기 위해, 이미 보고된 문제인지 먼저 확인해 주세요. <b>주의:</b> 아래 버튼을 클릭하면 현재 페이지 주소가 GitHub로 전송됩니다.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -224,7 +224,7 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "고급 네트워크 필터링과 선택한 필터 목록을 바탕으로 특정한 확장 필터링 및 보편적인 확장 필터링을 수행합니다.\n\n모든 웹사이트에서 데이터를 읽고 쓸 수 있도록 하는 광범위한 권한이 필요합니다.\n\n보편적인 확장 필터링 기능을 이용하는 경우 웹페이지의 리소스 사용량이 증가할 수 있습니다.",
+    "message": "고급 네트워크 필터링과 선택한 필터 목록을 기반의 맞춤형 및 보편적인 확장 필터링을 제공합니다.\n\n모든 웹사이트에서 데이터를 읽고 변경할 수 있도록 하는 광범위한 권한이 필요합니다.\n\n보편적인 확장 필터링을 사용하면 웹페이지의 리소스 사용량이 증가할 수 있습니다.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
@@ -308,7 +308,7 @@
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "다시는 이 사이트에 대해 경고하지 않기",
+    "message": "이 사이트에 대해 다시 경고하지 않기",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "기본 설정으로 초기화하기…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "모든 커스텀 설정이 삭제됩니다. 정말 진행하시겠습니까?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

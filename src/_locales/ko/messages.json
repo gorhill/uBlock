@@ -160,11 +160,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "클릭하여 이 사이트에서 시각적 필터링을 끕니다.",
+    "message": "클릭하여 이 사이트에서 요소 숨김 필터링을 끕니다",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "클릭하여 이 사이트에서 시각적 필터링을 켭니다.",
+    "message": "클릭하여 이 사이트에서 요소 숨김 필터링을 켭니다",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "표면 필터링",
+    "message": "요소 숨김 필터링",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "고급 사용자 모드 (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>필수로 읽어보세요.</a>)",
+    "message": "저는 고급 사용자입니다",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>이 옵션은 <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">애드블록 플러스-호환 &ldquo;구성 요소 감추기&rdquo; 필터</a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.</p><p>이 기능을 활성화하면 <i>uBlock₀</i>의 메모리 사용량이 증가합니다.</p>",
+    "message": "요소 숨김 필터링은 네트워크 요청 차단 방식으로는 막을 수 없는, 웹 페이지 내의 시각적으로 거슬리는 요소들을 숨기는 역할을 합니다.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>전체적 표면 필터들은 방문하는 모든 사이트에 적용하는 표면 필터입니다. <p>uBlock₀는 이를 효율적으로 적용하지만, 전체적 표면 필터들은 사이트의 크기와 유지시간에 따라 확연할 정도의 메모리 및 CPU 오버헤드를 줄 수 있습니다. <p>이 옵션을 활성화하면 전체적 표면 필터 적용으로 메모리 및 CPU 오버헤드를 제거하고, uBlock₀ 자체의 메모리 사용량도 줄입니다. <p>저전력 기기에 사용하는 것을 권장합니다.",
+    "message": "범용 요소 숨김 필터는 모든 웹사이트에 공통적으로 적용되는 필터입니다. 이 옵션을 활성화하면 범용 요소 숨김 필터링을 처리하는 과정에서 발생하는 웹 페이지의 메모리 및 CPU 부하를 제거할 수 있습니다.\n\n사양이 낮은 기기에서는 이 옵션을 활성화하는 것을 권장합니다.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "한 줄에 한 개의 URL을 입력하세요. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다. 존재하지 않는 URL은 자동으로 무시됩니다.",
+    "message": "한 줄에 한 개의 URL을 입력하세요. 존재하지 않는 URL은 자동으로 무시됩니다.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -1284,7 +1284,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "시각 요소 필터 토글",
+    "message": "요소 숨김 필터링 토글",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {

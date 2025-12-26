@@ -388,7 +388,7 @@
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Tüm özel ayarlarınız silinecektir. Gerçekten varsayılan ayarlara sıfırlamak istiyor musunuz?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
