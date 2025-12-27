@@ -145,39 +145,49 @@ async function backupSettings() {
 }
 
 async function restoreSettings() {
-    const input = qs$('section[data-pane="settings"] input[type="file"]');
-    input.onchange = ev => {
-        input.onchange = null;
-        const file = ev.target.files[0];
-        if ( file === undefined || file.name === '' ) { return; }
-        const fr = new FileReader();
-        fr.onload = ( ) => {
-            fr.onload = null;
-            if ( typeof fr.result !== 'string' ) { return; }
-            let data;
-            try {
-                data = JSON.parse(fr.result);
-            } catch {
-            }
-            if ( data instanceof Object === false ) { return; }
-            import('./backup-restore.js').then(api => {
-                api.restoreFromObject(data);
-            });
+    const promise = new Promise(resolve => {
+        const input = qs$('section[data-pane="settings"] input[type="file"]');
+        input.onchange = ev => {
+            dom.cl.add(dom.body, 'busy');
+            input.onchange = null;
+            const file = ev.target.files[0];
+            if ( file === undefined || file.name === '' ) { return resolve(); }
+            const fr = new FileReader();
+            fr.onload = ( ) => {
+                fr.onload = null;
+                if ( typeof fr.result !== 'string' ) { return resolve(); }
+                let data;
+                try {
+                    data = JSON.parse(fr.result);
+                } catch {
+                }
+                if ( data instanceof Object === false ) { return resolve(); }
+                import('./backup-restore.js').then(api => {
+                    resolve(api.restoreFromObject(data));
+                });
+            };
+            fr.readAsText(file);
         };
-        fr.readAsText(file);
-    };
-    // Reset to empty string, this will ensure a change event is properly
-    // triggered if the user pick a file, even if it's the same as the last
-    // one picked.
-    input.value = '';
-    input.click();
+        input.oncancel = ( ) => {
+            resolve();
+        };
+        // Reset to empty string, this will ensure a change event is properly
+        // triggered if the user pick a file, even if it's the same as the last
+        // one picked.
+        input.value = '';
+        input.click();
+    });
+    await promise;
+    dom.cl.remove(dom.body, 'busy');
 }
 
 async function resetSettings() {
     const response = self.confirm(i18n.getMessage('resetToDefaultConfirm'));
     if ( response !== true ) { return; }
+    dom.cl.add(dom.body, 'busy');
     const api = await import('./backup-restore.js');
     await api.restoreFromObject({});
+    dom.cl.remove(dom.body, 'busy');
 }
 
 /******************************************************************************/

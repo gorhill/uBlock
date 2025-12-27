@@ -61,11 +61,12 @@ body [data-pane-related] {
     padding: 0 var(--default-gap-xxsmall);
     }
 
-body[data-pane="settings"] > section[data-pane="settings"],
-body[data-pane="rulesets"] > section[data-pane="rulesets"],
-body[data-pane="filters"] > section[data-pane="filters"],
-body[data-pane="develop"] > section[data-pane="develop"],
-body[data-pane="about"] > section[data-pane="about"] {
+body[data-pane="settings"]:not(.busy) > section[data-pane="settings"],
+body[data-pane="rulesets"]:not(.busy) > section[data-pane="rulesets"],
+body[data-pane="filters"]:not(.busy) > section[data-pane="filters"],
+body[data-pane="develop"]:not(.busy) > section[data-pane="develop"],
+body[data-pane="about"]:not(.busy) > section[data-pane="about"],
+body.busy[data-pane] > section[data-pane="busy"] {
     display: block;
     }
 
