@@ -955,10 +955,6 @@
     "message": "Zemāk ir tehniskā informācija, kas var būt noderīga, kad brīvprātīgie mēģinās palīdzēt atrisināt sarežģījumus.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Svarīgi:</b> iespējami privāta vai jūtīga informācija pēc noklusējuma tiek izņemta. Aizvākta informācija var apgrūtināt sarežģījuma atrisināšanu.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Ziņot par aizturētāja nepilnībām",
     "description": "Header of 'Report a filter issue' section in Support pane"

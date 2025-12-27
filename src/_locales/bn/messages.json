@@ -955,10 +955,6 @@
     "message": "স্বেচ্ছাসেবকরা যখন কোনো সমস্যা সমাধানের জন্য আপনাকে সাহায্য করার চেষ্টা করছেন তখন প্রযুক্তিগত তথ্য নিচে দেওয়া হল যা কার্যকর হতে পারে।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>গুরুত্বপূর্ণ:</b> সম্ভাব্য ব্যক্তিগত বা সংবেদনশীল তথ্য ডিফল্টরূপে সংশোধন করা হয়। সংশোধিত তথ্য সমস্যা সমাধান করা আরও কঠিন করে তুলতে পারে।",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "একটি ফিল্টার সমস্যা রিপোর্ট করুন",
     "description": "Header of 'Report a filter issue' section in Support pane"

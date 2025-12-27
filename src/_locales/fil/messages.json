@@ -955,10 +955,6 @@
     "message": "Nasa ibaba ang mga teknikal na impormasyon na maaaring makatulong sa mga volunteer na tumutulong masolusyonan ang problema mo.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Mahalaga:</b> Sa default, nakatago ang mga pribado o sensitibong impormasyon. Maaaring mas mahirap masolusyonan ang mga problema dahil sa pagtatago ng pribadong impormasyon.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Mag-ulat ng problema ng filter",
     "description": "Header of 'Report a filter issue' section in Support pane"

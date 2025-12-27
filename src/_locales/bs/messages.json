@@ -955,10 +955,6 @@
     "message": "Ispod se nalaze tehničke informacije koje bi vam mogle biti korisne kada vam dobrovoljci pokušavaju pomoći s rješenjem problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Važno:</b> Moguće privatna ili osjetljiva informacija je prema zadanim postavkama automatski zaklonjena. Zaklonjene informacije mogu otežati rješavanju problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Prijavite problem sa filterom",
     "description": "Header of 'Report a filter issue' section in Support pane"

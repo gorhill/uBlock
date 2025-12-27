@@ -955,10 +955,6 @@
     "message": "Amañ dindan ez eus titouroù teknikel a c'hallfe sikour an dud a-youl vat a zo o klask diskoulmañ ur gudenn.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Talvoudus:</b> An titouroù a c'hallfe bezañ prevez pe kizidik a zo skarzhet ent-emgefreek. Pa vez skarzhet an titouroù mod-se e c'hall bezañ diaesoc'h da ziskoulmañ ur gudenn.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Danevelliñ ur gudenn gant ur sil",
     "description": "Header of 'Report a filter issue' section in Support pane"

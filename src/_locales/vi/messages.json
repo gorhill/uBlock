@@ -955,10 +955,6 @@
     "message": "Đây là các thông tin kỹ thuật có thể giúp ích khi khắc phục lỗi.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Lưu ý:</b> Mặc định, các luật và bộ lọc cá nhân được ẩn. Điều này có thể khiến việc khắc phục lỗi khó khăn hơn.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Báo cáo lỗi bộ lọc cụ thể",
     "description": "Header of 'Report a filter issue' section in Support pane"

@@ -955,10 +955,6 @@
     "message": "Ցածում տեխնիկական տեղեկություն է, որը կարող է օգտակար լինել, երբ կամավորները փորձում են օգնել Ձեզ լուծել խնդիրը։",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Կարևոր է.</b> Հնարավոր անձնական կամ զգայուն տեղեկությունները խմբագրվում է լռելյայնորեն։ Վերամշակված տեղեկություները կարող է ավելի բարդացնել խնդրի լուծումը:",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Հաղորդել զտիչի խնդրի մասին",
     "description": "Header of 'Report a filter issue' section in Support pane"

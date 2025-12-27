@@ -955,10 +955,6 @@
     "message": "Испод су техничке информације које могу бити корисне када волонтери покушавају да вам помогну да решите проблем.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Потенцијално приватне или осетљиве информације се подразумевано редигују. Редиговане информације могу отежати решавање проблема.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Пријављивање проблема са филтером",
     "description": "Header of 'Report a filter issue' section in Support pane"

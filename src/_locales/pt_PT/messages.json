@@ -955,10 +955,6 @@
     "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudar-lhe a resolver um problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> a informação potencialmente privada ou sensível é ocultada por predefinição. A informação ocultada pode dificultar a resolução de um problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Relatar um problema de filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"

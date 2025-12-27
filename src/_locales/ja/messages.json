@@ -955,10 +955,6 @@
     "message": "以下の技術情報はボランティアが問題解決の手助けをするときに役立つことがあります。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>重要:</b> 個人情報や機密情報の可能性のある情報は既定で削除されます。情報が削除されたことによって問題解決が困難になることがあります。",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "フィルターの問題を報告する",
     "description": "Header of 'Report a filter issue' section in Support pane"

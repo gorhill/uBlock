@@ -955,10 +955,6 @@
     "message": "以下是志願者嘗試幫您解決問題時，可能會用到的技術資訊：",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>特別注意：</b>預設情況下，潛在私人或敏感的資料會被略去。略去的資訊可能會讓問題更難獲解決。",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "回報過濾規則的問題",
     "description": "Header of 'Report a filter issue' section in Support pane"

@@ -955,10 +955,6 @@
     "message": "فيما يلي معلومات فنية قد تكون مفيدة عندما يحاول المتطوعون مساعدتك في حل مشكلة ما.فيما يلي معلومات فنية قد تكون مفيدة عندما يحاول المتطوعون مساعدتك في حل مشكلة ما. ",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>هام:</b> يتم تنقيح المعلومات التي يُحتمل أن تكون خاصة أو حساسة بشكل افتراضي. المعلومات المنقحة قد تجعل حل مشكلة ما أكثر صعوبة.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "الإبلاغ عن مشكلة في عوامل التصفية",
     "description": "Header of 'Report a filter issue' section in Support pane"

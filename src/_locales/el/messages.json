@@ -955,10 +955,6 @@
     "message": "Παρακάτω υπάρχουν τεχνικές πληροφορίες που μπορεί να είναι χρήσιμες όταν εθελοντές προσπαθούν να σας βοηθήσουν να λύσετε ένα πρόβλημα.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Σημαντικό:</b> Πιθανώς ιδιωτικές ή ευαίσθητες πληροφορίες αναπροσαρμόζονται από προεπιλογή. Οι αναδιατυπωμένες πληροφορίες ενδέχεται να δυσκολέψουν την επίλυση ενός προβλήματος.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Αναφέρετε πρόβλημα φίλτρου",
     "description": "Header of 'Report a filter issue' section in Support pane"

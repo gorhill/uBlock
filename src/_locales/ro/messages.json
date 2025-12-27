@@ -955,10 +955,6 @@
     "message": "Mai jos sunt informații care îi pot ajuta pe voluntarii care încearcă să vă ajute în rezolvarea problemelor.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Important:</b> Informațiile potențial private sau sensibile sunt redactate implicit. Aceasta poate face mai dificilă rezolvarea problemelor.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Raportează o problemăcu filtrele",
     "description": "Header of 'Report a filter issue' section in Support pane"

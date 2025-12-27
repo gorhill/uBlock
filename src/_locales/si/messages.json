@@ -955,10 +955,6 @@
     "message": "ස්වේච්ඡා සේවකයන් ගැටලුවක් විසඳීමට ඔබට උදව් කිරීමට උත්සාහ කරන විට ප්‍රයෝජනවත් විය හැකි තාක්ෂණික තොරතුරු පහත දැක්වේ.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>වැදගත්:</b> පුද්ගලික හෝ සංවේදී තොරතුරු පෙරනිමියෙන් සංස්කරණය කරනු ලැබේ. සංස්කරණය කරන ලද තොරතුරු ගැටළුවක් විසඳීම වඩාත් අපහසු කළ හැකිය.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "පෙරහන් ගැටළුවක් වාර්තා කරන්න",
     "description": "Header of 'Report a filter issue' section in Support pane"

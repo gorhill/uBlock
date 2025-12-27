@@ -955,10 +955,6 @@
     "message": "Informacioni teknik i mëposhtëm u shërben personave të cilët përpiqen të zgjidhin problemin që keni.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Kujdes:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e problemit.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Raportoni problemet me filtrat",
     "description": "Header of 'Report a filter issue' section in Support pane"

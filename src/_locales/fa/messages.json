@@ -955,10 +955,6 @@
     "message": "در زیر اطلاعات فنی آمده که ممکن است برای داوطلبانی که می‌خواهند در حل یک مشکل کمک کنند مفید باشد.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>مهم:</b> اطلاعات شخصی یا حساس به طور پیشفرض ویرایش و مبهم می‌شوند. اطلاعات مبهم‌شده ممکن است حل مشکل را سخت‌تر کند.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "گزارش یک اشکال در فیلتر",
     "description": "Header of 'Report a filter issue' section in Support pane"

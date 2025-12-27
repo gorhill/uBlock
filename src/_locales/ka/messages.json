@@ -955,10 +955,6 @@
     "message": "ქვემოთ მოცემულია ტექნიკური ინფორმაცია, რომელიც გამოადგებათ მოხალისეებს, უკეთ დაგეხმარონ ხარვეზის აღმოფხვრაში.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>გაითვალისწინეთ:</b> მონაცემები, რომლებიც შესაძლოა პირადი და მნიშვნელოვანი იყოს, ნაგულისხმევად იკვეცება. ამასთანავე, შეკვეცილი ინფორმაციით სავარაუდოდ გართულდება ხარვეზის გამოსწორება.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "ფილტრის ხარვეზის მოხსენება",
     "description": "Header of 'Report a filter issue' section in Support pane"

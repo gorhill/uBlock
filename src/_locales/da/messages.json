@@ -955,10 +955,6 @@
     "message": "Nedenfor findes tekniske oplysninger, som kan være nyttige, når frivillige forsøger at hjælpe dig med at løse et problem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Vigtigt:</b> Potentielt fortrolige eller sensitive oplysninger bortredigeres som standard, hvilket kan gøre problemløsningen vanskeligere.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Anmeld et filterproblem",
     "description": "Header of 'Report a filter issue' section in Support pane"

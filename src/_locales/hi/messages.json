@@ -955,10 +955,6 @@
     "message": "नीचे तकनीकी जानकारी दी गई है जो तब उपयोगी हो सकती है जब स्वयंसेवक किसी समस्या का समाधान करने में आपकी सहायता करने का प्रयास कर रहे हों।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b> महत्वपूर्ण: </b> संभावित रूप से निजी या संवेदनशील जानकारी को डिफ़ॉल्ट रूप से संशोधित किया जाता है। संशोधित जानकारी किसी समस्या को हल करना अधिक कठिन बना सकती है।",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "फ़िल्टर समस्या की रिपोर्ट करें",
     "description": "Header of 'Report a filter issue' section in Support pane"

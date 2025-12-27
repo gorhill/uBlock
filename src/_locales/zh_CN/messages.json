@@ -955,10 +955,6 @@
     "message": "以下生成的技术报告或有助于他人帮你解决问题。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>注意：</b>可能涉及隐私的内容已经过删改，需手动取消。删改部分有可能包括解决问题的关键信息。",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "报告过滤规则的问题",
     "description": "Header of 'Report a filter issue' section in Support pane"

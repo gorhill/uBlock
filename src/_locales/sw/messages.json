@@ -955,10 +955,6 @@
     "message": "Ifuatayo ni taarifa ya kiteknolojia inayoweza kuwa ya manufaa wakati waliojitolea wakijaribu kukusaidia.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Muhimu:</b> Taarifa inayoweza kuwa nyeti hutolewa, kama chaguo-msingi. Taarifa iliyotolewa huenda ikanya utatuzi wa shide iwe ngumu zaidi.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Ripoti shida ya kichujio",
     "description": "Header of 'Report a filter issue' section in Support pane"

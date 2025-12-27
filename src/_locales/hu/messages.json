@@ -955,10 +955,6 @@
     "message": "Az alábbi műszaki információk segíthetnek önkénteseinknek megoldani a problémáját.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Fontos:</b> Az esetleges személyes vagy érzékeny adatok alapértelmezés szerint eltávolításra kerülnek. A hiányzó információk megnehezíthetik a probléma megoldását.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Szűrőhibák bejelentése",
     "description": "Header of 'Report a filter issue' section in Support pane"

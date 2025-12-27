@@ -955,10 +955,6 @@
     "message": "ਹੇਠਾਂ ਤਕਨੀਕੀ ਜਾਣਕਾਰੀ ਦਿੱਤੀ ਹੈ, ਜੋ ਕਿ ਵਲੰਟੀਅਰਾਂ ਲਈ ਮਦਦਗਾਰ ਹੋ ਸਕਦੀ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਮੱਸਿਆ ਹੱਲ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ ਕਰਦੇ ਹਨ।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>ਖਾਸ:</b> ਸੰਭਾਵਿਤ ਤੌਰ ਉੱਤੇ ਪ੍ਰਾਈਵੇਟ ਜਾਂ ਸੰਵੇਦਨਸ਼ੀਲ ਜਾਣਕਾਰੀ ਨੂੰ ਮੂਲ ਰੂਪ ਵਿੱਚ ਛਾਂਟ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਛਾਂਂਟੀ ਕੀਤੀ ਜਾਣਕਾਰੀ ਸਮੱਸਿਆ ਨੂੰ ਹੱਲ ਕਰਨਾ ਵੱਧ ਔਖਾ ਬਣਾ ਸਕਦੀ ਹੈ।",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "ਫਿਲਟਰ ਮਸਲੇ ਬਾਰੇ ਰਿਪੋਰਟ ਕਰੋ",
     "description": "Header of 'Report a filter issue' section in Support pane"

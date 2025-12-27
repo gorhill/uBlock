@@ -955,10 +955,6 @@
     "message": "Hieronder bevindt zich technische informatie die handig kan zijn wanneer vrijwilligers u proberen te helpen bij het oplossen van een probleem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Belangrijk:</b> mogelijk gevoelige of privégegevens worden standaard geredigeerd. Geredigeerde gegevens kunnen het oplossen van een probleem bemoeilijken.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Een filterprobleem melden",
     "description": "Header of 'Report a filter issue' section in Support pane"

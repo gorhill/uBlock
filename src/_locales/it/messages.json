@@ -955,10 +955,6 @@
     "message": "Di seguito sono riportate informazioni tecniche che potrebbero essere utili quando i volontari cercheranno di aiutarti a risolvere un problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> Le informazioni potenzialmente private o sensibili vengono oscurate automaticamente. Le informazioni oscurate possono rendere più difficile risolvere un problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Segnala un problema con un filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"

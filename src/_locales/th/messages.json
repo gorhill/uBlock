@@ -955,10 +955,6 @@
     "message": "ด้านล่างนี้เป็นข้อมูลทางเทคนิคซึ่งอาจเป็นประโยชน์ในกรณีที่อาสาสมัครพยายามให้การช่วยเหลือในการแก้ไขปัญหาให้คุณ",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>สำคัญ:</b> ข้อมูลที่อาจเป็นความลับหรือละเอียดอ่อนจะถูกแก้ไขตามค่าเริ่มต้น ข้อมูลที่แก้ไขอาจะทำให้การแก้ไขปัญหายากขึ้น",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "รายงานปัญหาตัวกรอง",
     "description": "Header of 'Report a filter issue' section in Support pane"

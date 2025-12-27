@@ -955,10 +955,6 @@
     "message": "Ніжэй - тэхнічная інфармацыя, што можа быць карысная добраахвотнікам, якія паспрабуюць дапамагчы вам вырашыць праблему.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Важна:</b> Патэнцыйна прыватная або канфідэнцыяльныя зветскі прадвызначана рэдагуюцца. Адрэдагаваныя звесткі могуць ускладніць вырашэнне праблемы.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Паведаміць аб праблеме з фільтрам",
     "description": "Header of 'Report a filter issue' section in Support pane"

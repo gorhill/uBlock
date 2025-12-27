@@ -955,10 +955,6 @@
     "message": "По-долу е представена техническа информация, която може да е полезна, когато доброволците се опитват да ви помогнат да разрешите даден проблем.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Потенциално лична или чувствителна информация се редактира по подразбиране. Редактираната информация може да затрудни решаването на даден проблем.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Докладване на проблем с филтъра",
     "description": "Header of 'Report a filter issue' section in Support pane"

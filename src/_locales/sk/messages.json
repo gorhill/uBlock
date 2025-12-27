@@ -955,10 +955,6 @@
     "message": "Nasledujú technické informácie, ktoré môžu byť užitočné, keď sa vám dobrovoľníci pokúšajú pomôcť vyriešiť problém.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Dôležité:</b> Potenciálne súkromné alebo citlivé informácie sú štandardne upravované. Upravené informácie môžu sťažiť riešenie problému.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Nahlásiť problém s filtrom",
     "description": "Header of 'Report a filter issue' section in Support pane"

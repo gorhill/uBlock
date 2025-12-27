@@ -955,10 +955,6 @@
     "message": "ראה מטה מידע טכני שיכול להיות מועיל למתנדב, כאשר הוא מנסה לעזור לך לפתור בעיה.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>חשוב:</b> מידע שהוא פוטנציאלי רגיש או פרטי מוסר בברירת מחדל. המידע שמוסר יכול לגרום לעיכוב בפתרון בעיות.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "דיווח על בעיית מסנן",
     "description": "Header of 'Report a filter issue' section in Support pane"

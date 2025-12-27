@@ -955,10 +955,6 @@
     "message": "다음은 자원 봉사자들이 문제를 해결하는 데에 도움을 줄 때 유용할 수 있는 기술적인 정보입니다.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>중요:</b> 잠재적으로 개인 정보이거나 민감한 정보는 기본적으로 지워집니다. 정보가 지워지면 문제 해결이 더 어려워질 수도 있습니다.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "필터 이슈 신고",
     "description": "Header of 'Report a filter issue' section in Support pane"

@@ -955,10 +955,6 @@
     "message": "A información técnica seguinte podería ser útil para que as persoas que intentan axudar poidan resolver o problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> A potencial información privada ou sensible está editada por defecto. Ao editar a información poderías dificultar a resolución do problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Informar dun problema co filtrado",
     "description": "Header of 'Report a filter issue' section in Support pane"
