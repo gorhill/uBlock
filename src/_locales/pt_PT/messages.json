@@ -956,7 +956,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Importante:</b> a informação potencialmente privada ou sensível é redigida por predefinição. A informação redigida pode tornar mais difícil a resolução de um problema.",
+    "message": "<b>Importante:</b> a informação potencialmente privada ou sensível é ocultada por predefinição. A informação ocultada pode dificultar a resolução de um problema.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
