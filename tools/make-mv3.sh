@@ -129,6 +129,8 @@ cp platform/mv3/*.json "$UBOL_BUILD_DIR"/
 cp platform/mv3/*.js "$UBOL_BUILD_DIR"/
 cp platform/mv3/*.mjs "$UBOL_BUILD_DIR"/
 cp platform/mv3/extension/js/utils.js "$UBOL_BUILD_DIR"/js/
+cp "$UBO_DIR"/src/js/regex-analyzer.js "$UBOL_BUILD_DIR"/js/
+cp -R "$UBO_DIR"/src/lib/regexanalyzer "$UBOL_BUILD_DIR"/
 cp -R "$UBO_DIR"/src/js/resources "$UBOL_BUILD_DIR"/js/
 cp -R platform/mv3/scriptlets "$UBOL_BUILD_DIR"/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources

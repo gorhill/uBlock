@@ -21,6 +21,7 @@
 
 import { builtinScriptlets } from './js/resources/scriptlets.js';
 import fs from 'fs/promises';
+import { literalStrFromRegex } from './js/regex-analyzer.js';
 import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/
@@ -191,8 +192,14 @@ export async function commit(rulesetId, path, writeFn) {
         }).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
         const scriptletFromRegexes = Array.from(worldDetails.regexesOrPaths)
             .filter(a => a[0].startsWith('/') && a[0].endsWith('/'))
-            .map(a => [ a[0].slice(1, -1), JSON.stringify(Array.from(a[1])).slice(1,-1) ])
-            .flat();
+            .map(a => {
+                const restr = a[0].slice(1,-1);
+                return [
+                    literalStrFromRegex(restr).slice(0,8),
+                    restr,
+                    JSON.stringify(Array.from(a[1])).slice(1,-1),
+                ];
+            }).flat();
         let content = safeReplace(scriptletTemplate, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
         content = safeReplace(content, 'self.$hasAncestors$', JSON.stringify(worldDetails.hasAncestors));
         content = safeReplace(content, 'self.$hasRegexes$', JSON.stringify(scriptletFromRegexes.length !== 0));

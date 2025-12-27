@@ -149,12 +149,13 @@
             selectorsFromListIndex(data, data.selectorListRefs[listref]);
         }
         const { fromRegexes } = data;
-        for ( let i = 0, n = fromRegexes.length; i < n; i += 2 ) {
-            if ( typeof fromRegexes[i+0] === 'string' ) {
-                fromRegexes[i+0] = new RegExp(fromRegexes[i+0]);
+        for ( let i = 0, n = fromRegexes.length; i < n; i += 3 ) {
+            if ( hostname.includes(fromRegexes[i+0]) === false ) { continue; }
+            if ( typeof fromRegexes[i+1] === 'string' ) {
+                fromRegexes[i+1] = new RegExp(fromRegexes[i+1]);
             }
-            if ( fromRegexes[i+0].test(hostname) === false ) { continue; }
-            selectorsFromListIndex(data, fromRegexes[i+1]);
+            if ( fromRegexes[i+1].test(hostname) === false ) { continue; }
+            selectorsFromListIndex(data, fromRegexes[i+2]);
         }
     };
 
