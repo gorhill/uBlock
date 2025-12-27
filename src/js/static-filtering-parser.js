@@ -2241,7 +2241,7 @@ export class AstFilterParser {
             : before;
         // TODO: Remove unescaping of `|` once AdGuard filters no longer unduly
         // escape. In the mean time, if a literal `|` is needed in a path-based
-        // regex, the solution is to use `\x7C` instead of `|`.
+        // regex, the solution is to use `\x7C` instead of `\|`.
         const source = this.normalizeRegexPattern(regex.replace(/\\\|/g, '|'));
         if ( source === '' ) { return ''; }
         const after = `/${source}/`;
