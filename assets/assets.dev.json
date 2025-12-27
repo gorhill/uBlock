@@ -471,17 +471,23 @@
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
-        "fanboy-ai-suggestions": {
-                "content": "filters",
-                "group": "annoyances",
-                "parent": "EasyList – Annoyances",
-                "off": true,
-                "title": "EasyList – Anti AI Suggestions",
-                "tags": "annoyances",
-                "preferred": true,
-                "contentURL": "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/fanboy-addon/fanboy_ai_suggestions.txt",
-                "supportURL": "https://github.com/easylist/easylist#fanboy-lists"
-        }, 
+	"fanboy-ai-suggestions": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "EasyList – Annoyances",
+		"off": true,
+		"title": "EasyList – AI Suggestions",
+		"tags": "annoyances",
+		"preferred": true,
+		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-ai.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-ai.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-ai.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-ai.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-ai.txt"
+		],
+		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
+	},
 	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
