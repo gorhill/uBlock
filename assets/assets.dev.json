@@ -471,6 +471,17 @@
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
+        "fanboy-ai-suggestions": {
+                "content": "filters",
+                "group": "annoyances",
+                "parent": "EasyList – Annoyances",
+                "off": true,
+                "title": "EasyList – Anti AI Suggestions",
+                "tags": "annoyances",
+                "preferred": true,
+                "contentURL": "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/fanboy-addon/fanboy_ai_suggestions.txt",
+                "supportURL": "https://github.com/easylist/easylist#fanboy-lists"
+        }, 
 	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
