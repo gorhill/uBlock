@@ -19,8 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { matchesFromHostnames, strArrayEq } from './utils.js';
 import { browser } from './ext.js';
+import { matchesFromHostnames } from './utils.js';
 
 /******************************************************************************/
 
@@ -91,9 +91,6 @@ export async function registerToolbarIconToggler(context) {
 
     if ( toToggle.size === 0 ) { return; }
 
-    const registered = context.before.get('toolbar-icon');
-    context.before.delete('toolbar-icon'); // Important!
-
     const directive = {
         id: 'toolbar-icon',
         js: [ '/js/scripting/toolbar-icon.js' ],
@@ -101,10 +98,5 @@ export async function registerToolbarIconToggler(context) {
         runAt: 'document_start',
     };
 
-    if ( registered === undefined ) {
-        context.toAdd.push(directive);
-    } else if ( strArrayEq(registered.matches, directive.matches) === false ) {
-        context.toRemove.push('toolbar-icon');
-        context.toAdd.push(directive);
-    }
+    context.toAdd.push(directive);
 }

@@ -30,7 +30,6 @@ import {
 import {
     intersectHostnameIters,
     matchesFromHostnames,
-    strArrayEq,
     subtractHostnameIters,
 } from './utils.js';
 
@@ -189,9 +188,6 @@ export async function registerCustomFilters(context) {
     }
     if ( hostnames.length === 0 ) { return; }
 
-    const registered = context.before.get('css-user');
-    context.before.delete('css-user'); // Important!
-
     const directive = {
         id: 'css-user',
         js: [ '/js/scripting/css-user.js' ],
@@ -199,12 +195,7 @@ export async function registerCustomFilters(context) {
         runAt: 'document_start',
     };
 
-    if ( registered === undefined ) {
-        context.toAdd.push(directive);
-    } else if ( strArrayEq(registered.matches, directive.matches) === false ) {
-        context.toRemove.push('css-user');
-        context.toAdd.push(directive);
-    }
+    context.toAdd.push(directive);
 }
 
 /******************************************************************************/
