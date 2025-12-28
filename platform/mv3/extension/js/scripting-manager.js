@@ -445,7 +445,7 @@ export async function onWakeupRun() {
         return entry;
     }));
     entries.sort((a, b) => b.t - a.t);
-    entries.slice(MAX_CACHE_ENTRY_LOW).map(a => sessionRemove(a.key));
+    sessionRemove(entries.slice(MAX_CACHE_ENTRY_LOW).map(a => a.key));
     sessionWrite('scripting.manager.cleanup.time', now)
 }
 
