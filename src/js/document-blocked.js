@@ -255,7 +255,7 @@ lookupFilterLists().then((lists = []) => {
     i18n.render(why);
     dom.text(qs$(why, '.why'), details.fs);
     if ( reason ) {
-        dom.text(qs$(why, 'summary'), `Reason: ${reason}`);
+        dom.text(qs$(why, 'summary'), `${i18n$('docblockedReasonLabel')} ${reason}`);
     }
     qs$('#why').append(why);
     dom.cl.remove(dom.body, 'loading');
