@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Adlakaat an arventennoù dre ziouer…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Hoc'h holl arventennoù personelaet a vo dilamet. Daoust hag a fell deoc'h adlakaat an arventennoù dre ziouer?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
