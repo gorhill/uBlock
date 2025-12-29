@@ -110,6 +110,16 @@
     "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
+    "id": "annoyances-ai",
+    "name": "EasyList – AI Suggestions",
+    "group": "annoyances",
+    "enabled": false,
+    "urls": [
+      "https://ublockorigin.github.io/uAssets/thirdparties/easylist-ai.txt"
+    ],
+    "homeURL": "https://github.com/easylist/easylist#fanboy-lists"
+  },
+  {
     "id": "annoyances-cookies",
     "name": "EasyList/uBO – Cookie Notices",
     "group": "annoyances",
