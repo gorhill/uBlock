@@ -21,6 +21,7 @@
 */
 
 import { registerScriptlet } from './base.js';
+import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
 
 /******************************************************************************/
@@ -55,6 +56,7 @@ function trustedCreateHTML(
     if ( htmlStr === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-create-html', parentSelector, htmlStr, durationStr);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     // We do not want to recursively create elements
     self.trustedCreateHTML = true;
     let ancestor = self.frameElement;
@@ -94,17 +96,37 @@ function trustedCreateHTML(
         setTimeout(remove, duration);
         return true;
     };
-    if ( append() ) { return; }
-    const observer = new MutationObserver(( ) => {
-        if ( append() === false ) { return; }
-        observer.disconnect();
-    });
-    observer.observe(document, { childList: true, subtree: true });
+    const start = ( ) => {
+        if ( append() ) { return; }
+        const observer = new MutationObserver(( ) => {
+            if ( append() === false ) { return; }
+            observer.disconnect();
+        });
+        const observerOptions = {
+            childList: true,
+            subtree: true,
+        };
+        if ( /[#.[]/.test(parentSelector) ) {
+            observerOptions.attributes = true;
+            if ( parentSelector.includes('[') === false ) {
+                observerOptions.attributeFilter = [];
+                if ( parentSelector.includes('#') ) {
+                    observerOptions.attributeFilter.push('id');
+                }
+                if ( parentSelector.includes('.') ) {
+                    observerOptions.attributeFilter.push('class');
+                }
+            }
+        }
+        observer.observe(document, observerOptions);
+    };
+    runAt(start, extraArgs.runAt || 'loading');
 }
 registerScriptlet(trustedCreateHTML, {
     name: 'trusted-create-html.js',
     requiresTrust: true,
     dependencies: [
+        runAt,
         safeSelf,
     ],
     world: 'ISOLATED',
