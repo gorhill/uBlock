@@ -31,7 +31,8 @@ export function setAttrFn(
     logPrefix,
     selector = '',
     attr = '',
-    value = ''
+    value = '',
+    options = {}
 ) {
     if ( selector === '' ) { return; }
     if ( attr === '' ) { return; }
@@ -93,7 +94,7 @@ export function setAttrFn(
             childList: true,
         });
     };
-    runAt(( ) => { start(); }, 'idle');
+    runAt(( ) => { start(); }, options.runAt || 'idle');
 }
 registerScriptlet(setAttrFn, {
     name: 'set-attr.fn',
@@ -136,7 +137,6 @@ export function setAttr(
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('set-attr', selector, attr, value);
     const validValues = [ '', 'false', 'true' ];
-
     if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) ) {
             const n = parseInt(value, 10);
@@ -146,8 +146,8 @@ export function setAttr(
             return;
         }
     }
-
-    setAttrFn(false, logPrefix, selector, attr, value);
+    const options = safe.getExtraArgs(Array.from(arguments), 3);
+    setAttrFn(false, logPrefix, selector, attr, value, options);
 }
 registerScriptlet(setAttr, {
     name: 'set-attr.js',
@@ -186,7 +186,8 @@ export function trustedSetAttr(
 ) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-set-attr', selector, attr, value);
-    setAttrFn(true, logPrefix, selector, attr, value);
+    const options = safe.getExtraArgs(Array.from(arguments), 3);
+    setAttrFn(true, logPrefix, selector, attr, value, options);
 }
 registerScriptlet(trustedSetAttr, {
     name: 'trusted-set-attr.js',
