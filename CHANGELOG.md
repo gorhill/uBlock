@@ -1,3 +1,5 @@
+- [Improve `set-attr`/`trusted-set-attr` scriptlets](https://github.com/gorhill/uBlock/commit/3f3d4768b6)
+- [Improve `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/3c7eb3497d)
 - [Add Anti-AI Suggestions list](https://github.com/gorhill/uBlock/commit/a0a7a99675) (by @ryanbr)
 - [Unescape unduly escaped `|` in regex-based domain options](https://github.com/gorhill/uBlock/commit/bb34a4b83b)
 - [Mind id/class changes in generic cosmetic filtering surveyor](https://github.com/gorhill/uBlock/commit/c053361d30)
