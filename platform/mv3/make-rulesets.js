@@ -925,8 +925,6 @@ async function processScriptletFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
     if ( mapin.size === 0 ) { return 0; }
 
-    makeScriptlet.init();
-
     for ( const details of mapin.values() ) {
         makeScriptlet.compile(assetDetails, details);
     }

@@ -64,26 +64,6 @@ function createScriptletCoreCode(worldDetails, resourceEntry) {
 
 /******************************************************************************/
 
-export function init() {
-    for ( const scriptlet of builtinScriptlets ) {
-        const { name, aliases, fn } = scriptlet;
-        const entry = {
-            name: fn.name,
-            code: fn.toString(),
-            world: scriptlet.world || 'MAIN',
-            dependencies: scriptlet.dependencies,
-            requiresTrust: scriptlet.requiresTrust === true,
-        };
-        resourceDetails.set(name, entry);
-        if ( Array.isArray(aliases) === false ) { continue; }
-        for ( const alias of aliases ) {
-            resourceAliases.set(alias, name);
-        }
-    }
-}
-
-/******************************************************************************/
-
 export function reset() {
     worlds.ISOLATED = structuredClone(worldTemplate);
     worlds.MAIN = structuredClone(worldTemplate);
@@ -237,5 +217,27 @@ export async function commit(rulesetId, path, writeFn) {
     }
     return stats;
 }
+
+/******************************************************************************/
+
+function init() {
+    for ( const scriptlet of builtinScriptlets ) {
+        const { name, aliases, fn } = scriptlet;
+        const entry = {
+            name: fn.name,
+            code: fn.toString(),
+            world: scriptlet.world || 'MAIN',
+            dependencies: scriptlet.dependencies,
+            requiresTrust: scriptlet.requiresTrust === true,
+        };
+        resourceDetails.set(name, entry);
+        if ( Array.isArray(aliases) === false ) { continue; }
+        for ( const alias of aliases ) {
+            resourceAliases.set(alias, name);
+        }
+    }
+}
+
+init();
 
 /******************************************************************************/
