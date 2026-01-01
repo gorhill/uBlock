@@ -147,8 +147,7 @@ publish-dev-firefox:
 		ghtag=$(version) \
 		ghasset=firefox \
 		storeid=uBlock0@raymondhill.net \
-		channel=unlisted \
-		updatepath=./dist/firefox/updates.json
+		channel=unlisted
 
 # Usage: make upload-firefox version=?
 upload-firefox:
