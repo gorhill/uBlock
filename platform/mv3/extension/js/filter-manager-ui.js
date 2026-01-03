@@ -88,11 +88,11 @@ async function removeSelectorsFromHostname(node) {
         qsa$(hostnameNode, 'li.selector.removed [contenteditable]')
     ).map(a => a.dataset.ugly);
     if ( selectors.length === 0 ) { return; }
-    dom.cl.add(dom.body, 'busy');
+    dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
     await sendMessage({ what: 'removeCustomFilters', hostname, selectors });
     await debounceRenderCustomFilters();
-    dom.cl.remove(dom.body, 'busy');
+    dom.cl.remove(dom.body, 'readonly');
     updateContentEditability();
 }
 
@@ -105,11 +105,11 @@ async function unremoveSelectorsFromHostname(node) {
         qsa$(hostnameNode, 'li.selector:not(.removed) [contenteditable]')
     ).map(a => a.dataset.ugly);
     if ( selectors.length === 0 ) { return; }
-    dom.cl.add(dom.body, 'busy');
+    dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
     await sendMessage({ what: 'addCustomFilters', hostname, selectors });
     await debounceRenderCustomFilters();
-    dom.cl.remove(dom.body, 'busy');
+    dom.cl.remove(dom.body, 'readonly');
     updateContentEditability();
 }
 
@@ -199,7 +199,7 @@ debounceRenderCustomFilters.debouncer = undefined;
 /******************************************************************************/
 
 function updateContentEditability() {
-    if ( dom.cl.has(dom.body, 'busy') ) {
+    if ( dom.cl.has(dom.body, 'readonly') ) {
         dom.attr('[contenteditable]', 'contenteditable', 'false');
         return;
     }
@@ -228,7 +228,7 @@ async function onHostnameChanged(target, before, after) {
         return;
     }
 
-    dom.cl.add(dom.body, 'busy');
+    dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
 
     // Remove old hostname from storage
@@ -245,7 +245,7 @@ async function onHostnameChanged(target, before, after) {
     });
 
     await debounceRenderCustomFilters();
-    dom.cl.remove(dom.body, 'busy');
+    dom.cl.remove(dom.body, 'readonly');
     updateContentEditability();
 }
 
@@ -261,7 +261,7 @@ async function onSelectorChanged(target, before, after) {
 
     const hostname = hostnameFromNode(target);
 
-    dom.cl.add(dom.body, 'busy');
+    dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
 
     // Remove old selector from storage
@@ -279,7 +279,7 @@ async function onSelectorChanged(target, before, after) {
     });
 
     await debounceRenderCustomFilters();
-    dom.cl.remove(dom.body, 'busy');
+    dom.cl.remove(dom.body, 'readonly');
     updateContentEditability();
 }
 
@@ -385,7 +385,7 @@ async function importFromText(text) {
 
     if ( hostnameToSelectorsMap.size === 0 ) { return; }
 
-    dom.cl.add(dom.body, 'busy');
+    dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
 
     const promises = [];
@@ -400,7 +400,7 @@ async function importFromText(text) {
     await Promise.all(promises);
 
     await debounceRenderCustomFilters();
-    dom.cl.remove(dom.body, 'busy');
+    dom.cl.remove(dom.body, 'readonly');
     updateContentEditability();
 }
 

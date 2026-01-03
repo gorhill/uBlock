@@ -249,7 +249,7 @@ body section[data-pane="filters"] .hostnames {
 body section[data-pane="filters"] .hostnames:empty {
     display: none;
     }
-body.busy section[data-pane="filters"] .hostnames {
+body.readonly section[data-pane="filters"] .hostnames {
     pointer-events: none;
     }
 section[data-pane="filters"] ul {
