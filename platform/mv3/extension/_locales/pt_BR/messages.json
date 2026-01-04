@@ -384,7 +384,7 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Resetar para as configurações padrão…",
+    "message": "Reconfigurar tudo para o padrão…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {

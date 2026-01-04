@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Lähtesta tavaseadetele…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Kõik enda loodud seaded eemaldatakse. Tahad tõesti lähtestada tavaseadetele?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
