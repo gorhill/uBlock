@@ -197,7 +197,7 @@ function threeWayMerge(newContent) {
 
 /******************************************************************************/
 
-async function renderUserFilters(merge = false) {
+async function renderUserFilters() {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'readUserFilters',
     });
@@ -208,15 +208,8 @@ async function renderUserFilters(merge = false) {
     qs$('#enableMyFilters input').checked = details.enabled;
     qs$('#trustMyFilters input').checked = details.trusted;
 
-    const newContent = details.content.trim();
-
-    if ( merge && self.hasUnsavedData() ) {
-        setEditorText(threeWayMerge(newContent));
-        userFiltersChanged({ changed: true });
-    } else {
-        setEditorText(newContent);
-        userFiltersChanged({ changed: false });
-    }
+    setEditorText(details.content.trim());
+    userFiltersChanged({ changed: false });
 
     rememberCurrentState();
 }
@@ -365,7 +358,13 @@ dom.on('#trustMyFilters input', 'change', userFiltersChanged);
             cmEditor.startOperation();
             const scroll = cmEditor.getScrollInfo();
             const selections = cmEditor.listSelections();
-            renderUserFilters(true).then(( ) => {
+            const shouldMerge = self.hasUnsavedData();
+            const beforeContent = getEditorText();
+            renderUserFilters().then(( ) => {
+                if ( shouldMerge ) {
+                    setEditorText(threeWayMerge(beforeContent));
+                    userFiltersChanged({ changed: true });
+                }
                 cmEditor.clearHistory();
                 cmEditor.setSelection(selections[0].anchor, selections[0].head);
                 cmEditor.scrollTo(scroll.left, scroll.top);
