@@ -73,9 +73,7 @@ const normalizeMatches = matches => {
 
 async function resetCSSCache() {
     const keys = await sessionKeys();
-    return Promise.all(
-        keys.filter(a => a.startsWith('cache.css.')).map(a => sessionRemove(a))
-    );
+    return sessionRemove(keys.filter(a => a.startsWith('cache.css.')));
 }
 
 /******************************************************************************/
@@ -234,10 +232,7 @@ async function registerCosmetic(realm, context) {
 
     {
         const keys = await localKeys();
-        for ( const key of keys ) {
-            if ( key.startsWith(`css.${realm}.`) === false ) { continue; }
-            localRemove(key);
-        }
+        localRemove(keys.filter(a => a.startsWith(`css.${realm}.`)));
     }
 
     const rulesetIds = [];
