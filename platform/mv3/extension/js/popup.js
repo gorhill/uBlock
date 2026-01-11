@@ -42,7 +42,7 @@ function renderAdminRules() {
 
 const BLOCKING_MODE_MAX = 3;
 
-function setFilteringMode(level, commit = false) {
+async function setFilteringMode(level, commit = false) {
     const modeSlider = qs$('.filteringModeSlider');
     modeSlider.dataset.level = level;
     if ( qs$('.filteringModeSlider.moving') === null ) {
@@ -52,7 +52,9 @@ function setFilteringMode(level, commit = false) {
         );
     }
     if ( commit !== true ) { return; }
-    commitFilteringMode();
+    dom.cl.add(dom.body, 'busy');
+    await commitFilteringMode();
+    dom.cl.remove(dom.body, 'busy');
 }
 
 async function commitFilteringMode() {
