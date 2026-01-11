@@ -351,7 +351,7 @@ async function tryInit() {
     } catch {
         setTimeout(tryInit, 100);
     } finally {
-        dom.cl.remove(dom.body, 'loading');
+        dom.cl.remove(dom.body, 'loading', 'busy');
     }
 }
 
