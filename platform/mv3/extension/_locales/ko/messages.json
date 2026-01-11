@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "새 신고 생성",
+    "message": "GitHub에서 새 신고 생성",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -316,11 +316,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "구성 요소 제거 모드로 진입",
+    "message": "숨길 요소 선택하기",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "구성 요소 제거 모드 종료",
+    "message": "숨길 요소 선택 종료하기",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {

@@ -288,7 +288,7 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "该页面由于 {{listName}} 中的匹配过滤器而被阻止。",
+    "message": "该页面由于 {{listname}} 中的匹配过滤器而被阻止。",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {

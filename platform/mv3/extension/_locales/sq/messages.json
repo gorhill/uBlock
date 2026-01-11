@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Rikthej në parametrat fillestar…",
+    "message": "Rikthej parametrat standardë…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "Të gjitha parameterat e personalizuara do të hiqen. A doni të rivendosni parametrat fillestare?",
+    "message": "Do të hiqen gjithë parameterat e personalizuar. Vërtet doni të riktheni parametrat standardë?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
