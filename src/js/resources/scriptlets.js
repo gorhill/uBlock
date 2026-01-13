@@ -2072,7 +2072,7 @@ function trustedClickElement(
                 return chrome.dom.openOrClosedShadowRoot(elem);
             }
         }
-        return null;
+        return elem.shadowRoot;
     };
 
     const querySelectorEx = (selector, context = document) => {
