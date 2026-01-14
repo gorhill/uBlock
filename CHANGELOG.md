@@ -1,3 +1,7 @@
+- [Add `adthrive` shim](https://github.com/gorhill/uBlock/commit/b8bf0bbab4)
+- [Add `elem.shadowRoot` fallback in `getShadowRoot`](https://github.com/gorhill/uBlock/commit/c8b42ea819) (by @antonok-edm)
+- [Fix merging of uncommitted filters](https://github.com/gorhill/uBlock/commit/c8004c4b02)
+- [Improve `urlskip` implementation](https://github.com/gorhill/uBlock/commit/41ced43f03)
 - [Improve `set-attr`/`trusted-set-attr` scriptlets](https://github.com/gorhill/uBlock/commit/3f3d4768b6)
 - [Improve `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/3c7eb3497d)
 - [Add Anti-AI Suggestions list](https://github.com/gorhill/uBlock/commit/a0a7a99675) (by @ryanbr)
