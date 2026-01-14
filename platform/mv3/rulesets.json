@@ -224,6 +224,18 @@
     "homeURL": "https://github.com/AnXh3L0/blocklist"
   },
   {
+    "id": "ara-0",
+    "group": "regions",
+    "lang": "ar kab",
+    "name": "🇪🇬eg 🇸🇦sa 🇲🇦ma 🇩🇿dz: Liste AR",
+    "tags": "ads arabic اَلْعَرَبِيَّةُ",
+    "enabled": false,
+    "urls": [
+      "https://raw.githubusercontent.com/easylist/listear/master/Liste_AR.txt"
+    ],
+    "homeURL": "https://forums.lanik.us/viewforum.php?f=98"
+  },
+  {
     "id": "bgr-0",
     "group": "regions",
     "lang": "bg mk",
