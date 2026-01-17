@@ -667,9 +667,6 @@ async function startSession() {
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
-    // Unsure whether the browser remembers correctly registered css/scripts
-    // after we quit the browser. For now uBOL will check unconditionally at
-    // launch time whether content css/scripts are properly registered.
     if ( isNewVersion || permissionsUpdated ) {
         registerInjectables();
     }
