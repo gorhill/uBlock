@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { deepEquals } from './utils.js';
 
 export const webext = self.browser;
 
@@ -114,14 +115,6 @@ const prepareUpdateRules = optionsBefore => {
     return optionsAfter;
 };
 
-const ruleCompare = (a, b) => a.id - b.id;
-
-const isSameRules = (a, b) => {
-    a.sort(ruleCompare);
-    b.sort(ruleCompare);
-    return JSON.stringify(a) === JSON.stringify(b);
-};
-
 /******************************************************************************/
 
 export function normalizeDNRRules(rules, ruleIds) {
@@ -209,7 +202,7 @@ export const dnr = {
             }
             addRules.push(rule0);
         }
-        if ( isSameRules(addRules, beforeRules) ) { return false; }
+        if ( deepEquals(addRules, beforeRules) ) { return false; }
         return this.updateDynamicRules({
             addRules,
             removeRuleIds: beforeRules.map(r => r.id),

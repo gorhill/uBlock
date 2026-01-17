@@ -36,7 +36,7 @@ import { ubolErr, ubolLog } from './debug.js';
 import { dnr } from './ext-compat.js';
 import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
-import { hasBroadHostPermissions } from './utils.js';
+import { hasBroadHostPermissions } from './ext-utils.js';
 import { rulesFromText } from './dnr-parser.js';
 
 /******************************************************************************/

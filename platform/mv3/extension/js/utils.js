@@ -19,11 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import {
-    browser,
-    runtime,
-} from './ext.js';
-
 /******************************************************************************/
 
 function parsedURLromOrigin(origin) {
@@ -135,53 +130,40 @@ export const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
-const broadcastMessage = message => {
-    const bc = new self.BroadcastChannel('uBOL');
-    bc.postMessage(message);
+export const deepEquals = (a, b) => {
+    switch ( typeof a ) {
+    case 'undefined':
+    case 'boolean':
+    case 'number':
+    case 'string':
+        return a === b;
+    }
+    // case 'object':
+    if ( typeof b !== 'object' ) { return false; }
+    if ( a === null || b === null ) { return a === b; }
+    if ( Array.isArray(a) || Array.isArray(b) ) {
+        if ( Array.isArray(a) === false || Array.isArray(b) === false ) { return false; }
+        if ( a.length !== b.length ) { return false; }
+        for ( let i = 0; i < a.length; i++ ) {
+            if ( deepEquals(a[i], b[i]) === false ) { return false; }
+        }
+        return true;
+    }
+    const akeys = Object.keys(a);
+    const bkeys = Object.keys(b);
+    if ( akeys.length !== bkeys.length ) { return false; }
+    for ( const k of akeys ) {
+        if ( deepEquals(a[k], b[k]) === false ) { return false; }
+    }
+    return true;
 };
 
 /******************************************************************************/
 
-// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/host_permissions#requested_permissions_and_user_prompts
-// "Users can grant or revoke host permissions on an ad hoc basis. Therefore,
-// most browsers treat host_permissions as optional."
-
-async function hasBroadHostPermissions() {
-    return browser.permissions.getAll().then(permissions =>
-        permissions.origins.includes('<all_urls>') ||
-        permissions.origins.includes('*://*/*')
-    ).catch(( ) => false);
-}
-
-/******************************************************************************/
-
-async function gotoURL(url, type) {
-    const pageURL = new URL(url, runtime.getURL('/'));
-    const tabs = await browser.tabs.query({
-        url: pageURL.href,
-        windowType: type !== 'popup' ? 'normal' : 'popup'
-    });
-
-    if ( Array.isArray(tabs) && tabs.length !== 0 ) {
-        const { windowId, id } = tabs[0];
-        return Promise.all([
-            browser.windows.update(windowId, { focused: true }),
-            browser.tabs.update(id, { active: true }),
-        ]);
-    }
-
-    if ( type === 'popup' ) {
-        return browser.windows.create({
-            type: 'popup',
-            url: pageURL.href,
-        });
-    }
-
-    return browser.tabs.create({
-        active: true,
-        url: pageURL.href,
-    });
-}
+const broadcastMessage = message => {
+    const bc = new self.BroadcastChannel('uBOL');
+    bc.postMessage(message);
+};
 
 /******************************************************************************/
 
@@ -220,7 +202,5 @@ export {
     isDescendantHostnameOfIter,
     intersectHostnameIters,
     subtractHostnameIters,
-    hasBroadHostPermissions,
-    gotoURL,
     strArrayEq,
 };
