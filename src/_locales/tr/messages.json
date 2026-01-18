@@ -900,7 +900,7 @@
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "GitHub üzerinde yeni rapor oluştur",
+    "message": "GitHub'da yeni rapor oluştur",
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {

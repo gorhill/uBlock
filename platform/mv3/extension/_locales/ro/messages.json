@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un blocant experimental, fără permisiuni. Blochează reclamele, urmăritorii, minerii de monede virtuale și multe altele imediat [...]",
+    "message": "Un blocant de conținut eficient. Blochează reclamele, urmăritorii, minerii și multe altele imediat după instalare.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domenii malițioase",
+    "message": "Domenii malițioase, securitate",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Restabilește setările implicite…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Toate setările personalizate vor fi eliminate. Doriți cu siguranță să resetați la setările implicite?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
