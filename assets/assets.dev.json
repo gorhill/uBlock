@@ -476,7 +476,7 @@
 		"group": "annoyances",
 		"parent": "EasyList – Annoyances",
 		"off": true,
-		"title": "EasyList – AI Suggestions",
+		"title": "EasyList – AI Widgets",
 		"tags": "annoyances",
 		"preferred": true,
 		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-ai.txt",

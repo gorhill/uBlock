@@ -111,7 +111,7 @@
   },
   {
     "id": "annoyances-ai",
-    "name": "EasyList – AI Suggestions",
+    "name": "EasyList – AI Widgets",
     "group": "annoyances",
     "enabled": false,
     "urls": [
