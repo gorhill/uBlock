@@ -214,7 +214,7 @@ const rePatternFromUrlFilter = s => {
     let reStr = s.replace(rePatternFromUrlFilter.rePlainChars, '\\$&')
                  .replace(rePatternFromUrlFilter.reSeparators, restrSeparator)
                  .replace(rePatternFromUrlFilter.reDanglingAsterisks, '')
-                 .replace(rePatternFromUrlFilter.reAsterisks, '\\S*?');
+                 .replace(rePatternFromUrlFilter.reAsterisks, '.*?');
     if ( anchor & 0b100 ) {
         reStr = (
             reStr.startsWith('\\.') ?
