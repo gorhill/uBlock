@@ -423,6 +423,14 @@ export async function registerInjectables() {
 
 /******************************************************************************/
 
+export async function getRegisteredContentScripts() {
+    const scripts = await browser.scripting.getRegisteredContentScripts()
+        .catch(( ) => []);
+    return scripts.map(a => a.id);
+}
+
+/******************************************************************************/
+
 export async function onWakeupRun() {
     const cleanupTime = await sessionRead('scripting.manager.cleanup.time') || 0;
     const now = Date.now();

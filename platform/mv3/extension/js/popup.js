@@ -235,6 +235,7 @@ dom.on('#gotoReport', 'click', ev => {
     }
     if ( url === undefined ) { return; }
     const reportURL = new URL(runtime.getURL('/report.html'));
+    reportURL.searchParams.set('tabid', currentTab.id);
     reportURL.searchParams.set('url', tabURL.href);
     reportURL.searchParams.set('mode', popupPanelData.level);
     sendMessage({

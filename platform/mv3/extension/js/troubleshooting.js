@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { runtime, sendMessage } from './ext.js';
+import { browser, runtime, sendMessage } from './ext.js';
 
 /******************************************************************************/
 
@@ -49,7 +49,7 @@ function renderData(data, depth = 0) {
 
 /******************************************************************************/
 
-export async function getTroubleshootingInfo(siteMode) {
+export async function getTroubleshootingInfo(details) {
     const manifest = runtime.getManifest();
     const [
         platformInfo,
@@ -58,6 +58,8 @@ export async function getTroubleshootingInfo(siteMode) {
         defaultMode,
         userRules,
         consoleOutput,
+        showBlockedCount,
+        registeredScripts,
         hasOmnipotence,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
@@ -66,9 +68,11 @@ export async function getTroubleshootingInfo(siteMode) {
         sendMessage({ what: 'getDefaultFilteringMode' }),
         sendMessage({ what: 'getEffectiveUserRules' }),
         sendMessage({ what: 'getConsoleOutput' }),
+        sendMessage({ what: 'getShowBlockedCount' }),
+        sendMessage({ what: 'getRegisteredContentScripts' }),
         sendMessage({ what: 'hasBroadHostPermissions' }),
     ]);
-    const browser = (( ) => {
+    const vendor = (( ) => {
         const extURL = runtime.getURL('');
         let agent = '', version = '?';
         if ( extURL.startsWith('moz-extension:') ) {
@@ -96,17 +100,26 @@ export async function getTroubleshootingInfo(siteMode) {
     })();
     const modes = [ 'no filtering', 'basic', 'optimal', 'complete' ];
     const filtering = {};
-    if ( siteMode ) {
-        filtering.site = `${modes[siteMode]}`
+    if ( details?.siteMode ) {
+        filtering.site = `${modes[details.siteMode]}`
     }
     filtering.default = `${modes[defaultMode]}`;
     const config = {
         name: manifest.name,
         version: manifest.version,
-        browser,
+        browser: vendor,
         filtering,
         permission: hasOmnipotence ? 'all' : 'ask',
     };
+    if ( details?.tabId ) {
+        let badge = '?';
+        if ( showBlockedCount ) {
+            badge = await browser.action.getBadgeText({ tabId: details.tabId });
+        }
+        if ( badge ) {
+            config.badge = badge;
+        }
+    }
     if ( userRules.length !== 0 ) {
         config['user rules'] = userRules.length;
     }
@@ -121,8 +134,11 @@ export async function getTroubleshootingInfo(siteMode) {
         enabledRulesets.push(`-${id}`);
     }
     config.rulesets = enabledRulesets.sort();
+    if ( registeredScripts.length !== 0 ) {
+        config.scripting = registeredScripts;
+    }
     if ( consoleOutput.length !== 0 ) {
-        config.console = siteMode
+        config.console = details?.siteMode
             ? consoleOutput.slice(-8)
             : consoleOutput;
     }

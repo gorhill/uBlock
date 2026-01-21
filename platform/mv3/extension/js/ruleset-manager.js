@@ -352,7 +352,7 @@ async function updateSessionRules() {
     let ruleId = 1;
     for ( const rule of addRulesUnfiltered ) {
         rule.id = ruleId++;
-        if ( Boolean(rule?.condition.regexFilter) === false ) { continue; }
+        if ( Boolean(rule.condition.regexFilter) === false ) { continue; }
         regexCount += 1;
         if ( regexCount < maxRegexCount ) { continue; }
         rule.id = 0;
