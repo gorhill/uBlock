@@ -677,7 +677,9 @@ async function startSession() {
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
-    if ( isNewVersion || permissionsUpdated || isSideloaded ) {
+    const shouldInject = isNewVersion || permissionsUpdated ||
+        isSideloaded && rulesetConfig.developerMode;
+    if ( shouldInject ) {
         registerInjectables();
     }
 
