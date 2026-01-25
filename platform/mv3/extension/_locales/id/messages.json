@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domain malware",
+    "message": "Perlindungan malware, keamanan",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Kembalikan ke pengaturan bawaan…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Semua pengaturan kustom kamu akan dihapus. Apakah kamu benar ingin kembali ke pengaturan bawaan?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

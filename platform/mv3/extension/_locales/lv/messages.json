@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Ļaunatūras domēni",
+    "message": "Aizsardzība pret ļaunprātīgām (inficētas vai satur vīrusus) vietnēm, drošība",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {

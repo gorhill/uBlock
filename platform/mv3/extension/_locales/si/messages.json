@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "ද්වේශාංග වසම්",
+    "message": "අනිෂ්ට මෘදුකාංග ආරක්ෂාව, ආරක්ෂාව",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
