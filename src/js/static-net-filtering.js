@@ -4765,11 +4765,16 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 }
             }
             // https://github.com/uBlockOrigin/uBOL-home/discussions/575
-            if ( rule.condition.urlFilter === undefined ) {
+            const { urlFilter } = rule.condition;
+            if ( urlFilter === undefined ) {
                 if ( rule.condition.regexFilter === undefined ) {
                     if ( paramName !== '' ) {
                         rule.condition.urlFilter = `^${paramName}=`;
                     }
+                }
+            } else if ( urlFilter.startsWith('||') ) {
+                if ( urlFilter.includes(paramName) === false ) {
+                    rule.condition.urlFilter = `${rule.condition.urlFilter}*^${paramName}=`;
                 }
             }
             if ( rule.__modifierAction === ALLOW_REALM ) {
