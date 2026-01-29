@@ -4758,6 +4758,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( rule.condition.resourceTypes === undefined ) {
                 if ( rule.condition.excludedResourceTypes === undefined ) {
                     rule.condition.resourceTypes = [
+                        'image',
                         'main_frame',
                         'sub_frame',
                         'xmlhttprequest',
