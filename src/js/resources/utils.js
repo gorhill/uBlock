@@ -220,6 +220,14 @@ export function generateContentFn(trusted, directive) {
             warXHR.send();
         }).catch(( ) => '');
     }
+    if ( directive.startsWith('join:') ) {
+        const parts = directive.slice(7)
+                .split(directive.slice(5, 7))
+                .map(a => generateContentFn(trusted, a));
+        return parts.some(a => a instanceof Promise)
+            ? Promise.all(parts).then(parts => parts.join(''))
+            : parts.join('');
+    }
     if ( trusted ) {
         return directive;
     }
