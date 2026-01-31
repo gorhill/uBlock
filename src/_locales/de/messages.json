@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale Regeln: Diese Spalte ist für Regeln, die nur für die aktuelle Website gelten.\nLokale Regeln überschreiben globale Regeln.",
+    "message": "Lokale Regeln: Diese Spalte ist für Regeln, die ausschließlich für die aktuelle Site gelten.\nLokale Regeln überschreiben die globale Regeln.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

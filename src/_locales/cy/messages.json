@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "Local rules: this column is for rules which apply to the current site only.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

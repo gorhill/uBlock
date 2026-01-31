@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "القواعد الموضعية: هذا العمود يتعلق بالقواعد التي تنطبق فقط على الموقع المزار حاليا.\nالقواعد الموضعية تحل محل القواعد العامة.",
+    "message": "الشروط المؤقتة: هذا العمود يتعلق بالقواعد التي تنطبق فقط على الموقع المزار حاليا.\nالشروط المؤقتة تحل محل الشروط العامة.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

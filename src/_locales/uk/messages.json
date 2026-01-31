@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локальні правила: цей стовпчик для правил, що застосовуються лише для цього сайту.\nЛокальні правила замінюють глобальні.",
+    "message": "Локальні правила: цей стовпчик для правил, що застосовуються лише цього сайту.\nЛокальні правила замінюють глобальні.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
