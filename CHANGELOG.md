@@ -1,3 +1,4 @@
+- [Fix handling of `extraMatch` parameter in `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/a8ad95394d)
 - [Improve `generateContentFn` helper scriptlet](https://github.com/gorhill/uBlock/commit/7d95c58408)
 - [Improve `prevent-xhr` scriptlet](https://github.com/gorhill/uBlock/commit/168394440c)
 - [Improve `proxyApplyFn` helper scriptlet](https://github.com/gorhill/uBlock/commit/18a8fc7675)
