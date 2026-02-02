@@ -45,10 +45,11 @@ function patchRule(rule, out) {
     if ( copy.action.type === 'modifyHeaders' ) { return; }
     if ( Array.isArray(copy.condition.responseHeaders) ) { return; }
     // https://github.com/uBlockOrigin/uBOL-home/issues/476#issuecomment-3299309478
+    // https://github.com/uBlockOrigin/uBOL-home/issues/608
     if ( copy.action.redirect?.transform?.queryTransform?.removeParams ) {
         const resourceTypes = condition.resourceTypes;
         if ( resourceTypes?.includes('main_frame') ) {
-            condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame');
+            condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame' && a !== 'image');
             if ( condition.resourceTypes.length === 0 ) { return; }
         }
     }
