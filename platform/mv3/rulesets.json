@@ -103,6 +103,7 @@
     "name": "AdGuard/uBO – URL Tracking Protection",
     "group": "privacy",
     "enabled": false,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/privacy-removeparam.txt"
     ],
