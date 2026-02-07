@@ -51,6 +51,7 @@ function preventFetchFn(
     const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
     const validResponseProps = {
         ok: [ false, true ],
+        status: [ 403 ],
         statusText: [ '', 'Not Found' ],
         type: [ 'basic', 'cors', 'default', 'error', 'opaque' ],
     };
