@@ -71,15 +71,12 @@ function trustedCreateHTML(
     const duration = parseInt(durationStr, 10);
     const domParser = new DOMParser();
     const externalDoc = domParser.parseFromString(htmlStr, 'text/html');
-    const docFragment = new DocumentFragment();
-    const toRemove = [];
+    const toAppend = [];
     while ( externalDoc.body.firstChild !== null ) {
-        const imported = document.adoptNode(externalDoc.body.firstChild);
-        docFragment.appendChild(imported);
-        if ( isNaN(duration) ) { continue; }
-        toRemove.push(imported);
+        toAppend.push(document.adoptNode(externalDoc.body.firstChild));
     }
-    if ( docFragment.firstChild === null ) { return; }
+    if ( toAppend.length === 0 ) { return; }
+    const toRemove = [];
     const remove = ( ) => {
         for ( const node of toRemove ) {
             if ( node.parentNode === null ) { continue; }
@@ -87,10 +84,21 @@ function trustedCreateHTML(
         }
         safe.uboLog(logPrefix, 'Node(s) removed');
     };
+    const appendOne = (target, nodes) => {
+        for ( const node of nodes ) {
+            target.append(node);
+            if ( isNaN(duration) ) { continue; }
+            toRemove.push(node);
+        }
+    };
     const append = ( ) => {
-        const parent = document.querySelector(parentSelector);
-        if ( parent === null ) { return false; }
-        parent.append(docFragment);
+        const targets = document.querySelectorAll(parentSelector);
+        if ( targets.length === 0 ) { return false; }
+        const limit = Math.min(targets.length, extraArgs.limit || 1) - 1;
+        for ( let i = 0; i < limit; i++ ) {
+            appendOne(targets[i], toAppend.map(a => a.cloneNode(true)));
+        }
+        appendOne(targets[limit], toAppend);
         safe.uboLog(logPrefix, 'Node(s) appended');
         if ( toRemove.length === 0 ) { return true; }
         setTimeout(remove, duration);
