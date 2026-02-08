@@ -4774,7 +4774,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                     }
                 }
             } else if ( urlFilter.startsWith('||') ) {
-                if ( urlFilter.includes(paramName) === false ) {
+                if ( urlFilter.toLowerCase().includes(paramName.toLowerCase()) === false ) {
                     rule.condition.urlFilter = `${rule.condition.urlFilter}*^${paramName}=`;
                 }
             }
