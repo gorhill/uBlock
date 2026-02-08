@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale regels: deze kolom is voor regels die alleen op de huidige website van toepassing zijn.\nLokale regels hebben voorrang op algemene regels.",
+    "message": "Lokale regels: deze kolom is voor regels die alleen op de huidige website van toepassing zijn.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

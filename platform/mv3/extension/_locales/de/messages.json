@@ -136,7 +136,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu überlasten, vergewissern Sie sich bitte, dass das Problem noch nicht gemeldet wurde. <b>Hinweis:</b> Das Anklicken der Schaltfläche übermittelt den Ursprung der Seite an GitHub.",
+    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu überlasten, vergewissern Sie sich bitte, dass das Problem noch nicht gemeldet wurde. <b>Hinweis:</b> Das Anklicken der Schaltfläche übermittelt die Internetadresse an GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -156,11 +156,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Zeigt Werbung oder Werbereste",
+    "message": "Zeigt Werbung oder deren Überreste",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Hat Überdeckungen oder andere Belästigungen",
+    "message": "Enthält überdeckende oder belästigende Elemente",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -168,7 +168,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Hat Datenschutzprobleme",
+    "message": "Weist Datenschutzprobleme auf",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -196,7 +196,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Der Standardfiltermodus wird durch individuelle Filtermodi für die jeweiligen Websites überschrieben. Sie können den Filtermodus auf jeder beliebigen Website entsprechend dem Modus anpassen, der auf dieser Website am besten funktioniert. Jeder Modus hat seine Vor- und Nachteile.",
+    "message": "Der Standardfiltermodus wird durch den eingestellten Filtermodus der jeweiligen Website überschrieben. Er kann auf jeder beliebigen Website individuell angepasst werden. Jeder Modus hat seine Vor- und Nachteile.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -216,15 +216,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Einfaches Netzwerkfiltern aus gewählten Filterlisten.\n\nErfordert keine Berechtigung zum Lesen und Ändern von Daten auf Websites.",
+    "message": "Einfaches Netzwerkfiltern durch ausgewählte Filterlisten.\n\nErfordert keine Berechtigung zum Lesen und Ändern von Daten auf Websites.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Erweitertes Netzwerkfiltern plus spezifisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.",
+    "message": "Erweitertes Netzwerkfiltern plus umfassendes Filtern durch ausgewählte Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Erweitertes Netzwerkfiltern plus spezifisches und allgemeines erweitertes Filtern aus gewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDas allgemeine erweiterte Filtern kann zu einem höheren Ressourcenverbrauch der Webseite führen.",
+    "message": "Erweitertes Netzwerkfiltern plus umfassendes und allgemeines Filtern durch ausgewählte Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDas allgemeine Filtern kann zu einem höheren Ressourcenverbrauch der Webseite führen.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Sicherung",
+    "message": "Backup",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
