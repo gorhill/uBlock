@@ -192,16 +192,6 @@
     "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
-    "id": "stevenblack-hosts",
-    "name": "Steven Black’s Unified Hosts (adware + malware)",
-    "enabled": false,
-    "excludedPlatforms": [ "safari" ],
-    "urls": [
-      "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-    ],
-    "homeURL": "https://github.com/StevenBlack/hosts#readme"
-  },
-  {
     "id": "ubol-tests",
     "name": "uBO Lite Test Filters",
     "enabled": false,
