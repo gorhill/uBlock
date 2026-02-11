@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Đặt lại về cài đặt mặc định…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Tất cả cài đặt tùy chỉnh của bạn sẽ bị xóa. Bạn có thực sự muốn đặt lại về cài đặt mặc định không?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

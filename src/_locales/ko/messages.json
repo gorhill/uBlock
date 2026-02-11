@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "경고! 저장되지 않은 변경 사항이 있습니다",
+    "message": "경고: 저장되지 않은 변경 사항이 있습니다!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "클릭: 이 사이트에서 uBlock₀을 끕니다.\n\nCtrl+클릭: 이 페이지에서만 uBlock₀을 끕니다.",
+    "message": "클릭: 이 사이트에서 uBlock₀을 비활성화합니다.\nCtrl+클릭: 이 페이지에서만 uBlock₀을 비활성화합니다.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -96,7 +96,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "/",
+    "message": "또는",
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "이 사이트의 이슈 신고",
+    "message": "이 사이트의 문제 신고",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -136,27 +136,27 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "클릭하여 이 사이트에서 모든 팝업을 차단합니다.",
+    "message": "클릭하여 이 사이트에서 모든 팝업을 차단합니다",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "클릭하여 이 사이트에서 모든 팝업 차단을 해제합니다.",
+    "message": "클릭하여 이 사이트에서 팝업 차단을 해제합니다",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "이 사이트에서만 적용되는 대형 미디어 구성요소 차단 기능을 켜고 끕니다.",
+    "message": "이 사이트에서만 적용되는 대용량 미디어 요소 차단 기능을 켜고 끕니다",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "클릭하여 이 사이트에서 대용량의 미디어를 차단합니다.",
+    "message": "클릭하여 이 사이트에서 대용량 미디어를 차단합니다",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "클릭하여 이 사이트에서 대용량의 미디어 차단을 해제합니다.",
+    "message": "클릭하여 이 사이트에서 대용량 미디어 차단을 해제합니다",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "이 사이트에서 시각적 필터링 토글",
+    "message": "이 사이트에서 요소 숨김 필터링 토글",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -168,23 +168,23 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "이 사이트에서 글꼴조정 차단 토글",
+    "message": "이 사이트에서 외부 폰트 차단 토글",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "클릭하여 이 사이트에서 외부 폰트를 차단합니다.",
+    "message": "클릭하여 이 사이트에서 외부 폰트를 차단합니다",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "클릭하여 이 사이트에서 더 이상 외부 폰트를 차단하지 않습니다.",
+    "message": "클릭하여 이 사이트에서 외부 폰트 차단을 해제합니다",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "클릭하여 이 사이트에서 JavaScript 비활성화",
+    "message": "클릭하여 이 사이트에서 JavaScript를 비활성화합니다",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "클릭하여 이 사이트에서 JavaScript 활성화",
+    "message": "클릭하여 이 사이트에서 JavaScript를 활성화합니다",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "큰 미디어 요소",
+    "message": "대용량 미디어 요소",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -204,11 +204,11 @@
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
-    "message": "자바스크립트",
+    "message": "JavaScript",
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "더보기",
+    "message": "더 보기",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -240,11 +240,11 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "보조 필터",
+    "message": "서드 파티 필터",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "보조 CSS/이미지",
+    "message": "서드 파티 CSS/이미지",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -252,15 +252,15 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "주 스크립트",
+    "message": "스크립트",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "보조 스크립트",
+    "message": "서드 파티 스크립트",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "보조 프레임",
+    "message": "서드 파티 프레임",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -300,11 +300,11 @@
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "넷 필터",
+    "message": "네트워크 필터",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "표면 필터",
+    "message": "요소 숨김 필터",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -316,7 +316,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "차단된 구성 요소의 자리 감추기",
+    "message": "차단된 요소의 자리 감추기",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -332,7 +332,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "색맹 최적화",
+    "message": "색맹 접근성 향상",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "표면 필터 비활성화",
+    "message": "요소 숨김 필터 비활성화",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "글꼴 조종 차단",
+    "message": "외부 폰트 차단",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -420,7 +420,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 표면 필터:",
+    "message": "{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 요소 숨김 필터:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "표면 필터 분석 및 적용",
+    "message": "요소 숨김 필터 분석 및 적용",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -448,7 +448,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "전체적 표면 필터 무시",
+    "message": "범용 요소 숨김 필터 무시",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Ublock₀ 제공",
+    "message": "기본 내장",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
@@ -476,11 +476,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
-    "message": "개인정보",
+    "message": "개인정보 보호",
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "멀웨어 도메인",
+    "message": "멀웨어 및 보안",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -488,11 +488,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "쿠키 알림",
+    "message": "쿠키 공지",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "골칫거리",
+    "message": "방해 요소",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
@@ -500,7 +500,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupRegions": {
-    "message": "지역, 언어",
+    "message": "지역 및 언어",
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
@@ -740,7 +740,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "보조",
+    "message": "서드 파티",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "네트워크 요청이 {{type}} 일 경우,{{br}}URL 주소가 {{url}} 와 일치하고{{br}}{{origin}} 에서 비롯 되었을 경우 {{action}} 한다.{{br}}그리고 다음 예외 필터와 일치할 경우 {{importance}} 한다.",
+    "message": "네트워크 요청이 {{type}} 일 경우,{{br}}URL 주소가 {{url}} 와 일치하고{{br}}{{origin}} 에서 비롯되었을 경우 {{action}} 한다.{{br}}그리고 다음 예외 필터와 일치할 경우 {{importance}} 한다.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -836,7 +836,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "활성화된 정적 필터 목록에서 <code>{{filter}}</code>를 찾지 못했습니다",
+    "message": "현재 활성화된 필터 목록에서 정적 필터를 찾을 수 없습니다",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -928,11 +928,11 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "특정 웹사이트에서 발생하는 필터 이슈는 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 이슈 트래커</span>에 보고해주세요. GitHub 계정이 필요합니다.",
+    "message": "특정 웹사이트에서 발생하는 필터 문제는 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 이슈 트래커</span>에 보고해주세요. GitHub 계정이 필요합니다",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>중요:</b> uBlock Origin과 유사한 목적의 다른 차단기를 함께 사용하지 마세요. 특정 웹사이트에서 필터 문제가 발생할 수 있습니다.",
+    "message": "<b>중요:</b> uBlock Origin과 유사한 목적의 다른 차단기를 함께 사용하지 마세요. 일부 웹사이트에서 필터 문제가 발생할 수 있습니다.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -952,23 +952,23 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "다음은 자원 봉사자들이 문제를 해결하는 데에 도움을 줄 때 유용할 수 있는 기술적인 정보입니다.",
+    "message": "다음은 자원봉사자들이 문제를 해결을 돕는 데 유용할 수 있는 기술적인 정보입니다.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "필터 이슈 신고",
+    "message": "필터 문제 신고",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 이슈가 이미 신고되지는 않았는지 확인해주시기 바랍니다.",
+    "message": "자원봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 문제가 이미 신고되지는 않았는지 확인해주시기 바랍니다. <b>중요:</b> 버튼을 클릭하면 페이지의 출처가 GitHub로 전송됩니다.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "필터 목록은 매일 갱신됩니다. 최신 필터 목록에서 문제가 이미 해결되진 않았는지 확인하세요.",
+    "message": "필터 목록은 매일 업데이트됩니다. 최신 필터 목록에서 문제가 이미 해결되었는지 확인해 주세요.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "문제가 생긴 웹페이지를 새로고침해도 문제가 여전히 남아 있는지 확인하세요.",
+    "message": "문제가 있는 웹페이지를 새로고침한 후에도 문제가 여전히 발생하는지 확인해 주세요.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1012,11 +1012,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "웹페이지를 \"NSFW\"  (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)로 분류",
+    "message": "웹 페이지를 “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)로 분류",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
-    "message": "개인정보취급방침",
+    "message": "개인정보 처리방침",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1092,31 +1092,31 @@
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "1 분 전",
+    "message": "1분 전",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} 분 전",
+    "message": "{{value}}분 전",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "1 시간 전",
+    "message": "1시간 전",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} 시간 전",
+    "message": "{{value}}시간 전",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "1 일 전",
+    "message": "1일 전",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} 일 전",
+    "message": "{{value}}일 전",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "대쉬보드 보기",
+    "message": "대시보드 보기",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
@@ -1164,7 +1164,7 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "이번만",
+    "message": "일시적으로",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
@@ -1244,7 +1244,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "이번만 대형 미디어 구성요소 허용",
+    "message": "일시적으로 대용량 미디어 요소 허용",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {

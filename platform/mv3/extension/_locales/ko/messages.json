@@ -52,7 +52,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "자세히",
+    "message": "더 보기",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "멀웨어 도메인",
+    "message": "멀웨어 및 보안",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -168,7 +168,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "개인정보 보호 관련 이슈가 있습니다",
+    "message": "개인정보 보호 관련 문제가 있습니다",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -184,7 +184,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "웹페이지를 \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)로 분류",
+    "message": "웹페이지를 \"NSFW\" (<a href=\"https://ko.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>)로 분류",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
@@ -252,7 +252,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "잠재적으로 좋지 않은 사이트로의 접속을 차단하고, 사용자가 진행할지 선택하도록 합니다.",
+    "message": "잠재적으로 유해할 수 있는 사이트로의 접속이 차단되며, 계속 진행할지 여부를 선택할 수 있는 옵션이 제공됩니다.",
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
