@@ -486,7 +486,10 @@ export class JSONPath {
         if ( outcome ) { return k; }
     }
     #modifyVal(obj, key) {
-        const { modify, rval } = this.#compiled;
+        let { modify, rval } = this.#compiled;
+        if ( typeof rval === 'string' ) {
+            rval = rval.replace('${now}', `${Date.now()}`);
+        }
         switch ( modify ) {
         case undefined:
             obj[key] = rval;
