@@ -467,8 +467,14 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return `AdError ${this.errorCode}: ${this.message}`;
     }
   }
-  AdError.ErrorCode = {};
-  AdError.Type = {};
+
+  AdError.ErrorCode = {
+    AUTOPLAY_DISALLOWED: 1205,
+  };
+  AdError.Type = {
+    AD_LOAD: "adLoadError",
+    AD_PLAY: "adPlayError",
+  };
 
   const isEngadget = () => {
     try {
