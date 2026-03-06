@@ -314,7 +314,7 @@ const $httpHeaders = {
 
 // Local helpers
 
-const restrSeparator = '(?:[^%.0-9a-z_-]|$)';
+const restrSeparator = '([^%.0-9a-z_-]|$)';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 const reEscape = /[.*+?^${}()|[\]\\]/g;
@@ -326,7 +326,7 @@ const restrFromGenericPattern = function(s, anchor = 0) {
     let reStr = s.replace(restrFromGenericPattern.rePlainChars, '\\$&')
                  .replace(restrFromGenericPattern.reSeparators, restrSeparator)
                  .replace(restrFromGenericPattern.reDanglingAsterisks, '')
-                 .replace(restrFromGenericPattern.reAsterisks, '\\S*?');
+                 .replace(restrFromGenericPattern.reAsterisks, ' .*?');
     if ( anchor & 0b100 ) {
         reStr = (
             reStr.startsWith('\\.') ?
@@ -345,8 +345,8 @@ restrFromGenericPattern.rePlainChars = /[.+?${}()|[\]\\]/g;
 restrFromGenericPattern.reSeparators = /\^/g;
 restrFromGenericPattern.reDanglingAsterisks = /^\*+|\*+$/g;
 restrFromGenericPattern.reAsterisks = /\*+/g;
-restrFromGenericPattern.restrHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
-restrFromGenericPattern.restrHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
+restrFromGenericPattern.restrHostnameAnchor1 = '^[a-z-]+://([^/?#]+\\.)?';
+restrFromGenericPattern.restrHostnameAnchor2 = '^[a-z-]+://([^/?#]+)?';
 
 /******************************************************************************/
 
