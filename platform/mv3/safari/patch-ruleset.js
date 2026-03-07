@@ -84,7 +84,7 @@ function patchRuleWithTo(rule) {
     const { urlFilter } = condition;
     if ( urlFilter === undefined ) { return; }
     if ( urlFilter.includes('*') === false ) { return; }
-    if ( urlFilter.includes('/') === false ) { return; }
+    if ( urlFilter.includes('^') ) { return; }
     condition.regexFilter = regexFilterFromUrlFilter(urlFilter);
     condition.urlFilter = undefined;
 }
