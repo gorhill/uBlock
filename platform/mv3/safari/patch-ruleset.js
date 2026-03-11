@@ -50,7 +50,6 @@ function regexFilterFromUrlFilter(urlFilter) {
     if ( urlFilter.endsWith('|') ) {
         regexFilter = `${regexFilter}$`;
     }
-    console.info(`converting "${urlFilter}" to "${regexFilter}"`);
     return regexFilter;
 }
 
@@ -64,6 +63,7 @@ function patchRuleForRemoveParams(rule) {
     if ( urlFilter.startsWith('^') === false ) { return; }
     if ( urlFilter.includes('^', 1) ) { return; }
     condition.regexFilter = `[?&]${regexFilterFromUrlFilter(urlFilter.slice(1))}`;
+    console.info(`converting "urlFilter: ${urlFilter}" to "regexFilter: ${condition.regexFilter}"`);
     condition.urlFilter = undefined;
 }
 
