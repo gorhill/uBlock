@@ -19,9 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-const restrSeparator = '(?:[^%.0-9a-z_-]|$)';
 const rePlainChars = /[.+?${}()|[\]\\]/g;
-const reSeparators = /\^/g;
 const reDanglingAsterisks = /^\*+|\*+$/g;
 const reAsterisks = /\*+/g;
 const restrHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
@@ -38,7 +36,6 @@ function regexFilterFromUrlFilter(urlFilter) {
         regexFilter = regexFilter.slice(0, -1);
     }
     regexFilter = regexFilter.replace(rePlainChars, '\\$&')
-        .replace(reSeparators, restrSeparator)
         .replace(reDanglingAsterisks, '')
         .replace(reAsterisks, '.*?');
     if ( urlFilter.startsWith('||') ) {
@@ -55,6 +52,19 @@ function regexFilterFromUrlFilter(urlFilter) {
     }
     console.info(`converting "${urlFilter}" to "${regexFilter}"`);
     return regexFilter;
+}
+
+// https://github.com/WebKit/WebKit/blob/6cef2858442a4012b783876efd7dd8c0c5669cf9/Source/WebKit/UIProcess/Extensions/Cocoa/_WKWebExtensionDeclarativeNetRequestRule.mm#L1134
+function patchRuleForRemoveParams(rule) {
+    const { action, condition } = rule;
+    if ( action.type !== 'redirect' ) { return; }
+    if ( action.redirect.transform?.queryTransform?.removeParams === undefined ) { return; }
+    const { urlFilter } = condition;
+    if ( urlFilter === undefined ) { return; }
+    if ( urlFilter.startsWith('^') === false ) { return; }
+    if ( urlFilter.includes('^', 1) ) { return; }
+    condition.regexFilter = `[?&]${regexFilterFromUrlFilter(urlFilter.slice(1))}`;
+    condition.urlFilter = undefined;
 }
 
 // https://github.com/uBlockOrigin/uBOL-home/issues/539
@@ -75,18 +85,6 @@ function patchRuleForIssue539(rule) {
         condition.excludedInitiatorDomains = condition.excludedRequestDomains;
         delete condition.excludedRequestDomains;
     }
-}
-
-// https://github.com/WebKit/WebKit/blob/6cef2858442a4012b783876efd7dd8c0c5669cf9/Source/WebKit/UIProcess/Extensions/Cocoa/_WKWebExtensionDeclarativeNetRequestRule.mm#L1134
-function patchRuleWithTo(rule) {
-    const { condition } = rule;
-    if ( Array.isArray(condition.requestDomains) === false ) { return; }
-    const { urlFilter } = condition;
-    if ( urlFilter === undefined ) { return; }
-    if ( urlFilter.includes('*') === false ) { return; }
-    if ( urlFilter.includes('^') ) { return; }
-    condition.regexFilter = regexFilterFromUrlFilter(urlFilter);
-    condition.urlFilter = undefined;
 }
 
 function patchRule(rule, out) {
@@ -112,7 +110,7 @@ function patchRule(rule, out) {
         delete condition.excludedInitiatorDomains;
     }
     patchRuleForIssue539(copy);
-    patchRuleWithTo(copy);
+    patchRuleForRemoveParams(copy);
     // https://github.com/uBlockOrigin/uBOL-home/issues/434
     let { urlFilter } = condition;
     if ( urlFilter?.endsWith('^') ) {
