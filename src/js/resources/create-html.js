@@ -60,7 +60,7 @@ function trustedCreateHTML(
     // We do not want to recursively create elements
     self.trustedCreateHTML = true;
     let ancestor = self.frameElement;
-    while ( ancestor !== null ) {
+    while ( ancestor ) {
         const doc = ancestor.ownerDocument;
         if ( doc === null ) { break; }
         const win = doc.defaultView;
