@@ -80,3 +80,61 @@ registerScriptlet(preventInnerHTML, {
         safeSelf,
     ],
 });
+
+/**
+ * @scriptlet prevent-textContent
+ * 
+ * @description
+ * Conditionally prevent assignment to `textContent` property.
+ * 
+ * @param [selector]
+ * Optional. The element must matches `selector` for the prevention to take
+ * place.
+ * 
+ * @param [pattern]
+ * Optional. A pattern to match against the assigned value. The pattern can be
+ * a plain string, or a regex. Prepend with `!` to reverse the match condition.
+ * 
+ * */
+
+export function preventTextContent(
+    selector = '',
+    pattern = ''
+) {
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('prevent-textContent', selector, pattern);
+    const matcher = safe.initPattern(pattern, { canNegate: true });
+    const current = safe.Object_getOwnPropertyDescriptor(Element.prototype, 'textContent');
+    if ( current === undefined ) { return; }
+    const shouldPreventSet = (elem, a) => {
+        if ( selector !== '' ) {
+            if ( typeof elem.matches !== 'function' ) { return false; }
+            if ( elem.matches(selector) === false ) { return false; }
+        }
+        return safe.testPattern(matcher, `${a}`);
+    };
+    Object.defineProperty(Element.prototype, 'textContent', {
+        get: function() {
+            return current.get
+                ? current.get.call(this)
+                : current.value;
+        },
+        set: function(a) {
+            if ( shouldPreventSet(this, a) ) {
+                safe.uboLog(logPrefix, 'Prevented');
+            } else if ( current.set ) {
+                current.set.call(this, a);
+            }
+            if ( safe.logLevel > 1 ) {
+                safe.uboLog(logPrefix, `Assigned:\n${a}`);
+            }
+            current.value = a;
+        },
+    });
+}
+registerScriptlet(preventInnerHTML, {
+    name: 'prevent-textContent.js',
+    dependencies: [
+        safeSelf,
+    ],
+});
