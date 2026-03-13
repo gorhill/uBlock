@@ -1,3 +1,10 @@
+- [Add `prevent-textContent` scriptlet](https://github.com/gorhill/uBlock/commit/bdd10eb08f)
+- [Minor improvement of `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/https://github.com/gorhill/uBlock/commit/527939854d)
+
+----------
+
+# 1.70.0
+
 - [Improve `json-edit`-related scriptlets](https://github.com/gorhill/uBlock/commit/98d3e9500a)
 - [Improve `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/baffd32dab)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/2ce376cf1d)
