@@ -1304,13 +1304,15 @@ onResponseStarted.start = function() {
 const requestHeadersManager = {
     requests: new Map(),
     start() {
+        const extraInfoSpec = [ 'requestHeaders' ];
+        if ( isGecko !== true ) {
+            extraInfoSpec.push('extraHeaders');
+        }
         browser.webRequest.onSendHeaders.addListener(details => {
             this.requests.set(details.requestId, details.requestHeaders);
         }, {
             urls: [ 'http://*/*', 'https://*/*' ]
-        }, [
-            'requestHeaders', 'extraHeaders'
-        ]);
+        }, extraInfoSpec);
         browser.webRequest.onBeforeRedirect.addListener(details => {
             this.requests.delete(details.requestId);
         }, {
