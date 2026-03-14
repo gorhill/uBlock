@@ -71,6 +71,7 @@ const nativeDNR = webext.declarativeNetRequest;
 
 const isSupportedRule = r => {
     if ( r.action.responseHeaders ) { return false; }
+    if ( r.action.requestHeaders ) { return false; }
     const { condition } = r;
     if ( condition.tabIds !== undefined ) { return false; }
     if ( condition.resourceTypes?.includes('object') ) {

@@ -892,12 +892,12 @@ const PageStore = class {
         return result;
     }
 
-    filterOnHeaders(fctxt, headers) {
+    filterOnHeaders(fctxt, ...headers) {
         fctxt.filter = undefined;
 
         if ( this.getNetFilteringSwitch(fctxt) === false ) { return 0; }
 
-        let result = staticNetFilteringEngine.matchHeaders(fctxt, headers);
+        let result = staticNetFilteringEngine.matchHeaders(fctxt, ...headers);
         if ( result === 0 ) { return 0; }
 
         const loggerEnabled = logger.enabled;

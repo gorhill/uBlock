@@ -290,8 +290,8 @@ const $requestEntity = {
 };
 
 const $httpHeaders = {
-    init(headers) {
-        this.headers = headers;
+    init(...headers) {
+        this.headers = headers.flat();
         this.parsed.clear();
     },
     reset() {
@@ -299,12 +299,14 @@ const $httpHeaders = {
         this.parsed.clear();
     },
     lookup(name) {
-        if ( this.parsed.size === 0 ) {
-            for ( const { name, value } of this.headers ) {
-                this.parsed.set(name.toLowerCase(), value);
-            }
+        let value = this.parsed.get(name);
+        if ( value === undefined ) {
+            const headers = this.headers;
+            const i = headers.findIndex(a => name === a.name.toLowerCase());
+            value = i !== -1 ? headers[i].value : null;
+            this.parsed.set(name, value);
         }
-        return this.parsed.get(name);
+        return value ?? undefined;
     },
     headers: [],
     parsed: new Map(),
@@ -2943,13 +2945,14 @@ class FilterOnHeaders {
         return re.test(headerValue) !== not;
     }
 
-    static compile(details) {
-        const parsed = sfp.parseHeaderValue(details.optionValues.get('header'));
+    static compile(fid, details) {
+        const fc = filterClasses[fid];
+        const parsed = sfp.parseHeaderValue(details.optionValues.get(`${fc.headerRealm}header`));
         let normalized = parsed.name;
         if ( parsed.value !== '' ) {
             normalized += `:${parsed.value}`;
         }
-        return [ FilterOnHeaders.fid, normalized ];
+        return [ fid, normalized ];
     }
 
     static fromCompiled(args) {
@@ -2962,7 +2965,8 @@ class FilterOnHeaders {
         );
     }
 
-    static dnrFromCompiled(args, rule) {
+    static dnrFromCompiled(fid, args, rule) {
+        const fc = filterClasses[fid];
         rule.condition ||= {};
         const parsed = sfp.parseHeaderValue(args[1]);
         if ( parsed.bad !== true ) {
@@ -2971,8 +2975,8 @@ class FilterOnHeaders {
                 : parsed.value;
             if ( value !== undefined ) {
                 const prop = parsed.not
-                    ? 'excludedResponseHeaders'
-                    : 'responseHeaders';
+                    ? `excludedR${fc.headerRealm.slice(1)}Headers`
+                    : `${fc.headerRealm}Headers`;
                 rule.condition[prop] ||= [];
                 const details = {
                     header: parsed.name,
@@ -2984,13 +2988,14 @@ class FilterOnHeaders {
                 return;
             }
         }
-        dnrAddRuleError(rule, `header="${args[1]}" not supported`);
+        dnrAddRuleError(rule, `${fc.headerRealm}header="${args[1]}" not supported`);
     }
 
-    static logData(idata, details) {
+    static logData(fid, idata, details) {
+        const fc = filterClasses[fid];
         const irefs = filterData[idata+1];
         const headerOpt = filterRefs[irefs].headerOpt;
-        let opt = 'header';
+        let opt = `${fc.headerRealm}header`;
         if ( headerOpt !== '' ) {
             opt += `=${LogData.requote(headerOpt)}`;
         }
@@ -2998,7 +3003,37 @@ class FilterOnHeaders {
     }
 }
 
-registerFilterClass(FilterOnHeaders);
+class FilterOnResponseHeaders extends FilterOnHeaders {
+    static headerRealm = 'response';
+    static compile(details) {
+        return super.compile(FilterOnResponseHeaders.fid, details);
+    }
+
+    static dnrFromCompiled(args, rule) {
+        super.dnrFromCompiled(FilterOnResponseHeaders.fid, args, rule);
+    }
+
+    static logData(idata, details) {
+        super.logData(FilterOnResponseHeaders.fid, idata, details);
+    }
+}
+registerFilterClass(FilterOnResponseHeaders);
+
+class FilterOnRequestHeaders extends FilterOnHeaders {
+    static headerRealm = 'request';
+    static compile(details) {
+        return super.compile(FilterOnRequestHeaders.fid, details);
+    }
+
+    static dnrFromCompiled(args, rule) {
+        super.dnrFromCompiled(FilterOnRequestHeaders.fid, args, rule);
+    }
+
+    static logData(idata, details) {
+        super.logData(FilterOnRequestHeaders.fid, idata, details);
+    }
+}
+registerFilterClass(FilterOnRequestHeaders);
 
 /******************************************************************************/
 
@@ -3604,11 +3639,6 @@ class FilterCompiler {
             this.optionUnitBits |= FROM_BIT;
             break;
         }
-        case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER: {
-            this.optionValues.set('header', parser.getNetOptionValue(id) || '');
-            this.optionUnitBits |= HEADER_BIT;
-            break;
-        }
         case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
             this.optionValues.set('ipaddress', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= IPADDRESS_BIT;
@@ -3640,6 +3670,16 @@ class FilterCompiler {
                 return false;
             }
             this.optionUnitBits |= MODIFY_BIT;
+            break;
+        }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REQUESTHEADER: {
+            this.optionValues.set('requestheader', parser.getNetOptionValue(id) || '');
+            this.optionUnitBits |= HEADER_BIT;
+            break;
+        }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER: {
+            this.optionValues.set('responseheader', parser.getNetOptionValue(id) || '');
+            this.optionUnitBits |= HEADER_BIT;
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_TO: {
@@ -3736,7 +3776,6 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_CSP:
             case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
             case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
             case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
             case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
@@ -3745,6 +3784,8 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REPLACE:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_REQUESTHEADER:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER:
             case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
             case sfp.NODE_TYPE_NET_OPTION_NAME_URLSKIP:
             case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
@@ -4117,7 +4158,12 @@ class FilterCompiler {
 
         // Header
         if ( (this.optionUnitBits & HEADER_BIT) !== 0 ) {
-            units.push(FilterOnHeaders.compile(this));
+            if ( this.optionValues.has('requestheader') ) {
+                units.push(FilterOnRequestHeaders.compile(this));
+            }
+            if ( this.optionValues.has('responseheader') ) {
+                units.push(FilterOnResponseHeaders.compile(this));
+            }
             this.action |= HEADERS_REALM;
         }
 
@@ -5432,7 +5478,7 @@ StaticNetFilteringEngine.prototype.matchRequest = function(fctxt, modifiers = 0)
 
 /******************************************************************************/
 
-StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
+StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, ...headers) {
     const typeBits = typeNameToTypeValue[fctxt.type] || otherTypeBitValue;
     const partyBits = fctxt.is3rdPartyToDoc() ? THIRDPARTY_REALM : FIRSTPARTY_REALM;
 
@@ -5449,7 +5495,7 @@ StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
     $requestTypeValue = (typeBits & TYPE_REALM) >>> TYPE_REALM_OFFSET;
     $requestAddress = fctxt.getIPAddress();
     $isBlockImportant = false;
-    $httpHeaders.init(headers);
+    $httpHeaders.init(...headers);
 
     let r = 0;
     if ( this.realmMatchString(HEADERS_REALM | BLOCK_REALM, typeBits, partyBits) ) {
