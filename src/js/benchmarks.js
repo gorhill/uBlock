@@ -202,7 +202,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
                     permissionsCount += 1;
                 }
             }
-            sfne.matchHeaders(fctxt, []);
+            sfne.matchHeaders(fctxt, [], []);
             if ( sfne.matchAndFetchModifiers(fctxt, 'replace') ) {
                 replaceCount += 1;
             }

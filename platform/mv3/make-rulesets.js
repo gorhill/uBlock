@@ -424,6 +424,7 @@ function toStrictBlockRule(rule, out) {
     if ( condition.requestMethods ) { return; }
     if ( condition.excludedRequestMethods ) { return; }
     if ( condition.responseHeaders ) { return; }
+    if ( condition.requestHeaders ) { return; }
     if ( condition.excludedResponseHeaders ) { return; }
     if ( condition.initiatorDomains ) { return; }
     if ( condition.excludedInitiatorDomains ) { return; }

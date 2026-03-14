@@ -114,6 +114,7 @@ function discardUnsupportedRules(ruleset) {
         const { action, condition } = rule;
         if ( action.type === 'modifyHeaders' ) { return false; }
         if ( Array.isArray(condition.responseHeaders) ) { return false; }
+        if ( Array.isArray(condition.requestHeaders) ) { return false; }
         return true;
     };
     const out = [];
