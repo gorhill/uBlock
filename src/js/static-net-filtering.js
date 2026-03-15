@@ -50,20 +50,12 @@ const keyvalStore = typeof vAPI !== 'undefined'
 // ||||||||    | || |
 // ||||||||    | || |
 // ||||||||    | || |
-// ||||||||    | || +---- bit 0- 1: block=0, allow=1, block important=2
-// ||||||||    | |+------ bit    2: unused
-// ||||||||    | +------- bit 3- 4: party [0-3]
-// ||||||||    +--------- bit 5- 9: type [0-31]
-// |||||||+-------------- bit   10: headers-based filters
-// ||||||+--------------- bit   11: redirect filters
-// |||||+---------------- bit   12: removeparam filters
-// ||||+----------------- bit   13: csp filters
-// |||+------------------ bit   14: permissions filters
-// ||+------------------- bit   15: uritransform filters
-// |+-------------------- bit   16: replace filters
-// +--------------------- bit   17: urlskip filters
-// TODO: bit 11-17 could be converted into 3-bit value, as these options are not
-//       meant to be combined.
+// ||||||||    | || +---- bit  0- 1: block=0, allow=1, block important=2
+// ||||||||    | |+------ bit     2: unused
+// ||||||||    | +------- bit  3- 4: party [0-3]
+// ||||||||    +--------- bit  5- 9: type [0-31]
+// |||||||+-------------- bit    10: headers-based filters
+// ||||||+--------------- bit 13-11: modify type
 
 const BLOCK_REALM          = 0b0000_0000_0000_0000_0000;
 const ALLOW_REALM          = 0b0000_0000_0000_0000_0001;
@@ -78,15 +70,12 @@ const TYPE_REALM           = 0b0000_0000_0011_1110_0000;
 const HEADERS_REALM        = 0b0000_0000_0100_0000_0000;
 const REDIRECT_REALM       = 0b0000_0000_1000_0000_0000;
 const REMOVEPARAM_REALM    = 0b0000_0001_0000_0000_0000;
-const CSP_REALM            = 0b0000_0010_0000_0000_0000;
-const PERMISSIONS_REALM    = 0b0000_0100_0000_0000_0000;
-const URLTRANSFORM_REALM   = 0b0000_1000_0000_0000_0000;
-const REPLACE_REALM        = 0b0001_0000_0000_0000_0000;
-const URLSKIP_REALM        = 0b0010_0000_0000_0000_0000;
-const MODIFY_REALMS        = REDIRECT_REALM | CSP_REALM |
-                             REMOVEPARAM_REALM | PERMISSIONS_REALM |
-                             URLTRANSFORM_REALM | REPLACE_REALM |
-                             URLSKIP_REALM;
+const CSP_REALM            = 0b0000_0001_1000_0000_0000;
+const PERMISSIONS_REALM    = 0b0000_0010_0000_0000_0000;
+const URLTRANSFORM_REALM   = 0b0000_0010_1000_0000_0000;
+const REPLACE_REALM        = 0b0000_0011_0000_0000_0000;
+const URLSKIP_REALM        = 0b0000_0011_1000_0000_0000;
+const MODIFY_REALMS        = 0b0000_0011_1000_0000_0000;
 
 const TYPE_REALM_OFFSET = 5;
 
@@ -3026,7 +3015,7 @@ class FilterOnRequestHeaders extends FilterOnHeaders {
     }
 
     static dnrFromCompiled(args, rule) {
-        super.dnrFromCompiled(FilterOnRequestHeaders.fid, args, rule);
+        dnrAddRuleError(rule, `requestheader="${args[1]}" not supported`);
     }
 
     static logData(idata, details) {
