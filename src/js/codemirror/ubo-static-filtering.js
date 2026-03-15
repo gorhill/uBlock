@@ -513,10 +513,12 @@ function initHints() {
         if ( patternNode === 0 ) { return; }
         const patternEnd = astParser.getNodeStringEnd(patternNode);
         const beg = cursor.ch;
-        if ( beg <= patternEnd ) {
-            return getNetPatternHints(cursor, line);
-        }
         const lineBefore = line.slice(0, beg);
+        if ( beg <= patternEnd ) {
+            if ( astParser.hasOptions() !== false || lineBefore.includes('$') === false ) {
+                return getNetPatternHints(cursor, line);
+            }
+        }
         const lineAfter = line.slice(beg);
         let matchLeft = /[^$,]*$/.exec(lineBefore);
         let matchRight = /^[^,]*/.exec(lineAfter);
