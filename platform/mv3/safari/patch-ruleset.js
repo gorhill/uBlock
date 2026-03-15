@@ -19,122 +19,168 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-const rePlainChars = /[.+?${}()|[\]\\]/g;
-const reDanglingAsterisks = /^\*+|\*+$/g;
-const reAsterisks = /\*+/g;
-const restrHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
-const restrHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
-
-function regexFilterFromUrlFilter(urlFilter) {
-    let regexFilter = urlFilter;
-    if ( urlFilter.startsWith('||') ) {
-        regexFilter = regexFilter.slice(2);
-    } else if ( urlFilter.startsWith('|') ) {
-        regexFilter = regexFilter.slice(1);
-    }
-    if ( urlFilter.endsWith('|') ) {
-        regexFilter = regexFilter.slice(0, -1);
-    }
-    regexFilter = regexFilter.replace(rePlainChars, '\\$&')
-        .replace(reDanglingAsterisks, '')
-        .replace(reAsterisks, '.*?');
-    if ( urlFilter.startsWith('||') ) {
-        regexFilter = (
-            regexFilter.startsWith('\\.') ?
-                restrHostnameAnchor2 :
-                restrHostnameAnchor1
-        ) + regexFilter;
-    } else if ( urlFilter.startsWith('|') ) {
-        regexFilter = `^${regexFilter}`;
-    }
-    if ( urlFilter.endsWith('|') ) {
-        regexFilter = `${regexFilter}$`;
-    }
-    return regexFilter;
-}
-
 // https://github.com/WebKit/WebKit/blob/6cef2858442a4012b783876efd7dd8c0c5669cf9/Source/WebKit/UIProcess/Extensions/Cocoa/_WKWebExtensionDeclarativeNetRequestRule.mm#L1134
-function patchRuleForRemoveParams(rule) {
-    const { action, condition } = rule;
-    if ( action.type !== 'redirect' ) { return; }
-    if ( action.redirect.transform?.queryTransform?.removeParams === undefined ) { return; }
-    const { urlFilter } = condition;
-    if ( urlFilter === undefined ) { return; }
-    if ( urlFilter.startsWith('^') === false ) { return; }
-    if ( urlFilter.includes('^', 1) ) { return; }
-    condition.regexFilter = `[?&]${regexFilterFromUrlFilter(urlFilter.slice(1))}`;
-    console.info(`converting "urlFilter: ${urlFilter}" to "regexFilter: ${condition.regexFilter}"`);
-    condition.urlFilter = undefined;
+function patchRemoveParams(ruleset) {
+    const isRemoveParamsRule = rule =>
+        Array.isArray(rule.action.redirect?.transform?.queryTransform?.removeParams);
+    const patchResourceTypes = rule => {
+        const { condition } = rule;
+        // https://github.com/uBlockOrigin/uBOL-home/issues/476#issuecomment-3299309478
+        // https://github.com/uBlockOrigin/uBOL-home/issues/608
+        const { resourceTypes } = condition;
+        if ( resourceTypes?.length ) {
+            condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame' && a !== 'image');
+            return condition.resourceTypes.length !== 0;
+        }
+        return true;
+    };
+    const out = [];
+    for ( const rule of ruleset ) {
+        if ( isRemoveParamsRule(rule) ) {
+            if ( patchResourceTypes(rule) !== true ) { continue; }
+        }
+        out.push(rule);
+    }
+    return out;
 }
 
 // https://github.com/uBlockOrigin/uBOL-home/issues/539
-function patchRuleForIssue539(rule) {
-    const { condition } = rule;
-    if ( Array.isArray(condition.requestDomains) === false ) { return; }
-    if ( Array.isArray(condition.initiatorDomains) ) { return; }
-    if ( Array.isArray(condition.excludedRequestDomains) ) {
-        if ( Array.isArray(condition.excludedInitiatorDomains) ) { return; }
+function patchForIssue539(ruleset) {
+    const patchRule = rule => {
+        const { condition } = rule;
+        if ( Array.isArray(condition.requestDomains) === false ) { return; }
+        if ( Array.isArray(condition.initiatorDomains) ) { return; }
+        if ( Array.isArray(condition.excludedRequestDomains) ) {
+            if ( Array.isArray(condition.excludedInitiatorDomains) ) { return; }
+        }
+        if ( Array.isArray(condition.resourceTypes) === false ) { return; }
+        if ( condition.resourceTypes.length !== 1 ) { return; }
+        if ( condition.resourceTypes.includes('main_frame') === false ) { return; }
+        if ( condition.regexFilter === undefined ) { return; }
+        condition.initiatorDomains = condition.requestDomains;
+        delete condition.requestDomains;
+        if ( Array.isArray(condition.excludedRequestDomains) ) {
+            condition.excludedInitiatorDomains = condition.excludedRequestDomains;
+            delete condition.excludedRequestDomains;
+        }
+    };
+    const out = [];
+    for ( const rule of ruleset ) {
+        patchRule(rule);
+        out.push(rule);
     }
-    if ( Array.isArray(condition.resourceTypes) === false ) { return; }
-    if ( condition.resourceTypes.length !== 1 ) { return; }
-    if ( condition.resourceTypes.includes('main_frame') === false ) { return; }
-    if ( condition.regexFilter === undefined ) { return; }
-    condition.initiatorDomains = condition.requestDomains;
-    delete condition.requestDomains;
-    if ( Array.isArray(condition.excludedRequestDomains) ) {
-        condition.excludedInitiatorDomains = condition.excludedRequestDomains;
-        delete condition.excludedRequestDomains;
-    }
+    return out;
 }
 
-function patchRule(rule, out) {
-    const copy = structuredClone(rule);
-    const condition = copy.condition;
-    if ( copy.action.type === 'modifyHeaders' ) { return; }
-    if ( Array.isArray(copy.condition.responseHeaders) ) { return; }
-    // https://github.com/uBlockOrigin/uBOL-home/issues/476#issuecomment-3299309478
-    // https://github.com/uBlockOrigin/uBOL-home/issues/608
-    if ( copy.action.redirect?.transform?.queryTransform?.removeParams ) {
-        const resourceTypes = condition.resourceTypes;
-        if ( resourceTypes?.includes('main_frame') ) {
-            condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame' && a !== 'image');
-            if ( condition.resourceTypes.length === 0 ) { return; }
-        }
-    }
-    if ( Array.isArray(condition.initiatorDomains) ) {
-        condition.domains = condition.initiatorDomains;
-        delete condition.initiatorDomains;
-    }
-    if ( Array.isArray(condition.excludedInitiatorDomains) ) {
-        condition.excludedDomains = condition.excludedInitiatorDomains;
-        delete condition.excludedInitiatorDomains;
-    }
-    patchRuleForIssue539(copy);
-    patchRuleForRemoveParams(copy);
-    // https://github.com/uBlockOrigin/uBOL-home/issues/434
-    let { urlFilter } = condition;
-    if ( urlFilter?.endsWith('^') ) {
+// https://github.com/uBlockOrigin/uBOL-home/issues/434
+function patchForIssue434(ruleset) {
+    const out = [];
+    for ( const rule of ruleset ) {
+        out.push(rule);
+        const { condition } = rule;
+        let { urlFilter } = condition;
+        if ( Boolean(urlFilter?.endsWith('^')) === false ) { continue; }
         urlFilter = urlFilter.slice(0, -1);
         const match = /^(.*?\/\/|\|\|)/.exec(urlFilter);
         const pattern = match
             ? urlFilter.slice(match[0].length)
             : urlFilter;
-        if ( /[^\w.%*-]/.test(pattern) ) {
-            const extra = structuredClone(copy);
-            extra.condition.urlFilter = `${urlFilter}|`;
-            out.push(extra);
-            console.log(`\tAdd ${extra.condition.urlFilter}`);
+        if ( /[^\w.%*-]/.test(pattern) === false ) { continue; }
+        const extra = structuredClone(rule);
+        extra.condition.urlFilter = `${urlFilter}|`;
+        out.push(extra);
+        console.log(`\tIssue 434/Add rule for "${extra.condition.urlFilter}"`);
+    }
+    return out;
+}
+
+function patchRuleProperties(ruleset) {
+    for ( const rule of ruleset ) {
+        const { condition } = rule;
+        if ( Array.isArray(condition.initiatorDomains) ) {
+            condition.domains = condition.initiatorDomains;
+            delete condition.initiatorDomains;
+        }
+        if ( Array.isArray(condition.excludedInitiatorDomains) ) {
+            condition.excludedDomains = condition.excludedInitiatorDomains;
+            delete condition.excludedInitiatorDomains;
         }
     }
-    out.push(copy);
-    return copy;
+    return ruleset;
+}
+
+function discardUnsupportedRules(ruleset) {
+    const isValidRule = rule => {
+        const { action, condition } = rule;
+        if ( action.type === 'modifyHeaders' ) { return false; }
+        if ( Array.isArray(condition.responseHeaders) ) { return false; }
+        return true;
+    };
+    const out = [];
+    for ( const rule of ruleset ) {
+        if ( isValidRule(rule) ) {
+            out.push(rule);
+        } else {
+            console.log(`\tReject ${JSON.stringify(rule)}`);
+        }
+    }
+    return out;
+}
+
+function patchRequestDomains(ruleset) {
+    const canMerge = rule => {
+        const { condition } = rule;
+        if ( Array.isArray(condition.requestDomains) === false ) { return false; }
+        if ( condition.regexFilter ) { return false; }
+        const { urlFilter } = condition;
+        if ( urlFilter === undefined ) { return true; }
+        if ( urlFilter.startsWith('^') ) { return true; }
+        if ( urlFilter.startsWith('/') ) { return true; }
+        if ( urlFilter.startsWith('?') ) { return true; }
+        if ( urlFilter.startsWith('=') ) { return true; }
+        return false;
+        
+    };
+    const merge = (domain, urlFilter) => {
+        if ( urlFilter === undefined ) {
+            return `||{$domain}^`;
+        }
+        if ( urlFilter.startsWith('^') ) {
+            return `||${domain}/*${urlFilter}`;
+        }
+        if ( urlFilter.startsWith('/') ) {
+            return `||${domain}*${urlFilter}`;
+        }
+        if ( urlFilter.startsWith('?') ) {
+            return `||${domain}/*${urlFilter}`;
+        }
+        if ( urlFilter.startsWith('=') ) {
+            return `||${domain}/*${urlFilter}`;
+        }
+    };
+    const out = [];
+    for ( const rule of ruleset ) {
+        const { condition } = rule;
+        if ( canMerge(rule) === false ) {
+            out.push(rule); continue;
+        }
+        const { requestDomains, urlFilter } = condition;
+        condition.requestDomains = undefined;
+        for ( const domain of requestDomains ) {
+            const copy = structuredClone(rule);
+            copy.condition.urlFilter = merge(domain, urlFilter);
+            out.push(copy);
+        }
+    }
+    return out;
 }
 
 export function patchRuleset(ruleset) {
-    const out = [];
-    for ( const rule of ruleset ) {
-        if ( patchRule(rule, out) ) { continue; }
-        console.log(`\tReject ${JSON.stringify(rule)}`);
-    }
-    return out;
+    ruleset = discardUnsupportedRules(ruleset);
+    ruleset = patchForIssue434(ruleset);
+    ruleset = patchForIssue539(ruleset);
+    ruleset = patchRemoveParams(ruleset);
+    ruleset = patchRuleProperties(ruleset);
+    ruleset = patchRequestDomains(ruleset);
+    return ruleset;
 }
