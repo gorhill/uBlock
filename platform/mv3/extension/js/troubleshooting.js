@@ -55,6 +55,7 @@ export async function getTroubleshootingInfo(details) {
         platformInfo,
         defaultConfig,
         enabledRulesets,
+        rulesetDetails,
         defaultMode,
         userRules,
         consoleOutput,
@@ -65,6 +66,7 @@ export async function getTroubleshootingInfo(details) {
         runtime.getPlatformInfo(),
         sendMessage({ what: 'getDefaultConfig' }),
         sendMessage({ what: 'getEnabledRulesets' }),
+        sendMessage({ what: 'getRulesetDetails' }).then(a => new Map(a.map(a => [ a.id, a ]))),
         sendMessage({ what: 'getDefaultFilteringMode' }),
         sendMessage({ what: 'getEffectiveUserRules' }),
         sendMessage({ what: 'getConsoleOutput' }),
@@ -123,6 +125,9 @@ export async function getTroubleshootingInfo(details) {
     if ( userRules.length !== 0 ) {
         config['user rules'] = userRules.length;
     }
+    config.rules = enabledRulesets.reduce((a, b) => {
+        return a + rulesetDetails.get(b).rules.total;
+    }, 0);
     const defaultRulesets = defaultConfig.rulesets;
     for ( let i = 0; i < enabledRulesets.length; i++ ) {
         const id = enabledRulesets[i];
