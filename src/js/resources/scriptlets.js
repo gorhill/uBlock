@@ -31,6 +31,7 @@ import './prevent-addeventlistener.js';
 import './prevent-dialog.js';
 import './prevent-fetch.js';
 import './prevent-innerHTML.js';
+import './prevent-navigation.js';
 import './prevent-settimeout.js';
 import './prevent-xhr.js';
 import './replace-argument.js';
