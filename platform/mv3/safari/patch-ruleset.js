@@ -94,21 +94,6 @@ function patchForIssue434(ruleset) {
     return out;
 }
 
-function patchRuleProperties(ruleset) {
-    for ( const rule of ruleset ) {
-        const { condition } = rule;
-        if ( Array.isArray(condition.initiatorDomains) ) {
-            condition.domains = condition.initiatorDomains;
-            delete condition.initiatorDomains;
-        }
-        if ( Array.isArray(condition.excludedInitiatorDomains) ) {
-            condition.excludedDomains = condition.excludedInitiatorDomains;
-            delete condition.excludedInitiatorDomains;
-        }
-    }
-    return ruleset;
-}
-
 function discardUnsupportedRules(ruleset) {
     const isValidRule = rule => {
         const { action, condition } = rule;
@@ -144,7 +129,7 @@ function patchRequestDomains(ruleset) {
     };
     const merge = (domain, urlFilter) => {
         if ( urlFilter === undefined ) {
-            return `||{$domain}^`;
+            return `||${domain}^`;
         }
         if ( urlFilter.startsWith('^') ) {
             return `||${domain}/*${urlFilter}`;
@@ -181,7 +166,6 @@ export function patchRuleset(ruleset) {
     ruleset = patchForIssue434(ruleset);
     ruleset = patchForIssue539(ruleset);
     ruleset = patchRemoveParams(ruleset);
-    ruleset = patchRuleProperties(ruleset);
     ruleset = patchRequestDomains(ruleset);
     return ruleset;
 }
