@@ -69,4 +69,5 @@ registerScriptlet(preventDialog, {
     dependencies: [
         safeSelf,
     ],
+    world: 'ISOLATED',
 });
