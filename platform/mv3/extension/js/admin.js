@@ -132,6 +132,7 @@ const adminSettings = {
         if ( this.keys.has('noFiltering') ) {
             ubolLog('admin setting "noFiltering" changed');
             const filteringModeDetails = await readFilteringModeDetails(true);
+            await registerInjectables();
             broadcastMessage({ filteringModeDetails });
         }
         if ( this.keys.has('showBlockedCount') ) {
