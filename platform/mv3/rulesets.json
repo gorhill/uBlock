@@ -39,6 +39,7 @@
     "name": "Peter Lowe – Ads, trackers, and more",
     "group": "default",
     "enabled": true,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
     ],
@@ -50,6 +51,7 @@
     "group": "malware",
     "enabled": true,
     "trusted": true,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/badware.min.txt"
     ],
