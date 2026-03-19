@@ -317,7 +317,7 @@ const restrFromGenericPattern = function(s, anchor = 0) {
     let reStr = s.replace(restrFromGenericPattern.rePlainChars, '\\$&')
                  .replace(restrFromGenericPattern.reSeparators, restrSeparator)
                  .replace(restrFromGenericPattern.reDanglingAsterisks, '')
-                 .replace(restrFromGenericPattern.reAsterisks, '\\S*?');
+                 .replace(restrFromGenericPattern.reAsterisks, '.*?');
     if ( anchor & 0b100 ) {
         reStr = (
             reStr.startsWith('\\.') ?
