@@ -4723,9 +4723,10 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 operation: 'append',
                 value: rule.__modifierValue,
             }];
-            if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, `Unsupported csp exception: ${rule.__modifierValue}`);
-            }
+            if ( rule.__modifierAction !== ALLOW_REALM ) { break; }
+            // Use low-priority "allow" to implement csp allow filter
+            rule.action.type = 'allow';
+            rule.action.responseHeaders = undefined;
             break;
         case 'permissions':
             rule.action.type = 'modifyHeaders';
@@ -4734,10 +4735,11 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 operation: 'append',
                 value: rule.__modifierValue.split('|').join(', '),
             }];
-            if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, `Unsupported permissions exception: ${rule.__modifierValue}`);
-            }
             patchDomainOption = true;
+            if ( rule.__modifierAction !== ALLOW_REALM ) { break; }
+            // Use low-priority "allow" to implement permissions allow filter
+            rule.action.type = 'allow';
+            rule.action.responseHeaders = undefined;
             break;
         case 'redirect-rule': {
             let token = rule.__modifierValue;
@@ -4786,13 +4788,11 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                     }
                 };
             }
-            if ( rule.condition === undefined ) {
-                rule.condition = {
-                };
-            }
-            if ( rule.condition.resourceTypes === undefined ) {
-                if ( rule.condition.excludedResourceTypes === undefined ) {
-                    rule.condition.resourceTypes = [
+            rule.condition ||= {};
+            const { condition } = rule;
+            if ( condition.resourceTypes === undefined ) {
+                if ( condition.excludedResourceTypes === undefined ) {
+                    condition.resourceTypes = [
                         'image',
                         'main_frame',
                         'sub_frame',
@@ -4801,21 +4801,22 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 }
             }
             // https://github.com/uBlockOrigin/uBOL-home/discussions/575
-            const { urlFilter } = rule.condition;
+            const { urlFilter } = condition;
             if ( urlFilter === undefined ) {
-                if ( rule.condition.regexFilter === undefined ) {
+                if ( condition.regexFilter === undefined ) {
                     if ( paramName !== '' ) {
-                        rule.condition.urlFilter = `^${paramName}=`;
+                        condition.urlFilter = `^${paramName}=`;
                     }
                 }
             } else if ( urlFilter.startsWith('||') ) {
                 if ( urlFilter.toLowerCase().includes(paramName.toLowerCase()) === false ) {
-                    rule.condition.urlFilter = `${rule.condition.urlFilter}*^${paramName}=`;
+                    condition.urlFilter = `${condition.urlFilter}*^${paramName}=`;
                 }
             }
-            if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, `Unsupported removeparam exception: ${rule.__modifierValue}`);
-            }
+            if ( rule.__modifierAction !== ALLOW_REALM ) { break; }
+            // Use low-priority "allow" to implement removeparam allow filter
+            rule.action.type = 'allow';
+            rule.action.redirect = undefined;
             break;
         }
         case 'uritransform': {
@@ -4865,11 +4866,13 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( Array.isArray(domains) && domains.length !== 0 ) {
                 rule.condition.requestDomains ||= [];
                 rule.condition.requestDomains.push(...domains);
+                rule.condition.initiatorDomains = undefined;
             }
             const notDomains = rule.condition.excludedInitiatorDomains;
             if ( Array.isArray(notDomains) && notDomains.length !== 0 ) {
                 rule.condition.excludedRequestDomains ||= [];
                 rule.condition.excludedRequestDomains.push(...notDomains);
+                rule.condition.excludedInitiatorDomains = undefined;
             }
         }
     }
