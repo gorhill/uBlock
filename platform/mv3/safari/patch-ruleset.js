@@ -30,6 +30,7 @@ function patchRemoveParams(ruleset) {
         const { resourceTypes } = condition;
         if ( resourceTypes?.length ) {
             condition.resourceTypes = resourceTypes.filter(a => a !== 'main_frame' && a !== 'image');
+            console.log(`\tPatch requestParams types: "${resourceTypes.join()}" => "${condition.resourceTypes.join()}"`);
             return condition.resourceTypes.length !== 0;
         }
         return true;
@@ -63,6 +64,7 @@ function patchForIssue539(ruleset) {
             condition.excludedInitiatorDomains = condition.excludedRequestDomains;
             delete condition.excludedRequestDomains;
         }
+        console.log(`\tIssue 539/Patch requestDomains to initiatorDomains: "${condition.initiatorDomains.join()}"`);
     };
     const out = [];
     for ( const rule of ruleset ) {
@@ -129,7 +131,7 @@ function patchRequestDomains(ruleset) {
     };
     const merge = (domain, urlFilter) => {
         if ( urlFilter === undefined ) {
-            return `||${domain}^`;
+            return `||${domain}/`;
         }
         if ( urlFilter.startsWith('^') ) {
             return `||${domain}/*${urlFilter}`;
@@ -155,6 +157,7 @@ function patchRequestDomains(ruleset) {
         for ( const domain of requestDomains ) {
             const copy = structuredClone(rule);
             copy.condition.urlFilter = merge(domain, urlFilter);
+            console.log(`\tConvert requestDomains entry to urlFilter "${copy.condition.urlFilter}"`);
             out.push(copy);
         }
     }
