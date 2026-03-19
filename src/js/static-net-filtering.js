@@ -4591,6 +4591,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         'websocket',
         'ping',
         'other',
+        'popup',
     ]);
     const ruleset = [];
     const seen = new Set();

@@ -263,8 +263,6 @@ function addExtendedToDNR(context, parser) {
     }
 }
 
-/******************************************************************************/
-
 function addToDNR(context, list) {
     const env = context.env || [];
     const writer = new CompiledListWriter();

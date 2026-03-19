@@ -275,7 +275,7 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
     // Fetch strick-block rules
     const toFetch = [];
     for ( const details of rulesetDetails ) {
-        if ( details.rules.strictblock === 0 ) { continue; }
+        if ( Boolean(details.rules.strictblock) === false ) { continue; }
         toFetch.push(fetchJSON(`/rulesets/strictblock/${details.id}`));
     }
     const rulesets = await Promise.all(toFetch);

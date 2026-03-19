@@ -214,7 +214,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
     };
     const toFetch = [];
     for ( let i = 0; i < rulesetDetails.length; i++ ) {
-        if ( rulesetDetails[i].rules.strictblock === 0 ) { continue; }
+        if ( Boolean(rulesetDetails[i].rules.strictblock) === false ) { continue; }
         toFetch.push(searchInList(i));
     }
     if ( toFetch.length === 0 ) { return; }
