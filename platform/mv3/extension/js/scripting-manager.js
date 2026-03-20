@@ -32,6 +32,7 @@ import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
 import { registerCustomFilters } from './filter-manager.js';
+import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
 /******************************************************************************/
@@ -395,6 +396,7 @@ export async function registerInjectables() {
         registerGeneric(context, genericDetails),
         registerHighGeneric(context, genericDetails),
         registerCustomFilters(context),
+        registerPreventPopup(context),
         registerToolbarIconToggler(context),
     ]);
 
