@@ -23,8 +23,7 @@ import { matchesFromHostnames } from './utils.js';
 
 /******************************************************************************/
 
-// https://github.com/uBlockOrigin/uBOL-home/issues/198
-//  Ensure the toolbar icon reflects the no-filtering mode of "trusted sites"
+// https://github.com/uBlockOrigin/uBOL-home/issues/632
 
 export async function registerPreventPopup(context) {
     const js = [];
@@ -33,16 +32,19 @@ export async function registerPreventPopup(context) {
         js.push(`/rulesets/scripting/popup/${id}.js`);
     }
     if ( js.length === 0 ) { return; }
-    js.push('/js/scripting/prevent-popup.js');
+    js.push(
+        '/js/scripting/prevent-popup-target.js',
+        '/js/scripting/prevent-popup.js'
+    );
 
     const { none, basic, optimal, complete } = context.filteringModeDetails;
     let matches = [];
     let excludeMatches = [];
-    if ( optimal.has('all-urls') || complete.has('all-urls') ) {
+    if ( complete.has('all-urls') ) {
         matches = [ '*' ];
-        excludeMatches = [ ...none, ...basic ];
+        excludeMatches = [ ...none, ...basic, ...optimal ];
     } else {
-        matches = [ ...optimal, ...complete ];
+        matches = [ ...complete ];
     }
     if ( matches.length === 0 && excludeMatches.length === 0 ) { return; }
 
@@ -51,7 +53,7 @@ export async function registerPreventPopup(context) {
         js,
         matches: matchesFromHostnames(matches),
         excludeMatches: matchesFromHostnames(excludeMatches),
-        runAt: 'document_end',
+        runAt: 'document_start',
     };
     context.toAdd.push(directive);
 }

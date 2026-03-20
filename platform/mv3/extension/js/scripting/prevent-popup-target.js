@@ -16,16 +16,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/gorhill/uBlock/
+
 */
 
-// Important!
-// Isolate from global scope
-(function uBOL_preventPopup() {
+/******************************************************************************/
 
-    const details = self.$details$;
-
-    self.preventPopupDetails = self.preventPopupDetails || [];
-    self.preventPopupDetails.push(details);
-
-})();
+self.preventPopupTarget = document.location;

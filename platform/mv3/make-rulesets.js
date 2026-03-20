@@ -659,7 +659,7 @@ async function processDnrRules(assetDetails, network, dnrRules) {
         plain: staticRules.length,
         rejected: bad.length,
         regex: regexRules.length,
-        urlskip: urlskips.size,
+        urlskip: urlskips.size || undefined,
     };
 }
 
@@ -988,51 +988,68 @@ async function processScriptletFilters(assetDetails, mapin) {
 
 async function processPopupRules(assetDetails, popupRules) {
     if ( popupRules.length === 0 ) { return; }
-    // Only pure hostname-based rules
-    const hostnames = popupRules.reduce((a, rule) => {
+    const reduceRules = (data, rule) => {
         const { condition }  = rule;
-        if ( condition.regexFilter ) { return a; }
-        if ( condition.domainType ) { return a; }
-        if ( condition.initiatorDomains ) { return a; }
-        const { urlFilter } = condition;
-        if ( Array.isArray(condition.requestDomains) ) {
-            if ( urlFilter ) { return a; }
-            a = a.concat(condition.requestDomains);
-        } else if ( rePatternIsHostname.test(urlFilter) ) {
-            a.push(urlFilter.slice(2, -1));
-        }
-        return a;
-    }, []).toSorted(hostnameCompare);
-    // pattern-based rules
-    const regexes = popupRules.reduce((a, rule) => {
-        const { condition }  = rule;
-        if ( condition.domainType ) { return a; }
-        if ( condition.initiatorDomains ) { return a; }
+        if ( condition.domainType ) { return data; }
+        if ( condition.initiatorDomains ) { return data; }
+        const { type } = rule.action;
+        if ( type !== 'block' && type !== 'allow' ) { return data; }
+        const realm = type === 'block' ? data.block : data.allow;
         const { urlFilter, regexFilter, isUrlFilterCaseSensitive } = condition;
-        if ( urlFilter ) {
-            a.push([ rePatternFromUrlFilter(urlFilter), '' ]);
-        } else if ( regexFilter ) {
-            a.push([ regexFilter, isUrlFilterCaseSensitive ? '' : 'i' ]);
+        if ( urlFilter || regexFilter ) {
+            if ( rePatternIsHostname.test(urlFilter) ) {
+                realm.hostnames.push(urlFilter.slice(2, -1));
+                return data;
+            }
+            let re;
+            if ( urlFilter ) {
+                re = rePatternFromUrlFilter(urlFilter);
+            } else if ( regexFilter ) {
+                re = regexFilter;
+            }
+            if ( re === undefined ) { return data; }
+            const token = literalStrFromRegex(re).slice(0, 7);
+            const key = `${isUrlFilterCaseSensitive ? ' ' : 'i'}${token}`;
+            if ( realm.regexes.has(key) ) {
+                realm.regexes.set(key, `${realm.regexes.get(key)}|${re}`);
+            } else {
+                realm.regexes.set(key, re);
+            }
+            return data;
         }
-        return a;
-    }, []);
-    if ( hostnames.length === 0 && regexes.length === 0 ) { return; }
+        if ( Array.isArray(condition.requestDomains) ) {
+            realm.hostnames = realm.hostnames.concat(condition.requestDomains);
+        }
+        return data;
+    };
+    const data = {
+        id: assetDetails.id,
+        block: {
+            hostnames: [],
+            regexes: new Map(),
+        },
+        allow: {
+            hostnames: [],
+            regexes: new Map(),
+        },
+    };
+    popupRules.reduce(reduceRules, data);
+    const count = data.block.hostnames.length + data.block.regexes.size;
+    if ( count === 0 ) { return; }
+    data.block.hostnames = data.block.hostnames.toSorted(hostnameCompare);
+    data.block.regexes = Array.from(data.block.regexes).flat();
+    data.allow.hostnames = data.allow.hostnames.toSorted(hostnameCompare);
+    data.allow.regexes = Array.from(data.allow.regexes).flat();
     const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get(`prevent-popup`).replace(
-        'self.$rulesetId$',
-        JSON.stringify(assetDetails.id)
-    );
+    let patchedScriptlet = originalScriptletMap.get(`prevent-popup`);
     patchedScriptlet = safeReplace(patchedScriptlet,
         /self\.\$details\$/,
-        JSON.stringify({
-            hostnames,
-            regexes: regexes.map(a => [ literalStrFromRegex(a[0], 8).slice(0, 8), a[0], a[1] ]).flat()
-        })
+        JSON.stringify(data)
     );
     writeFile(`${rulesetDir}/scripting/popup/${assetDetails.id}.js`,
         patchedScriptlet
     );
-    return hostnames.length;
+    return count;
 }
 
 function isPopupRule(rule) {

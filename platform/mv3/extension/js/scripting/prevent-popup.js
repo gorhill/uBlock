@@ -27,23 +27,24 @@
 (( ) => {
     if ( self !== self.top ) { return; }
 
-    const abort = ( ) => {
-        self.close();
-    };
+    const { preventPopupDetails } = self;
+    if ( Array.isArray(preventPopupDetails) === false ) { return; }
+    self.preventPopupDetails = undefined;
 
-    const docloc = document.location;
+    const docloc = self.preventPopupTarget;
+    const href = docloc.href;
     const targets = docloc.hostname.split('.').map((e, i, a) =>
         a.slice(i).join('.')
     );
 
-    const binarySearch = (sorted, targets) => {
+    const hostnameSearch = (hostnames, targets) => {
         let l = 0, i = 0, d = 0;
-        let r = sorted.length;
+        let r = hostnames.length;
         let candidate;
         for ( const target of targets ) {
             while ( l < r ) {
                 i = l + r >>> 1;
-                candidate = sorted[i];
+                candidate = hostnames[i];
                 d = target.length - candidate.length;
                 if ( d === 0 ) {
                     if ( target === candidate ) { return i; }
@@ -60,20 +61,35 @@
         return -1;
     };
 
-    while ( self.preventPopupDetails.length !== 0 ) {
-        const { hostnames, regexes } = self.preventPopupDetails.pop()
-        const i = binarySearch(hostnames, targets);
-        if ( i !== -1 ) {
-            return abort();
+    const regexSearch = (regexes, target) => {
+        for ( let i = 0; i < regexes.length; i += 2 ) {
+            const key = regexes[i+0];
+            if ( target.includes(key.slice(1)) === false ) { continue; }
+            const re = new RegExp(regexes[i+1], key.charAt(0).trimEnd());
+            if ( re.test(target) ) { return i; }
         }
-        const url = docloc.href;
-        for ( let i = 0; i < regexes.length; i += 3 ) {
-            if ( url.includes(regexes[i+0]) === false ) { continue; }
-            const re = new RegExp(regexes[i+1], regexes[i+2]);
-            if ( re.test(url) ) { return abort(); }
-        }
-    };
+        return -1;
+    }
 
+    let shouldClose = false;
+    for ( const { block } of preventPopupDetails ) {
+        if ( hostnameSearch(block.hostnames, targets) === -1 ) {
+            if ( regexSearch(block.regexes, href) === -1 ) { continue; }
+        }
+        shouldClose = true;
+        break;
+    }
+    if ( shouldClose === false ) { return; }
+    for ( const { allow } of preventPopupDetails ) {
+        if ( hostnameSearch(allow.hostnames, targets) === -1 ) {
+            if ( regexSearch(allow.regexes, href) === -1 ) { continue; }
+        }
+        shouldClose = false;
+        break;
+    }
+    if ( shouldClose === false ) { return; }
+    
+    self.close();
 })();
 
 /******************************************************************************/
