@@ -168,6 +168,7 @@ if [ -z "$TAGNAME" ]; then
 else
     jq --arg version "${TAGNAME}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp_manifest" \
         && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
+    rm -rf "$UBOL_DIR/rulesets/debug"
 fi
 
 # Platform-specific steps
