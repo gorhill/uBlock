@@ -336,8 +336,8 @@ restrFromGenericPattern.rePlainChars = /[.+?${}()|[\]\\]/g;
 restrFromGenericPattern.reSeparators = /\^/g;
 restrFromGenericPattern.reDanglingAsterisks = /^\*+|\*+$/g;
 restrFromGenericPattern.reAsterisks = /\*+/g;
-restrFromGenericPattern.restrHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
-restrFromGenericPattern.restrHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
+restrFromGenericPattern.restrHostnameAnchor1 = '^[^:]+://(?:[^/]+\\.)?';
+restrFromGenericPattern.restrHostnameAnchor2 = '^[^:]+://(?:[^/]+)?';
 
 /******************************************************************************/
 
