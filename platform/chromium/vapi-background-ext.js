@@ -82,9 +82,9 @@ vAPI.Tabs = class extends vAPI.Tabs {
 
 {
     const extToTypeMap = new Map([
-        ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
+        ['eot','font'],['otf','font'],['ttf','font'],['woff','font'],['woff2','font'],
         ['mp3','media'],['mp4','media'],['webm','media'],
-        ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['webp','image']
+        ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['svg','image'],['webp','image']
     ]);
 
     const parsedURL = new URL('https://www.example.org/');
