@@ -507,7 +507,7 @@ function splitDnrRules(rules) {
         const nottypes = rule.condition?.excludedResourceTypes;
         if ( nottypes ) {
             rule.condition.excludedResourceTypes = nottypes.filter(a =>
-                a !== 'popup' && a !== 'main_frame'
+                a !== 'popup'
             );
             if ( rule.condition.excludedResourceTypes.length === 0 ) {
                 rule.condition.excludedResourceTypes = undefined;
