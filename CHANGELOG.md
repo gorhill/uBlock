@@ -1,7 +1,8 @@
+- [Add `freeze-element-property` scriptlet](https://github.com/gorhill/uBlock/commit/05f01f6be4)
+- [chromium][Categorize `.svg` resources as image type](https://github.com/gorhill/uBlock/commit/b862b73134)
 - [Add `prevent-navigation` scriptlet](https://github.com/gorhill/uBlock/commit/60f57594bf)
 - [Fix editor's autocomplete for first filter option](https://github.com/gorhill/uBlock/commit/ab8baaf833)
 - [Add new filter option: `requestheader`](https://github.com/gorhill/uBlock/commit/e871d6e673)
-- [Add `prevent-textContent` scriptlet](https://github.com/gorhill/uBlock/commit/bdd10eb08f)
 - [Minor improvement of `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/https://github.com/gorhill/uBlock/commit/527939854d)
 
 ----------
