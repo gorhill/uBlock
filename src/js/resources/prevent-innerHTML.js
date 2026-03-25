@@ -30,10 +30,10 @@ import { safeSelf } from './safe-self.js';
  * Conditionally prevent assignment to an element property.
  * 
  * @param property
- * The property name to freeze.
+ * The name of the property to freeze.
  * 
  * @param [selector]
- * Optional. The element must matches `selector` for the prevention to take
+ * Optional. The element must match `selector` for the prevention to take
  * place.
  * 
  * @param [pattern]
@@ -103,7 +103,7 @@ registerScriptlet(freezeElementProperty, {
  * Conditionally prevent assignment to `innerHTML` property.
  * 
  * @param [selector]
- * Optional. The element must matches `selector` for the prevention to take
+ * Optional. The element must match `selector` for the prevention to take
  * place.
  * 
  * @param [pattern]
