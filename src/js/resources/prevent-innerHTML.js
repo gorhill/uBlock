@@ -58,6 +58,9 @@ function freezeElementProperty(
         if ( Object.hasOwn(HTMLElement.prototype, property) ) {
             return HTMLElement.prototype;
         }
+        if ( Object.hasOwn(Node.prototype, property) ) {
+            return Node.prototype;
+        }
         return null;
     })();
     if ( owner === null ) { return; }
