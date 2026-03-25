@@ -655,7 +655,7 @@ async function processDnrRules(assetDetails, network, dnrRules) {
     }
 
     return {
-        total: dnrRules.length,
+        total: staticRules.length + regexRules.length,
         plain: staticRules.length,
         rejected: bad.length,
         regex: regexRules.length,
