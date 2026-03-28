@@ -3,7 +3,7 @@
 - [Add `prevent-navigation` scriptlet](https://github.com/gorhill/uBlock/commit/60f57594bf)
 - [Fix editor's autocomplete for first filter option](https://github.com/gorhill/uBlock/commit/ab8baaf833)
 - [Add new filter option: `requestheader`](https://github.com/gorhill/uBlock/commit/e871d6e673)
-- [Minor improvement of `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/https://github.com/gorhill/uBlock/commit/527939854d)
+- [Minor improvement of `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/527939854d)
 
 ----------
 
