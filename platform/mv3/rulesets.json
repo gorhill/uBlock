@@ -438,7 +438,7 @@
     "tags": "ads korean 한국어",
     "enabled": false,
     "urls": [
-      "https://cdn.jsdelivr.net/gh/List-KR/List-KR@latest/filter-uBlockOrigin.txt"
+      "https://cdn.jsdelivr.net/npm/@list-kr/filterslists@latest/dist/filterslist-uBlockOrigin-classic.txt"
     ],
     "homeURL": "https://github.com/List-KR/List-KR#readme"
   },
@@ -535,9 +535,10 @@
     "tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek uk",
     "enabled": false,
     "urls": [
-      "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt"
+      "https://raw.githubusercontent.com/easylist/ruadlist/{commit}/RuAdList-uBO.txt"
     ],
-    "homeURL": "https://forums.lanik.us/viewforum.php?f=102"
+    "homeURL": "https://forums.lanik.us/viewforum.php?f=102",
+    "commit": "master"
   },
   {
     "id": "rus-1",
