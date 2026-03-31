@@ -754,7 +754,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇰🇷kr: List-KR",
+		"title": "🇰🇷kr: List-KR Classic",
 		"tags": "ads korean 한국어",
 		"lang": "ko",
 		"contentURL": "https://cdn.jsdelivr.net/npm/@list-kr/filterslists@latest/dist/filterslist-uBlockOrigin-classic.txt",
