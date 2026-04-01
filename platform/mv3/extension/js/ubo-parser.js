@@ -385,7 +385,7 @@ export function parseNetworkFilter(parser) {
             }
             break;
         }
-        case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER: {
+        case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER: {
             const details = sfp.parseHeaderValue(parser.getNetOptionValue(type));
             const headerInfo = {
                 header: details.name,
