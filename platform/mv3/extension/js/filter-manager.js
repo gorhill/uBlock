@@ -263,7 +263,8 @@ async function removeCustomFiltersByKey(key, toRemove) {
     if ( selectors === undefined ) { return false; }
     const beforeCount = selectors.length;
     for ( const selector of toRemove ) {
-        let i = selectors.indexOf(selector);
+        const i = selectors.indexOf(selector);
+        if ( i === -1 ) { continue; }
         selectors.splice(i, 1);
     }
     const afterCount = selectors.length;
