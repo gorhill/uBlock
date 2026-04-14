@@ -156,7 +156,16 @@ async function renderCustomFilters() {
                 ...Array.from(storedSelectors),
                 ...Array.from(domSelectors),
             ])
-        ).sort();
+        ).sort((a, b) => {
+            const as = a[0] === '+';
+            const bs = b[0] === '+';
+            if ( as ) {
+                return bs && as < bs ? -1 : 1;
+            } else if ( bs ) {
+                return -1;
+            }
+            return a < b ? -1 : 1;
+        });
         const ulSelectors = qs$(hostnameNode, '.selectors');
         for ( const selector of selectors ) {
             const selectorNode = nodeFromTemplate('customFiltersSelector');
@@ -251,15 +260,29 @@ async function onHostnameChanged(target, before, after) {
 
 async function onSelectorChanged(target, before, after) {
     // Validate selector
-    const parserModule = await import('./static-filtering-parser.js');
-    const compiler = new parserModule.ExtSelectorCompiler({ nativeCssHas: true });
-    const result = {};
-    if ( compiler.compile(after, result) === false ) {
+    const sfp = await import('./static-filtering-parser.js');
+    const parser = new sfp.AstFilterParser({
+        nativeCssHas: true,
+        trustedSource: true,
+    });
+    const hostname = hostnameFromNode(target);
+    parser.parse(`##${after}`);
+    if ( parser.hasError() ) {
         target.textContent = before;
         return;
     }
-
-    const hostname = hostnameFromNode(target);
+    let prettySelector, uglySelector;
+    if ( parser.isScriptletFilter() ) {
+        prettySelector = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
+        uglySelector = prettySelector;
+    } else if ( parser.isCosmeticFilter() ) {
+        prettySelector = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_COSMETIC);
+        uglySelector = parser.result.compiled;
+    }
+    if ( Boolean(prettySelector) === false ) {
+        target.textContent = before;
+        return;
+    }
 
     dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
@@ -271,11 +294,11 @@ async function onSelectorChanged(target, before, after) {
     });
 
     // Add new selector to storage
-    target.dataset.ugly = result.compiled;
-    target.dataset.pretty = result.raw;
+    target.dataset.ugly = uglySelector;
+    target.dataset.pretty = prettySelector;
     await sendMessage({ what: 'addCustomFilters',
         hostname,
-        selectors: [ result.compiled ],
+        selectors: [ uglySelector ],
     });
 
     await debounceRenderCustomFilters();
@@ -285,7 +308,7 @@ async function onSelectorChanged(target, before, after) {
 
 function onTextChanged(target) {
     const before = target.dataset.pretty;
-    const after = target.textContent.trim();
+    const after = target.textContent.trim().replace('\n', '');
     if ( after !== target.textContent ) {
         target.textContent = after;
     }
@@ -353,19 +376,26 @@ function onUndoClicked(ev) {
 /******************************************************************************/
 
 async function importFromText(text) {
-    const parserModule = await import('./static-filtering-parser.js');
-    const parser = new parserModule.AstFilterParser({ nativeCssHas: true });
+    const sfp = await import('./static-filtering-parser.js');
+    const parser = new sfp.AstFilterParser({
+        nativeCssHas: true,
+        trustedSource: true,
+    });
     const lines = text.split(/\n/);
     const hostnameToSelectorsMap = new Map();
 
     for ( const line of lines ) {
         parser.parse(line);
         if ( parser.hasError() ) { continue; }
-        if ( parser.isCosmeticFilter() === false ) { continue; }
         if ( parser.hasOptions() === false ) { continue; }
-        const { compiled, exception } = parser.result;
-        if ( compiled === undefined ) { continue; }
-        if ( exception ) { continue; }
+        if ( parser.isException() ) { continue; }
+        let selector;
+        if ( parser.isScriptletFilter() ) {
+            selector = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
+        } else if ( parser.isCosmeticFilter() ) {
+            selector = parser.result.compiled;
+        }
+        if ( Boolean(selector) === false ) { continue; }
         const hostnames = new Set();
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
@@ -379,7 +409,7 @@ async function importFromText(text) {
             if ( selectors.size === 0 ) {
                 hostnameToSelectorsMap.set(hn, selectors)
             }
-            selectors.add(compiled);
+            selectors.add(selector);
         }
     }
 

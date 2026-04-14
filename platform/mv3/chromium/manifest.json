@@ -43,8 +43,10 @@
   "permissions": [
     "activeTab",
     "declarativeNetRequest",
+    "offscreen",
     "scripting",
-    "storage"
+    "storage",
+    "userScripts"
   ],
   "short_name": "uBO Lite",
   "storage": {

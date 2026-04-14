@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as makeScriptlet from './make-scriptlets.js';
+import * as makeScriptlet from './js/make-scriptlets.js';
 import * as sfp from './js/static-filtering-parser.js';
 
 import {
@@ -37,7 +37,7 @@ import { literalStrFromRegex } from './js/regex-analyzer.js';
 import path from 'path';
 import process from 'process';
 import redirectResourcesMap from './js/redirect-resources.js';
-import { safeReplace } from './safe-replace.js';
+import { safeReplace } from './js/safe-replace.js';
 
 /******************************************************************************/
 
@@ -975,19 +975,32 @@ async function processScriptletFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
     if ( mapin.size === 0 ) { return 0; }
 
+    const { id } = assetDetails;
     for ( const details of mapin.values() ) {
-        makeScriptlet.compile(assetDetails, details);
+        makeScriptlet.compile(id, details);
     }
-    const stats = await makeScriptlet.commit(
-        assetDetails.id,
-        `${scriptletDir}/scriptlet`,
-        writeFile
+    const template = await fs.readFile(
+        './scriptlets/scriptlet.template.js',
+        { encoding: 'utf8' }
     );
-    if ( stats.length !== 0 ) {
-        scriptletStats.set(assetDetails.id, stats);
+    const result = makeScriptlet.commit(id, template);
+    const stats = {};
+    let count = 0;
+    if ( result.MAIN ) {
+        writeFile(`${scriptletDir}/scriptlet/main/${id}.js`, result.MAIN.code);
+        stats.MAIN = result.MAIN.hostnames;
+        count += stats.MAIN.length;
+    }
+    if ( result.ISOLATED ) {
+        writeFile(`${scriptletDir}/scriptlet/isolated/${id}.js`, result.ISOLATED.code);
+        stats.ISOLATED = result.ISOLATED.hostnames;
+        count += stats.ISOLATED.length;
+    }
+    if ( count !== 0 ) {
+        scriptletStats.set(id, stats);
     }
     makeScriptlet.reset();
-    return stats.length;
+    return count;
 }
 
 /******************************************************************************/

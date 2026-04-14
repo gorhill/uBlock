@@ -25,6 +25,7 @@ import {
     localRead,
     localRemove,
     localWrite,
+    runtime,
 } from './ext.js';
 
 import {
@@ -33,7 +34,16 @@ import {
     subtractHostnameIters,
 } from './utils.js';
 
-import { ubolErr } from './debug.js';
+import {
+    ubolErr,
+    ubolLog,
+} from './debug.js';
+
+/******************************************************************************/
+
+const isProcedural = a => a.startsWith('{');
+const isScriptlet = a => a.startsWith('+js');
+const isCSS = a => isProcedural(a) === false && isScriptlet(a) === false;
 
 /******************************************************************************/
 
@@ -82,7 +92,7 @@ export async function customFiltersFromHostname(hostname) {
         const selectors = results[i];
         if ( selectors === undefined ) { continue; }
         selectors.forEach(selector => {
-            out.push(selector.startsWith('0') ? selector.slice(1) : selector);
+            out.push(selector);
         });
     }
     return out.sort();
@@ -107,7 +117,7 @@ async function getAllCustomFilterKeys() {
 export async function getAllCustomFilters() {
     const collect = async key => {
         const selectors = await readFromStorage(key);
-        return [ key.slice(5), selectors.map(a => a.startsWith('0') ? a.slice(1) : a) ];
+        return [ key.slice(5), selectors ];
     };
     const keys = await getAllCustomFilterKeys();
     const promises = keys.map(k => collect(k));
@@ -142,7 +152,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
     const selectors = await customFiltersFromHostname(hostname);
     if ( selectors.length === 0 ) { return; }
     const promises = [];
-    const plainSelectors = selectors.filter(a => a.startsWith('{') === false);
+    const plainSelectors = selectors.filter(a => isCSS(a));
     if ( plainSelectors.length !== 0 ) {
         promises.push(
             browser.scripting.insertCSS({
@@ -154,7 +164,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
             })
         );
     }
-    const proceduralSelectors = selectors.filter(a => a.startsWith('{'));
+    const proceduralSelectors = selectors.filter(a => isProcedural(a));
     if ( proceduralSelectors.length !== 0 ) {
         promises.push(
             browser.scripting.executeScript({
@@ -173,11 +183,11 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
 /******************************************************************************/
 
 export async function registerCustomFilters(context) {
-    const siteKeys = await getAllCustomFilterKeys();
-    if ( siteKeys.length === 0 ) { return; }
+    const customFilters = new Map(await getAllCustomFilters());
+    if ( customFilters.size === 0 ) { return; }
 
     const { none } = context.filteringModeDetails;
-    let hostnames = siteKeys.map(a => a.slice(5));
+    let hostnames = Array.from(customFilters.keys());
     if ( none.has('all-urls') ) {
         const { basic, optimal, complete } = context.filteringModeDetails;
         hostnames = intersectHostnameIters(hostnames, [
@@ -186,6 +196,9 @@ export async function registerCustomFilters(context) {
     } else if ( none.size !== 0 ) {
         hostnames = [ ...subtractHostnameIters(hostnames, none) ];
     }
+    hostnames = hostnames.filter(a => {
+        return customFilters.get(a).some(a => isCSS(a) || isProcedural(a));
+    });
     if ( hostnames.length === 0 ) { return; }
 
     const directive = {
@@ -251,10 +264,6 @@ async function removeCustomFiltersByKey(key, toRemove) {
     const beforeCount = selectors.length;
     for ( const selector of toRemove ) {
         let i = selectors.indexOf(selector);
-        if ( i === -1 ) {
-            i = selectors.indexOf(`0${selector}`);
-            if ( i === -1 ) { continue; }
-        }
         selectors.splice(i, 1);
     }
     const afterCount = selectors.length;
@@ -266,3 +275,113 @@ async function removeCustomFiltersByKey(key, toRemove) {
     }
     return true;
 }
+
+/******************************************************************************/
+
+export function isUserScriptsAvailable() {
+    if ( browser.offscreen === undefined ) { return false; }
+    try {
+        chrome.userScripts.getScripts();
+    } catch {
+        return false;
+    }
+    return true;
+}
+
+export async function registerCustomScriptlets(context) {
+    if ( isUserScriptsAvailable() === false ) { return; }
+    const { none, basic, optimal, complete } = context.filteringModeDetails;
+    const notNone = [ ...basic, ...optimal, ...complete ];
+    if ( registerCustomScriptlets.promise ) {
+        registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(( ) =>
+            registerCustomScriptlets.create().then(worlds =>
+                registerCustomScriptlets.register(worlds, none, notNone)
+            )
+        );
+    } else {
+        registerCustomScriptlets.promise = registerCustomScriptlets.create().then(worlds =>
+            registerCustomScriptlets.register(worlds, none, notNone)
+        );
+    }
+    return registerCustomScriptlets.promise;
+}
+
+registerCustomScriptlets.register = async function(worlds, none, notNone) {
+    if ( Boolean(worlds) === false ) { return; }
+    const toAdd = [];
+    const prepare = world => {
+        let { hostnames } = world;
+        if ( none.has('all-urls') ) {
+            hostnames = intersectHostnameIters(hostnames, notNone);
+        } else if ( none.size !== 0 ) {
+            hostnames = [ ...subtractHostnameIters(hostnames, none) ];
+        }
+        if ( hostnames.length === 0 ) { return; }
+        return {
+            allFrames: true,
+            js: [ { code: world.code } ],
+            matches: matchesFromHostnames(hostnames),
+            runAt: 'document_start',
+        };
+    };
+    if ( worlds.ISOLATED ) {
+        const directive = prepare(worlds.ISOLATED);
+        if ( directive ) {
+            directive.id = 'user.isolated';
+            directive.world = 'USER_SCRIPT';
+            toAdd.push(directive);
+        }
+    }
+    if ( worlds.MAIN ) {
+        const directive = prepare(worlds.MAIN);
+        if ( directive ) {
+            directive.id = 'user.main';
+            directive.world = 'MAIN';
+            toAdd.push(directive);
+        }
+    }
+    if ( toAdd.length === 0 ) { return; }
+    await browser.userScripts.register(toAdd).then(( ) => {
+        ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
+    });
+};
+
+registerCustomScriptlets.create = async function() {
+    const toRemove = await browser.userScripts.getScripts();
+    if ( toRemove.length !== 0 ) {
+        await browser.userScripts.unregister();
+        ubolLog(`Unregistered userscript ${toRemove.map(v => v.id)}`);
+    }
+    const { promise: offscreenPromise, resolve: offscreenResolve } = Promise.withResolvers();
+    const handler = (msg, sender, callback) => {
+        if ( typeof msg !== 'object' ) { return; }
+        switch ( msg?.what ) {
+        case 'getAllCustomFilters':
+            getAllCustomFilters().then(result => {
+                callback(result);
+            });
+            break;
+        case 'registerCustomScriptlets':
+            offscreenResolve(msg);
+            break;
+        default:
+            break;
+        }
+    };
+    const { promise: timeoutPromise, resolve: timeoutResolve } = Promise.withResolvers();
+    self.setTimeout(timeoutResolve, 1000);
+    runtime.onMessage.addListener(handler);
+    const [ worlds ] = await Promise.all([
+        Promise.race([ offscreenPromise, timeoutPromise ]),
+        browser.offscreen.createDocument({
+            url: '/js/offscreen/compile-scriptlets.html',
+            reasons: [ 'WORKERS' ],
+            justification: 'To compile custom user script-based filters in a modular way from service worker (service workers do not allow dynamic module import)',
+        }),
+    ]);
+    runtime.onMessage.removeListener(handler);
+    await browser.offscreen.closeDocument();
+    return worlds;
+};
+
+registerCustomScriptlets.promise = null;

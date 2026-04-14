@@ -2600,6 +2600,7 @@ export class AstFilterParser {
             parentBeg,
             parentEnd
         );
+        this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_COSMETIC, head);
         this.result.exception = this.isException();
         this.result.raw = this.getNodeString(head);
         this.result.compiled = undefined;

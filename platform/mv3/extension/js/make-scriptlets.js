@@ -19,9 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { builtinScriptlets } from './js/resources/scriptlets.js';
-import fs from 'fs/promises';
-import { literalStrFromRegex } from './js/regex-analyzer.js';
+import { builtinScriptlets } from './resources/scriptlets.js';
+import { literalStrFromRegex } from './regex-analyzer.js';
 import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/
@@ -71,7 +70,7 @@ export function reset() {
 
 /******************************************************************************/
 
-export function compile(assetDetails, details) {
+export function compile(rulesetId, details) {
     if ( details.args[0].endsWith('.js') === false ) {
         details.args[0] += '.js';
     }
@@ -82,7 +81,7 @@ export function compile(assetDetails, details) {
     const resourceEntry = resourceDetails.get(scriptletToken);
     if ( resourceEntry === undefined ) { return; }
     if ( resourceEntry.requiresTrust && details.trustedSource !== true ) {
-        console.log(`Rejecting +js(${details.args.join()}): ${assetDetails.id} is not trusted`);
+        console.log(`Rejecting +js(${details.args.join()}): ${rulesetId} is not trusted`);
         return;
     }
     const worldDetails = worlds[resourceEntry.world];
@@ -155,11 +154,7 @@ export function compile(assetDetails, details) {
 
 /******************************************************************************/
 
-export async function commit(rulesetId, path, writeFn) {
-    const scriptletTemplate = await fs.readFile(
-        './scriptlets/scriptlet.template.js',
-        { encoding: 'utf8' }
-    );
+export function commit(rulesetId, template) {
     const stats = {};
     for ( const world of Object.keys(worlds) ) {
         const worldDetails = worlds[world];
@@ -180,7 +175,7 @@ export async function commit(rulesetId, path, writeFn) {
                     JSON.stringify(Array.from(a[1])).slice(1,-1),
                 ];
             }).flat();
-        let content = safeReplace(scriptletTemplate, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
+        let content = safeReplace(template, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
         content = safeReplace(content, 'self.$hasAncestors$', JSON.stringify(worldDetails.hasAncestors));
         content = safeReplace(content, 'self.$hasRegexes$', JSON.stringify(scriptletFromRegexes.length !== 0));
         content = safeReplace(content,
@@ -212,8 +207,10 @@ export async function commit(rulesetId, path, writeFn) {
             Array.from(allFunctions.values()).sort().join('\n\n')
         );
         content = safeReplace(content, /\$rulesetId\$/, rulesetId, 0);
-        writeFn(`${path}/${world.toLowerCase()}/${rulesetId}.js`, content);
-        stats[world] = Array.from(worldDetails.matches).sort();
+        stats[world] = {
+            code: content,
+            hostnames: Array.from(worldDetails.matches).sort(),
+        };
     }
     return stats;
 }
