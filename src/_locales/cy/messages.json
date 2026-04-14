@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "O'r diwedd, rhwystrydd effeithlon sy'n gwell ar y CPU a'r cof.",
+    "message": "O'r diwedd, rhwystrydd effeithlon sy'n well ar y CPU a'r cof.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Rhybudd! Mae gennych newidiadau heb eu cadw",
+    "message": "Rhybudd: mae gennych newidiadau heb eu cadw!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -92,7 +92,7 @@
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "since install",
+    "message": "ers gosod",
     "description": "English: since install"
   },
   "popupOr": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Parthau wedi cysylltu",
+    "message": "Parthau wedi'u cysylltu",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -188,11 +188,11 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Ffenestri naid",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Elfennau cyfryngau mawr",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -232,7 +232,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "all",
+    "message": "popeth",
     "description": ""
   },
   "popupImageRulePrompt": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "sgript",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "ffram",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -288,15 +288,15 @@
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Dewis",
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "Quit",
+    "message": "Gadael",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Rhagolwg",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -504,7 +504,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
-    "message": "Addasedig",
+    "message": "Addas",
     "description": "Filter lists section name"
   },
   "3pImport": {
@@ -516,7 +516,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Out of date.",
+    "message": "Wedi dyddio.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
@@ -576,7 +576,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "Cadw",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -588,7 +588,7 @@
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "Discard",
+    "message": "Dileu",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file…",
+    "message": "Allforio i ffeil…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -740,7 +740,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "3ydd-parti",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -768,7 +768,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Lefel parti",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -812,7 +812,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "any type",
+    "message": "unrhyw fath",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
@@ -984,7 +984,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Yn dangos hysbysebion neu weddillion hysbysebion",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -992,11 +992,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Yn canfod uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Yn cynnwys materion preifatrwydd",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1060,7 +1060,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "my-ublock-backup_{{datetime}}.txt",
+    "message": "copi-wrth-gefn-ublock_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -1128,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Tudalen wedi'i blocio",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1136,7 +1136,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "This happened because of the following filter:",
+    "message": "Digwyddodd hyn oherwydd y hidlydd canlynol:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1180,15 +1180,15 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Rheswm:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Maleisus",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Traciwr",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {

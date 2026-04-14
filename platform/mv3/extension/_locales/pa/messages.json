@@ -344,7 +344,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "…ਦੇ DNR ਨਿਯਮ",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {

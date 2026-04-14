@@ -524,7 +524,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Letzte Aktualisierung: {{ago}}.\nAktualisierung durch Anklicken erzwingen.",
+    "message": "Zuletzt aktualisiert: {{ago}}.\nAktualisierung durch Anklicken durchführen.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -1280,7 +1280,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Genutzter Speicherplatz: {{value}} {{unit}}",
+    "message": "Belegter Speicherplatz: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {

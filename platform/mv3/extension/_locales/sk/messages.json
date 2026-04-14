@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Vytvoriť nové hlásenie na Githube",
+    "message": "Vytvoriť nové hlásenie na GitHube",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {

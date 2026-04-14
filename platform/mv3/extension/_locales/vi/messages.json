@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Bảo vệ phần mềm độc hại, bảo mật",
+    "message": "Chặn mã độc, bảo mật",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Dán vào đây các bộ lọc cụ thể",
+    "message": "Dán vào đây các bộ lọc cụ thể để thêm",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -104,7 +104,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Người đóng góp",
+    "message": "Những người đóng góp",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -136,11 +136,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Để tránh tạo thêm gánh nặng cho các tình nguyện viên, hãy chắc chắn rằng chưa từng có vấn đề tương tự được báo cáo.",
+    "message": "Để tránh tạo thêm gánh nặng cho các tình nguyện viên hai báo cáo tương tự, hãy chắc chắn rằng chưa từng có vấn đề tương tự được báo cáo. <b>Lưu ý:</b> bấm vào nút này sẽ khiến nguồn của trang web bị gửi tới Github.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Tìm các báo cáo tương tự",
+    "message": "Tìm các báo cáo tương tự trên Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -160,7 +160,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Có lớp phủ hoặc những phiền toái khác",
+    "message": "Xuất hiện lớp phủ hoặc các phần tử phiền toái khác",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Tạo báo cáo mới",
+    "message": "Tạo báo cáo mới trên Github",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -200,11 +200,11 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "Không có bộ lọc",
+    "message": "không có bộ lọc",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "Cơ bản",
+    "message": "cơ bản",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -212,11 +212,11 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "Hoàn toàn",
+    "message": "hoàn toàn",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Chế độ lọc mạng cơ bản từ các danh sách bộ lọc đã chọn.\n\nKhông yêu cầu quyền về đọc và thay đổi dữ liệu trên các trang web.\n",
+    "message": "Chế độ lọc mạng cơ bản từ các danh sách bộ lọc đã chọn.\n\nKhông yêu cầu quyền về đọc và thay đổi dữ liệu trên các trang web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
@@ -228,11 +228,11 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Danh sách tên máy chủ sẽ không được lọc",
+    "message": "Danh sách tên máy chủ sẽ không được lọc.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example",
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -260,7 +260,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Cho phép truy cập các tính năng dành cho người dùng nâng cao",
+    "message": "Cho phép truy cập các tính năng dành cho người dùng nâng cao.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
@@ -308,11 +308,11 @@
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Đừng cảnh báo lại cho tôi về trang web này",
+    "message": "Đừng cảnh báo tôi lần nữa về trang web này",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Tiến hành",
+    "message": "Tiếp tục",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
@@ -344,7 +344,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "Quy tắc DRN cho ...",
+    "message": "Quy tắc DRN cho …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
@@ -368,7 +368,7 @@
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Nhập và thêm vào",
+    "message": "Nhập và thêm vào…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {

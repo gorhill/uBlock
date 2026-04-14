@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Paste here specific cosmetic filters to add",
+    "message": "Устаўце сюды спецыяльныя касметычныя фільтры для дадання",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -384,11 +384,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "Скід да налад па змаўчанні…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Усе вашыя прыстасаваныя наладкі будуць выдалены. Вы сапраўды хочаце вярнуцца да налад па змаўчанні?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

@@ -88,7 +88,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "Mewnforio / Allforio",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
@@ -280,7 +280,7 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Tudalen wedi'i blocio",
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
@@ -332,7 +332,7 @@
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Gweld:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
@@ -404,15 +404,15 @@
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Dewis",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Rhagolwg",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Creu",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {

@@ -1072,7 +1072,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "모든 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock₀이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
+    "message": "모든 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock₀이 재시작됩니다.\n\n백업된 데이터로 기존의 모든 설정을 덮어쓰시겠습니까?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {

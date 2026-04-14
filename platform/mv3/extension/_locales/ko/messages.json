@@ -196,7 +196,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "웹사이트별 필터링 모드가 있다면 기본 필터링 모드를 덮어씁니다. 각 웹사이트에서 가장 잘 작동하는 필터링 모드로 조정할 수 있습니다. 각 모드에는 장단점이 있습니다.",
+    "message": "사이트별 필터링 모드가 설정된 경우, 기본 필터링 모드보다 우선하여 적용됩니다. 각 사이트의 특성에 맞춰 가장 적합한 모드로 조정할 수 있으며, 각각의 모드는 장단점이 있습니다.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -272,7 +272,7 @@
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "복원 시 현재 설정이 모두 덮어씌워집니다.",
+    "message": "복원 시 현재의 모든 설정이 덮어쓰여집니다.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {

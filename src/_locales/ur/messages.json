@@ -16,11 +16,11 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay here",
+    "message": "یہیں رہیں",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "نظر انداز کریں",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "سپورٹ",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {

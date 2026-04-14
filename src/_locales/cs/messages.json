@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokální pravidla: tento sloupec slouží pro pravidla, která platí jen pro aktuální web.\nLokální pravidla přepisují globální pravidla.",
+    "message": "Lokální pravidla: tento sloupec slouží pro pravidla, která platí jen pro aktuální web.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
