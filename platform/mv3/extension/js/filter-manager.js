@@ -294,16 +294,15 @@ export async function registerCustomScriptlets(context) {
     const { none, basic, optimal, complete } = context.filteringModeDetails;
     const notNone = [ ...basic, ...optimal, ...complete ];
     if ( registerCustomScriptlets.promise ) {
-        registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(( ) =>
-            registerCustomScriptlets.create().then(worlds =>
-                registerCustomScriptlets.register(worlds, none, notNone)
-            )
+        registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(
+            registerCustomScriptlets.create
         );
     } else {
-        registerCustomScriptlets.promise = registerCustomScriptlets.create().then(worlds =>
-            registerCustomScriptlets.register(worlds, none, notNone)
-        );
+        registerCustomScriptlets.promise = registerCustomScriptlets.create();
     }
+    registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(worlds =>
+        registerCustomScriptlets.register(worlds, none, notNone)
+    );
     return registerCustomScriptlets.promise;
 }
 

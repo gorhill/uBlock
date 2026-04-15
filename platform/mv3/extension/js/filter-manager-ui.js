@@ -183,10 +183,7 @@ async function renderCustomFilters() {
 async function debounceRenderCustomFilters() {
     let { debouncer } = debounceRenderCustomFilters;
     if ( debouncer === undefined ) {
-        debouncer = debounceRenderCustomFilters.debouncer = {};
-        debouncer.promise = new Promise(resolve => {
-            debouncer.resolve = resolve;
-        });
+        debouncer = debounceRenderCustomFilters.debouncer = Promise.withResolvers();
     }
     if ( debouncer.timer !== undefined ) {
         self.clearTimeout(debouncer.timer);
