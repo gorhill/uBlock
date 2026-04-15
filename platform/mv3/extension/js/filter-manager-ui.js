@@ -159,12 +159,7 @@ async function renderCustomFilters() {
         ).sort((a, b) => {
             const as = a[0] === '+';
             const bs = b[0] === '+';
-            if ( as ) {
-                return bs && as < bs ? -1 : 1;
-            } else if ( bs ) {
-                return -1;
-            }
-            return a < b ? -1 : 1;
+            return as && bs && a < b || !as && bs || !as && !bs && a < b ? -1 : 1;
         });
         const ulSelectors = qs$(hostnameNode, '.selectors');
         for ( const selector of selectors ) {
