@@ -989,12 +989,12 @@ async function processScriptletFilters(assetDetails, mapin) {
     if ( result.MAIN ) {
         writeFile(`${scriptletDir}/scriptlet/main/${id}.js`, result.MAIN.code);
         stats.MAIN = result.MAIN.hostnames;
-        count += stats.MAIN.length;
+        count += result.MAIN.hostnames.length;
     }
     if ( result.ISOLATED ) {
         writeFile(`${scriptletDir}/scriptlet/isolated/${id}.js`, result.ISOLATED.code);
         stats.ISOLATED = result.ISOLATED.hostnames;
-        count += stats.ISOLATED.length;
+        count += result.ISOLATED.hostnames.length;
     }
     if ( count !== 0 ) {
         scriptletStats.set(id, stats);

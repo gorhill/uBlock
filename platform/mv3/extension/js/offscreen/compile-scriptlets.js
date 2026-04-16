@@ -33,7 +33,7 @@ import * as sfp from '../static-filtering-parser.js';
     for ( const [ hostname, selectors ] of data ) {
         for ( const selector of selectors ) {
             if ( selector.startsWith('+js') === false ) { continue; }
-            parser.parse(`${hostname}##${selector}`);
+            parser.parse(`##${selector}`);
             if ( parser.isScriptletFilter() === false ) { continue; }
             const args = parser.getScriptletArgs();
             const argsToken = JSON.stringify(args);
@@ -57,6 +57,5 @@ import * as sfp from '../static-filtering-parser.js';
         response.text()
     );
     const result = makeScriptlet.commit('user', template);
-
     chrome.runtime.sendMessage(Object.assign({ what: 'registerCustomScriptlets', }, result));
 })();
