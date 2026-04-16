@@ -27,6 +27,7 @@ import {
     sessionKeys, sessionRead, sessionRemove, sessionWrite,
 } from './ext.js';
 import {
+    isUserScriptsAvailable,
     registerCustomFilters,
     registerCustomScriptlets,
 } from './filter-manager.js';
@@ -430,9 +431,14 @@ export async function registerInjectables() {
 /******************************************************************************/
 
 export async function getRegisteredContentScripts() {
-    const scripts = await browser.scripting.getRegisteredContentScripts()
-        .catch(( ) => []);
-    return scripts.map(a => a.id);
+    const promises = [
+        browser.scripting.getRegisteredContentScripts(),
+    ];
+    if ( isUserScriptsAvailable() ) {
+        promises.push(browser.userScripts.getScripts());
+    }
+    const scripts = await Promise.all(promises).catch(( ) => []);
+    return scripts.flat().map(a => a.id);
 }
 
 /******************************************************************************/
