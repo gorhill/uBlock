@@ -42,6 +42,7 @@ function isValidHostname(hostname) {
 /******************************************************************************/
 
 function toPrettySelector(selector) {
+    if ( selector === '' ) { return ''; }
     if ( selector.startsWith('{') === false ) { return selector; }
     try {
         return JSON.parse(selector).raw;
@@ -53,28 +54,26 @@ function toPrettySelector(selector) {
 /******************************************************************************/
 
 function hostnameFromNode(node) {
-    const li = node.closest('li.hostname');
+    const li = node.closest('li.hostname[data-ugly]');
     if ( li === null ) { return; }
-    const span = qs$(li, '.hostname[data-pretty]');
-    if ( span === null ) { return; }
-    return span.dataset.ugly || undefined;
+    return li.dataset.ugly || undefined;
 }
 
 function selectorFromNode(node) {
-    const li = node.closest('li.selector');
+    const li = node.closest('li.selector[data-ugly]');
     if ( li === null ) { return; }
-    const span = qs$(li, '.selector[data-pretty]');
-    if ( span === null ) { return; }
-    return span.dataset.ugly || undefined;
+    return li.dataset.ugly || undefined;
 }
 
 function selectorsFromNode(node, all = false) {
     const li = node.closest('li.hostname');
     if ( li === null ) { return []; }
     const qsel = all
-        ? 'li.selector [contenteditable]'
-        : 'li.selector:not(.removed) [contenteditable]';
-    return Array.from(qsa$(li, qsel)).map(a => a.dataset.ugly);
+        ? 'li.selector[data-ugly]'
+        : 'li.selector[data-ugly]:not(.removed)';
+    return Array.from(qsa$(li, qsel))
+        .map(a => a.dataset.ugly)
+        .filter(a => Boolean(a));
 }
 
 /******************************************************************************/
@@ -85,7 +84,7 @@ async function removeSelectorsFromHostname(node) {
     const hostname = hostnameFromNode(hostnameNode);
     if ( hostname === undefined ) { return; }
     const selectors = Array.from(
-        qsa$(hostnameNode, 'li.selector.removed [contenteditable]')
+        qsa$(hostnameNode, 'li.selector.removed:not([data-ugly=""])')
     ).map(a => a.dataset.ugly);
     if ( selectors.length === 0 ) { return; }
     dom.cl.add(dom.body, 'readonly');
@@ -101,9 +100,7 @@ async function unremoveSelectorsFromHostname(node) {
     if ( hostnameNode === null ) { return; }
     const hostname = hostnameFromNode(hostnameNode);
     if ( hostname === undefined ) { return; }
-    const selectors = Array.from(
-        qsa$(hostnameNode, 'li.selector:not(.removed) [contenteditable]')
-    ).map(a => a.dataset.ugly);
+    const selectors = selectorsFromNode(hostnameNode);
     if ( selectors.length === 0 ) { return; }
     dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
@@ -119,9 +116,12 @@ function dataFromDOM() {
     const data = new Map();
     for ( const hostnameNode of qsa$('li.hostname') ) {
         const hostname = hostnameFromNode(hostnameNode);
+        if ( hostname === undefined ) { continue; }
         const selectors = [];
         for ( const selectorNode of qsa$(hostnameNode, 'li.selector') ) {
-            selectors.push(selectorFromNode(selectorNode));
+            const selector = selectorFromNode(selectorNode);
+            if ( selector === undefined ) { continue; }
+            selectors.push(selector);
         }
         data.set(hostname, selectors);
     }
@@ -133,6 +133,24 @@ function dataFromDOM() {
 async function renderCustomFilters() {
     const data = await sendMessage({ what: 'getAllCustomFilters' });
     if ( Boolean(data) === false ) { return; }
+    const nodeFromHostname = hostname => {
+        const hostnameNode = nodeFromTemplate('customFiltersHostname');
+        hostnameNode.dataset.ugly = hostname;
+        const pretty = punycode.toUnicode(hostname);
+        hostnameNode.dataset.pretty = pretty;
+        const label = qs$(hostnameNode, 'span.hostname');
+        dom.text(label, pretty);
+        return hostnameNode;
+    };
+    const nodeFromSelector = selector => {
+        const selectorNode = nodeFromTemplate('customFiltersSelector');
+        selectorNode.dataset.ugly = selector;
+        const pretty = toPrettySelector(selector);
+        selectorNode.dataset.pretty = pretty;
+        const label = qs$(selectorNode, 'span.selector');
+        dom.text(label, pretty);
+        return selectorNode;
+    };
     const storedData = new Map(data);
     const domData = dataFromDOM();
     const hostnames = Array.from(
@@ -143,12 +161,7 @@ async function renderCustomFilters() {
     ).sort();
     const fragment = document.createDocumentFragment();
     for ( const hostname of hostnames ) {
-        const hostnameNode = nodeFromTemplate('customFiltersHostname');
-        const label = qs$(hostnameNode, 'span.hostname');
-        label.dataset.ugly = hostname;
-        const pretty = punycode.toUnicode(hostname);
-        label.dataset.pretty = pretty;
-        dom.text(label, pretty);
+        const hostnameNode = nodeFromHostname(hostname);
         const storedSelectors = new Set(storedData.get(hostname));
         const domSelectors = new Set(domData.get(hostname));
         const selectors = Array.from(
@@ -163,19 +176,23 @@ async function renderCustomFilters() {
         });
         const ulSelectors = qs$(hostnameNode, '.selectors');
         for ( const selector of selectors ) {
-            const selectorNode = nodeFromTemplate('customFiltersSelector');
-            const label = qs$(selectorNode, 'span.selector');
-            label.dataset.ugly = selector;
-            const pretty = toPrettySelector(selector);
-            label.dataset.pretty = pretty;
-            dom.text(label, pretty);
+            const selectorNode = nodeFromSelector(selector);
             if ( storedSelectors.has(selector) === false ) {
                 dom.cl.add(selectorNode, 'removed');
             }
             ulSelectors.append(selectorNode);
         }
+        if ( qs$(hostnameNode, ':has(li.selector)') ) {
+            if ( qs$(hostnameNode, 'li.selector:not(.removed)') === null ) {
+                dom.cl.add(hostnameNode, 'removed');
+            }
+        }
+        const selectorNode = nodeFromSelector('');
+        ulSelectors.append(selectorNode);
         fragment.append(hostnameNode);
     }
+    const hostnameNode = nodeFromHostname('');
+    fragment.append(hostnameNode);
     dom.remove('section[data-pane="filters"] .hostnames > .hostname');
     dataContainer.prepend(fragment);
 }
@@ -201,20 +218,15 @@ debounceRenderCustomFilters.debouncer = undefined;
 
 function updateContentEditability() {
     if ( dom.cl.has(dom.body, 'readonly') ) {
-        dom.attr('[contenteditable]', 'contenteditable', 'false');
+        dom.attr('section[data-pane="filters"] [contenteditable]', 'contenteditable', 'false');
         return;
     }
-    dom.attr('section[data-pane="filters"] li:not(.removed) [contenteditable]',
+    dom.attr('section[data-pane="filters"] li[data-ugly]:not(.removed) > div [contenteditable]',
         'contenteditable',
         'plaintext-only'
     );
-    // No point editing a removed hostname
-    dom.attr('section[data-pane="filters"] li.hostname:not(:has(li.selector:not(.removed))) > div [contenteditable]',
-        'contenteditable',
-        'false'
-    );
-    // No point editing a removed selector
-    dom.attr('section[data-pane="filters"] .selector.removed [contenteditable]',
+    // No point editing a removed item
+    dom.attr('section[data-pane="filters"] li[data-ugly].removed > div [contenteditable]',
         'contenteditable',
         'false'
     );
@@ -229,17 +241,22 @@ async function onHostnameChanged(target, before, after) {
         return;
     }
 
+    const hostnameNode = target.closest('li.hostname');
+    if ( hostnameNode === null ) { return; }
+
     dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
 
     // Remove old hostname from storage
-    await sendMessage({ what: 'removeAllCustomFilters',
-        hostname: target.dataset.ugly,
-    });
+    if ( hostnameNode.dataset.ugly ) {
+        await sendMessage({ what: 'removeAllCustomFilters',
+            hostname: hostnameNode.dataset.ugly,
+        });
+    }
 
     // Add selectors under new hostname to storage
-    target.dataset.ugly = uglyAfter;
-    target.dataset.pretty = after;
+    hostnameNode.dataset.ugly = uglyAfter;
+    hostnameNode.dataset.pretty = after;
     await sendMessage({ what: 'addCustomFilters',
         hostname: hostnameFromNode(target),
         selectors: selectorsFromNode(target),
@@ -251,6 +268,9 @@ async function onHostnameChanged(target, before, after) {
 }
 
 async function onSelectorChanged(target, before, after) {
+    const selectorNode = target.closest('li.selector');
+    if ( selectorNode === null ) { return; }
+
     // Validate selector
     const sfp = await import('./static-filtering-parser.js');
     const parser = new sfp.AstFilterParser({
@@ -282,12 +302,12 @@ async function onSelectorChanged(target, before, after) {
     // Remove old selector from storage
     await sendMessage({ what: 'removeCustomFilters',
         hostname,
-        selectors: [ target.dataset.ugly ],
+        selectors: [ selectorNode.dataset.ugly ],
     });
 
     // Add new selector to storage
-    target.dataset.ugly = uglySelector;
-    target.dataset.pretty = prettySelector;
+    selectorNode.dataset.ugly = uglySelector;
+    selectorNode.dataset.pretty = prettySelector;
     await sendMessage({ what: 'addCustomFilters',
         hostname,
         selectors: [ uglySelector ],
@@ -299,7 +319,9 @@ async function onSelectorChanged(target, before, after) {
 }
 
 function onTextChanged(target) {
-    const before = target.dataset.pretty;
+    const itemNode = target.closest('[data-pretty]');
+    if ( itemNode === null ) { return; }
+    const before = itemNode.dataset.pretty;
     const after = target.textContent.trim().replace('\n', '');
     if ( after !== target.textContent ) {
         target.textContent = after;
@@ -345,23 +367,33 @@ let focusedEditableContent = null;
 
 function onTrashClicked(ev) {
     const { target } = ev;
-    const node = target.closest('li.selector');
-    if ( node ) {
-        dom.cl.add(node, 'removed');
+    const selectorNode = target.closest('li.selector');
+    const hostnameNode = target.closest('li.hostname');
+    if ( selectorNode ) {
+        dom.cl.add(selectorNode, 'removed');
+        if ( qs$(hostnameNode, 'li.selector:not([data-ugly=""]):not(.removed)') === null ) {
+            dom.cl.add(hostnameNode, 'removed');
+        }
+    } else if ( qs$(hostnameNode, 'li.selector:not([data-ugly=""])') ) {
+        dom.cl.add(qsa$(hostnameNode, 'li.selector:not([data-ugly=""])'), 'removed');
+        dom.cl.add(hostnameNode, 'removed');
     } else {
-        dom.cl.add(qsa$(target.closest('li.hostname'), 'li.selector'), 'removed');
+        hostnameNode.remove();
     }
-    removeSelectorsFromHostname(target);
+    removeSelectorsFromHostname(hostnameNode);
 }
 
 function onUndoClicked(ev) {
     const { target } = ev;
-    const node = target.closest('li.selector');
-    if ( node ) {
-        dom.cl.remove(node, 'removed');
+    const selectorNode = target.closest('li.selector');
+    const hostnameNode = target.closest('li.hostname');
+    if ( selectorNode ) {
+        dom.cl.remove(selectorNode, 'removed');
+        dom.cl.remove(hostnameNode, 'removed');
     } else {
-        dom.cl.remove(qsa$(target.closest('li.hostname'), 'li.selector'), 'removed');
+        dom.cl.remove(qsa$(hostnameNode, 'li.selector.removed'), 'removed');
     }
+    dom.cl.remove(hostnameNode, 'removed');
     unremoveSelectorsFromHostname(target);
 }
 

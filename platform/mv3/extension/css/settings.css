@@ -285,17 +285,21 @@ section[data-pane="filters"] li .fa-icon {
 section[data-pane="filters"] li.selector:not(:first-of-type) {
     border-top: 1px dotted var(--border-1);
     }
-section[data-pane="filters"] li.hostname:not(:has(li.selector:not(.removed))) > div [contenteditable],
-section[data-pane="filters"] li.selector.removed [contenteditable] {
+section[data-pane="filters"] li.removed > div [contenteditable] {
     color: red;
     text-decoration-line: line-through;
     }
-section[data-pane="filters"] li.hostname:not(:has(li.selector:not(.removed))) > div span.remove,
-section[data-pane="filters"] li.selector.removed > div span.remove,
-section[data-pane="filters"] li.hostname:has(li.selector:not(.removed)) > div span.undo,
-section[data-pane="filters"] li.selector:not(.removed) > div span.undo {
+section[data-pane="filters"] li.removed > div span.remove,
+section[data-pane="filters"] li:not(.removed) > div span.undo {
     display: none;
     }
+section[data-pane="filters"] span[contenteditable]:empty:not(:focus)::before {
+    color: gray;
+    content: '\2026';
+}
+section[data-pane="filters"] span[contenteditable]:empty ~ * {
+    display: none;
+}
 html.desktop section[data-pane="filters"] li > div:hover {
     background-color: var(--surface-0);
     }
