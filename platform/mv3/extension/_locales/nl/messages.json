@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Plak hier specifieke cosmetische filters om toe te voegen",
+    "message": "Plak hier specifieke cosmetische of scriptletfilters om toe te voegen.",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {

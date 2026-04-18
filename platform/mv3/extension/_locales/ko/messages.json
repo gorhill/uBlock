@@ -324,7 +324,7 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "커스텀 필터 생성",
+    "message": "커스텀 필터 만들기",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
