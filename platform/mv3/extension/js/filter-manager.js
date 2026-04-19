@@ -188,6 +188,7 @@ export async function registerCustomFilters(context) {
 
     const { none } = context.filteringModeDetails;
     let hostnames = Array.from(customFilters.keys());
+    let excludeHostnames = [];
     if ( none.has('all-urls') ) {
         const { basic, optimal, complete } = context.filteringModeDetails;
         hostnames = intersectHostnameIters(hostnames, [
@@ -195,10 +196,11 @@ export async function registerCustomFilters(context) {
         ]);
     } else if ( none.size !== 0 ) {
         hostnames = [ ...subtractHostnameIters(hostnames, none) ];
+        excludeHostnames = Array.from(none);
     }
-    hostnames = hostnames.filter(a => {
-        return customFilters.get(a).some(a => isCSS(a) || isProcedural(a));
-    });
+    hostnames = hostnames.filter(a =>
+        customFilters.get(a).some(a => isCSS(a) || isProcedural(a))
+    );
     if ( hostnames.length === 0 ) { return; }
 
     const directive = {
@@ -207,6 +209,9 @@ export async function registerCustomFilters(context) {
         matches: matchesFromHostnames(hostnames),
         runAt: 'document_start',
     };
+    if ( excludeHostnames.length !== 0 ) {
+        directive.excludeMatches = matchesFromHostnames(excludeHostnames);
+    }
 
     context.toAdd.push(directive);
 }
@@ -311,18 +316,24 @@ registerCustomScriptlets.register = async function(worlds, none, notNone) {
     const toAdd = [];
     const prepare = world => {
         let { hostnames } = world;
+        let excludeHostnames = [];
         if ( none.has('all-urls') ) {
             hostnames = intersectHostnameIters(hostnames, notNone);
         } else if ( none.size !== 0 ) {
             hostnames = [ ...subtractHostnameIters(hostnames, none) ];
+            excludeHostnames = Array.from(none);
         }
         if ( hostnames.length === 0 ) { return; }
-        return {
+        const directive = {
             allFrames: true,
             js: [ { code: world.code } ],
             matches: matchesFromHostnames(hostnames),
             runAt: 'document_start',
         };
+        if ( excludeHostnames.length !== 0 ) {
+            directive.excludeMatches = matchesFromHostnames(excludeHostnames);
+        }
+        return directive;
     };
     if ( worlds.ISOLATED ) {
         const directive = prepare(worlds.ISOLATED);
