@@ -30,6 +30,15 @@ const dataContainer = qs$('section[data-pane="filters"] .hostnames');
 
 /******************************************************************************/
 
+function getSFP() {
+    if ( getSFP.sfp === undefined ) {
+        getSFP.sfp = import('./static-filtering-parser.js');
+    }
+    return getSFP.sfp;
+}
+
+/******************************************************************************/
+
 function isValidHostname(hostname) {
     try {
         const url = new URL(`https://${hostname}/`);
@@ -234,6 +243,29 @@ function updateContentEditability() {
 
 /******************************************************************************/
 
+async function validateSelector(target, selector) {
+    const sfp = await getSFP();
+    const parser = new sfp.AstFilterParser({
+        nativeCssHas: true,
+        trustedSource: true,
+    });
+    parser.parse(`##${selector}`);
+    let pretty, ugly;
+    if ( parser.hasError() === false ) {
+        if ( parser.isScriptletFilter() ) {
+            pretty = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
+            ugly = pretty;
+        } else if ( parser.isCosmeticFilter() ) {
+            pretty = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_COSMETIC);
+            ugly = parser.result.compiled;
+        }
+    }
+    if ( Boolean(pretty) === false ) { return {}; }
+    return { pretty, ugly };
+}
+
+/******************************************************************************/
+
 async function onHostnameChanged(target, before, after) {
     const uglyAfter = punycode.toASCII(after);
     if ( isValidHostname(uglyAfter) === false ) {
@@ -272,32 +304,16 @@ async function onSelectorChanged(target, before, after) {
     if ( selectorNode === null ) { return; }
 
     // Validate selector
-    const sfp = await import('./static-filtering-parser.js');
-    const parser = new sfp.AstFilterParser({
-        nativeCssHas: true,
-        trustedSource: true,
-    });
-    const hostname = hostnameFromNode(target);
-    parser.parse(`##${after}`);
-    if ( parser.hasError() ) {
-        target.textContent = before;
-        return;
-    }
-    let prettySelector, uglySelector;
-    if ( parser.isScriptletFilter() ) {
-        prettySelector = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
-        uglySelector = prettySelector;
-    } else if ( parser.isCosmeticFilter() ) {
-        prettySelector = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_COSMETIC);
-        uglySelector = parser.result.compiled;
-    }
-    if ( Boolean(prettySelector) === false ) {
+    const { pretty, ugly } = await validateSelector(target, after);
+    if ( Boolean(pretty) === false ) {
         target.textContent = before;
         return;
     }
 
     dom.cl.add(dom.body, 'readonly');
     updateContentEditability();
+
+    const hostname = hostnameFromNode(target);
 
     // Remove old selector from storage
     await sendMessage({ what: 'removeCustomFilters',
@@ -306,11 +322,11 @@ async function onSelectorChanged(target, before, after) {
     });
 
     // Add new selector to storage
-    selectorNode.dataset.ugly = uglySelector;
-    selectorNode.dataset.pretty = prettySelector;
+    selectorNode.dataset.ugly = ugly;
+    selectorNode.dataset.pretty = pretty;
     await sendMessage({ what: 'addCustomFilters',
         hostname,
-        selectors: [ uglySelector ],
+        selectors: [ ugly ],
     });
 
     await debounceRenderCustomFilters();
@@ -321,12 +337,13 @@ async function onSelectorChanged(target, before, after) {
 function onTextChanged(target) {
     const itemNode = target.closest('[data-pretty]');
     if ( itemNode === null ) { return; }
+    dom.cl.remove(itemNode, 'error');
     const before = itemNode.dataset.pretty;
     const after = target.textContent.trim().replace('\n', '');
     if ( after !== target.textContent ) {
         target.textContent = after;
     }
-    if ( after === before ) { return; }
+    if ( before !== '' && after === before ) { return; }
     if ( after === '' ) {
         target.textContent = before;
         return;
@@ -355,10 +372,30 @@ function endEdit(ev) {
 function commitEdit(ev) {
     const { target } = ev;
     if ( target === focusedEditableContent ) {
-        if ( ev.inputType === 'insertLineBreak' ) { target.blur(); }
+        if ( ev.inputType === 'insertLineBreak' ) {
+            target.blur();
+        } else {
+            validateEdit(ev);
+        }
         return;
     }
     onTextChanged(target);
+}
+
+function validateEdit(ev) {
+    const { target } = ev;
+    const itemNode = target.closest('[data-pretty]');
+    if ( itemNode === null ) { return; }
+    const after = target.textContent.trim().replace('\n', '');
+    if ( after === '' ) { return; }
+    if ( target.matches('.selector') ) {
+        validateSelector(target, after).then(({ pretty }) => {
+            if ( focusedEditableContent !== target ) { return; }
+            dom.cl.toggle(itemNode, 'error', after !== '' && Boolean(pretty) === false);
+        });
+    } else if ( target.matches('.hostname') ) {
+        dom.cl.toggle(itemNode, 'error', isValidHostname(punycode.toASCII(after)) === false);
+    }
 }
 
 let focusedEditableContent = null;
@@ -400,7 +437,7 @@ function onUndoClicked(ev) {
 /******************************************************************************/
 
 async function importFromText(text) {
-    const sfp = await import('./static-filtering-parser.js');
+    const sfp = await getSFP();
     const parser = new sfp.AstFilterParser({
         nativeCssHas: true,
         trustedSource: true,

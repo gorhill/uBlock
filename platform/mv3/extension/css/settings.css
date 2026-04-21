@@ -257,9 +257,11 @@ section[data-pane="filters"] ul {
     margin: 0;
     padding-inline-start: 0;
     }
-section[data-pane="filters"] .hostnames > li.hostname > div {
-    background-color: var(--surface-2);
+section[data-pane="filters"] li[data-pretty] > div {
     padding-inline-start: 0.5em;
+    }
+section[data-pane="filters"] li.hostname > div {
+    background-color: var(--surface-2);
     }
 section[data-pane="filters"] ul ul {
     padding-block-end: 1em;
@@ -341,6 +343,9 @@ section[data-pane="filters"] aside p {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+    }
+section[data-pane="filters"] li.error[data-pretty] > div span[contenteditable] {
+    color: var(--info3-ink);
     }
 
 @media (max-width: 480px) {
