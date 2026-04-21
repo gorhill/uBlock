@@ -363,6 +363,8 @@ registerCustomScriptlets.create = async function() {
         await browser.userScripts.unregister();
         ubolLog(`Unregistered userscript ${toRemove.map(v => v.id)}`);
     }
+    const customFilters = await getAllCustomFilters();
+    if ( customFilters.some(a => a[1].some(b => isScriptlet(b))) === false ) { return; }
     const { promise: offscreenPromise, resolve: offscreenResolve } = Promise.withResolvers();
     const handler = (msg, sender, callback) => {
         if ( typeof msg !== 'object' ) { return; }
