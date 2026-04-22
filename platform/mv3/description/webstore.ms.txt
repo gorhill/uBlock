@@ -7,6 +7,6 @@ Set peraturan lalai sepadan dengan set penapis lalai uBlock Origin:
 - EasyPrivacy
 - Senarai pelayan iklan dan penjejakan 'Peter Lowe'
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Anda boleh menaktifkan lebih banyak set-set peraturan dengan melayari "Halaman Tetapan" kemudian memilih ikon gear di panel timbul.
 
 uBOL adalah deklaratif sepenuhnya, bermakna tidak ada keperluan untuk proses uBOL kekal untuk penapisan berlaku, dan penapisan kandungan berasaskan suntikan CSS/JS dilakukan sepenuhnya oleh penyemak imbas itu sendiri dan bukannya oleh sambungan. Ini bermakna uBOL sendiri tidak menggunakan sumber CPU/memori semasa penyekatan kandungan sedang berjalan -- proses pekerja perkhidmatan uBOL diperlukan _hanya_ apabila anda berinteraksi dengan panel timbul atau halaman pilihan.

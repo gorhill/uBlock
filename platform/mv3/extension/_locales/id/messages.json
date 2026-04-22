@@ -312,7 +312,7 @@
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Lanjutkan",
+    "message": "Proceed",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
@@ -320,7 +320,7 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Keluar dari mode penghapus elemen",
+    "message": "Mbyll asgjësuesin e elementeve",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
