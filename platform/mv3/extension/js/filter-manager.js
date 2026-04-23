@@ -168,7 +168,10 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
     if ( proceduralSelectors.length !== 0 ) {
         promises.push(
             browser.scripting.executeScript({
-                files: [ '/js/scripting/css-procedural-api.js' ],
+                files: [
+                    '/js/scripting/css-api.js',
+                    '/js/scripting/css-procedural-api.js',
+                ],
                 target: { tabId, frameIds: [ frameId ] },
                 injectImmediately: true,
             }).catch(reason => {
