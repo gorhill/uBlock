@@ -284,6 +284,7 @@ dom.on('#gotoUnpicker', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
         files: [
+            '/js/scripting/css-procedural-api.js',
             '/js/scripting/tool-overlay.js',
             '/js/scripting/unpicker.js',
         ],
