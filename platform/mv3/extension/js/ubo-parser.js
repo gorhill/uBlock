@@ -162,6 +162,8 @@ function minimizeRuleset(rules) {
     rules = mergeArrays(rules, 'condition.excludedRequestDomains');
     rules = mergeArrays(rules, 'condition.initiatorDomains');
     rules = mergeArrays(rules, 'condition.excludedInitiatorDomains');
+    rules = mergeArrays(rules, 'condition.topDomains');
+    rules = mergeArrays(rules, 'condition.excludedTopDomains');
     rules = mergeArrays(rules, 'condition.resourceTypes');
     rules = mergeArrays(rules, 'condition.excludedRequestMethods');
     rules = mergeArrays(rules, 'condition.requestMethods');
