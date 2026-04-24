@@ -372,8 +372,11 @@ function registerScriptlet(context, scriptletDetails) {
 export async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }
 
-    if ( registerInjectables.barrier ) { return true; }
-    registerInjectables.barrier = true;
+    if ( registerInjectables.pendingRegisterOp ) {
+        await registerInjectables.pendingRegisterOp;
+    }
+    const { resolve: resolveRegisterOp, promise } = Promise.withResolvers();
+    registerInjectables.pendingRegisterOp = promise;
 
     const [
         filteringModeDetails,
@@ -423,7 +426,7 @@ export async function registerInjectables() {
 
     await resetCSSCache();
 
-    registerInjectables.barrier = false;
+    resolveRegisterOp();
 
     return true;
 }

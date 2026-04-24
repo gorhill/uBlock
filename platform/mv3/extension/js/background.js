@@ -577,6 +577,24 @@ function onMessage(request, sender, callback) {
         })
         return true;
 
+    case 'addManyCustomFilters': {
+        const promises = [];
+        for ( const [ hostname, selectors ] of request.entries ) {
+            if ( typeof hostname !== 'string' ) { continue; }
+            if ( hostname === '' ) { continue; }
+            if ( Array.isArray(selectors) === false ) { continue; }
+            if ( selectors.length === 0 ) { continue; }
+            promises.push(addCustomFilters(hostname, selectors));
+        }
+        Promise.all(promises).then(results => {
+            if ( results.some(a => a) === false ) { return; }
+            return registerInjectables();
+        }).then(( ) => {
+            callback();
+        });
+        return true;
+    }
+
     case 'removeCustomFilters':
         removeCustomFilters(request.hostname, request.selectors).then(modified => {
             if ( modified !== true ) { return; }
