@@ -47,33 +47,27 @@ const isCSS = a => isProcedural(a) === false && isScriptlet(a) === false;
 
 /******************************************************************************/
 
-async function flushWrites() {
-    while ( pendingWrites.length !== 0 ) {
-        const promises = pendingWrites;
-        pendingWrites.length = 0;
-        await Promise.all(promises);
-    }
-}
-
 async function keysFromStorage() {
-    await flushWrites();
-    return localKeys();
+    pendingStorageOp = pendingStorageOp.then(( ) => localKeys());
+    return pendingStorageOp;
 }
 
 async function readFromStorage(key) {
-    await flushWrites();
-    return localRead(key);
+    pendingStorageOp = pendingStorageOp.then(( ) => localRead(key));
+    return pendingStorageOp;
 }
 
 async function writeToStorage(key, value) {
-    pendingWrites.push(localWrite(key, value));
+    pendingStorageOp = pendingStorageOp.then(( ) => localWrite(key, value));
+    return pendingStorageOp;
 }
 
 async function removeFromStorage(key) {
-    pendingWrites.push(localRemove(key));
+    pendingStorageOp = pendingStorageOp.then(( ) => localRemove(key));
+    return pendingStorageOp;
 }
 
-const pendingWrites = [];
+let pendingStorageOp = Promise.resolve();
 
 /******************************************************************************/
 
@@ -117,7 +111,7 @@ async function getAllCustomFilterKeys() {
 export async function getAllCustomFilters() {
     const collect = async key => {
         const selectors = await readFromStorage(key);
-        return [ key.slice(5), selectors ];
+        return [ key.slice(5), selectors ?? [] ];
     };
     const keys = await getAllCustomFilterKeys();
     const promises = keys.map(k => collect(k));
