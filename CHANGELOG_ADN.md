@@ -1,3 +1,10 @@
+
+# 3.25.5b11
+
+- [Implement ad collection benchmarking system](https://github.com/dhowe/AdNauseam/pull/2798)
+
+----------
+
 # 3.25.5b9
 
 - [Implement ad collection benchmarking system](https://github.com/dhowe/AdNauseam/pull/2798)
