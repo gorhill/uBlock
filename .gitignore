@@ -11,3 +11,4 @@ node_modules/
 /tmp/
 .DS_Store
 /.vs
+submodules/uAssets

@@ -11,9 +11,6 @@ jobs:
   build:
     permissions:
       contents: write # for creating release
-    strategy:
-      matrix:
-        node-version: [18.x]
     name: Build packages
     runs-on: ubuntu-slim
     if: startsWith(github.ref, 'refs/tags/')
@@ -35,8 +32,7 @@ jobs:
       - name: Assemble release notes
         run: |
           > release.body.txt
-          grep -m1 -B10000 -- "----------" CHANGELOG.md >> release.body.txt
-          sed -e 's/%version%/${{ env.VERSION }}/g' .github/workflows/RELEASE.HEAD.md >> release.body.txt
+          grep -m1 -B10000 -- "----------" CHANGELOG_ADN.md | grep -v "^#" | grep -v "^--" | sed '/^$/N;/^\n$/d' >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -49,5 +45,5 @@ jobs:
           prerelease: true
           body_path: release.body.txt
           files: |
-            dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
-            dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
+            dist/build/adnauseam_${{ env.VERSION }}.chromium.zip
+            dist/build/adnauseam_${{ env.VERSION }}.firefox.xpi
