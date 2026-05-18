@@ -1,24 +1,31 @@
 
-# v3.25.5b11
+
+# 3.25.5b13
+
+- [Adjustments to the dev-ops](https://github.com/dhowe/AdNauseam/pull/2798)
+
+----------
+
+# 3.25.5b11
 
 - [Implement ad collection benchmarking system](https://github.com/dhowe/AdNauseam/pull/2798)
 
 ----------
 
-# v3.25.5b9
+# 3.25.5b9
 
 - [Implement ad collection benchmarking system](https://github.com/dhowe/AdNauseam/pull/2798)
 
 ----------
 
-# v3.25.5b7
+# 3.25.5b7
 
 - [Improve ad parsing](https://github.com/dhowe/AdNauseam/pull/2794)
 - [Merge with uBlock Origin v1.71.0](https://github.com/dhowe/AdNauseam/pull/2796)
 
 ----------
 
-# v3.28.5.3
+# 3.28.5.3
 
 - [Further tests with mv3 implementation](https://github.com/dhowe/AdNauseam/pull/2784)
 - [Fix vault zoom](https://github.com/dhowe/AdNauseam/pull/2786)
@@ -27,25 +34,25 @@
 
 ----------
 
-# v3.28.4
+# 3.28.4
 
 - [Merge to uBlock Origin 1.70.0](https://github.com/dhowe/AdNauseam/pull/2780)
 
 ----------
 
-# v3.28.3b1
+# 3.28.3b1
 
 - [Merge to uBlock Origin 1.70.0](https://github.com/dhowe/AdNauseam/pull/2780)
 
 ----------
 
-# v3.28.2
+# 3.28.2
 
 - [Fix selector issue](https://github.com/dhowe/AdNauseam/pull/2771)
 
 ----------
 
-# v3.28.0
+# 3.28.0
 
 - [Fix issue #2698](https://github.com/dhowe/AdNauseam/pull/2753)
 - [Improving ad collection and parsing](https://github.com/dhowe/AdNauseam/pull/2762)
@@ -56,14 +63,14 @@
 
 ----------
 
-# v3.27.1b5
+# 3.27.1b5
 
 - [Minor updates](https://github.com/dhowe/AdNauseam/pull/2768)
 - [Update translations](https://github.com/dhowe/AdNauseam/pull/2769)
 
 ----------
 
-# v3.27.1b3
+# 3.27.1b3
 
 - General improvements to ad parsing
 - Add delay to css injection to improve ad collection
@@ -74,7 +81,7 @@
 
 ----------
 
-# v3.27.0
+# 3.27.0
 
 - [Basic test adaptations on mv3](https://github.com/dhowe/AdNauseam/pull/2739)
 - [Merge to uBlock Origin v1.68.0](https://github.com/dhowe/AdNauseam/pull/2744)
@@ -82,20 +89,20 @@
 
 ----------
 
-# v3.26.3b3
+# 3.26.3b3
 
 - [Adjusts to badge icon and clicked count on vault button](https://github.com/dhowe/AdNauseam/pull/2746)
 
 ----------
 
-# v3.26.3b1
+# 3.26.3b1
 
 - [Basic adaptations on mv3](https://github.com/dhowe/AdNauseam/pull/2739)
 - [Merge to uBlock Origin v1.68.0](https://github.com/dhowe/AdNauseam/pull/2744)
 
 ----------
 
-# v3.26.2
+# 3.26.2
 
 - [Merge to uBlock Origin v1.67.0](https://github.com/dhowe/AdNauseam/pull/2690)
 - [Temporary fix for scriptlets that dont work](https://github.com/dhowe/AdNauseam/pull/2694)
@@ -104,52 +111,52 @@
 
 ----------
 
-# v3.26.1b1
+# 3.26.1b1
 
 - [Merge to uBlock Origin v1.67.0](https://github.com/dhowe/AdNauseam/pull/2690)
 - [Temporary fix for scriptlets that dont work](https://github.com/dhowe/AdNauseam/pull/2694)
 
 ----------
 
-# v3.26.0
+# 3.26.0
 
 - [Merge to uBlock Origin v1.66.4](https://github.com/dhowe/AdNauseam/pull/2684)
 - [Fixing issue on menu](https://github.com/dhowe/AdNauseam/pull/2686)
 
 ----------
 
-# v3.25.9b5
+# 3.25.9b5
 
 - [Fix bug on menu](https://github.com/dhowe/AdNauseam/pull/2686)
 
 ----------
 
-# v3.25.9b3
+# 3.25.9b3
 
 - Merge to uBlock Origin v1.66.4
 
 ----------
 
-# v3.25.9b1
+# 3.25.9b1
 
 - [Merge to uBlock Origin v1.66.0](https://github.com/dhowe/AdNauseam/pull/2680)
 
 ----------
 
-# v3.25.8
+# 3.25.8
 
 - Fix minor issue with the notification on the vault page
 
 ----------
 
-# v3.25.6
+# 3.25.6
 
 - [Merge with uBlock Origin v1.65.0](https://github.com/dhowe/AdNauseam/pull/2668)
 - [Add Letter notification](https://github.com/dhowe/AdNauseam/pull/2674)
 
 ----------
 
-# v3.25.4
+# 3.25.4
 
 - [Fix ad showing in snooker.org](https://github.com/dhowe/AdNauseam/pull/2648)
 - [Fix ad detection on drakecomic.org](https://github.com/dhowe/AdNauseam/pull/2649)
@@ -158,20 +165,20 @@
 
 ----------
 
-# v3.25.3b7
+# 3.25.3b7
 
 - Improve similarity to uBlock code
 - Fix with youtube scriptlets
 
 ----------
 
-# v3.25.3b3
+# 3.25.3b3
 
 - Fix ubolog entries
 
 ----------
 
-# v3.25.3b1
+# 3.25.3b1
 
 - Fix ad showing in snooker.org
 - Fix ad detection on drakecomic.org
@@ -179,7 +186,7 @@
 
 ----------
 
-# v3.25.2
+# 3.25.2
 
 - [Merge to uBlock Origin v1.63.2](https://github.com/dhowe/AdNauseam/pull/2635)
 - [Fix logger resize issue](https://github.com/dhowe/AdNauseam/pull/2640)
@@ -187,26 +194,26 @@
 
 ----------
 
-# v3.25.1b5
+# 3.25.1b5
 
 - [Fix logger resize issue](https://github.com/dhowe/AdNauseam/pull/2640)
 - [Bypass cache on reload when switching to strict mode](https://github.com/dhowe/AdNauseam/pull/2641)
 
 ----------
 
-# v3.25.1b3
+# 3.25.1b3
 
 - [Merge to uBlock Origin v1.63.2](https://github.com/dhowe/AdNauseam/pull/2635)
 
 ----------
 
-# v3.25.1b1
+# 3.25.1b1
 
 - Merge to uBlock Origin v1.63.0
 
 ----------
 
-# v3.24.6
+# 3.24.6
 
 - [Fix merge issue](https://github.com/dhowe/AdNauseam/pull/2612)
 - [Fix typo](https://github.com/dhowe/AdNauseam/pull/2613)
@@ -217,7 +224,7 @@
 
 ----------
 
-# v3.24.5b3
+# 3.24.5b3
 
 - Add template for page broken
 - Update locales
