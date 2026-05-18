@@ -169,17 +169,19 @@ function registerGeneric(context, genericDetails) {
 
 /******************************************************************************/
 
-async function registerCosmetic(realm, context) {
+async function registerCosmetic(context) {
     const { filteringModeDetails, rulesetsDetails } = context;
 
     {
         const keys = await localKeys();
-        localRemove(keys.filter(a => a.startsWith(`css.${realm}.`)));
+        localRemove(keys.filter(a => a.startsWith('css.specific.')));
+        // TODO: remove after a few versions after 2026.516.1652
+        localRemove(keys.filter(a => a.startsWith('css.procedural.')));
     }
 
     const rulesetIds = [];
     for ( const rulesetDetails of rulesetsDetails ) {
-        const count = rulesetDetails.css?.[realm] || 0;
+        const count = rulesetDetails.css?.specific ?? 0;
         if ( count === 0 ) { continue; }
         rulesetIds.push(rulesetDetails.id);
     }
@@ -196,8 +198,8 @@ async function registerCosmetic(realm, context) {
         const promises = [];
         for ( const id of rulesetIds ) {
             promises.push(
-                fetchJSON(`/rulesets/scripting/${realm}/${id}`).then(data => {
-                    return localWrite(`css.${realm}.${id}`, data);
+                fetchJSON(`/rulesets/scripting/specific/${id}`).then(data => {
+                    return localWrite(`css.specific.${id}`, data);
                 })
             );
         }
@@ -206,13 +208,12 @@ async function registerCosmetic(realm, context) {
 
     normalizeMatches(matches);
 
-    const realmid = `css-${realm}`;
-    const js = rulesetIds.map(id => `/rulesets/scripting/${realm}/${id}.js`);
+    const js = rulesetIds.map(id => `/rulesets/scripting/specific/${id}.js`);
     js.unshift('/js/scripting/css-api.js', '/js/scripting/isolated-api.js');
-    if ( realm === 'procedural' && webextFlavor === 'safari' ) {
+    if ( webextFlavor === 'safari' ) {
         js.push('/js/scripting/css-procedural-api.js');
     }
-    js.push(`/js/scripting/${realmid}.js`);
+    js.push('/js/scripting/css-specific.js');
 
     const excludeMatches = [];
     if ( none.has('all-urls') === false && basic.has('all-urls') === false ) {
@@ -226,7 +227,7 @@ async function registerCosmetic(realm, context) {
     }
 
     const directive = {
-        id: realmid,
+        id: 'css-specific',
         js,
         matches,
         allFrames: true,
@@ -338,8 +339,7 @@ registerInjectables.register = async function register() {
 
     await Promise.all([
         registerScriptlet(context, scriptletDetails),
-        registerCosmetic('specific', context),
-        registerCosmetic('procedural', context),
+        registerCosmetic(context),
         registerGeneric(context, genericDetails),
         registerCustomFilters(context),
         registerCustomScriptlets(context),

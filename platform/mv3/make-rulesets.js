@@ -726,7 +726,7 @@ async function processGenericCosmeticFilters(
     assetDetails,
     selectorList,
     exceptionList,
-    declarativeMap
+    specificMap
 ) {
     const exceptionSet = new Set(
         exceptionList &&
@@ -754,11 +754,12 @@ async function processGenericCosmeticFilters(
 
     // Specific exceptions
     const exceptionMap = new Map();
-    if ( declarativeMap ) {
-        for ( const [ exception, details ] of declarativeMap ) {
+    if ( specificMap ) {
+        for ( const [ exception, details ] of specificMap ) {
             if ( details.rejected ) { continue; }
             if ( details.matches !== undefined ) { continue; }
             if ( details.excludeMatches === undefined ) { continue; }
+            if ( exception.startsWith('{') ) { continue; }
             for ( const hn of details.excludeMatches ) {
                 const exceptions = exceptionMap.get(hn);
                 if ( exceptions === undefined ) {
@@ -848,7 +849,7 @@ const hostnameCompare = (a, b) => {
 
 /******************************************************************************/
 
-async function processCosmeticFilters(assetDetails, realm, mapin) {
+async function processCosmeticFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
     if ( mapin.size === 0 ) { return 0; }
 
@@ -922,19 +923,19 @@ async function processCosmeticFilters(assetDetails, realm, mapin) {
                 return [ literalStrFromRegex(restr).slice(0,8), restr, a[1] ]
             }).flat(),
     };
-    writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.json`, JSON.stringify(data));
+    writeFile(`${scriptletDir}/specific/${assetDetails.id}.json`, JSON.stringify(data));
 
     // The cosmetic filters will be injected programmatically as content
     // script and the decisions to activate the cosmetic filters will be
     // done at injection time according to the document's hostname.
     const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get(`css-${realm}`).replace(
+    let patchedScriptlet = originalScriptletMap.get(`css-specific`).replace(
         'self.$rulesetId$',
         JSON.stringify(assetDetails.id)
     );
-    writeFile(`${scriptletDir}/${realm}/${assetDetails.id}.js`, patchedScriptlet);
+    writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`, patchedScriptlet);
 
-    log(`CSS-${realm}: ${allSelectors.size} distinct filters for ${allHostnames.size} distinct hostnames`);
+    log(`CSS-specific: ${allSelectors.size} distinct filters for ${allHostnames.size} distinct hostnames`);
 
     return sortedHostnames.length + allRegexesOrPaths.size;
 }
@@ -1126,9 +1127,8 @@ async function rulesetFromURLs(assetDetails) {
     }
 
     // Split cosmetic filters into two groups: declarative and procedural
-    const declarativeCosmetic = new Map();
-    const proceduralCosmetic = new Map();
     const rejectedCosmetic = [];
+    const specificCosmetic = new Map();
     if ( results.specificCosmetic ) {
         for ( const [ selector, details ] of results.specificCosmetic ) {
             if ( details.rejected ) {
@@ -1136,12 +1136,12 @@ async function rulesetFromURLs(assetDetails) {
                 continue;
             }
             if ( selector.startsWith('{') === false ) {
-                declarativeCosmetic.set(selector, details);
-                continue;
+                specificCosmetic.set(selector, details);
+            } else {
+                const parsed = JSON.parse(selector);
+                parsed.raw = undefined;
+                specificCosmetic.set(JSON.stringify(parsed), details);
             }
-            const parsed = JSON.parse(selector);
-            parsed.raw = undefined;
-            proceduralCosmetic.set(JSON.stringify(parsed), details);
         }
     }
     if ( rejectedCosmetic.length !== 0 ) {
@@ -1174,19 +1174,13 @@ async function rulesetFromURLs(assetDetails) {
         assetDetails,
         results.genericCosmeticFilters,
         results.genericCosmeticExceptions,
-        declarativeCosmetic
+        specificCosmetic
     );
     const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,
-        'specific',
-        declarativeCosmetic
+        specificCosmetic
     );
 
-    const proceduralStats = await processCosmeticFilters(
-        assetDetails,
-        'procedural',
-        proceduralCosmetic
-    );
     await processScriptletFilters(assetDetails, results.scriptlet);
 
     rulesetDetails.push({
@@ -1218,7 +1212,6 @@ async function rulesetFromURLs(assetDetails) {
         css: {
             generic: genericCosmeticStats,
             specific: specificCosmeticStats,
-            procedural: proceduralStats,
         },
         popups: popupStats,
     });
