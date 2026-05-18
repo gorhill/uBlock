@@ -41,7 +41,7 @@ elif [ -n "$1" ]; then
     pushd $DES > /dev/null
     zip ../$(basename $DES).xpi -qr *
     popd > /dev/null
-    mv "$BLDIR"/adnauseam.firefox.xpi "$BLDIR"/adnauseam_"$1".firefox.xpi
+    mv "$BLDIR"/adnauseam.firefox.xpi "$BLDIR"/adnauseam-"$1".firefox.xpi
 fi
 
 echo "*** AdNauseam.firefox: Package done."

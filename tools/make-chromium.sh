@@ -37,7 +37,7 @@ if [ "$1" = all ]; then
 elif [ -n "$1" ]; then
     echo "*** AdNauseam.chromium: Creating versioned package..."
     pushd $(dirname $DES/) > /dev/null
-    zip adnauseam_"$1".chromium.zip -qr $(basename $DES/)/*
+    zip adnauseam-"$1".chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
