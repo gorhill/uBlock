@@ -29,9 +29,20 @@ jobs:
         run: |
           tools/make-chromium.sh ${{ env.VERSION }}
           tools/make-firefox.sh ${{ env.VERSION }}
+          tools/make-opera.sh
+          tools/make-edge.sh
+      - name: Package Opera and Edge
+        run: |
+          cd dist/build
+          zip -qr adnauseam-${{ env.VERSION }}.opera.zip adnauseam.opera
+          jq 'del(.key)' adnauseam.edge/manifest.json > adnauseam.edge/manifest.tmp && mv adnauseam.edge/manifest.tmp adnauseam.edge/manifest.json
+          zip -qr adnauseam-${{ env.VERSION }}.edge.zip adnauseam.edge
+          cp adnauseam-${{ env.VERSION }}.chromium.zip adnauseam.chromium.zip
       - name: Assemble release notes
         run: |
           > release.body.txt
+          RELEASE_TITLE=$(grep -m1 "^# " CHANGELOG_ADN.md | sed 's/^# //')
+          echo "RELEASE_TITLE=${RELEASE_TITLE}" >> $GITHUB_ENV
           grep -m1 -B10000 -- "----------" CHANGELOG_ADN.md | grep -v "^#" | grep -v "^--" | sed '/^$/N;/^\n$/d' >> release.body.txt
       - name: Create GitHub release
         id: create_release
@@ -40,10 +51,13 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ env.VERSION }}
-          name: ${{ env.VERSION }}
+          name: ${{ env.RELEASE_TITLE }}
           draft: true
           prerelease: true
           body_path: release.body.txt
           files: |
-            dist/build/adnauseam_${{ env.VERSION }}.chromium.zip
-            dist/build/adnauseam_${{ env.VERSION }}.firefox.xpi
+            dist/build/adnauseam-${{ env.VERSION }}.chromium.zip
+            dist/build/adnauseam-${{ env.VERSION }}.firefox.xpi
+            dist/build/adnauseam-${{ env.VERSION }}.opera.zip
+            dist/build/adnauseam-${{ env.VERSION }}.edge.zip
+            dist/build/adnauseam.chromium.zip
