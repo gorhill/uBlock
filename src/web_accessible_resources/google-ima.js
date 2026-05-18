@@ -24,7 +24,9 @@
  * - https://github.com/uBlockOrigin/uAssets/issues/31018
  * 
 **/
- 
+
+/* eslint-disable indent */
+
 'use strict';
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
@@ -41,7 +43,7 @@
  */
 
 if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
-  const VERSION = "3.517.2";
+  const VERSION = "3.764.0";
   const ima = {};
 
   class AdDisplayContainer {
@@ -481,7 +483,8 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
           return true;
         }
       }
-    } catch (_) {}
+    } catch {
+    }
     return false;
   };
 
