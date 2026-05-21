@@ -27,16 +27,12 @@ import {
     sessionKeys, sessionRead, sessionRemove, sessionWrite,
     webextFlavor,
 } from './ext.js';
-import {
-    isUserScriptsAvailable,
-    registerCustomFilters,
-    registerCustomScriptlets,
-} from './filter-manager.js';
 import { ubolErr, ubolLog } from './debug.js';
 
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
+import { registerCustomFilters } from './filter-manager.js';
 import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
@@ -310,15 +306,15 @@ function registerScriptlet(context, scriptletDetails) {
 // Issue: Safari appears to completely ignore excludeMatches
 // https://github.com/radiolondra/ExcludeMatches-Test
 
-export async function registerInjectables() {
+export async function registerContentScripts() {
     if ( browser.scripting === undefined ) { return false; }
-    registerInjectables.pendingOp =
-        registerInjectables.pendingOp.then(( ) => registerInjectables.register());
-    return registerInjectables.pendingOp;
+    registerContentScripts.pendingOp =
+        registerContentScripts.pendingOp.then(( ) => registerContentScripts.register());
+    return registerContentScripts.pendingOp;
 }
-registerInjectables.pendingOp = Promise.resolve();
+registerContentScripts.pendingOp = Promise.resolve();
 
-registerInjectables.register = async function register() {
+registerContentScripts.register = async function register() {
     const [
         filteringModeDetails,
         rulesetsDetails,
@@ -342,7 +338,6 @@ registerInjectables.register = async function register() {
         registerCosmetic(context),
         registerGeneric(context, genericDetails),
         registerCustomFilters(context),
-        registerCustomScriptlets(context),
         registerPreventPopup(context),
         registerToolbarIconToggler(context),
     ]);
@@ -371,14 +366,8 @@ registerInjectables.register = async function register() {
 /******************************************************************************/
 
 export async function getRegisteredContentScripts() {
-    const promises = [
-        browser.scripting.getRegisteredContentScripts(),
-    ];
-    if ( isUserScriptsAvailable() ) {
-        promises.push(browser.userScripts.getScripts());
-    }
-    const scripts = await Promise.all(promises).catch(( ) => []);
-    return scripts.flat().map(a => a.id);
+    const scripts = await browser.scripting.getRegisteredContentScripts();
+    return scripts.map(a => a.id);
 }
 
 /******************************************************************************/

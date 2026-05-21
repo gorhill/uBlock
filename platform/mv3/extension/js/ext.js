@@ -35,6 +35,13 @@ export const webextFlavor = (( ) => {
 
 const notAnObject = a => typeof a !== 'object' || a === null;
 
+export const supportsUserScripts = (() => {
+    if ( browser.offscreen === undefined ) { return false; }
+    try { browser.userScripts.getScripts(); }
+    catch { return false; }
+    return true;
+})();
+
 /******************************************************************************/
 
 // The extension's service worker can be evicted at any time, so when we

@@ -19,13 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import Regex from '../lib/regexanalyzer/regex.js';
-
 /******************************************************************************/
 
 // Depends on:
 // https://github.com/foo123/RegexAnalyzer
-const RegexAnalyzer = Regex && Regex.Analyzer || null;
+const RegexAnalyzer = globalThis.Regex && globalThis.Regex.Analyzer || null;
 
 export function isRE2(reStr) {
     if ( RegexAnalyzer === null ) { return true; }

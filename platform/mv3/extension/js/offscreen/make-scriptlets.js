@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { builtinScriptlets } from './resources/scriptlets.js';
+import { hostnameCompare, isHnRegexOrPath } from './make-utils.js';
+import { builtinScriptlets } from '../resources/scriptlets.js';
 import { literalStrFromRegex } from './regex-analyzer.js';
 import { safeReplace } from './safe-replace.js';
 
@@ -107,7 +108,7 @@ export function compile(rulesetId, details) {
     const arglistIndex = worldDetails.arglists.get(arglistKey);
     if ( details.matches ) {
         for ( const hn of details.matches ) {
-            if ( hn.includes('/') ) {
+            if ( isHnRegexOrPath(hn) ) {
                 worldDetails.matches.clear();
                 worldDetails.matches.add('*');
                 if ( worldDetails.regexesOrPaths.has(hn) === false ) {
@@ -137,7 +138,7 @@ export function compile(rulesetId, details) {
     }
     if ( details.excludeMatches ) {
         for ( const hn of details.excludeMatches ) {
-            if ( hn.includes('/') ) {
+            if ( isHnRegexOrPath(hn) ) {
                 if ( worldDetails.regexesOrPaths.has(hn) === false ) {
                     worldDetails.regexesOrPaths.set(hn, new Set());
                 }
@@ -160,11 +161,9 @@ export function commit(rulesetId, template) {
         const worldDetails = worlds[world];
         const { scriptletFunctions, allFunctions, args, arglists } = worldDetails;
         if ( scriptletFunctions.size === 0 ) { continue; }
-        const hostnames = Array.from(worldDetails.hostnames).toSorted((a, b) => {
-            const d = a[0].length - b[0].length;
-            if ( d !== 0 ) { return d; }
-            return a[0] < b[0] ? -1 : 1;
-        }).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
+        const hostnames = Array.from(worldDetails.hostnames).toSorted((a, b) =>
+            hostnameCompare(a[0], b[0])
+        ).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
         const scriptletFromRegexes = Array.from(worldDetails.regexesOrPaths)
             .filter(a => a[0].startsWith('/') && a[0].endsWith('/'))
             .map(a => {

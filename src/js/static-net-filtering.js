@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import '../lib/regexanalyzer/regex.js';
+
 import * as sfp from './static-filtering-parser.js';
 
 import { dropTask, queueTask } from './tasks.js';

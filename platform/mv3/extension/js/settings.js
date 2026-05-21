@@ -329,6 +329,9 @@ sendMessage({
 }).then(data => {
     if ( !data ) { return; }
     cachedRulesetData = data;
+    if ( data.supportsUserScripts ) {
+        dom.body.dataset.supports = 'user-scripts';
+    }
     try {
         renderAdminRules();
         renderFilterLists(cachedRulesetData);
