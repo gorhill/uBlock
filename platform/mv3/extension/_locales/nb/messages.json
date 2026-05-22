@@ -263,6 +263,10 @@
     "message": "Når denne er aktiv vil matchende filtre automatisk lukke uønskede nettleserfaner laget av nettsiden.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Utviklermodus",
     "description": "Label for a checkbox in the options page"

@@ -263,6 +263,10 @@
     "message": "开启后，匹配的过滤器将自动关闭网站创建的不需要的浏览器标签页。",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "开发者模式",
     "description": "Label for a checkbox in the options page"

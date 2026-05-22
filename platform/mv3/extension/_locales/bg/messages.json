@@ -263,6 +263,10 @@
     "message": "Когато тази функция е активирана, филтрите за съвпадение автоматично затварят нежеланите раздели в браузъра, създадени от уебсайтове.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Режим за програмисти",
     "description": "Label for a checkbox in the options page"

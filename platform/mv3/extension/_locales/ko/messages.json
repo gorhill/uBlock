@@ -263,6 +263,10 @@
     "message": "켜면, 웹사이트에서 원치 않는 탭을 열 때 해당하는 필터가 자동으로 이를 닫습니다.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "개발자 모드",
     "description": "Label for a checkbox in the options page"

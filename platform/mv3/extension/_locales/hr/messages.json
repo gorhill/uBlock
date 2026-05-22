@@ -263,6 +263,10 @@
     "message": "Kada su aktivni, odgovarajući filteri automatski će zatvoriti neželjene kartice preglednika koje su kreirale web-lokacije.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Način rada za programere",
     "description": "Label for a checkbox in the options page"

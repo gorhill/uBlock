@@ -263,6 +263,10 @@
     "message": "När funktionen är aktiv stänger matchande filter automatiskt oönskade flikar som webbplatser öppnat.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Utvecklarläge",
     "description": "Label for a checkbox in the options page"

@@ -263,6 +263,10 @@
     "message": "Ha aktív, a megfelelő szűrők automatikusan bezárják a webhelyek által létrehozott kéretlen böngészőlapokat.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Fejlesztői mód",
     "description": "Label for a checkbox in the options page"

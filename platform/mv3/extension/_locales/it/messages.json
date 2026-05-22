@@ -263,6 +263,10 @@
     "message": "Quando attivo, i filtri corrispondenti chiuderanno automaticamente le schede del browser indesiderate create dai siti web.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Modalità sviluppatore",
     "description": "Label for a checkbox in the options page"

@@ -263,6 +263,10 @@
     "message": "Если активно, то подходящие фильтры будут автоматически закрывать нежелательные вкладки браузера, создаваемые веб-сайтами.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Режим разработчика",
     "description": "Label for a checkbox in the options page"

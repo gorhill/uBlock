@@ -263,6 +263,10 @@
     "message": "Cuando está activo, los filtros que coincidan cerraran automáticamente las pestañas no solicitadas creadas por los sitios web.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Modo desarrollador",
     "description": "Label for a checkbox in the options page"

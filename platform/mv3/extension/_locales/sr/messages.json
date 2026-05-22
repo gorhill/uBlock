@@ -263,6 +263,10 @@
     "message": "Када је активно, одговарајући филтери ће аутоматски затворити нежељене картице прегледача које су креирале веб странице.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Режим за програмере",
     "description": "Label for a checkbox in the options page"

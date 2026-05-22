@@ -263,6 +263,10 @@
     "message": "Kad ieslēgts, atbilstošie aizturētāji automātiski aizvērs tīmekļvietņu izveidotas nevēlamas pārlūka cilnes.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Izstrādātāja režīms",
     "description": "Label for a checkbox in the options page"

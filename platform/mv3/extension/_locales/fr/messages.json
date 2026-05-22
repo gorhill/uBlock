@@ -263,6 +263,10 @@
     "message": "Lorsque cette option est activée, les filtres correspondants fermeront automatiquement les onglets de navigateur indésirés créés par les sites Web.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mode développeur",
     "description": "Label for a checkbox in the options page"

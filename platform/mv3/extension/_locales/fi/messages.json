@@ -263,6 +263,10 @@
     "message": "Kun käytössä, suljetaan suodattimia vastaavat verkkosivustojen avaamat ei-toivotut selainvälilehdet automaattisesti.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Kehittäjätila",
     "description": "Label for a checkbox in the options page"

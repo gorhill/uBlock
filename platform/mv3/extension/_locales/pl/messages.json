@@ -263,6 +263,10 @@
     "message": "Po aktywacji pasujące filtry będą automatycznie zamykać niechciane karty przeglądarki utworzone przez witryny internetowe.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Tryb programisty",
     "description": "Label for a checkbox in the options page"

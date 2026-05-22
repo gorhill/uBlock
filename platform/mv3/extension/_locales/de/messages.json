@@ -263,6 +263,10 @@
     "message": "Dadurch werden unerwünschte Browser-Tabs, die durch Websites geöffnet wurden, mithilfe von Filtern geschlossen.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Entwicklermodus",
     "description": "Label for a checkbox in the options page"

@@ -263,6 +263,10 @@
     "message": "有効にすると、一致するフィルターはウェブサイトによって作成された不要なブラウザータブを自動的に閉じます。",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "開発者モード",
     "description": "Label for a checkbox in the options page"

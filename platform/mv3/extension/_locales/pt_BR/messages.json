@@ -263,6 +263,10 @@
     "message": "Quando ativado, os filtros correspondentes fecharão automaticamente as abas indesejadas do navegador criadas por sites.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Modo de desenvolvedor",
     "description": "Label for a checkbox in the options page"

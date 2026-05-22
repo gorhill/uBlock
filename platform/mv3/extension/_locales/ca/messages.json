@@ -263,6 +263,10 @@
     "message": "En activar-se, els filtres coincidents tancaran automàticament les pestanyes del navegador no desitjades creades pels llocs web.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mode de desenvolupador",
     "description": "Label for a checkbox in the options page"

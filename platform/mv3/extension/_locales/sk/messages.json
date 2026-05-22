@@ -263,6 +263,10 @@
     "message": "Ak je zapnuté, príslušné filtre automaticky zatvoria nepotrebné karty prehliadača, ktoré otvorili webové stránky.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Vývojársky režim",
     "description": "Label for a checkbox in the options page"
