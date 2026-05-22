@@ -23,6 +23,7 @@
 
 /******************************************************************************/
 
+import '../../lib/regexanalyzer/regex.js';
 import * as sfp from '../static-filtering-parser.js';
 import { dom, qs$ } from '../dom.js';
 import { tokenizableStrFromRegex } from '../regex-analyzer.js';

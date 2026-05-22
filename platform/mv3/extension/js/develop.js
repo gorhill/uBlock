@@ -93,7 +93,9 @@ class Editor {
             readOnly: this.isReadOnly(),
         };
         viewConfig.panels = [ this.ioPanel, this.summaryPanel, ...this.panels ];
-        this.view = self.cm6.createEditorView(viewConfig, qs$('#cm-container'));
+        this.view = self.cm6.createEditorView(viewConfig,
+            qs$('section[data-pane="develop"] .cm-container')
+        );
         this.lastSavedText = text;
         self.cm6.foldAll(this.view);
         self.cm6.resetUndoRedo(this.view);

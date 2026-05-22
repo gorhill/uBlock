@@ -138,7 +138,7 @@ let cacheEntry = await sessionRead(cacheKey) ?? { t: 0 };
 if ( cacheEntry.t === 0 ) {
     cacheEntry = await fillCache(specificImports);
 }
-const now = Math.round(Date.now() / 15000);
+const now = Math.round(Date.now() / (5 * 60000));
 const since = now - cacheEntry.t;
 if ( since > 1 ) {
     cacheEntry.t = now;

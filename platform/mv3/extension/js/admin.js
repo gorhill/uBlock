@@ -43,7 +43,7 @@ import {
 
 import { broadcastMessage } from './utils.js';
 import { dnr } from './ext-compat.js';
-import { registerInjectables } from './scripting-manager.js';
+import { registerContentScripts } from './scripting-manager.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
@@ -114,7 +114,7 @@ const adminSettings = {
         if ( this.keys.has('rulesets') ) {
             ubolLog('admin setting "rulesets" changed');
             await enableRulesets(rulesetConfig.enabledRulesets);
-            await registerInjectables();
+            await registerContentScripts();
             const results = await Promise.all([
                 getAdminRulesets(),
                 dnr.getEnabledRulesets(),
@@ -125,14 +125,14 @@ const adminSettings = {
         if ( this.keys.has('defaultFiltering') ) {
             ubolLog('admin setting "defaultFiltering" changed');
             await readFilteringModeDetails(true);
-            await registerInjectables();
+            await registerContentScripts();
             const defaultFilteringMode = await getDefaultFilteringMode();
             broadcastMessage({ defaultFilteringMode });
         }
         if ( this.keys.has('noFiltering') ) {
             ubolLog('admin setting "noFiltering" changed');
             const filteringModeDetails = await readFilteringModeDetails(true);
-            await registerInjectables();
+            await registerContentScripts();
             broadcastMessage({ filteringModeDetails });
         }
         if ( this.keys.has('showBlockedCount') ) {

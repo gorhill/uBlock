@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
-    Copyright (C) 2014-present Raymond Hill
+    uBlock Origin - a comprehensive, efficient content blocker
+    Copyright (C) 2022-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,8 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* $rulesetId$ */
+/******************************************************************************/
 
-$selectorList$ {
-    display: none !important;
+export function hostnameCompare(a, b) {
+    const d = a.length - b.length;
+    if ( d !== 0 ) { return d; }
+    return a < b ? -1 : 1;
+}
+
+export function isHnRegexOrPath(hn) {
+    return hn.includes('/');
 }

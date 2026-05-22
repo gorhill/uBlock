@@ -263,6 +263,10 @@
     "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
     "description": "Short description for a checkbox in the options page"
   },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Developer mode",
     "description": "Label for a checkbox in the options page"
@@ -303,11 +307,11 @@
     "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
-   "strictblockNoParamsPrompt": {
+  "strictblockNoParamsPrompt": {
     "message": "without parameters",
     "description": "Label to be used for the parameter-less URL"
   },
- "strictblockBack": {
+  "strictblockBack": {
     "message": "Go back",
     "description": "A button to go back to the previous web page"
   },

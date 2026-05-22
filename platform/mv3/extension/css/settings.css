@@ -320,11 +320,8 @@ html.desktop section[data-pane="filters"] li > div:hover {
 html.desktop section[data-pane="filters"] li > div span.fa-icon:hover {
     transform: scale(1.3);
     }
-section[data-pane="filters"] aside {
-    padding: 1em 0.5em;
-    }
 section[data-pane="filters"] aside details {
-    padding: 0;
+    padding: 1em 0;
     }
 section[data-pane="filters"] aside summary {
     cursor: default;
@@ -333,7 +330,7 @@ section[data-pane="filters"] aside summary {
 section[data-pane="filters"] aside .importFromText {
     color: var(--ink-2);
     }
-section[data-pane="filters"] aside .importFromText textarea {
+section[data-pane="filters"] aside textarea {
     background-color: var(--surface-1);
     border: 1px solid var(--border-1);
     box-sizing: border-box;
@@ -341,7 +338,7 @@ section[data-pane="filters"] aside .importFromText textarea {
     resize: vertical;
     width: 100%;
     }
-section[data-pane="filters"] aside .importFromText textarea:focus {
+section[data-pane="filters"] aside textarea:focus {
     background-color: var(--surface-0);
     }
 section[data-pane="filters"] aside .importFromText:has(textarea:placeholder-shown) button:has([data-i18n="addButton"]) {
@@ -358,6 +355,15 @@ section[data-pane="filters"] aside p {
     }
 section[data-pane="filters"] li.error[data-pretty] > div span[contenteditable] {
     color: var(--info3-ink);
+    }
+body:not([data-supports~="user-scripts"]) section[data-pane="filters"] aside#sandboxEditor {
+    display: none;
+    }
+section[data-pane="filters"] aside#sandboxEditor .cm-scroller {
+    max-height: 480px;
+    }
+body:not([data-develop="true"]) section[data-pane="filters"] aside#sandboxEditor {
+    display: none;
     }
 
 @media (max-width: 480px) {

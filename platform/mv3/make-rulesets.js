@@ -19,7 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as makeScriptlet from './js/make-scriptlets.js';
+import './lib/regexanalyzer/regex.js';
+
+import * as makeScriptlet from './js/offscreen/make-scriptlets.js';
 import * as sfp from './js/static-filtering-parser.js';
 
 import {
@@ -33,11 +35,13 @@ import {
 
 import { execSync } from 'node:child_process';
 import fs from 'fs/promises';
-import { literalStrFromRegex } from './js/regex-analyzer.js';
+import { hostnameCompare } from './js/offscreen/make-utils.js';
+import { literalStrFromRegex } from './js/offscreen/regex-analyzer.js';
+import { makeCosmeticScripts } from './js/offscreen/make-cosmetic-filters.js';
 import path from 'path';
 import process from 'process';
 import redirectResourcesMap from './js/redirect-resources.js';
-import { safeReplace } from './js/safe-replace.js';
+import { safeReplace } from './js/offscreen/safe-replace.js';
 
 /******************************************************************************/
 
@@ -112,8 +116,6 @@ const logProgress = text => {
     process?.stdout?.cursorTo?.(0);
     process?.stdout?.write?.(text.length > 120 ? `${text.slice(0, 119)}… ` : `${text} `);
 };
-
-const isHnRegexOrPath = hn => hn.includes('/');
 
 /******************************************************************************/
 
@@ -841,103 +843,18 @@ const scriptletJsonReplacer = (k, v) => {
 
 /******************************************************************************/
 
-const hostnameCompare = (a, b) => {
-    const d = a.length - b.length;
-    if ( d !== 0 ) { return d; }
-    return a < b ? -1 : 1;
-};
-
-/******************************************************************************/
-
 async function processCosmeticFilters(assetDetails, mapin) {
-    if ( mapin === undefined ) { return 0; }
-    if ( mapin.size === 0 ) { return 0; }
-
-    // Collate all distinct selectors
-    const allSelectors = new Map();
-    const allHostnames = new Map();
-    const allRegexesOrPaths = new Map();
-    let hasEntities = false;
-
-    const storeHostnameSelectorPair = (hn, iSelector) => {
-        if ( isHnRegexOrPath(hn) ) {
-            if ( allRegexesOrPaths.has(hn) === false ) {
-                allRegexesOrPaths.set(hn, new Set());
-            }
-            allRegexesOrPaths.get(hn).add(iSelector);
-        } else {
-            if ( allHostnames.has(hn) === false ) {
-                allHostnames.set(hn, new Set());
-            }
-            allHostnames.get(hn).add(iSelector);
-            hasEntities ||= hn.endsWith('.*');
-        }
-    };
-
-    for ( const [ selector, details ] of mapin ) {
-        if ( details.rejected ) { continue; }
-        if ( allSelectors.has(selector) === false ) {
-            allSelectors.set(selector, allSelectors.size);
-        }
-        const iSelector = allSelectors.get(selector);
-        if ( details.matches ) {
-            for ( const hn of details.matches ) {
-                storeHostnameSelectorPair(hn, iSelector);
-            }
-        }
-        if ( details.excludeMatches ) {
-            for ( const hn of details.excludeMatches ) {
-                storeHostnameSelectorPair(hn, ~iSelector);
-            }
-        }
-    }
-    const allSelectorLists = new Map();
-
-    const ilistFromSelectorSet = selectorSet => {
-        const list = JSON.stringify(Array.from(selectorSet).sort()).slice(1, -1);
-        if ( allSelectorLists.has(list) === false ) {
-            allSelectorLists.set(list, allSelectorLists.size);
-        }
-        return allSelectorLists.get(list);
-    };
-
-    for ( const [ hn, selectorSet ] of allHostnames ) {
-        allHostnames.set(hn, ilistFromSelectorSet(selectorSet));
-    }
-    for ( const [ regexOrPath, selectorSet ] of allRegexesOrPaths ) {
-        allRegexesOrPaths.set(regexOrPath, ilistFromSelectorSet(selectorSet));
-    }
-
-    const sortedHostnames = Array.from(allHostnames.keys()).toSorted(hostnameCompare);
-
-    const data = {
-        selectors: Array.from(allSelectors.keys()),
-        selectorLists: Array.from(allSelectorLists.keys()),
-        selectorListRefs: sortedHostnames.map(a => allHostnames.get(a)),
-        hostnames: sortedHostnames,
-        hasEntities,
-        regexes: Array.from(allRegexesOrPaths)
-            .filter(a => a[0].startsWith('/') && a[0].endsWith('/'))
-            .map(a => {
-                const restr = a[0].slice(1,-1);
-                return [ literalStrFromRegex(restr).slice(0,8), restr, a[1] ]
-            }).flat(),
-    };
-    writeFile(`${scriptletDir}/specific/${assetDetails.id}.json`, JSON.stringify(data));
-
-    // The cosmetic filters will be injected programmatically as content
-    // script and the decisions to activate the cosmetic filters will be
-    // done at injection time according to the document's hostname.
-    const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get(`css-specific`).replace(
-        'self.$rulesetId$',
-        JSON.stringify(assetDetails.id)
+    const template = await fs.readFile(`./scriptlets/css-specific.template.js`, {
+        encoding: 'utf8',
+    });
+    const result = await makeCosmeticScripts(assetDetails.id, mapin);
+    if ( result === undefined ) { return 0; }
+    writeFile(`${scriptletDir}/specific/${assetDetails.id}.json`, result.json);
+    writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`,
+        template.replace('self.$rulesetId$', JSON.stringify(assetDetails.id))
     );
-    writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`, patchedScriptlet);
-
-    log(`CSS-specific: ${allSelectors.size} distinct filters for ${allHostnames.size} distinct hostnames`);
-
-    return sortedHostnames.length + allRegexesOrPaths.size;
+    log(`CSS-specific: ${result.selectorCount} distinct filters for ${result.hostnameCount} distinct hostnames`);
+    return result.hostnameCount + result.regexCount;
 }
 
 /******************************************************************************/
@@ -950,10 +867,9 @@ async function processScriptletFilters(assetDetails, mapin) {
     for ( const details of mapin.values() ) {
         makeScriptlet.compile(id, details);
     }
-    const template = await fs.readFile(
-        './scriptlets/scriptlet.template.js',
-        { encoding: 'utf8' }
-    );
+    const template = await fs.readFile('./js/offscreen/scriptlet.template.js', {
+        encoding: 'utf8',
+    });
     const result = makeScriptlet.commit(id, template);
     const stats = {};
     let count = 0;

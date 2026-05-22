@@ -157,7 +157,7 @@ function mergeArrays(rules, propertyPath) {
 
 /******************************************************************************/
 
-function minimizeRuleset(rules) {
+export function minimizeRuleset(rules) {
     rules = mergeArrays(rules, 'condition.requestDomains');
     rules = mergeArrays(rules, 'condition.excludedRequestDomains');
     rules = mergeArrays(rules, 'condition.initiatorDomains');
@@ -174,7 +174,7 @@ function minimizeRuleset(rules) {
 
 /******************************************************************************/
 
-function minimizeRules(rules) {
+export function minimizeRules(rules) {
     const hostnameListProp = [
         'requestDomains',
         'excludedRequestDomains',
@@ -215,7 +215,7 @@ function dropEntities(rule, prop) {
 
 /******************************************************************************/
 
-function validateRules(rules) {
+export function validateRules(rules) {
     const out = [];
     for ( const rule of rules ) {
         const { condition } = rule;
