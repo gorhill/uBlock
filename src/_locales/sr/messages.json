@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локална правила: ова колона је за правила која се примењују само на тренутном сајту.\nЛокална правила имају предност у односу на општа.",
+    "message": "Локална правила: ова колона је за правила која се примењују само на тренутни сајт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -324,7 +324,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Онемогући описе алатке",
+    "message": "Онемогућите описе алата",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -900,11 +900,11 @@
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Креирај нови извештај на ГитХабу",
+    "message": "Креирај нови извештај на GitHub-у",
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Пронађи сличне извештаје на ГитХабу",
+    "message": "Пронађи сличне извештаје на GitHub-у",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -960,7 +960,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Да не бисте оптерећивали волонтере дуплим извештајима, проверите да ли је проблем већ пријављен. <b>Напомена:</b> кликом на дугме, адреса странице ће бити послата ГитХаб-у.",
+    "message": "Да бисте избегли оптерећење волонтера дуплим извештајима, проверите да ли је проблем већ пријављен. <b>Напомена:</b> кликом на дугме, порекло странице ће бити послато GitHub-у.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Изначите веб страницу као „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Није безбедна за рад”</a>)",
+    "message": "Означите веб страницу као „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Није безбедна за рад”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
@@ -1192,7 +1192,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Неугледан",
+    "message": "Неугледно",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

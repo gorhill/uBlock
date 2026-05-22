@@ -256,11 +256,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "Ativar bloqueio de janelas pop-up",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Quando ativados, os filtros de correspondência fecharão automaticamente os separadores indesejados do navegador criados pelos websites.",
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {

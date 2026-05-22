@@ -256,11 +256,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "ამომხტომების შეზღუდვის ჩართვა",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "როცა მოქმედია, შესაბამისი ფილტრები თავისით დახურავს ვებსაიტების მიერ გახსნილ არასასურველ ჩანართებს.",
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {

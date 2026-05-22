@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Ефикасан блокатор садржаја. Блокира рекламе, праћења, рударе криптовалута, и много више одмах по инсталацији.",
+    "message": "Ефикасан блокатор садржаја. Блокира рекламе, праћења, рударе криптовалута и још много тога одмах након инсталације.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Развијте",
+    "message": "Развој",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -40,11 +40,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "На овој веб страници",
+    "message": "На овом веб сајту",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Пријавите проблем на овом веб сајту",
+    "message": "Пријави проблем",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Овде налепите одређене козметичке филтере које желите додати",
+    "message": "Овде налепите одређене козметичке/скриптлет филтере које желите додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -136,11 +136,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Да не бисте оптерећивали волонтере дуплим извештајима, проверите да ли је проблем већ пријављен.",
+    "message": "Да бисте избегли оптерећење волонтера дуплим извештајима, проверите да ли је проблем већ пријављен. <b>Напомена:</b> кликом на дугме, порекло странице ће бити послато GitHub-у.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Пронађи сличне извештаје",
+    "message": "Пронађи сличне извештаје на GitHub-у",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Креирај нови извештај",
+    "message": "Креирај нови извештај на GitHub-у",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -276,11 +276,11 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Napravite sigurnosnu kopiju prilagođenih postavki u datoteku ili ih vratite iz datoteke.",
+    "message": "Направите резервну копију прилагођених подешавања у датотеку или вратите прилагођена подешавања из датотеке.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Vraćanje će prepisati sve vaše trenutne prilagođene postavke.",
+    "message": "Враћање ће прегазити сва ваша тренутна прилагођена подешавања.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -300,7 +300,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "Блокирана страница жели да преусмери на други сајт. Ако одлучите да наставите, бићете директно на: {{url}}",
+    "message": "Блокирана страница жели да преусмери на други сајт. Ако одлучите да наставите, бићете директно преусмерени на: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -324,23 +324,23 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Уклоните елемент",
+    "message": "Уклони елемент",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Изађи из режима за затварање елемената",
+    "message": "Изађи из режима уклањања елемената",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Направите прилагођени филтер",
+    "message": "Креирај прилагођени филтер",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Уклоните прилагођени филтер",
+    "message": "Уклони прилагођени филтер",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "Приказ:",
+    "message": "Прикажи:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
@@ -348,11 +348,11 @@
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Прилагођена правила за DNR",
+    "message": "Прилагођена правила DNR-а",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "ДНР правила …",
+    "message": "DNR правила …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
@@ -376,31 +376,31 @@
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Увези и додај…",
+    "message": "Увези и допиши…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Извоз…",
+    "message": "Извези…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Направите резервну копију…",
+    "message": "Направи резервну копију…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Вратите резервну копију…",
+    "message": "Врати…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Ресетуј на подразумевана подешавања…",
+    "message": "Врати на подразумевана подешавања…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "Сва ваша прилагођена подешавања ће бити уклоњена. Да ли заиста желите да ресетујете на подразумевана подешавања?",
+    "message": "Сва ваша прилагођена подешавања ће бити уклоњена. Да ли заиста желите да вратите на подразумевана подешавања?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Не додајте садржај из непоузданих извора",
+    "message": "Немојте додавати садржај из непоузданих извора",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
@@ -412,7 +412,7 @@
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Изаберите",
+    "message": "Изабери",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
