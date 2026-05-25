@@ -789,7 +789,7 @@ const adnauseam = (function () {
 
     // Reject titles that look like JavaScript/CSS code
     if (ad.title && (/^(var|let|const|function)\s/.test(ad.title) || (ad.title.match(/;/g) || []).length >= 2)) {
-      ad.title = 'Pending';
+      ad.title = parseDomain(ad.targetUrl, true) || 'Pending';
     }
 
     if (ct === 'text') {

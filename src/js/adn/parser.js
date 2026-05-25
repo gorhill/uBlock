@@ -573,6 +573,19 @@
         adTitle = '';
       }
 
+      // Fallback: try element attributes and parent anchor for a title
+      if (!adTitle) {
+        const anchor = el.closest('a');
+        adTitle = (el.getAttribute('alt') || el.getAttribute('title') || el.getAttribute('aria-label')
+          || (anchor && (anchor.getAttribute('aria-label') || anchor.getAttribute('title')))
+          || '').trim();
+      }
+
+      // Last resort: use domain from target URL
+      if (!adTitle) {
+        adTitle = parseDomain(targetUrl) || '';
+      }
+
       // In iframes, ads often have no nearby text — use 'Pending' so the visit can resolve it
       if (!adTitle) {
         if (window !== window.top) {
