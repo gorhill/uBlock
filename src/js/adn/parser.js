@@ -568,7 +568,8 @@
       let adTitle = closestText(el);
 
       // Validate title: reject URLs, JSON, code-like strings
-      if (adTitle && (/^https?:\/\//.test(adTitle) || /^{/.test(adTitle) || /^javascript/i.test(adTitle) || /^www\./i.test(adTitle))) {
+      if (adTitle && (/^https?:\/\//.test(adTitle) || /^{/.test(adTitle) || /^javascript/i.test(adTitle) || /^www\./i.test(adTitle)
+          || /^(var|let|const|function)\s/.test(adTitle) || (adTitle.match(/;/g) || []).length >= 2)) {
         adTitle = '';
       }
 

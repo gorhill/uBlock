@@ -787,6 +787,11 @@ const adnauseam = (function () {
 
     ad.title = unescapeHTML(ad.title); // fix to #31
 
+    // Reject titles that look like JavaScript/CSS code
+    if (ad.title && (/^(var|let|const|function)\s/.test(ad.title) || (ad.title.match(/;/g) || []).length >= 2)) {
+      ad.title = 'Pending';
+    }
+
     if (ct === 'text') {
 
       cd.title = unescapeHTML(cd.title);

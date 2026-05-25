@@ -266,6 +266,11 @@
     }
     if (data.title.length > 120) data.title = data.title.substring(0, 120).trim();
 
+    // Reject titles that look like JavaScript/CSS code
+    if (data.title && (/^(var|let|const|function)\s/.test(data.title) || (data.title.match(/;/g) || []).length >= 2)) {
+      data.title = '';
+    }
+
     // Description text
     if (!data.imgSrc) {
       const textEl = element.querySelector(textSelectors.join(', '));
