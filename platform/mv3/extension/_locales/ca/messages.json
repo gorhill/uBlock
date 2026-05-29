@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Entorn de proves per a la creació de filtres",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -328,7 +328,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Accedeix al mode d'eliminació d'elements",
+    "message": "Elimina un element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

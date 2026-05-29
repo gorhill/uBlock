@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Här klistrar du in specifika kosmetiska filter att lägga till",
+    "message": "Klistra in de kosmetiska/scriptlet‑filter du vill lägga till",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Sandlåda för filterskapande",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

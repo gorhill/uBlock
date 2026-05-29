@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Песочница для создания фильтров",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

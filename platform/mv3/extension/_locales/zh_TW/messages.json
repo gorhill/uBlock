@@ -256,15 +256,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "啟用彈出式視窗封鎖",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "啟用後，符合的篩選規則將自動關閉網站所建立的不需要的瀏覽器分頁。",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "篩選規則建立沙盒",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -328,7 +328,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "進入元素臨時移除模式",
+    "message": "移除元素",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

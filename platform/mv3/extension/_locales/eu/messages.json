@@ -328,7 +328,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Sartu elementua zapper moduan",
+    "message": "Elementu bat kendu",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

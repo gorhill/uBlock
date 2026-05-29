@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Bac à sable de création de filtres",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

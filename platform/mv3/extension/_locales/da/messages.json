@@ -92,7 +92,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Indsæt bestemte kosmetiske filtre hér for at tilføje",
+    "message": "For at tilføje bestemte kosmetiske/scriplets-filtre, indsæt dem hér",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "aboutChangelog": {
@@ -256,15 +256,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "Aktivér pop op-blokering",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Når aktiv, lukker matchende filtre automatisk uønskede webbrowserfaner åbnet af websteder.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Sandkasse til filteroprettelse",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

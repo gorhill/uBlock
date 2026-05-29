@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Đang cập nhật...",
+    "message": "Đang cập nhật…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -904,7 +904,7 @@
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Tìm các báo cáo tương tự",
+    "message": "Tìm các báo cáo tương tự trên Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -1132,7 +1132,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBloc Origin đã chặn tải trang sau:",
+    "message": "uBlock Origin đã chặn tải trang sau:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
