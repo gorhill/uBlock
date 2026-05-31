@@ -302,6 +302,13 @@ export function setSandboxFilters(text = '') {
 
 export async function registerSandboxFilters() {
     if ( supportsUserScripts !== true ) { return false; }
+    registerSandboxFilters.pendingOp =
+        registerSandboxFilters.pendingOp.then(( ) => registerSandboxFilters.register());
+    return registerSandboxFilters.pendingOp;
+}
+registerSandboxFilters.pendingOp = Promise.resolve();
+
+registerSandboxFilters.register = async function register() {
     const filteringModeDetails = await getFilteringModeDetails();
     const { none, basic, optimal, complete } = filteringModeDetails;
     const notNone = [ ...basic, ...optimal, ...complete ];
