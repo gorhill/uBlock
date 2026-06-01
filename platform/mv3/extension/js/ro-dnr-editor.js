@@ -30,14 +30,14 @@ import { textFromRules } from './dnr-parser.js';
 export class ReadOnlyDNREditor extends DNREditor {
     async getText(hint) {
         if ( hint === 'dnr.ro.dynamic' ) {
-            const rules = await sendMessage({ what: 'getEffectiveDynamicRules' });
+            const rules = await sendMessage({ what: 'getAllDynamicRules' });
             if ( Array.isArray(rules) === false ) { return; }
             this.id = 'dynamic';
             this.count = rules.length;
             return textFromRules(rules, { keepId: true });
         }
         if ( hint === 'dnr.ro.session' ) {
-            const rules = await sendMessage({ what: 'getEffectiveSessionRules' });
+            const rules = await sendMessage({ what: 'getAllSessionRules' });
             if ( Array.isArray(rules) === false ) { return; }
             this.id = 'session';
             this.count = rules.length;

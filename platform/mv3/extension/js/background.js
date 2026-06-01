@@ -84,8 +84,6 @@ import {
     enableRulesets,
     excludeFromStrictBlock,
     getDefaultRulesetsFromEnv,
-    getEffectiveDynamicRules,
-    getEffectiveSessionRules,
     getEffectiveUserRules,
     getEnabledRulesetsDetails,
     getRulesetDetails,
@@ -520,11 +518,11 @@ async function onMessage(request, sender) {
         });
         return;
 
-    case 'getEffectiveDynamicRules':
-        return getEffectiveDynamicRules();
+    case 'getAllDynamicRules':
+        return dnr.getDynamicRules();
 
-    case 'getEffectiveSessionRules':
-        return getEffectiveSessionRules();
+    case 'getAllSessionRules':
+        return dnr.getSessionRules();
 
     case 'getEffectiveUserRules':
         return getEffectiveUserRules();

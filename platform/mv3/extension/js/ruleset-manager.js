@@ -227,18 +227,6 @@ async function updateDynamicRules() {
 
 /******************************************************************************/
 
-async function getEffectiveDynamicRules() {
-    const allRules = await dnr.getDynamicRules();
-    const dynamicRules = [];
-    for ( const rule of allRules ) {
-        if ( rule.id >= USER_RULES_BASE_RULE_ID ) { continue; }
-        dynamicRules.push(rule);
-    }
-    return dynamicRules;
-}
-
-/******************************************************************************/
-
 async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
     // Remove existing strictblock-related rules
     for ( const rule of currentRules ) {
@@ -387,18 +375,6 @@ async function clearSessionRules() {
     if ( currentRules.length === 0 ) { return; }
     const removeRuleIds = currentRules.map(a => a.id);
     return dnr.updateSessionRules({ removeRuleIds });
-}
-
-/******************************************************************************/
-
-async function getEffectiveSessionRules() {
-    const allRules = await dnr.getSessionRules();
-    const sessionRules = [];
-    for ( const rule of allRules ) {
-        if ( rule.id >= USER_RULES_BASE_RULE_ID ) { continue; }
-        sessionRules.push(rule);
-    }
-    return sessionRules;
 }
 
 /******************************************************************************/
@@ -716,8 +692,6 @@ export {
     enableRulesets,
     excludeFromStrictBlock,
     filteringModesToDNR,
-    getEffectiveDynamicRules,
-    getEffectiveSessionRules,
     getEffectiveUserRules,
     getEnabledRulesetsDetails,
     getRulesetDetails,
