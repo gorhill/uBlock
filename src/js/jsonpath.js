@@ -119,7 +119,7 @@ export class JSONPath {
     }
     evaluate(root) {
         if ( this.valid === false ) { return []; }
-        this.#root = root;
+        this.#root = { '$': root };
         const paths = this.#evaluate(this.#compiled.steps, []);
         this.#root = null;
         return paths;
