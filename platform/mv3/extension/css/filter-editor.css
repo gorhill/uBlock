@@ -1,3 +1,6 @@
+.cm-container .cm-line {
+    word-break: break-all;
+    }
 .sfp_comment {
     color: var(--sf-comment-ink);
     }
