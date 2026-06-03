@@ -74,7 +74,7 @@ const selectorsFromHostnames = (haystack, needles, data) => {
         if ( listref >= 0 ) {
             selectorsFromListIndex(data, data.selectorListRefs[listref]);
         } else {
-            listref = ~listref;
+            listref = ~listref + 1;
         }
     }
 };
@@ -83,11 +83,13 @@ const selectorsFromRuleset = async (rulesetId, result) => {
     const data = await localRead(`css.specific.${rulesetId}`);
     if ( typeof data !== 'object' || data === null ) { return; }
     data.result = result;
-    selectorsFromHostnames(data.hostnames, isolatedAPI.contexts.hostnames, data);
-    if ( data.hasEntities ) {
-        selectorsFromHostnames(data.hostnames, isolatedAPI.contexts.entities, data);
+    const { hostnames, regexes } = data;
+    if ( hostnames.length ) {
+        selectorsFromHostnames(hostnames, isolatedAPI.contexts.hostnames, data);
+        if ( data.hasEntities ) {
+            selectorsFromHostnames(hostnames, isolatedAPI.contexts.entities, data);
+        }
     }
-    const { regexes } = data;
     for ( let i = 0, n = regexes.length; i < n; i += 3 ) {
         if ( thisHostname.includes(regexes[i+0]) === false ) { continue; }
         if ( typeof regexes[i+1] === 'string' ) {

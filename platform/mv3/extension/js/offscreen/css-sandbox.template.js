@@ -49,35 +49,32 @@ const selectorsFromListIndex = ilist => {
     }
 };
 
-const selectorsFromHostnames = (haystack, needles) => {
-    let listref = -1;
-    for ( const needle of needles ) {
-        listref = isolatedAPI.binarySearch(haystack, needle, listref);
-        if ( listref >= 0 ) {
-            selectorsFromListIndex(cssSpecificData.selectorListRefs[listref]);
-        } else {
-            listref = ~listref;
+const { hostnames, regexes } = cssSpecificData;
+if ( hostnames.length ) {
+    const selectorsFromHostnames = (haystack, needles) => {
+        let listref = -1;
+        for ( const needle of needles ) {
+            listref = isolatedAPI.binarySearch(haystack, needle, listref);
+            if ( listref >= 0 ) {
+                selectorsFromListIndex(cssSpecificData.selectorListRefs[listref]);
+            } else {
+                listref = ~listref + 1;
+            }
         }
-    }
-};
-
-const selectorsFromRuleset = ( ) => {
-    selectorsFromHostnames(cssSpecificData.hostnames, isolatedAPI.contexts.hostnames);
+    };
+    selectorsFromHostnames(hostnames, isolatedAPI.contexts.hostnames);
     if ( cssSpecificData.hasEntities ) {
-        selectorsFromHostnames(cssSpecificData.hostnames, isolatedAPI.contexts.entities);
+        selectorsFromHostnames(hostnames, isolatedAPI.contexts.entities);
     }
-    const { regexes } = cssSpecificData;
-    for ( let i = 0, n = regexes.length; i < n; i += 3 ) {
-        if ( thisHostname.includes(regexes[i+0]) === false ) { continue; }
-        if ( typeof regexes[i+1] === 'string' ) {
-            regexes[i+1] = new RegExp(regexes[i+1]);
-        }
-        if ( regexes[i+1].test(thisHostname) === false ) { continue; }
-        selectorsFromListIndex(cssSpecificData, regexes[i+2]);
+}
+for ( let i = 0, n = regexes.length; i < n; i += 3 ) {
+    if ( thisHostname.includes(regexes[i+0]) === false ) { continue; }
+    if ( typeof regexes[i+1] === 'string' ) {
+        regexes[i+1] = new RegExp(regexes[i+1]);
     }
-};
-
-selectorsFromRuleset();
+    if ( regexes[i+1].test(thisHostname) === false ) { continue; }
+    selectorsFromListIndex(cssSpecificData, regexes[i+2]);
+}
 
 const s = [];
 const p = [];
