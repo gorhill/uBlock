@@ -1888,12 +1888,23 @@ function trustedClickElement(
         return elem.shadowRoot;
     };
 
+    const queryOrEvaluateSelector = (selector, context) => {
+        if ( selector.startsWith('xpath:') === false ) {
+            return context.querySelector(selector);
+        }
+        const result = document.evaluate(selector.slice(6), context, null, 9, null);
+        if ( result.resultType !== 9 ) { return null; }
+        const elem = result.singleNodeValue;
+        if ( elem?.nodeType !== 1 ) { return null; }
+        return elem;
+    }
+
     const querySelectorEx = (selector, context = document) => {
         const pos = selector.indexOf(' >>> ');
-        if ( pos === -1 ) { return context.querySelector(selector); }
+        if ( pos === -1 ) { return queryOrEvaluateSelector(selector, context); }
         const outside = selector.slice(0, pos).trim();
         const inside = selector.slice(pos + 5).trim();
-        const elem = context.querySelector(outside);
+        const elem = queryOrEvaluateSelector(outside, context);
         if ( elem === null ) { return null; }
         const shadowRoot = getShadowRoot(elem);
         return shadowRoot && querySelectorEx(inside, shadowRoot);
