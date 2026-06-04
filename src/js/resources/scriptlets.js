@@ -1945,34 +1945,39 @@ function trustedClickElement(
     };
 
     const waitForElement = selector => {
+        safe.uboLog(logPrefix, `Waiting for ${selector}`);
         return new Promise(resolve => {
-            const elem = querySelectorEx(selector);
-            if ( elem !== null ) {
-                elem.click();
-                resolve();
-                return;
-            }
-            safe.uboLog(logPrefix, `Waiting for ${selector}`);
-            const observer = new MutationObserver(( ) => {
-                const elem = querySelectorEx(selector);
-                if ( elem === null ) { return; }
-                waitForElement.cancel();
-                elem.click();
-                resolve();
-            });
-            observer.observe(document, {
-                attributes: true,
-                childList: true,
-                subtree: true,
-            });
-            waitForElement.observer = observer;
+            waitForElement.check(selector, resolve);
         });
     };
+    waitForElement.lookup = directive => {
+        const beVisible = directive.startsWith('when-visible:');
+        const selector = beVisible ? directive.slice(13) : directive;
+        const elem = querySelectorEx(selector);
+        if ( Boolean(elem) === false ) { return null; }
+        if ( beVisible !== true ) { return elem; }
+        const isVisible = elem.checkVisibility({
+            opacityProperty: true,
+            visibilityProperty: true,
+        });
+        return isVisible ? elem : null;
+    };
+    waitForElement.check = (directive, resolve) => {
+        const elem = waitForElement.lookup(directive);
+        if ( elem ) {
+            waitForElement.cbid = undefined;
+            elem.click();
+            return resolve();
+        }
+        waitForElement.cbid = safe.onIdle(( ) => {
+            waitForElement.check(directive, resolve);
+        }, { timeout: 1009 });
+    };
     waitForElement.cancel = ( ) => {
-        const { observer } = waitForElement;
-        if ( observer === undefined ) { return; }
-        waitForElement.observer = undefined;
-        observer.disconnect();
+        const { cbid } = waitForElement;
+        if ( cbid === undefined ) { return; }
+        waitForElement.cbid = undefined;
+        safe.offIdle(cbid);
     };
 
     const waitForTimeout = ms => {
