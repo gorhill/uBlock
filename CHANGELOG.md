@@ -1,9 +1,11 @@
+- [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/32a4d640fb)
+    - <https://github.com/gorhill/uBlock/commit/aa028eacd0>
 - [Improve `google-ima` shim](https://github.com/gorhill/uBlock/commit/9e5299e7f4)
 - [Add ISO-8859-2 as alias of Windows-1250 in text encoder](https://github.com/gorhill/uBlock/commit/3f0c4e1110)
 
 ----------
 
-# 1.70.1
+# 1.71.0
 
 - [Improve `freeze-element-property` scriptlet](https://github.com/gorhill/uBlock/commit/b91798c6f4)
 - [Add support for network filter option `top=`](https://github.com/gorhill/uBlock/commit/aebc108e36)
