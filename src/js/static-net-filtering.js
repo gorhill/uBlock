@@ -3102,7 +3102,7 @@ class FilterOnHeaders {
         const { bad, name, not, value } = refs.$parsed;
         if ( bad ) { return false; }
         const headerValue = $httpHeaders.lookup(name);
-        if ( headerValue === undefined ) { return false; }
+        if ( headerValue === undefined ) { return not; }
         if ( value === '' ) { return true; }
         let { re } = refs.$parsed;
         if ( re === undefined ) {
