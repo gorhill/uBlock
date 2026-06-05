@@ -389,6 +389,7 @@ export function parseNetworkFilter(parser) {
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER: {
             const details = sfp.parseHeaderValue(parser.getNetOptionValue(type));
+            if ( details.bad ) { return; }
             const headerInfo = {
                 header: details.name,
             };
@@ -396,7 +397,11 @@ export function parseNetworkFilter(parser) {
                 if ( details.isRegex ) { return; }
                 headerInfo.values = [ details.value ];
             }
-            rule.condition.responseHeaders = [ headerInfo ];
+            if ( details.not ) {
+                rule.condition.excludedResponseHeaders = [ headerInfo ];
+            } else {
+                rule.condition.responseHeaders = [ headerInfo ];
+            }
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMAGE:
