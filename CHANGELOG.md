@@ -1,3 +1,6 @@
+- [Add `edit-this-object`/`trusted-edit-this-object` scriptlets](https://github.com/gorhill/uBlock/commit/2695b9f7d6)
+- [Minor improvement to `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/da9287257d)
+- [Fix test for header matching when using negated value](https://github.com/gorhill/uBlock/commit/09e46b744e)
 - [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/32a4d640fb)
     - <https://github.com/gorhill/uBlock/commit/aa028eacd0>
 - [Improve `google-ima` shim](https://github.com/gorhill/uBlock/commit/9e5299e7f4)
