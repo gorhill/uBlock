@@ -1925,7 +1925,7 @@ function trustedClickElement(
         steps.unshift(clickDelay);
     }
     if ( typeof steps.at(-1) !== 'number' ) {
-        steps.push(10000);
+        steps.push(11000);
     }
 
     const waitForTime = ms => {
@@ -1971,7 +1971,7 @@ function trustedClickElement(
         }
         waitForElement.cbid = safe.onIdle(( ) => {
             waitForElement.check(directive, resolve);
-        }, { timeout: 1009 });
+        }, { timeout: 67 });
     };
     waitForElement.cancel = ( ) => {
         const { cbid } = waitForElement;
