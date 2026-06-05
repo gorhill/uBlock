@@ -301,6 +301,118 @@ registerScriptlet(trustedEditInboundObject, {
 /******************************************************************************/
 /******************************************************************************/
 
+function editThisObjectFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+    order = ''
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-this-object`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    proxyApplyFn(propChain, function(context) {
+        const { thisArg } = context;
+        let r;
+        if ( order === 'after' ) {
+            r = context.reflect();
+        }
+        editObj(thisArg);
+        if ( order !== 'after' ) {
+            r = context.reflect();
+        }
+        return r;
+    });
+}
+registerScriptlet(editThisObjectFn, {
+    name: 'edit-this-object.fn',
+    dependencies: [
+        JSONPath,
+        proxyApplyFn,
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-this-object.js
+ * 
+ * @description
+ * Prune properties from an object through one of the object's own method.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param order
+ * If set to `after`, the `this` object will be edited after the trapped method
+ * is called. By default the `this` object is edited before calling the trapped
+ * method.
+ * 
+ * */
+
+function editThisObject(...args) {
+    editThisObjectFn(false, ...args);
+}
+registerScriptlet(editThisObject, {
+    name: 'edit-this-object.js',
+    dependencies: [
+        editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-this-object.js
+ * 
+ * @description
+ * Edit properties of an object through one of the object's own method.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param order
+ * If set to `after`, the `this` object will be edited after the trapped method
+ * is called. By default the `this` object is edited before calling the trapped
+ * method.
+ * 
+ * */
+
+function trustedEditThisObject(...args) {
+    editThisObjectFn(true, ...args);
+}
+registerScriptlet(trustedEditThisObject, {
+    name: 'trusted-edit-this-object.js',
+    requiresTrust: true,
+    dependencies: [
+        editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
 function jsonEditXhrResponseFn(trusted, jsonq = '') {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
