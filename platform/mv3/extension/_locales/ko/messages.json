@@ -256,11 +256,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "팝업 차단 켜기",
+    "message": "팝업 차단 활성화",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "켜면, 웹사이트에서 원치 않는 탭을 열 때 해당하는 필터가 자동으로 이를 닫습니다.",
+    "message": "활성화되면, 일치하는 필터가 웹사이트에서 열린 원치 않는 브라우저 탭을 자동으로 닫습니다.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {

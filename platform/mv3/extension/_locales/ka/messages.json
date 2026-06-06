@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "მავნე დომენები",
+    "message": "მავნე პროგრამებისგან დაცვა, უსაფრთხოება",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "ფილტრის შესაქმნელი ცალკე გარემო",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

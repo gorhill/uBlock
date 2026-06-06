@@ -148,7 +148,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Webová stránka...",
+    "message": "Webová stránka…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Testovací prostředí pro vytváření filtrů",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -356,7 +356,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "Pravidla DNR pro...",
+    "message": "Pravidla DNR pro …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
@@ -380,23 +380,23 @@
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Importovat a připojit...",
+    "message": "Importovat a připojit…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Exportovat...",
+    "message": "Exportovat…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Zálohovat...",
+    "message": "Zálohovat…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Obnovit...",
+    "message": "Obnovit…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Resetovat do výchozího nastavení...",
+    "message": "Resetovat do výchozího nastavení…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {

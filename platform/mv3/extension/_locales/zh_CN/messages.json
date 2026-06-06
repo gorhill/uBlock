@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "恶意网站",
+    "message": "恶意软件防护、安全",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -264,7 +264,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "过滤器创建沙盒",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

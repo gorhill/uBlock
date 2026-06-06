@@ -140,7 +140,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Temukan laporan serupa",
+    "message": "Temukan laporan serupa di Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Buat laporan baru",
+    "message": "Buat laporan baru di Github",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -256,15 +256,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "Aktifkan pemblokiran pop-up",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Saat diaktifkan, filter pencocokan akan secara otomatis menutup tab browser yang tidak diinginkan yang dibuat oleh situs web.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Lingkungan uji coba pembuatan filter",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -324,11 +324,11 @@
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Lanjutkan",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Masuk ke mode penghapus elemen",
+    "message": "Menghapus elemen",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
