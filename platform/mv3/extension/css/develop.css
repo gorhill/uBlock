@@ -23,6 +23,7 @@ section[data-pane="develop"] > div > * {
     flex-grow: 1;
     font-size: var(--monospace-size);
     max-height: stretch;
+        max-height: -webkit-fill-available;
     padding-bottom: 2em;
     }
 
