@@ -22,6 +22,7 @@
 
 import {
     collateFetchArgumentsFn,
+    lookupElementsFn,
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
 } from './utils.js';
@@ -407,6 +408,115 @@ registerScriptlet(trustedEditThisObject, {
     requiresTrust: true,
     dependencies: [
         editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editElementObjectFn(
+    trusted = false,
+    selector = '',
+    jsonq = '',
+    timeout = ''
+) {
+    if ( selector === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-element-object`,
+        selector, jsonq, timeout
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const process = elems => {
+        for ( const elem of elems ) {
+            const r = jsonp.apply(elem);
+            if ( r === undefined ) { continue; }
+            safe.uboLog(logPrefix, 'Edited');
+        }
+    };
+    const result = lookupElementsFn(selector,
+        timeout !== '' ? Date.now() + parseInt(timeout, 10) : 0
+    );
+    if ( Array.isArray(result) ) {
+        process(result);
+    } else if ( result instanceof Promise ) {
+        result.then(elems => process(elems));
+    }
+}
+registerScriptlet(editElementObjectFn, {
+    name: 'edit-element-object.fn',
+    dependencies: [
+        JSONPath,
+        lookupElementsFn,
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-element-object.js
+ * 
+ * @description
+ * Prune properties of one or more elements matching a specific selector.
+ * Properties can only be removed.
+ * 
+ * @param selector
+ * The selector used to locate the elements on which the JSONPath query will
+ * be applied.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param timeout
+ * The maximum time (in milliseconds) to wait for matching elements before
+ * stopping. Defaults to 0, which executes a single lookup attempt without
+ * waiting.
+ * 
+ * */
+
+function editElementObject(...args) {
+    editElementObjectFn(false, ...args);
+}
+registerScriptlet(editElementObject, {
+    name: 'edit-element-object.js',
+    dependencies: [
+        editElementObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-element-this-object.js
+ * 
+ * @description
+ * Edit properties of one or more elements matching a specific selector.
+ * Properties can be assigned new values.
+ * 
+ * @param selector
+ * The selector used to locate the elements on which the JSONPath query will
+ * be applied.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param timeout
+ * The maximum time (in milliseconds) to wait for matching elements before
+ * stopping. Defaults to 0, which executes a single lookup attempt without
+ * waiting.
+ * 
+ * */
+
+function trustedEditElementObject(...args) {
+    editElementObjectFn(true, ...args);
+}
+registerScriptlet(trustedEditElementObject, {
+    name: 'trusted-edit-element-object.js',
+    requiresTrust: true,
+    dependencies: [
+        editElementObjectFn,
     ],
 });
 

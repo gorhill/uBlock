@@ -20,6 +20,7 @@
 
 */
 
+import { onIdleFn } from './utils.js';
 import { registerScriptlet } from './base.js';
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
@@ -141,7 +142,7 @@ function hrefSanitizer(
             if ( shouldSanitize ) { break; }
         }
         if ( shouldSanitize === false ) { return; }
-        timer = safe.onIdle(( ) => {
+        timer = onIdleFn(( ) => {
             timer = undefined;
             sanitize();
         });
@@ -163,6 +164,7 @@ registerScriptlet(hrefSanitizer, {
         'urlskip.js',
     ],
     dependencies: [
+        onIdleFn,
         runAt,
         safeSelf,
         urlSkip,

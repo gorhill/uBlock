@@ -20,6 +20,7 @@
 
 */
 
+import { offIdleFn, onIdleFn } from './utils.js';
 import { registerScriptlet } from './base.js';
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
@@ -241,14 +242,14 @@ export function removeAttr(
     let timerId;
     const rmattrAsync = ( ) => {
         if ( timerId !== undefined ) { return; }
-        timerId = safe.onIdle(( ) => {
+        timerId = onIdleFn(( ) => {
             timerId = undefined;
             rmattr();
         }, { timeout: 17 });
     };
     const rmattr = ( ) => {
         if ( timerId !== undefined ) {
-            safe.offIdle(timerId);
+            offIdleFn(timerId);
             timerId = undefined;
         }
         try {
@@ -298,6 +299,8 @@ registerScriptlet(removeAttr, {
         'ra.js',
     ],
     dependencies: [
+        offIdleFn,
+        onIdleFn,
         runAt,
         safeSelf,
     ],

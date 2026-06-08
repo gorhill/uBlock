@@ -49,8 +49,10 @@
  *   - ^=: stringified value starts with 
  *   - $=: stringified value ends with
  *   - *=: stringified value includes
- *   - =/.../: regular expression matches
- * 
+ *   - =/.../: true if the regular expression matches the stringified value
+ *   - =repl(...): [to be documented] i.e. {"regex":"...","flags":"i","replacement":"..."}
+ *   - =call(...): [to be documented] i.e. ["${obj}","setAttribute","${key}"]
+ *  * 
  * - Examples (from "JSONPath examples" at reference link)
  *   - .store.book[*].author
  *   - ..author
@@ -102,9 +104,10 @@ export class JSONPath {
         if ( r.i !== query.length ) {
             let val;
             if ( query.startsWith('=', r.i) ) {
-                if ( /^=repl\(.+\)$/.test(query.slice(r.i)) ) {
-                    r.modify = 'repl';
-                    val = query.slice(r.i+6, -1);
+                const match = this.#reRval.exec(query.slice(r.i));
+                if ( match ) {
+                    r.modify = match[1];
+                    val = match[2];
                 } else {
                     val = query.slice(r.i+1);
                 }
@@ -162,6 +165,7 @@ export class JSONPath {
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
     #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\]/;
     #reIndice = /^-?\d+/;
+    #reRval = /^=([a-z]+)\((.+)\)$/;
     #root;
     #compiled;
     #compile(query, i) {
@@ -314,14 +318,6 @@ export class JSONPath {
             out.push(q);
         }
     }
-    #normalizeKey(owner, key) {
-        if ( typeof key === 'number' ) {
-            if ( Array.isArray(owner) ) {
-                return key >= 0 ? key : owner.length + key;
-            }
-        }
-        return key;
-    }
     #getDescendants(v, recursive) {
         const iterator = {
             next() {
@@ -461,11 +457,14 @@ export class JSONPath {
     }
     #evaluateExpr(step, owner, key) {
         if ( owner === undefined || owner === null ) { return; }
+        let k;
         if ( typeof key === 'number' ) {
             if ( Array.isArray(owner) === false ) { return; }
+            k = key >= 0 ? key : owner.length + key;
+        } else {
+            k = key;
         }
-        const k = this.#normalizeKey(owner, key);
-        const hasOwn = Object.hasOwn(owner, k);
+        const hasOwn = owner[k] !== undefined || Object.hasOwn(owner, k);
         if ( step.op !== undefined && hasOwn === false ) { return; }
         const target = step.not !== true;
         const v = owner[k];
@@ -502,6 +501,18 @@ export class JSONPath {
             for ( const [ k, v ] of Object.entries(rval) ) {
                 lval[k] = v;
             }
+            break;
+        }
+        case 'call': {
+            const entries = rval.slice();
+            if ( entries.length < 2 ) { break; }
+            entries.forEach((a, i, aa) => {
+                if ( a === '${obj}' ) { aa[i] = obj; }
+                else if ( a === '${key}' ) { aa[i] = key; }
+                else if ( a === '${val}' ) { aa[i] = obj[key]; }
+            });
+            const instance = entries[0] ?? self;
+            instance[entries[1]](...entries.slice(2));
             break;
         }
         case 'repl': {

@@ -41,7 +41,9 @@ import {
     collateFetchArgumentsFn,
     getExceptionTokenFn,
     getRandomTokenFn,
+    lookupElementsFn,
     matchObjectPropertiesFn,
+    onIdleFn,
     parsePropertiesToMatchFn,
 } from './utils.js';
 import { runAt, runAtHtmlElementFn } from './run-at.js';
@@ -718,7 +720,7 @@ function removeClass(
             }
         }
         if ( skip ) { return; }
-        timer = safe.onIdle(rmclass, { timeout: 67 });
+        timer = onIdleFn(rmclass, { timeout: 67 });
     };
     const observer = new MutationObserver(mutationHandler);
     const start = ( ) => {
@@ -1623,7 +1625,7 @@ builtinScriptlets.push({
     ],
 });
 function breakOnCall(target) {
-    proxyApplyFn(target, function fetch(context) {
+    proxyApplyFn(target, function(context) {
         debugger;  // eslint-disable-line no-debugger
         return context.reflect();
     });
@@ -1818,6 +1820,7 @@ builtinScriptlets.push({
     dependencies: [
         'get-all-cookies.fn',
         'get-all-local-storage.fn',
+        'lookup-elements.fn',
         'run-at-html-element.fn',
         'safe-self.fn',
     ],
@@ -1874,42 +1877,6 @@ function trustedClickElement(
         }
     }
 
-    const getShadowRoot = elem => {
-        // Firefox
-        if ( elem.openOrClosedShadowRoot ) {
-            return elem.openOrClosedShadowRoot;
-        }
-        // Chromium
-        if ( typeof chrome === 'object' ) {
-            if ( chrome.dom && chrome.dom.openOrClosedShadowRoot ) {
-                return chrome.dom.openOrClosedShadowRoot(elem);
-            }
-        }
-        return elem.shadowRoot;
-    };
-
-    const queryOrEvaluateSelector = (selector, context) => {
-        if ( selector.startsWith('xpath:') === false ) {
-            return context.querySelector(selector);
-        }
-        const result = document.evaluate(selector.slice(6), context, null, 9, null);
-        if ( result.resultType !== 9 ) { return null; }
-        const elem = result.singleNodeValue;
-        if ( elem?.nodeType !== 1 ) { return null; }
-        return elem;
-    }
-
-    const querySelectorEx = (selector, context = document) => {
-        const pos = selector.indexOf(' >>> ');
-        if ( pos === -1 ) { return queryOrEvaluateSelector(selector, context); }
-        const outside = selector.slice(0, pos).trim();
-        const inside = selector.slice(pos + 5).trim();
-        const elem = queryOrEvaluateSelector(outside, context);
-        if ( elem === null ) { return null; }
-        const shadowRoot = getShadowRoot(elem);
-        return shadowRoot && querySelectorEx(inside, shadowRoot);
-    };
-
     const steps = safe.String_split.call(selectors, /\s*,\s*/).map(a => {
         if ( /^\d+$/.test(a) ) { return parseInt(a, 10); }
         return a;
@@ -1928,6 +1895,8 @@ function trustedClickElement(
         steps.push(11000);
     }
 
+    const timeout = steps.pop();
+
     const waitForTime = ms => {
         return new Promise(resolve => {
             safe.uboLog(logPrefix, `Waiting for ${ms} ms`);
@@ -1937,71 +1906,18 @@ function trustedClickElement(
             }, ms);
         });
     };
-    waitForTime.cancel = ( ) => {
-        const { timer } = waitForTime;
-        if ( timer === undefined ) { return; }
-        clearTimeout(timer);
-        waitForTime.timer = undefined;
-    };
 
-    const waitForElement = selector => {
-        safe.uboLog(logPrefix, `Waiting for ${selector}`);
-        return new Promise(resolve => {
-            waitForElement.check(selector, resolve);
+    const waitForElement = directive => {
+        safe.uboLog(logPrefix, `Waiting for ${directive}`);
+        return lookupElementsFn(directive, Date.now() + timeout).then(elems => {
+            if ( elems.length === 0 ) { return false; }
+            elems[0].click();
+            safe.uboLog(logPrefix, `Clicked ${directive}`);
+            return true;
         });
-    };
-    waitForElement.lookup = directive => {
-        const beVisible = directive.startsWith('when-visible:');
-        const selector = beVisible ? directive.slice(13) : directive;
-        const elem = querySelectorEx(selector);
-        if ( Boolean(elem) === false ) { return null; }
-        if ( beVisible !== true ) { return elem; }
-        const isVisible = elem.checkVisibility({
-            opacityProperty: true,
-            visibilityProperty: true,
-        });
-        return isVisible ? elem : null;
-    };
-    waitForElement.check = (directive, resolve) => {
-        const elem = waitForElement.lookup(directive);
-        if ( elem ) {
-            waitForElement.cbid = undefined;
-            elem.click();
-            return resolve();
-        }
-        waitForElement.cbid = safe.onIdle(( ) => {
-            waitForElement.check(directive, resolve);
-        }, { timeout: 67 });
-    };
-    waitForElement.cancel = ( ) => {
-        const { cbid } = waitForElement;
-        if ( cbid === undefined ) { return; }
-        waitForElement.cbid = undefined;
-        safe.offIdle(cbid);
-    };
-
-    const waitForTimeout = ms => {
-        waitForTimeout.cancel();
-        waitForTimeout.timer = setTimeout(( ) => {
-            waitForTimeout.timer = undefined;
-            terminate();
-            safe.uboLog(logPrefix, `Timed out after ${ms} ms`);
-        }, ms);
-    };
-    waitForTimeout.cancel = ( ) => {
-        if ( waitForTimeout.timer === undefined ) { return; }
-        clearTimeout(waitForTimeout.timer);
-        waitForTimeout.timer = undefined;
-    };
-
-    const terminate = ( ) => {
-        waitForTime.cancel();
-        waitForElement.cancel();
-        waitForTimeout.cancel();
     };
 
     const process = async ( ) => {
-        waitForTimeout(steps.pop());
         while ( steps.length !== 0 ) {
             const step = steps.shift();
             if ( step === undefined ) { break; }
@@ -2011,10 +1927,11 @@ function trustedClickElement(
                 continue;
             }
             if ( step.startsWith('!') ) { continue; }
-            await waitForElement(step);
-            safe.uboLog(logPrefix, `Clicked ${step}`);
+            const clicked = await waitForElement(step);
+            if ( clicked ) { continue; }
+            safe.uboLog(logPrefix, `Timed out waiting on ${step}`);
+            break;
         }
-        terminate();
     };
 
     runAtHtmlElementFn(process);
