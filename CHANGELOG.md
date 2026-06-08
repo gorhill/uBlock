@@ -1,3 +1,5 @@
+- [Improve `JSONPath`; add `[trusted-]edit-element-object` scriptlets](https://github.com/gorhill/uBlock/commit/fdc1a4e743)
+- [Improve `JSONPath`: add support for double quote for names](https://github.com/gorhill/uBlock/commit/fe45329032)
 - [Add `edit-this-object`/`trusted-edit-this-object` scriptlets](https://github.com/gorhill/uBlock/commit/2695b9f7d6)
 - [Minor improvement to `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/da9287257d)
 - [Fix test for header matching when using negated value](https://github.com/gorhill/uBlock/commit/09e46b744e)
