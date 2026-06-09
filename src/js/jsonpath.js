@@ -24,19 +24,14 @@
  * Implement the parsing of uBO-flavored JSON path queries.
  * 
  * Reference to original JSON path syntax:
- * https://goessner.net/articles/JsonPath/index.html
+ * https://www.rfc-editor.org/info/rfc9535/
  * 
  * uBO-flavored JSON path implementation differs as follow:
+ *   - Array slice operator not supported
+ *   - Selectors can be a `/`-delimited regex, i.e. `$./pattern/`
+ *   - Onle a single filter selector is allowed in filter selector syntax
  * 
- * - Both $ and @ are implicit. Though you can use them, you do not have to.
- *   Use $ only when the implicit context is not that of root. Example:
- *   -     Official: $..book[?(@.isbn)]
- *   - uBO-flavored: ..book[?(.isbn)]
- * 
- * - uBO-flavor syntax does not (yet) support:
- *   - Array slice operator
- * 
- * - Regarding filter expressions, uBO-flavored JSON path supports a limited
+ * - uBO-flavored JSON path supports a limited set of filter selectors:
  *   set of expressions since unlike the official implementation, uBO can't use
  *   JS eval() to evaluate arbitrary JS expressions. The operand MUST be valid
  *   JSON. The currently supported expressions are:
@@ -50,6 +45,9 @@
  *   - $=: stringified value ends with
  *   - *=: stringified value includes
  *   - =/.../: true if the regular expression matches the stringified value
+ * 
+ * - uBO-flavored JSON path supports assignement operator:
+ *   - =[any well-formed JSON value]
  *   - =repl(...): [to be documented] i.e. {"regex":"...","flags":"i","replacement":"..."}
  *   - =call(...): [to be documented] i.e. ["${obj}","setAttribute","${key}"]
  *  * 
@@ -87,6 +85,10 @@ export class JSONPath {
         return (stringifier || JSON.stringify)(obj, ...args)
             .replace(/\//g, '\\/');
     }
+    static keys = Object.keys;
+    static entries = Object.entries;
+    static hasOwn = Object.hasOwn;
+    static Regex = RegExp;
     get value() {
         return this.#compiled && this.#compiled.rval;
     }
@@ -163,7 +165,7 @@ export class JSONPath {
     #CHILDREN = 3;
     #DESCENDANTS = 4;
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
-    #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\]/;
+    #reExpr = /^\s*([!=^$*]=|[<>]=?)\s*(.+?)\]/;
     #reIndice = /^-?\d+/;
     #reRval = /^=([a-z]+)\((.+)\)$/;
     #root;
@@ -205,20 +207,21 @@ export class JSONPath {
                 if ( mv === this.#UNDEFINED ) {
                     const step = steps.at(-1);
                     if ( step === undefined ) { return; }
-                    i = this.#compileExpr(query, step, i);
+                    const j = this.#compileExpr(query, step, i);
+                    if ( j ) { i = j; }
                     break;
                 }
-                const s = this.#consumeUnquotedIdentifier(query, i);
-                if  ( s === undefined ) { return; }
-                steps.push({ mv, k: s });
-                i += s.length;
+                const r = this.#consumeUnquotedIdentifier(query, i);
+                if  ( r === undefined ) { return; }
+                steps.push({ mv, k: r.s });
+                i = r.i;
                 mv = this.#UNDEFINED;
                 continue;
             }
             // Bracket accessor syntax
             if ( query.startsWith('[?', i) ) {
-                const not = query.charCodeAt(i+2) === 0x21 /* ! */;
-                const j = i + 2 + (not ? 1 : 0);
+                const not = query.charCodeAt(i+2) === 0x21 /* ! */ ? 1 : 0;
+                const j = i + 2 + not;
                 const r = this.#compile(query, j);
                 if ( r === undefined ) { return; }
                 if ( query.startsWith(']', r.i) === false ) { return; }
@@ -255,12 +258,19 @@ export class JSONPath {
                 resultset = [ [ '$' ] ];
                 break;
             case this.#CURRENT:
+                if ( step.op ) {
+                    const { obj, key } = this.#resolvePath(pathin);
+                    const outcome = this.#evaluateExpr(step, obj, key);
+                    if ( outcome !== true ) { break; }
+                }
                 resultset = [ pathin ];
                 break;
             case this.#CHILDREN:
-            case this.#DESCENDANTS:
+            case this.#DESCENDANTS: {
+                if ( resultset.length === 0 ) { break; }
                 resultset = this.#getMatches(resultset, step);
                 break;
+            }
             default:
                 break;
             }
@@ -271,50 +281,66 @@ export class JSONPath {
         const listout = [];
         for ( const pathin of listin ) {
             const { value: owner } = this.#resolvePath(pathin);
-            if ( step.k === '*' ) {
-                this.#getMatchesFromAll(pathin, step, owner, listout);
-            } else if ( step.k !== undefined ) {
-                this.#getMatchesFromKeys(pathin, step, owner, listout);
-            } else if ( step.steps ) {
+            if ( step.steps ) {
                 this.#getMatchesFromExpr(pathin, step, owner, listout);
+                continue;
+            }
+            const iter = this.#expandKey(owner, step.k);
+            if ( iter ) {
+                for ( const k of iter ) {
+                    const outcome = this.#evaluateExpr(step, owner, k);
+                    if ( outcome !== true ) { continue; }
+                    listout.push([ ...pathin, k ]);
+                }
+            }
+            if ( step.mv !== this.#DESCENDANTS ) { continue; }
+            for ( const { obj, key, path } of this.#getDescendants(owner, true) ) {
+                const iter = this.#expandKey(obj[key], step.k);
+                if ( iter === undefined ) { continue; }
+                for ( const k of iter ) {
+                    const outcome = this.#evaluateExpr(step, obj[key], k);
+                    if ( outcome !== true ) { continue; }
+                    listout.push([ ...pathin, ...path, k ]);
+                }
             }
         }
         return listout;
     }
-    #getMatchesFromAll(pathin, step, owner, out) {
-        const recursive = step.mv === this.#DESCENDANTS;
-        for ( const { path } of this.#getDescendants(owner, recursive) ) {
-            out.push([ ...pathin, ...path ]);
-        }
-    }
-    #getMatchesFromKeys(pathin, step, owner, out) {
-        const kk = Array.isArray(step.k) ? step.k : [ step.k ];
-        for ( const k of kk ) {
-            const normalized = this.#evaluateExpr(step, owner, k);
-            if ( normalized === undefined ) { continue; }
-            out.push([ ...pathin, normalized ]);
-        }
-        if ( step.mv !== this.#DESCENDANTS ) { return; }
-        for ( const { obj, key, path } of this.#getDescendants(owner, true) ) {
-            for ( const k of kk ) {
-                const normalized = this.#evaluateExpr(step, obj[key], k);
-                if ( normalized === undefined ) { continue; }
-                out.push([ ...pathin, ...path, normalized ]);
+    #expandKey(owner, k) {
+        if ( typeof owner !== 'object' ) { return; }
+        if ( Array.isArray(k) ) {
+            const out = [];
+            for ( const a of k ) {
+                const iter = this.#expandKey(owner, a);
+                if ( iter === undefined ) { continue; }
+                out.push(...iter);
             }
+            return out;
         }
+        if ( typeof k === 'number' ) {
+            if ( Array.isArray(owner) === false ) { return; }
+            return [ k >= 0 ? k : owner.length + k ];
+        }
+        if ( k === '*' ) {
+            if ( Array.isArray(owner) ) { return owner.keys(); }
+            return JSONPath.keys(owner);
+        }
+        if ( k instanceof JSONPath.Regex ) {
+            const out = [];
+            for ( const key of JSONPath.keys(owner) ) {
+                if ( k.test(key) === false ) { continue; }
+                out.push(key);
+            }
+            return out;
+        }
+        return [ k ];
     }
     #getMatchesFromExpr(pathin, step, owner, out) {
         const recursive = step.mv === this.#DESCENDANTS;
-        if ( Array.isArray(owner) === false ) {
-            const r = this.#evaluate(step.steps, pathin);
-            if ( r.length !== 0 ) { out.push(pathin); }
-            if ( recursive !== true ) { return; }
-        }
-        for ( const { obj, key, path } of this.#getDescendants(owner, recursive) ) {
-            if ( Array.isArray(obj[key]) ) { continue; }
+        for ( const { path } of this.#getDescendants(owner, recursive) ) {
             const q = [ ...pathin, ...path ];
             const r = this.#evaluate(step.steps, q);
-            if ( r.length === 0 ) { continue; }
+            if ( Boolean(r?.length) === false ) { continue; }
             out.push(q);
         }
     }
@@ -345,7 +371,7 @@ export class JSONPath {
                     if ( Array.isArray(v) ) {
                         this.stack.push({ obj: v, keys: v.keys() });
                     } else if ( typeof v === 'object' && v !== null ) {
-                        this.stack.push({ obj: v, keys: Object.keys(v).values() });
+                        this.stack.push({ obj: v, keys: JSONPath.keys(v).values() });
                     }
                 }
                 return this;
@@ -359,7 +385,7 @@ export class JSONPath {
         if ( Array.isArray(v) ) {
             iterator.stack.push({ obj: v, keys: v.keys() });
         } else if ( typeof v === 'object' && v !== null ) {
-            iterator.stack.push({ obj: v, keys: Object.keys(v).values() });
+            iterator.stack.push({ obj: v, keys: JSONPath.keys(v).values() });
         }
         return iterator;
     }
@@ -368,7 +394,7 @@ export class JSONPath {
         for (;;) {
             const c0 = query.charCodeAt(i);
             if ( c0 === 0x5D /* ] */ ) { break; }
-            if ( c0 === 0x2C /* , */ ) {
+            if ( c0 === 0x2C /* , */ || c0 === 0x20 /* SPACE */) {
                 i += 1;
                 continue;
             }
@@ -387,17 +413,24 @@ export class JSONPath {
                 i += match[0].length;
                 continue;
             }
-            const s = this.#consumeUnquotedIdentifier(query, i);
-            if ( s === undefined ) { return; }
-            keys.push(s);
-            i += s.length;
+            const r = this.#consumeUnquotedIdentifier(query, i);
+            if ( r === undefined ) { return; }
+            keys.push(r.s);
+            i = r.i;
         }
         return { s: keys.length === 1 ? keys[0] : keys, i };
     }
     #consumeUnquotedIdentifier(query, i) {
+        if ( query.charCodeAt(i) === 0x2F /* / */ ) {
+            const r = this.#untilChar(query, 0x2F, i+1);
+            if ( r === undefined ) { return; }
+            let re;
+            try { re = new JSONPath.Regex(r.s); } catch { return; }
+            return { s: re, i: r.i };
+        }
         const match = this.#reUnquotedIdentifier.exec(query.slice(i));
         if ( match === null ) { return; }
-        return match[0];
+        return { s: match[0], i: i + match[0].length };
     }
     #untilChar(query, targetCharCode, i) {
         const len = query.length;
@@ -429,22 +462,27 @@ export class JSONPath {
             if ( r === undefined ) { return i; }
             const match = /^[i]/.exec(query.slice(r.i));
             try {
-                step.rval = new RegExp(r.s, match && match[0] || undefined);
-            } catch {
-                return i;
-            }
+                step.rval = new JSONPath.Regex(r.s, match && match[0] || undefined);
+            } catch { return; }
             step.op = 're';
             if ( match ) { r.i += match[0].length; }
             return r.i;
         }
         const match = this.#reExpr.exec(query.slice(i));
-        if ( match === null ) { return i; }
-        try {
-            step.rval = JSON.parse(match[2]);
-            step.op = match[1];
-        } catch {
+        if ( match === null ) { return; }
+        const op = match[1], rval = match[2];
+        if ( rval.charCodeAt(0) === 0x27 /* ' */ ) {
+            const r = this.#untilChar(rval, 0x27, 1);
+            if ( r === undefined ) { return; }
+            step.rval = r.s;
+            step.op = op;
+        } else {
+            try {
+                step.rval = JSON.parse(rval);
+                step.op = op;
+            } catch { return; }
         }
-        return i + match[1].length + match[2].length;
+        return i + match[0].length - 1;
     }
     #resolvePath(path) {
         if ( path.length === 0 ) { return { value: this.#root }; }
@@ -455,34 +493,26 @@ export class JSONPath {
         }
         return { obj, key, value: obj[key] };
     }
-    #evaluateExpr(step, owner, key) {
+    #evaluateExpr(step, owner, k) {
         if ( owner === undefined || owner === null ) { return; }
-        let k;
-        if ( typeof key === 'number' ) {
-            if ( Array.isArray(owner) === false ) { return; }
-            k = key >= 0 ? key : owner.length + key;
-        } else {
-            k = key;
-        }
-        const hasOwn = owner[k] !== undefined || Object.hasOwn(owner, k);
+        const hasOwn = owner[k] !== undefined || JSONPath.hasOwn(owner, k);
         if ( step.op !== undefined && hasOwn === false ) { return; }
         const target = step.not !== true;
         const v = owner[k];
-        let outcome = false;
         switch ( step.op ) {
-        case '==': outcome = (v === step.rval) === target; break;
-        case '!=': outcome = (v !== step.rval) === target; break;
-        case  '<': outcome = (v < step.rval) === target; break;
-        case '<=': outcome = (v <= step.rval) === target; break;
-        case  '>': outcome = (v > step.rval) === target; break;
-        case '>=': outcome = (v >= step.rval) === target; break;
-        case '^=': outcome = `${v}`.startsWith(step.rval) === target; break;
-        case '$=': outcome = `${v}`.endsWith(step.rval) === target; break;
-        case '*=': outcome = `${v}`.includes(step.rval) === target; break;
-        case 're': outcome = step.rval.test(`${v}`); break;
-        default: outcome = hasOwn === target; break;
+        case '==': return (v === step.rval) === target;
+        case '!=': return (v !== step.rval) === target;
+        case  '<': return (v < step.rval) === target;
+        case '<=': return (v <= step.rval) === target;
+        case  '>': return (v > step.rval) === target;
+        case '>=': return (v >= step.rval) === target;
+        case '^=': return `${v}`.startsWith(step.rval) === target;
+        case '$=': return `${v}`.endsWith(step.rval) === target;
+        case '*=': return `${v}`.includes(step.rval) === target;
+        case 're': return step.rval.test(`${v}`);
+        default: break;
         }
-        if ( outcome ) { return k; }
+        return hasOwn === target;
     }
     #modifyVal(obj, key) {
         let { modify, rval } = this.#compiled;
@@ -498,7 +528,7 @@ export class JSONPath {
             const lval = obj[key];
             if ( lval instanceof Object === false ) { return; }
             if ( Array.isArray(lval) ) { return; }
-            for ( const [ k, v ] of Object.entries(rval) ) {
+            for ( const [ k, v ] of JSONPath.entries(rval) ) {
                 lval[k] = v;
             }
             break;
@@ -522,10 +552,9 @@ export class JSONPath {
                 this.#compiled.re = null;
                 try {
                     this.#compiled.re = rval.regex !== undefined
-                        ? new RegExp(rval.regex, rval.flags)
-                        : new RegExp(rval.pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-                } catch {
-                }
+                        ? new JSONPath.Regex(rval.regex, rval.flags)
+                        : new JSONPath.Regex(rval.pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                } catch { }
             }
             if ( this.#compiled.re === null ) { return; }
             obj[key] = lval.replace(this.#compiled.re, rval.replacement);
