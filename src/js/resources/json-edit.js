@@ -25,6 +25,7 @@ import {
     lookupElementsFn,
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
+    sleepFn,
 } from './utils.js';
 
 import { JSONPath } from './shared.js';
@@ -414,7 +415,7 @@ registerScriptlet(trustedEditThisObject, {
 /******************************************************************************/
 /******************************************************************************/
 
-function editElementObjectFn(
+async function editElementObjectFn(
     trusted = false,
     selector = '',
     jsonq = '',
@@ -437,14 +438,17 @@ function editElementObjectFn(
             safe.uboLog(logPrefix, 'Edited');
         }
     };
-    const result = lookupElementsFn(selector,
-        timeout !== '' ? Date.now() + parseInt(timeout, 10) : 0
-    );
-    if ( Array.isArray(result) ) {
-        process(result);
-    } else if ( result instanceof Promise ) {
-        result.then(elems => process(elems));
-    }
+    const until = timeout !== '' ? Date.now() + parseInt(timeout, 10) : 0;
+    do {
+        const r = lookupElementsFn(selector, until);
+        if ( Array.isArray(r) ) {
+            process(r);
+        } else if ( r instanceof Promise ) {
+            const elems = await r;
+            process(elems);
+        }
+        await sleepFn();
+    } while ( Date.now() < until );
 }
 registerScriptlet(editElementObjectFn, {
     name: 'edit-element-object.fn',
@@ -452,6 +456,7 @@ registerScriptlet(editElementObjectFn, {
         JSONPath,
         lookupElementsFn,
         safeSelf,
+        sleepFn,
     ],
 });
 
