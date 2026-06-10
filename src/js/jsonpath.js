@@ -101,6 +101,8 @@ export class JSONPath {
     }
     compile(query) {
         this.#compiled = undefined;
+        const v2 = query.startsWith('v2:');
+        if ( v2 ) { query = query.slice(3); }
         const r = this.#compile(query, 0);
         if ( r === undefined ) { return; }
         if ( r.i !== query.length ) {
@@ -120,6 +122,7 @@ export class JSONPath {
             try { r.rval = JSON.parse(val); }
             catch { return; }
         }
+        r.v2 = v2;
         this.#compiled = r;
     }
     evaluate(root) {
@@ -203,6 +206,12 @@ export class JSONPath {
                 }
                 continue;
             }
+            if ( c === 0x24 /* $ */ ) {
+                steps.push({ mv: this.#ROOT });
+                i += 1;
+                mv = this.#UNDEFINED;
+                continue;
+            }
             if ( c !== 0x5B /* [ */ ) {
                 if ( mv === this.#UNDEFINED ) {
                     const step = steps.at(-1);
@@ -252,9 +261,11 @@ export class JSONPath {
     #evaluate(steps, pathin) {
         let resultset = [];
         if ( Array.isArray(steps) === false ) { return resultset; }
-        for ( const step of steps ) {
+        for ( let i = 0; i < steps.length; i++ ) {
+            const step = steps[i];
             switch ( step.mv ) {
             case this.#ROOT:
+                if ( resultset.length === 0 && i !== 0 ) { break; }
                 resultset = [ [ '$' ] ];
                 break;
             case this.#CURRENT:
@@ -338,10 +349,11 @@ export class JSONPath {
     #getMatchesFromExpr(pathin, step, owner, out) {
         const recursive = step.mv === this.#DESCENDANTS;
         for ( const { path } of this.#getDescendants(owner, recursive) ) {
-            const q = [ ...pathin, ...path ];
+            const q = this.#compiled.v2 ? [ ...pathin, ...path ] : pathin;
             const r = this.#evaluate(step.steps, q);
             if ( Boolean(r?.length) === false ) { continue; }
             out.push(q);
+            if ( this.#compiled.v2 === false ) { break; }
         }
     }
     #getDescendants(v, recursive) {

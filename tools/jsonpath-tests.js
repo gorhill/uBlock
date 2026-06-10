@@ -335,11 +335,11 @@ const jsonpathTests = [ {
             ['store', 'book', 0],
             ['store', 'book', 1],
         ] },
-        { q: `$..book[?(@.isbn)]`, r: [
+        { q: `$..book[?@.isbn]`, r: [
             ['store', 'book', 2],
             ['store', 'book', 3],
         ] },
-        { q: `$..book[?(@.price<10)]`, r: [
+        { q: `$..book[?@.price<10]`, r: [
             ['store', 'book', 0],
             ['store', 'book', 2],
         ] },
@@ -385,7 +385,7 @@ const formatResult = a => {
 for ( const tests of jsonpathTests ) {
     const obj = JSON.parse(tests.json);
     for ( const { q, r } of tests.queries ) {
-        jsonp.compile(q);
+        jsonp.compile(`v2:${q}`);
         const actual = formatResult(jsonp.evaluate(obj)?.map(a => a.slice(1)));
         const expected = formatResult(r);
         console.log(`${q}\n${expected}\n${actual}`);
