@@ -348,12 +348,13 @@ export class JSONPath {
     }
     #getMatchesFromExpr(pathin, step, owner, out) {
         const recursive = step.mv === this.#DESCENDANTS;
+        const v2 = this.#compiled.v2 || Array.isArray(owner);
         for ( const { path } of this.#getDescendants(owner, recursive) ) {
-            const q = this.#compiled.v2 ? [ ...pathin, ...path ] : pathin;
+            const q = v2 ? [ ...pathin, ...path ] : pathin;
             const r = this.#evaluate(step.steps, q);
             if ( Boolean(r?.length) === false ) { continue; }
             out.push(q);
-            if ( this.#compiled.v2 === false ) { break; }
+            if ( v2 === false ) { break; }
         }
     }
     #getDescendants(v, recursive) {
