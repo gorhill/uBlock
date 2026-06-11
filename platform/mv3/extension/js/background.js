@@ -109,6 +109,7 @@ import {
 } from './ext-utils.js';
 
 import { dnr } from './ext-compat.js';
+import { setPopupBlockMode } from './prevent-popup.js';
 import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
@@ -208,17 +209,6 @@ async function onPermissionsChanged(op, permissions) {
     pending.push(promise);
 }
 onPermissionsChanged.pending = [];
-
-/******************************************************************************/
-
-async function setPopupBlockMode(state) {
-    state = state === true;
-    if ( state === rulesetConfig.popupBlockMode ) { return; }
-    rulesetConfig.popupBlockMode = state;
-    await saveRulesetConfig();
-    await registerContentScripts();
-    broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
-}
 
 /******************************************************************************/
 
@@ -439,7 +429,10 @@ async function onMessage(request, sender) {
         return;
 
     case 'setPopupBlockMode':
-        return setPopupBlockMode(request.state);
+        await setPopupBlockMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
+        return;
 
     case 'setDeveloperMode':
         return setDeveloperMode(request.state);

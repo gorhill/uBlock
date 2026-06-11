@@ -19,8 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { rulesetConfig, saveRulesetConfig } from './config.js';
 import { matchesFromHostnames } from './utils.js';
-import { rulesetConfig } from './config.js';
 
 /******************************************************************************/
 
@@ -58,4 +58,15 @@ export async function registerPreventPopup(context) {
         runAt: 'document_start',
     };
     context.toAdd.push(directive);
+}
+
+/******************************************************************************/
+
+export async function setPopupBlockMode(state, force = false) {
+    const newState = Boolean(state);
+    if ( force === false ) {
+        if ( newState === rulesetConfig.popupBlockMode ) { return; }
+    }
+    rulesetConfig.popupBlockMode = state;
+    await saveRulesetConfig();
 }

@@ -28,6 +28,10 @@
       "type": "array",
       "items": { "type": "string" }
     },
+    "popupBlockMode": {
+      "title": "Enable/disable pop-up blocking",
+      "type": "boolean"
+    },
     "showBlockedCount": {
       "title": "Enable/disable toolbar icon count badge",
       "type": "boolean"

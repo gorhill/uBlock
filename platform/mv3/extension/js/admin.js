@@ -44,19 +44,22 @@ import {
 import { broadcastMessage } from './utils.js';
 import { dnr } from './ext-compat.js';
 import { registerContentScripts } from './scripting-manager.js';
+import { setPopupBlockMode } from './prevent-popup.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
 export async function loadAdminConfig() {
     const [
+        popupBlockMode,
         showBlockedCount,
         strictBlockMode,
     ] = await Promise.all([
+        adminReadEx('popupBlockMode'),
         adminReadEx('showBlockedCount'),
         adminReadEx('strictBlockMode'),
     ]);
-    applyAdminConfig({ showBlockedCount, strictBlockMode });
+    applyAdminConfig({ popupBlockMode, showBlockedCount, strictBlockMode });
 }
 
 /******************************************************************************/
@@ -75,6 +78,13 @@ function applyAdminConfig(config, apply = false) {
     while ( toApply.length !== 0 ) {
         const key = toApply.pop();
         switch ( key ) {
+        case 'popupBlockMode': {
+            const { popupBlockMode } = config;
+            setPopupBlockMode(popupBlockMode, true).then(( ) => {
+                broadcastMessage({ popupBlockMode });
+            });
+            break;
+        }
         case 'showBlockedCount': {
             if ( typeof dnr.setExtensionActionOptions !== 'function' ) { break; }
             const { showBlockedCount } = config;
@@ -134,6 +144,12 @@ const adminSettings = {
             const filteringModeDetails = await readFilteringModeDetails(true);
             await registerContentScripts();
             broadcastMessage({ filteringModeDetails });
+        }
+        if ( this.keys.has('popupBlockMode') ) {
+            ubolLog('admin setting "popupBlockMode" changed');
+            const popupBlockMode = this.keys.get('popupBlockMode');
+            applyAdminConfig({ popupBlockMode }, true);
+            await registerContentScripts();
         }
         if ( this.keys.has('showBlockedCount') ) {
             ubolLog('admin setting "showBlockedCount" changed');
