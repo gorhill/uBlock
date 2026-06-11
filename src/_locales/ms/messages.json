@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Kekal",
+    "message": "Tinggal di sini",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Peraturan tempatan: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.\nPeraturan tempatan menolak peraturan global.",
+    "message": "Peraturan tempatan: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

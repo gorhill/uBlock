@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokal qaydalar: bu sütun yalnız bu saytda tətbiq olunan qaydalar üçündür.\nLokal qaydalar qlobal qaydalardan üstün tutulur.",
+    "message": "Lokal qaydalar: bu sütun yalnız bu saytda tətbiq olunan qaydalar üçündür.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

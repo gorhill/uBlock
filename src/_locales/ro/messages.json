@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reguli locale: această coloană este pentru regulile care se aplică doar site-ului curent.\nRegulile locale suprascriu pe cele globale.",
+    "message": "Reguli locale: această coloană este pentru regulile care se aplică doar site-ului curent.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

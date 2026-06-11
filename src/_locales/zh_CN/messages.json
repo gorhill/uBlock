@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "本地规则：此列的规则仅作用于当前网站。\n本地规则优先于全局规则。",
+    "message": "本地规则：此列的规则仅作用于当前网站。",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

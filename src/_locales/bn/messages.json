@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "অভ্যন্তরীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা শুধু বর্তমান সাইটে প্রয়োগ করা হবে।\nঅভ্যন্তরীন নিয়ম সার্বজনীন নিয়মকে অগ্রাহ্য করবে।",
+    "message": "অভ্যন্তরীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা শুধু বর্তমান সাইটে প্রয়োগ করা হবে।",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "ローカルルール: この列のルールは現在のサイトだけに適用されます。\nローカルルールはグローバルルールを上書きします。",
+    "message": "ローカルルール: この列にあるルールは、現在のサイトのみに適用されます。",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

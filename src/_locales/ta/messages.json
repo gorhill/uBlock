@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "இருங்கள்",
+    "message": "இங்கேயே இரு",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "அக விதிகள்: இந்நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.அக விதிகள் உலகளாவிய விதிகளை மீறுகின்றன.",
+    "message": "அக விதிகள்: இந்நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

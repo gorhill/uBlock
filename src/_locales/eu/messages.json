@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da. Tokiko arauek arau orokorrak gainidazten dituzte.",
+    "message": "Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
