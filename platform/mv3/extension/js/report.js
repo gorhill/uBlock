@@ -83,9 +83,9 @@ async function reportSpecificFilterIssue() {
     githubURL.searchParams.set('category', issueType);
 
     const configBody = [
-        '```yaml',
+        '<details>\n\n```yaml',
         qs$('[data-i18n="supportS5H"] + pre').textContent,
-        '```',
+        '```\n</details>',
         '',
     ].join('\n');
     githubURL.searchParams.set('configuration', configBody);
