@@ -167,10 +167,12 @@ export class JSONPath {
     #CURRENT = 2;
     #CHILDREN = 3;
     #DESCENDANTS = 4;
+    #QUANTIFIER = 5;
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
     #reExpr = /^\s*([!=^$*]=|[<>]=?)\s*(.+?)\]/;
     #reIndice = /^-?\d+/;
     #reRval = /^=([a-z]+)\((.+)\)$/;
+    #reQuantifier = /^\{(\d+|\d+,\d+|\d+,|,\d+)\};\$/;
     #root;
     #compiled;
     #compile(query, i) {
@@ -206,9 +208,32 @@ export class JSONPath {
                 }
                 continue;
             }
-            if ( c === 0x24 /* $ */ ) {
-                steps.push({ mv: this.#ROOT });
-                i += 1;
+            if ( c === 0x3B /* ; */ ) {
+                if ( query.startsWith(';$', i) === false ) { return; }
+                steps.push(
+                    { mv: this.#QUANTIFIER, min: 1, max: 1e6 },
+                    { mv: this.#ROOT }
+                );
+                i += 2;
+                mv = this.#UNDEFINED;
+                continue;
+            }
+            if ( c === 0x7B /* { */ ) {
+                const match = this.#reQuantifier.exec(query.slice(i));
+                if ( match === null ) { return; }
+                const comma = match[1].indexOf(',');
+                let min, max;
+                if ( comma === -1 ) {
+                    min = max = parseInt(match[1]);
+                } else {
+                    min = parseInt(match[1].slice(0, comma)) || 0;
+                    max = parseInt(match[1].slice(comma+1)) || 1e6;
+                }
+                steps.push(
+                    { mv: this.#QUANTIFIER, min, max },
+                    { mv: this.#ROOT }
+                );
+                i += match[0].length;
                 mv = this.#UNDEFINED;
                 continue;
             }
@@ -261,11 +286,9 @@ export class JSONPath {
     #evaluate(steps, pathin) {
         let resultset = [];
         if ( Array.isArray(steps) === false ) { return resultset; }
-        for ( let i = 0; i < steps.length; i++ ) {
-            const step = steps[i];
+        for ( const step of steps ) {
             switch ( step.mv ) {
             case this.#ROOT:
-                if ( resultset.length === 0 && i !== 0 ) { break; }
                 resultset = [ [ '$' ] ];
                 break;
             case this.#CURRENT:
@@ -280,6 +303,12 @@ export class JSONPath {
             case this.#DESCENDANTS: {
                 if ( resultset.length === 0 ) { break; }
                 resultset = this.#getMatches(resultset, step);
+                break;
+            }
+            case this.#QUANTIFIER: {
+                const { length } = resultset;
+                if ( length < step.min || length > step.max ) { return []; }
+                resultset = [];
                 break;
             }
             default:
