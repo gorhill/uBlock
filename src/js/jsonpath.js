@@ -141,6 +141,7 @@ export class JSONPath {
         if ( i === 0 ) { this.#root = null; return; }
         while ( i-- ) {
             const { obj, key } = this.#resolvePath(paths[i]);
+            if ( obj === undefined ) { continue; }
             if ( rval !== undefined ) {
                 this.#modifyVal(obj, key);
             } else if ( Array.isArray(obj) && typeof key === 'number' ) {
@@ -294,6 +295,7 @@ export class JSONPath {
             case this.#CURRENT:
                 if ( step.op ) {
                     const { obj, key } = this.#resolvePath(pathin);
+                    if ( obj === undefined ) { return []; }
                     const outcome = this.#evaluateExpr(step, obj, key);
                     if ( outcome !== true ) { break; }
                 }
@@ -321,6 +323,7 @@ export class JSONPath {
         const listout = [];
         for ( const pathin of listin ) {
             const { value: owner } = this.#resolvePath(pathin);
+            if ( owner === undefined ) { continue; }
             if ( step.steps ) {
                 this.#getMatchesFromExpr(pathin, step, owner, listout);
                 continue;
@@ -377,7 +380,7 @@ export class JSONPath {
     }
     #getMatchesFromExpr(pathin, step, owner, out) {
         const recursive = step.mv === this.#DESCENDANTS;
-        const v2 = this.#compiled.v2 || Array.isArray(owner);
+        const v2 = this.#compiled.v2 || recursive || Array.isArray(owner);
         for ( const { path } of this.#getDescendants(owner, recursive) ) {
             const q = v2 ? [ ...pathin, ...path ] : pathin;
             const r = this.#evaluate(step.steps, q);
@@ -532,6 +535,7 @@ export class JSONPath {
         let obj = this.#root
         for ( let i = 0, n = path.length-1; i < n; i++ ) {
             obj = obj[path[i]];
+            if ( obj instanceof Object === false ) { return {}; }
         }
         return { obj, key, value: obj[key] };
     }

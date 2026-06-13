@@ -26,6 +26,7 @@ import {
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
     sleepFn,
+    trapPropertyFn,
 } from './utils.js';
 
 import { JSONPath } from './shared.js';
@@ -409,6 +410,209 @@ registerScriptlet(trustedEditThisObject, {
     requiresTrust: true,
     dependencies: [
         editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editObjectOnGetterFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-object-on-getter`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    let currentValue = trapPropertyFn(propChain, {
+        get: function() {
+            if ( currentValue instanceof Object ) {
+                editObj(currentValue);
+            }
+            return currentValue;
+        },
+        set: function(a) {
+            currentValue = a;
+        }
+    });
+}
+registerScriptlet(editObjectOnGetterFn, {
+    name: 'edit-object-on-getter.fn',
+    dependencies: [
+        JSONPath,
+        safeSelf,
+        trapPropertyFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-object-on-getter.js
+ * 
+ * @description
+ * Prune properties from an object on read access.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function editObjectOnGetter(...args) {
+    editObjectOnGetterFn(false, ...args);
+}
+registerScriptlet(editObjectOnGetter, {
+    name: 'edit-object-on-getter.js',
+    dependencies: [
+        editObjectOnGetterFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-object-on-getter.js
+ * 
+ * @description
+ * Edit properties of an object on read access.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditObjectOnGetter(...args) {
+    editObjectOnGetterFn(true, ...args);
+}
+registerScriptlet(trustedEditObjectOnGetter, {
+    name: 'trusted-edit-object-on-getter.js',
+    requiresTrust: true,
+    dependencies: [
+        editObjectOnGetterFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editObjectOnSetterFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-object-on-setter`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    let currentValue = trapPropertyFn(propChain, {
+        get: function() {
+            return currentValue;
+        },
+        set: function(a) {
+            currentValue = a;
+            if ( currentValue instanceof Object ) {
+                editObj(currentValue);
+            }
+        }
+    });
+    if ( currentValue instanceof Object ) {
+        editObj(currentValue);
+    }
+}
+registerScriptlet(editObjectOnSetterFn, {
+    name: 'edit-object-on-setter.fn',
+    dependencies: [
+        JSONPath,
+        safeSelf,
+        trapPropertyFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-object-on-setter.js
+ * 
+ * @description
+ * Prune properties from an object on write access.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function editObjectOnSetter(...args) {
+    editObjectOnSetterFn(false, ...args);
+}
+registerScriptlet(editObjectOnSetter, {
+    name: 'edit-object-on-setter.js',
+    dependencies: [
+        editObjectOnSetterFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-object-on-setter.js
+ * 
+ * @description
+ * Edit properties of an object on write access.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditObjectOnSetter(...args) {
+    editObjectOnSetterFn(true, ...args);
+}
+registerScriptlet(trustedEditObjectOnSetter, {
+    name: 'trusted-edit-object-on-setter.js',
+    requiresTrust: true,
+    dependencies: [
+        editObjectOnSetterFn,
     ],
 });
 
