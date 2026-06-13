@@ -670,6 +670,7 @@ builtinScriptlets.push({
     fn: removeClass,
     world: 'ISOLATED',
     dependencies: [
+        'on-idle.fn',
         'run-at.fn',
         'safe-self.fn',
     ],
