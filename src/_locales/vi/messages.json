@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Quy tắc nội bộ: cột này dành cho quy tắc chỉ áp dụng cho trang hiện tại.\nQuy tắc nội bộ sẽ thay thế quy tắc chung.",
+    "message": "Quy tắc nội bộ: cột này dành cho quy tắc chỉ áp dụng cho trang hiện tại.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

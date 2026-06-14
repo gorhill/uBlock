@@ -188,7 +188,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Creează o nouă sesizare",
+    "message": "Creează o nouă sesizare pe GitHub",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
