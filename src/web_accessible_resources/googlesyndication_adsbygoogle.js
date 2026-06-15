@@ -40,7 +40,7 @@
             placeholder.dataset.adStatus = 'filled';
             fr.dataset.loadComplete = 'true';
         }, { once: true });
-        fr.contentWindow.location = 'https://googleads.g.doubleclick.net.ublock-origin.invalid/pagead/ads?';
+        fr.contentWindow.location = 'data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCiAgICA8aGVhZD48dGl0bGU+PC90aXRsZT48L2hlYWQ+DQogICAgPGJvZHk+PC9ib2R5Pg0KPC9odG1sPg==';
     };
     const process = ( ) => {
         const phs = document.querySelectorAll('.adsbygoogle:not([data-ad-status][data-adsbygoogle-status])');
