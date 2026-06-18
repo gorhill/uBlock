@@ -919,3 +919,7 @@ artnet.com#@#.ads-loaded
 # developer.mozilla #2808
 developer.mozilla.org##mdn-placement-hp-main
 developer.mozilla.org##mdn-placement-bottom
+
+# https://www.nexusmods.com
+www.nexusmods.com##.md\:flex.py-2.bg-surface-low.border-stroke-subdued.border-b.gap-x-4.justify-center.items-center.hidden
+www.nexusmods.com##.py-2.bg-surface-low.border-stroke-subdued.border-y.gap-x-4.justify-center.items-center.flex
