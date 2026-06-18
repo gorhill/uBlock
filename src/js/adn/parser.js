@@ -34,38 +34,6 @@
     elem && vAPI.adParser.process(elem);
   }
 
-  // When running inside a sub-frame, scan all images on load and watch for dynamic updates.
-  // Handles cross-origin iframes where the parent cannot access contentDocument.
-  // manifest.json all_frames:true ensures this code runs inside every iframe.
-  if (window !== window.top) {
-    let iframeScanDone = false;
-    const runIframeScan = function () {
-      if (iframeScanDone) return;
-      iframeScanDone = true;
-      if (typeof vAPI.adParser === 'undefined') {
-        vAPI.adParser = createParser();
-      }
-      vAPI.adParser.scanDocument();
-      // Watch for content injected after the initial scan (many ad iframes load creatives dynamically)
-      new MutationObserver(function (mutations) { // is this working?
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              vAPI.adCheck(node);
-            }
-          }
-        }
-      }).observe(document.body, { childList: true, subtree: true });
-    };
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      runIframeScan();
-    } else {
-      window.addEventListener('DOMContentLoaded', runIframeScan);
-      window.addEventListener('load', runIframeScan);
-    }
-  }
-  
-
   const ignorableImages = ['mgid_logo_mini_43x20.png', 'data:image/gif;base64,R0lGODlh7AFIAfAAAAAAAAAAACH5BAEAAAAALAAAAADsAUgBAAL+hI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPExcbHyMnKy8zNzs/AwdLT1NXW19jZ2tvc3d7f0NHi4+Tl5ufo6err7O3u7+Dh8vP09fb3+Pn6+/z9/v/w8woMCBBAsaPIgwocKFDBs6fAgxosSJFCtavIgxo8b+jRw7evwIMqTIkSRLmjyJMqXKlSxbunwJM6bMmTRr2ryJM6fOnTx7+vwJNKjQoUSLGj2KNKnSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLmj2LNq3atWzbun0LN67cuXTr2r2LN6/evXz7+v0LOLDgwYQLGz6MOLHixYwbO34MObLkyZQrW76MObPmzZw7e/4MOrTo0aRLmz6NOrXq1axbu34NO7bs2bRr276NO7fu3bx7+/4NPLjw4cSLGz+OPLny5cybO38OPbr06dSrW7+OPbv27dy7e/8OPrz48eTLmz+PPr369ezbu38PP778+fTr27+PP7/+/fxR+/v/D2CAAg5IYIEGHohgggouyGCDDj4IYYQSTkhhhRZeiGGGGm7IYYcefghiiCKOSGKJJp6IYooqrshiiy6+CGOMMs5IY4023ohjjjruCFYBADs='];
   const ocRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi;
   const urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
@@ -92,7 +60,7 @@
     '.posterImage-link'
   ];
 
-  const createParser = function () {
+  function createParser() {
 
     const findImageAds = function (imgs) {
 
@@ -1073,5 +1041,38 @@
       }
     };
 
-  };
+  }
+
+  // When running inside a sub-frame, scan all images on load and watch for dynamic updates.
+  // Handles cross-origin iframes where the parent cannot access contentDocument.
+  // manifest.json all_frames:true ensures this code runs inside every iframe.
+  // Placed at the end of the IIFE so createParser and module-level consts are initialized
+  // before the synchronous readyState branch runs (avoids temporal-dead-zone errors).
+  if (window !== window.top) {
+    let iframeScanDone = false;
+    const runIframeScan = function () {
+      if (iframeScanDone) return;
+      iframeScanDone = true;
+      if (typeof vAPI.adParser === 'undefined') {
+        vAPI.adParser = createParser();
+      }
+      vAPI.adParser.scanDocument();
+      // Watch for content injected after the initial scan (many ad iframes load creatives dynamically)
+      new MutationObserver(function (mutations) {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              vAPI.adCheck(node);
+            }
+          }
+        }
+      }).observe(document.body, { childList: true, subtree: true });
+    };
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      runIframeScan();
+    } else {
+      window.addEventListener('DOMContentLoaded', runIframeScan);
+      window.addEventListener('load', runIframeScan);
+    }
+  }
 })();
