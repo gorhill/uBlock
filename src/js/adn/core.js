@@ -133,7 +133,8 @@ const adnauseam = (function () {
     'AdNauseam filters', 'Spam404', 'Anti-Adblock Killer | Reek',
     'Fanboy’s Social Blocking List', 'Malware domains (long-lived)',
     'Adblock Warning Removal List', 'Malware filter list by Disconnect',
-    'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist',
+    'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist', 
+		'AdGuard – Cookie Notices', 'uBlock filters – Cookie Notices'
   ];
 
   const removableBlockLists = ['hphosts', 'mvps-0', 'plowe-0'];
