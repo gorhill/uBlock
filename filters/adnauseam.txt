@@ -915,3 +915,7 @@ ads.eu.criteo.com##div:has(.imageholder)
 
 # avoid wrong style on artnet.com
 artnet.com#@#.ads-loaded
+
+# developer.mozilla #2808
+developer.mozilla.org##mdn-placement-hp-main
+developer.mozilla.org##mdn-placement-bottom

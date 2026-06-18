@@ -568,8 +568,22 @@
       let adTitle = closestText(el);
 
       // Validate title: reject URLs, JSON, code-like strings
-      if (adTitle && (/^https?:\/\//.test(adTitle) || /^{/.test(adTitle) || /^javascript/i.test(adTitle) || /^www\./i.test(adTitle))) {
+      if (adTitle && (/^https?:\/\//.test(adTitle) || /^{/.test(adTitle) || /^javascript/i.test(adTitle) || /^www\./i.test(adTitle)
+          || /^(var|let|const|function)\s/.test(adTitle) || (adTitle.match(/;/g) || []).length >= 2)) {
         adTitle = '';
+      }
+
+      // Fallback: try element attributes and parent anchor for a title
+      if (!adTitle) {
+        const anchor = el.closest('a');
+        adTitle = (el.getAttribute('alt') || el.getAttribute('title') || el.getAttribute('aria-label')
+          || (anchor && (anchor.getAttribute('aria-label') || anchor.getAttribute('title')))
+          || '').trim();
+      }
+
+      // Last resort: use domain from target URL
+      if (!adTitle) {
+        adTitle = parseDomain(targetUrl) || '';
       }
 
       // In iframes, ads often have no nearby text — use 'Pending' so the visit can resolve it
