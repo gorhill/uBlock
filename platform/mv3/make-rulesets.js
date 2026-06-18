@@ -21,8 +21,7 @@
 
 import './lib/regexanalyzer/regex.js';
 
-import * as makeScriptlet from './js/offscreen/make-scriptlets.js';
-import * as sfp from './js/static-filtering-parser.js';
+import * as makeScriptlets from './js/offscreen/make-scriptlets.js';
 
 import {
     createHash,
@@ -34,6 +33,7 @@ import {
 } from './js/static-dnr-filtering.js';
 
 import { execSync } from 'node:child_process';
+import { fetchList } from './js/offscreen/fetch-list.js';
 import fs from 'fs/promises';
 import { hostnameCompare } from './js/offscreen/make-utils.js';
 import { literalStrFromRegex } from './js/offscreen/regex-analyzer.js';
@@ -193,8 +193,16 @@ const genericDetails = new Map();
 const requiredRedirectResources = new Set();
 let networkBad = new Set();
 
-// This will be used to sign our inserted `!#trusted on` directives
-const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
+/******************************************************************************/
+
+// "secret" will be used to sign our inserted `!#trusted on` directives
+const secret = await fs.readFile(`${cacheDir}/secret.txt`, {
+    encoding: 'utf8'
+}).catch(( ) => {
+    const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
+    writeFile(`${cacheDir}/secret.txt`, secret);
+    return secret;
+});
 log(`Secret: ${secret}`, false);
 
 /******************************************************************************/
@@ -243,58 +251,31 @@ rePatternFromUrlFilter.restrHostnameAnchor2 = '^[^:]+://([^:/]+)?';
 
 /******************************************************************************/
 
-async function fetchList(assetDetails) {
-    // Mind commit if present
-    const effectiveURL = url => {
-        return assetDetails.commit
-            ? url.replace('{commit}',  assetDetails.commit)
-            : url;
+async function fetchListFromCache(assetDetails) {
+    const fname = assetDetails.id;
+    logProgress(`Reading locally cached ${fname}`);
+
+    const content = await fs.readFile(`${cacheDir}/${fname}`,
+        { encoding: 'utf8' }
+    ).catch(( ) => { });
+    if ( content !== undefined ) {
+        log(`\tFetched local ${fname}`);
+        return content;
+    }
+
+    const context = {
+        env,
+        secret,
+        trustedPrefix: [ 'https://ublockorigin.github.io/uAssets/filters/' ],
     };
-    // Remember fetched URLs
-    const fetchedURLs = new Set();
 
-    // Fetch list and expand `!#include` directives
-    let parts = assetDetails.urls.map(url => ({ url: effectiveURL(url) }));
-    while (  parts.every(v => typeof v === 'string') === false ) {
-        const newParts = [];
-        for ( const part of parts ) {
-            if ( typeof part === 'string' ) {
-                newParts.push(effectiveURL(part));
-                continue;
-            }
-            if ( fetchedURLs.has(effectiveURL(part.url)) ) {
-                newParts.push('');
-                continue;
-            }
-            fetchedURLs.add(effectiveURL(part.url));
-            if (
-                assetDetails.trusted ||
-                part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/')
-            ) {
-                newParts.push(`!#trusted on ${secret}`);
-            }
-            newParts.push(
-                fetchText(effectiveURL(part.url), cacheDir).then(details => {
-                    const { url, error } = details;
-                    if ( error !== undefined ) { return details; }
-                    const content = details.content.trim();
-                    if ( /^<.*>$/.test(content) ) {
-                        return { url, error: `Bad content: ${url}` };
-                    }
-                    return { url, content };
-                })
-            );
-            newParts.push(`!#trusted off ${secret}`);
-        }
-        if ( parts.some(v => typeof v === 'object' && v.error) ) { return; }
-        parts = await Promise.all(newParts);
-        parts = sfp.utils.preparser.expandIncludes(parts, env);
-    }
-    const text = parts.join('\n');
+    const text = await fetchList(context, assetDetails);
+    writeFile(`${cacheDir}/${fname}`, text);
 
-    if ( text === '' ) {
-        log('No filterset found', false);
+    if ( Boolean(text) === false ) {
+        throw 'Filter list should not be empty';
     }
+
     return text;
 }
 
@@ -849,7 +830,7 @@ async function processCosmeticFilters(assetDetails, mapin) {
     });
     const result = await makeCosmeticScripts(assetDetails.id, mapin);
     if ( result === undefined ) { return 0; }
-    writeFile(`${scriptletDir}/specific/${assetDetails.id}.json`, result.json);
+    writeFile(`${scriptletDir}/specific/${assetDetails.id}.json`, JSON.stringify(result.data));
     writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`,
         template.replace('self.$rulesetId$', JSON.stringify(assetDetails.id))
     );
@@ -865,12 +846,12 @@ async function processScriptletFilters(assetDetails, mapin) {
 
     const { id } = assetDetails;
     for ( const details of mapin.values() ) {
-        makeScriptlet.compile(id, details);
+        makeScriptlets.compile(id, details);
     }
     const template = await fs.readFile('./js/offscreen/scriptlet.template.js', {
         encoding: 'utf8',
     });
-    const result = makeScriptlet.commit(id, template);
+    const result = makeScriptlets.commit(id, template);
     const stats = {};
     let count = 0;
     if ( result.MAIN ) {
@@ -886,7 +867,7 @@ async function processScriptletFilters(assetDetails, mapin) {
     if ( count !== 0 ) {
         scriptletStats.set(id, stats);
     }
-    makeScriptlet.reset();
+    makeScriptlets.reset();
     return count;
 }
 
@@ -969,7 +950,7 @@ async function rulesetFromURLs(assetDetails) {
     log(`Listset for '${assetDetails.id}':`);
 
     if ( assetDetails.text === undefined && assetDetails.urls.length !== 0 ) {
-        const text = await fetchList(assetDetails);
+        const text = await fetchListFromCache(assetDetails);
         if ( text === undefined ) {
             process.exit(1);
         }

@@ -20,6 +20,12 @@
 */
 
 import {
+    getEnabledImportedLists,
+    getImportedLists,
+    updateEnabledImportedLists,
+} from './imported-lists.js';
+
+import {
     i18n,
     localRead, localRemove, localWrite,
     runtime,
@@ -68,16 +74,17 @@ const isStrictBlockRule = rule => {
 
 /******************************************************************************/
 
-function getRulesetDetails() {
-    if ( getRulesetDetails.rulesetDetailsPromise !== undefined ) {
-        return getRulesetDetails.rulesetDetailsPromise;
+export function getRulesetDetails() {
+    if ( getRulesetDetails.rulesetDetailsPromise === undefined ) {
+        getRulesetDetails.rulesetDetailsPromise = fetchJSON('/rulesets/ruleset-details');
     }
-    getRulesetDetails.rulesetDetailsPromise =
-        fetchJSON('/rulesets/ruleset-details').then(entries => {
-            const rulesMap = new Map(entries.map(entry => [ entry.id, entry ]));
-            return rulesMap;
-        });
-    return getRulesetDetails.rulesetDetailsPromise;
+    return Promise.all([
+        getRulesetDetails.rulesetDetailsPromise,
+        getImportedLists(),
+    ]).then(results => {
+        const [ stock, imported ] = results;
+        return new Map(stock.concat(imported).map(entry => [ entry.id, entry ]));
+    });
 }
 
 /******************************************************************************/
@@ -171,7 +178,7 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
 
 /******************************************************************************/
 
-async function updateDynamicRules() {
+export async function updateDynamicAndSessionRules() {
     const currentRules = await dnr.getDynamicRules();
 
     // Remove potentially left-over rules from previous version
@@ -213,7 +220,7 @@ async function updateDynamicRules() {
             ubolLog(`Add ${addRules.length} dynamic DNR rules`);
         }
     } catch(reason) {
-        ubolErr(`updateDynamicRules/${reason}`);
+        ubolErr(`updateDynamicAndSessionRules/${reason}`);
         response.error = `${reason}`;
     }
 
@@ -432,6 +439,7 @@ export async function getDefaultRulesetsFromEnv() {
     const rulesetDetails = await getRulesetDetails();
     const out = [];
     for ( const ruleset of rulesetDetails.values() ) {
+        if ( ruleset.group === 'imported' ) { continue; }
         const { id, enabled } = ruleset;
         if ( enabled ) {
             out.push(id);
@@ -456,7 +464,7 @@ export async function getDefaultRulesetsFromEnv() {
 
 /******************************************************************************/
 
-async function patchDefaultRulesets() {
+export async function patchDefaultRulesets() {
     const [
         oldDefaultIds = [],
         newDefaultIds,
@@ -464,7 +472,7 @@ async function patchDefaultRulesets() {
     ] = await Promise.all([
         localRead('defaultRulesetIds'),
         getDefaultRulesetsFromEnv(),
-        getStaticRulesets().then(r => r.map(a => a.id)),
+        getStaticRulesets().then(a => a.map(a => a.id)),
     ]);
     const toAdd = [];
     const toRemove = [];
@@ -476,7 +484,9 @@ async function patchDefaultRulesets() {
         if ( newDefaultIds.includes(id) ) { continue; }
         toRemove.push(id);
     }
+    const reImported = /^[a-z]+:\/\//;
     for ( const id of rulesetConfig.enabledRulesets ) {
+        if ( reImported.test(id) ) { continue; }
         if ( staticRulesetIds.includes(id) ) { continue; }
         toRemove.push(id);
     }
@@ -492,6 +502,40 @@ async function patchDefaultRulesets() {
 
 /******************************************************************************/
 
+export async function getEnabledRulesets() {
+    const [
+        stockRulesets,
+        importedLists,
+    ] = await Promise.all([
+        dnr.getEnabledRulesets(),
+        getEnabledImportedLists(),
+    ]);
+    return stockRulesets.concat(importedLists.map(a => a.id));
+}
+
+/******************************************************************************/
+
+async function updateEnabledRulesets(toEnable, toDisable, out) {
+    const reImported = /^[a-z-]+:\/\//;
+    const enableRulesetIds = toEnable.filter(a => reImported.test(a) === false);
+    const disableRulesetIds = toDisable.filter(a => reImported.test(a) === false);
+    if ( enableRulesetIds.length === 0 ) {
+        if ( disableRulesetIds.length === 0 ) { return false; }
+    }
+    return await dnr.updateEnabledRulesets({
+        enableRulesetIds,
+        disableRulesetIds,
+    }).then(( ) => {
+        return true;
+    }).catch(reason => {
+        ubolErr(`updateEnabledRulesets/${reason}`);
+        out.error = `${reason}`;
+        return false;
+    });
+}
+
+/******************************************************************************/
+
 async function enableRulesets(ids) {
     const afterIds = new Set(ids);
     const [
@@ -499,7 +543,7 @@ async function enableRulesets(ids) {
         adminIds,
         rulesetDetails,
     ] = await Promise.all([
-        dnr.getEnabledRulesets().then(ids => new Set(ids)),
+        getEnabledRulesets().then(ids => new Set(ids)),
         getAdminRulesets(),
         getRulesetDetails(),
     ]);
@@ -525,18 +569,27 @@ async function enableRulesets(ids) {
         disableRulesetSet.add(id);
     }
 
+    const response = {};
+
     // Be sure the rulesets to enable/disable do exist in the current version,
     // otherwise the API throws.
     for ( const id of enableRulesetSet ) {
         if ( rulesetDetails.has(id) ) { continue; }
         enableRulesetSet.delete(id);
+        if ( /^[a-z-]+:\/\//.test(id) ) {
+            response.importedUpdated = true;
+        } else {
+            response.stockUpdated = true;
+        }
     }
     for ( const id of disableRulesetSet ) {
         if ( rulesetDetails.has(id) ) { continue; }
         disableRulesetSet.delete(id);
     }
 
-    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) { return; }
+    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) {
+        return response;
+    }
 
     const enableRulesetIds = Array.from(enableRulesetSet);
     const disableRulesetIds = Array.from(disableRulesetSet);
@@ -548,22 +601,28 @@ async function enableRulesets(ids) {
         ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
 
-    const response = {};
-
-    await dnr.updateEnabledRulesets({
+    response.stockUpdated ||= await updateEnabledRulesets(
         enableRulesetIds,
         disableRulesetIds,
-    }).catch(reason => {
-        ubolErr(`updateEnabledRulesets/${reason}`);
-        response.error = `${reason}`;
-    });
-
-    const result = await updateDynamicRules();
-    if ( result?.error ) {
-        response.error ||= result.error;
+        response,
+    );
+    if ( response.stockUpdated ) {
+        const result = await updateDynamicAndSessionRules();
+        if ( result?.error ) {
+            response.error ||= result.error;
+        }
+        response.changed = true;
     }
 
-    await dnr.getEnabledRulesets().then(enabledRulesets => {
+    response.importedUpdated ||= await updateEnabledImportedLists(
+        enableRulesetIds,
+        disableRulesetIds
+    );
+    if ( response.importedUpdated ) {
+        response.changed = true;
+    }
+
+    await getEnabledRulesets().then(enabledRulesets => {
         ubolLog(`Enabled rulesets: ${enabledRulesets}`);
         response.enabledRulesets = enabledRulesets;
         return dnr.getAvailableStaticRuleCount();
@@ -588,14 +647,14 @@ async function getStaticRulesets() {
 
 async function getEnabledRulesetsDetails() {
     const [
-        ids,
+        rulesetIds,
         rulesetDetails,
     ] = await Promise.all([
-        dnr.getEnabledRulesets(),
+        getEnabledRulesets(),
         getRulesetDetails(),
     ]);
     const out = [];
-    for ( const id of ids ) {
+    for ( const id of rulesetIds ) {
         const ruleset = rulesetDetails.get(id);
         if ( ruleset === undefined ) { continue; }
         out.push(ruleset);
@@ -620,10 +679,12 @@ async function updateUserRules() {
         userRules,
         userRulesText = '',
         sandboxRules,
+        importedRules,
     ] = await Promise.all([
         getEffectiveUserRules(),
         localRead('userDnrRules'),
         localRead('sandboxFilters.dnrRules'),
+        localRead('importedFilters.dnrRules'),
     ]);
 
     const effectiveRulesText = rulesetConfig.developerMode
@@ -634,6 +695,13 @@ async function updateUserRules() {
     const { rules } = parsed;
     if ( Array.isArray(sandboxRules) ) {
         sandboxRules.forEach(a => rules.push(a));
+    }
+    // User rules have high priority
+    rules.forEach(a => {
+        a.priority = (a.priority || 1) + USER_RULES_PRIORITY;
+    });
+    if ( Array.isArray(importedRules) ) {
+        importedRules.forEach(a => rules.push(a));
     }
     const removeRuleIds = [ ...userRules.map(a => a.id) ];
     const rejectedRegexes = [];
@@ -654,7 +722,6 @@ async function updateUserRules() {
     let ruleId = 0;
     for ( const rule of addRules ) {
         rule.id = USER_RULES_BASE_RULE_ID + ruleId++;
-        rule.priority = (rule.priority || 1) + USER_RULES_PRIORITY;
     }
 
     // Rules are first removed separately to ensure registered rules match
@@ -694,10 +761,7 @@ export {
     filteringModesToDNR,
     getEffectiveUserRules,
     getEnabledRulesetsDetails,
-    getRulesetDetails,
-    patchDefaultRulesets,
     setStrictBlockMode,
-    updateDynamicRules,
     updateSessionRules,
     updateUserRules,
 };

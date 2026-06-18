@@ -26,10 +26,10 @@ import { localRead, localWrite, sendMessage } from './ext.js';
 
 /******************************************************************************/
 
-export const rulesetMap = new Map();
+const rulesetMap = new Map();
+const visuallyEnabledRulesets = new Set();
 
-let cachedRulesetData = {};
-let hideUnusedSet = new Set([ 'ads', 'regions' ]);
+let hideUnusedSet = new Set([ 'ads', 'regions', 'imported' ]);
 
 /******************************************************************************/
 
@@ -43,10 +43,12 @@ function renderTotalRuleCounts() {
     let rulesetCount = 0;
     let filterCount = 0;
     let ruleCount = 0;
-    for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
-        if ( qs$(liEntry, 'input[type="checkbox"]:checked') === null ) { continue; }
-        rulesetCount += 1;
-        const stats = rulesetStats(liEntry.dataset.rulesetid);
+    for ( const listEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
+        if ( qs$(listEntry, 'input[type="checkbox"]:checked') === null ) { continue; }
+        if ( listEntry.dataset.imported === undefined ) {
+            rulesetCount += 1;
+        }
+        const stats = rulesetStats(listEntry.dataset.rulesetid);
         if ( stats === undefined ) { continue; }
         ruleCount += stats.ruleCount;
         filterCount += stats.filterCount;
@@ -57,7 +59,7 @@ function renderTotalRuleCounts() {
     );
 
     dom.cl.toggle(dom.body, 'noMoreRuleset',
-        rulesetCount === cachedRulesetData.maxNumberOfEnabledRulesets
+        rulesetCount === self.cachedRulesetData.maxNumberOfEnabledRulesets
     );
 }
 
@@ -102,7 +104,7 @@ function rulesetStats(rulesetId) {
 /******************************************************************************/
 
 function isAdminRuleset(listkey) {
-    const { adminRulesets = [] } = cachedRulesetData;
+    const { adminRulesets = [] } = self.cachedRulesetData;
     for ( const id of adminRulesets ) {
         const pos = id.indexOf(listkey);
         if ( pos === 0 ) { return true; }
@@ -115,30 +117,50 @@ function isAdminRuleset(listkey) {
 
 /******************************************************************************/
 
-export function renderFilterLists(rulesetData) {
-    cachedRulesetData = rulesetData;
-    const { enabledRulesets, rulesetDetails } = cachedRulesetData;
+export async function renderFilterLists() {
+    const [
+        enabledRulesets,
+        rulesetDetails,
+    ] = await Promise.all([
+        sendMessage({ what: 'getEnabledRulesets' }),
+        sendMessage({ what: 'getRulesetDetails' }),
+    ]);
 
-    const shouldUpdate = rulesetMap.size !== 0;
+    self.cachedRulesetData.enabledRulesets = enabledRulesets;
+    self.cachedRulesetData.rulesetDetails = rulesetDetails;
 
-    rulesetDetails.forEach(rule => rulesetMap.set(rule.id, rule));
+    visuallyEnabledRulesets.clear();
+    rulesetMap.clear();
+    rulesetDetails.forEach(rule => {
+        rulesetMap.set(rule.id, rule);
+    });
 
     const listStatsTemplate = i18n$('perRulesetStats');
 
     const initializeListEntry = (ruleset, listEntry) => {
         const on = enabledRulesets.includes(ruleset.id);
+        if ( on ) {
+            visuallyEnabledRulesets.add(ruleset.id);
+        }
         if ( dom.cl.has(listEntry, 'toggled') === false ) {
             dom.prop(qs$(listEntry, ':scope > .detailbar input'), 'checked', on);
         }
         if ( ruleset.homeURL ) {
             dom.attr(qs$(listEntry, 'a.support'), 'href', ruleset.homeURL);
         }
-        dom.cl.toggle(listEntry, 'isDefault', ruleset.enabled === true);
+        const isImported = ruleset.group === 'imported';
+        dom.cl.toggle(listEntry, 'isDefault',
+            ruleset.enabled === true && isImported === false
+        );
+        if ( isImported ) {
+            listEntry.dataset.imported = '';
+        }
         const stats = rulesetStats(ruleset.id);
         if ( stats === undefined ) { return; }
         listEntry.title = listStatsTemplate
             .replace('{{ruleCount}}', renderNumber(stats.ruleCount))
             .replace('{{filterCount}}', renderNumber(stats.filterCount));
+        if ( isImported ) { return; }
         const fromAdmin = isAdminRuleset(ruleset.id);
         dom.cl.toggle(listEntry, 'fromAdmin', fromAdmin);
         dom.attr(
@@ -148,31 +170,26 @@ export function renderFilterLists(rulesetData) {
         );
     };
 
-    // Update already rendered DOM lists
-    if ( shouldUpdate ) {
-        for ( const listEntry of qsa$('#lists .listEntry[data-rulesetid]') ) {
-            const rulesetid = listEntry.dataset.rulesetid;
-            const ruleset = rulesetMap.get(rulesetid);
-            initializeListEntry(ruleset, listEntry);
-        }
-        updateNodes();
-        renderTotalRuleCounts();
-        return;
-    }
-
-    const createListEntry = (listDetails, depth) => {
+    const createListEntry = (entryid, listDetails, depth) => {
         if ( listDetails.lists === undefined ) {
+            const listEntry = qs$(`[data-role="leaf"][data-rulesetid="${entryid}"]`);
+            if ( listEntry !== null ) { return listEntry; }
             return nodeFromTemplate('listEntryLeaf', '.listEntry');
         }
         if ( depth !== 0 ) {
+            const listEntry = qs$(`[data-role="node"][data-nodeid="${entryid}"]`);
+            if ( listEntry !== null ) { return listEntry; }
             return nodeFromTemplate('listEntryNode', '.listEntry');
         }
+        const listEntry = qs$(`[data-role="rootnode"][data-nodeid="${entryid}"]`);
+        if ( listEntry !== null ) { return listEntry; }
         return nodeFromTemplate('listEntryRoot', '.listEntry');
     };
 
     const createListEntries = (parentkey, listTree, depth = 0) => {
-        const listEntries = nodeFromTemplate('listEntries', '.listEntries');
         const treeEntries = Object.entries(listTree);
+        const listEntries = qs$(`#lists > .listEntries`) ||
+            nodeFromTemplate('listEntries', '.listEntries');
         if ( depth !== 0 ) {
             const reEmojis = /\p{Emoji}+/gu;
             treeEntries.sort((a ,b) => {
@@ -184,31 +201,37 @@ export function renderFilterLists(rulesetData) {
                 return as.localeCompare(bs);
             });
         }
-        for ( const [ listkey, listDetails ] of treeEntries ) {
-            const listEntry = createListEntry(listDetails, depth);
+        for ( const [ listid, listDetails ] of treeEntries ) {
+            const listEntry = createListEntry(listid, listDetails, depth);
+            const newEntry = listEntry.parentElement === null;
             if ( listDetails.lists === undefined ) {
-                listEntry.dataset.rulesetid = listkey;
+                listEntry.dataset.rulesetid = listid;
             } else {
-                listEntry.dataset.nodeid = listkey;
-                dom.cl.toggle(listEntry, 'hideUnused', hideUnusedSet.has(listkey));
+                listEntry.dataset.nodeid = listid;
+                dom.cl.toggle(listEntry, 'hideUnused', hideUnusedSet.has(listid));
             }
-            qs$(listEntry, ':scope > .detailbar .listname').append(
-                i18n.patchUnicodeFlags(listDetails.name)
-            );
+            if ( newEntry ) {
+                qs$(listEntry, ':scope > .detailbar .listname').append(
+                    i18n.patchUnicodeFlags(listDetails.name)
+                );
+            }
             if ( listDetails.lists !== undefined ) {
-                listEntry.append(createListEntries(listkey, listDetails.lists, depth+1));
-                dom.cl.toggle(listEntry, 'expanded', true/*listIsExpanded(listkey)*/);
-                //updateListNode(listEntry);
+                const listEntries = createListEntries(listid, listDetails.lists, depth+1)
+                if ( listEntries.parentElement === null ) {
+                    listEntry.append(listEntries);
+                }
             } else {
                 initializeListEntry(listDetails, listEntry);
             }
-            listEntries.append(listEntry);
+            if ( newEntry ) {
+                listEntries.append(listEntry);
+            }
         }
         return listEntries;
     };
 
     // Visually split the filter lists in groups
-    const groups = new Map([
+    const groups = [
         [
             'default',
             rulesetDetails.filter(ruleset =>
@@ -238,15 +261,20 @@ export function renderFilterLists(rulesetData) {
             'misc',
             rulesetDetails.filter(ruleset =>
                 ruleset.group === undefined &&
-                typeof ruleset.lang !== 'string' 
+                typeof ruleset.lang !== 'string'
             ),
         ], [
             'regions',
             rulesetDetails.filter(ruleset =>
-                ruleset.group === 'regions' 
+                ruleset.group === 'regions'
+            ),
+        ], [
+            'imported',
+            rulesetDetails.filter(ruleset =>
+                ruleset.group === 'imported'
             ),
         ],
-    ]);
+    ];
 
     dom.cl.toggle(dom.body, 'hideUnused', mustHideUnusedLists('*'));
 
@@ -297,8 +325,9 @@ export function renderFilterLists(rulesetData) {
 
     updateNodes(listEntries);
 
-    dom.clear('#lists');
-    qs$('#lists').append(listEntries);
+    if ( listEntries.parentElement === null ) {
+        qs$('#lists').append(listEntries);
+    }
 
     renderTotalRuleCounts();
 }
@@ -393,27 +422,38 @@ dom.on('#findInLists', 'input', searchFilterLists);
 /******************************************************************************/
 
 const applyEnabledRulesets = (( ) => {
-    const apply = async ( ) => {
+    const apply = async (final = false) => {
         dom.cl.add(dom.body, 'committing');
 
         const enabledRulesets = [];
-        for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
-            const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
+        const rulesetEntries =
+            qsa$('#lists [data-role="leaf"][data-rulesetid]');
+        for ( const listEntry of rulesetEntries ) {
+            const checked = qs$(listEntry, 'input[type="checkbox"]:checked') !== null;
             if ( checked === false ) { continue; }
-            const { rulesetid } = liEntry.dataset;
-            if ( dom.cl.has(liEntry, 'fromAdmin') ) { continue; }
+            const { rulesetid } = listEntry.dataset;
+            if ( dom.cl.has(listEntry, 'fromAdmin') ) { continue; }
             enabledRulesets.push(rulesetid);
         }
 
         dom.cl.remove('#lists .listEntry.toggled', 'toggled');
 
+        const toRemove = Array.from(
+            qsa$('#lists [data-role="leaf"][data-rulesetid][data-remove]')
+        ).map(a => a.dataset.rulesetid);
+
         const modified = hashFromIterable(enabledRulesets) !==
-            hashFromIterable(cachedRulesetData.enabledRulesets);
+            hashFromIterable(visuallyEnabledRulesets) ||
+            final && toRemove.length;
         if ( modified ) {
-            const result = await sendMessage({
+            const msg = {
                 what: 'applyRulesets',
                 enabledRulesets,
-            });
+            };
+            if ( final ) {
+                msg.toRemove = toRemove;
+            }
+            const result = await sendMessage(msg);
             dom.text('#dnrError', result?.error || '');
         }
 
@@ -426,7 +466,7 @@ const applyEnabledRulesets = (( ) => {
         if ( timer !== undefined ) { return; }
         self.clearTimeout(timer);
         timer = undefined;
-        apply();
+        apply(true);
     });
 
     return function() {
@@ -462,3 +502,47 @@ dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ev => {
     renderTotalRuleCounts();
     applyEnabledRulesets();
 });
+
+/******************************************************************************/
+
+function importFromInput() {
+    const input = qs$('.importRulesetURL input[type="url"]');
+    const url = input.value;
+    if ( /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m.test(url) === false ) { return; }
+    sendMessage({ what: 'importFilterList', url });
+    qs$('.importRulesetURL').open = false;
+    input.value = '';
+}
+dom.on('section[data-pane="rulesets"] button:has([data-i18n="addButton"])', 'click', importFromInput);
+
+function removeImportedList(ev) {
+    const listEntry = ev.target.closest('[data-role="leaf"]');
+    const input = qs$(listEntry, 'input[type="checkbox"]');
+    listEntry.dataset.remove = JSON.stringify(input.checked);
+    input.checked = false;
+    input.setAttribute('disabled', '');
+    updateNodes();
+    renderTotalRuleCounts();
+    applyEnabledRulesets();
+}
+dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .doRemove', removeImportedList);
+
+function unremoveImportedList(ev) {
+    const listEntry = ev.target.closest('[data-role="leaf"]');
+    const input = qs$(listEntry, 'input[type="checkbox"]');
+    input.removeAttribute('disabled');
+    input.checked = JSON.parse(listEntry.dataset.remove);
+    delete listEntry.dataset.remove;
+    updateNodes();
+    renderTotalRuleCounts();
+    applyEnabledRulesets();
+}
+dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .undoRemove', unremoveImportedList);
+
+/******************************************************************************/
+
+async function start() {
+    renderFilterLists();
+}
+
+dom.onFirstShown(start, qs$('section[data-pane="rulesets"]'));

@@ -51,6 +51,12 @@ import {
 } from './filter-manager.js';
 
 import {
+    addImportedList,
+    getImportedLists,
+    removeImportedLists,
+} from './imported-lists.js';
+
+import {
     adminReadEx,
     getAdminRulesets,
     loadAdminConfig,
@@ -85,11 +91,12 @@ import {
     excludeFromStrictBlock,
     getDefaultRulesetsFromEnv,
     getEffectiveUserRules,
+    getEnabledRulesets,
     getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,
     setStrictBlockMode,
-    updateDynamicRules,
+    updateDynamicAndSessionRules,
     updateSessionRules,
     updateUserRules,
 } from './ruleset-manager.js';
@@ -228,12 +235,25 @@ async function registerDeclarativeAssets(
 
 /******************************************************************************/
 
+async function applyRulesets(rulesets) {
+    const result = await enableRulesets(rulesets);
+    const stockUpdated = result.stockUpdated ?? false;
+    const importedUpdated = result.importedUpdated ?? false;
+    if ( stockUpdated === false && importedUpdated === false ) { return; }
+    rulesetConfig.enabledRulesets = result.enabledRulesets;
+    await saveRulesetConfig();
+    await registerDeclarativeAssets(stockUpdated, importedUpdated);
+    broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
+}
+
+/******************************************************************************/
+
 async function setDeveloperMode(state) {
     rulesetConfig.developerMode = state === true;
     toggleDeveloperMode(rulesetConfig.developerMode);
     broadcastMessage({ developerMode: rulesetConfig.developerMode });
     await saveRulesetConfig();
-    await registerDeclarativeAssets(false, true, false);
+    await registerDeclarativeAssets(false, true, true);
     await updateUserRules();
     return rulesetConfig.developerMode;
 }
@@ -330,12 +350,10 @@ async function onMessage(request, sender) {
     switch ( request.what ) {
 
     case 'applyRulesets': {
-        const result = await enableRulesets(request.enabledRulesets);
-        if ( result === undefined || result.error ) { return; }
-        rulesetConfig.enabledRulesets = result.enabledRulesets;
-        await saveRulesetConfig();
-        await registerContentScripts();
-        broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
+        await applyRulesets(request.enabledRulesets);
+        if ( request.toRemove ) {
+            await removeImportedLists(request.toRemove);
+        }
         return;
     }
 
@@ -367,7 +385,7 @@ async function onMessage(request, sender) {
             hasBroadHostPermissions(),
             getDefaultFilteringMode(),
             getRulesetDetails(),
-            dnr.getEnabledRulesets(),
+            getEnabledRulesets(),
             getAdminRulesets(),
             adminReadEx('disabledFeatures'),
         ]);
@@ -393,7 +411,7 @@ async function onMessage(request, sender) {
     }
 
     case 'getEnabledRulesets':
-        return dnr.getEnabledRulesets();
+        return getEnabledRulesets();
 
     case 'getRulesetDetails': {
         const rulesetDetails = await getRulesetDetails();
@@ -575,6 +593,22 @@ async function onMessage(request, sender) {
     case 'getConsoleOutput':
         return getConsoleOutput();
 
+    case 'importFilterList': {
+        const modified = await addImportedList(request.url);
+        if ( modified !== true ) { break; }
+        const rulesets = await getEnabledRulesets();
+        rulesets.push(request.url);
+        applyRulesets(rulesets);
+        if ( modified ) {
+            return registerDeclarativeAssets(false);
+        }
+        break;
+    }
+
+    case 'getImportedLists': {   
+        return getImportedLists();
+    }
+
     default:
         break;
     }
@@ -651,25 +685,45 @@ async function startSession() {
         }
     }
 
-    const rulesetsUpdated = await enableRulesets(rulesetConfig.enabledRulesets);
+    // 
+    const {
+        stockUpdated,
+        importedUpdated,
+        enabledRulesets,
+    } = await enableRulesets(rulesetConfig.enabledRulesets);
+    if ( stockUpdated || importedUpdated ) {
+        rulesetConfig.enabledRulesets = enabledRulesets;
+        await saveRulesetConfig();
+    }
 
-    // We need to update the regex rules only when ruleset version changes.
-    if ( rulesetsUpdated === undefined ) {
-        if ( isNewVersion ) {
-            updateDynamicRules();
-        } else {
-            updateSessionRules();
-        }
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest#rulesets
+    // "The set of enabled static rulesets is persisted across sessions but not across extension updates"
+    // "[Dynamic] rules persist across sessions and extension updates"
+    // "[Session] rules do not persist across browser sessions"
+    if ( isNewVersion ) {
+        updateDynamicAndSessionRules();
+    } else {
+        updateSessionRules();
     }
 
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/scripting/RegisteredContentScript#persistacrosssessions
+    // "When an extension updates, content scripts are cleared"
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/userScripts#extension_updates
+    // "User scripts are cleared when an extension updates"
     const shouldInject = isNewVersion || permissionsUpdated ||
         isSideloaded && rulesetConfig.developerMode;
-    if ( shouldInject ) {
-        await registerDeclarativeAssets(true, true, false);
-        await updateUserRules();
+    if ( shouldInject || stockUpdated || importedUpdated ) {
+        await registerDeclarativeAssets(
+            shouldInject || stockUpdated,
+            shouldInject || importedUpdated,
+            false
+        );
+        if ( importedUpdated ) {
+            await updateUserRules();
+        }
     }
 
     // Cosmetic filtering-related content scripts cache fitlering data in
@@ -751,6 +805,7 @@ const isFullyInitialized = start().then(( ) => {
 });
 
 runtime.onMessage.addListener((request, sender, callback) => {
+    if ( request.what.includes(':') ) { return; }
     onMessage(request, sender).then(callback);
     return true;
 });

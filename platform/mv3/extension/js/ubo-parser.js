@@ -243,6 +243,15 @@ export function validateRules(rules) {
 
 /******************************************************************************/
 
+// Priority:
+//   Removeparam: 1-4
+//   Block: 10 (default priority)
+//   Redirect: 11-19
+//   Excepted redirect: 21-29
+//   Allow: 30
+//   Block important: 40
+//   Redirect important: 41-49
+
 export function parseNetworkFilter(parser) {
     if ( parser.isNetworkFilter() === false ) { return; }
     if ( parser.hasError() ) { return; }
@@ -251,7 +260,8 @@ export function parseNetworkFilter(parser) {
         action: { type: 'block' },
         condition: { },
     };
-    if ( parser.isException() ) {
+    const isException = parser.isException();
+    if ( isException ) {
         rule.action.type = 'allow';
     }
 
@@ -275,8 +285,6 @@ export function parseNetworkFilter(parser) {
     }
 
     const defaultResourceTypes = new Set();
-    let defaultUrlFilter = '';
-
     const initiatorDomains = new Set();
     const excludedInitiatorDomains = new Set();
     const requestDomains = new Set();
@@ -300,7 +308,8 @@ export function parseNetworkFilter(parser) {
         }
     };
 
-    let priority = 0;
+    let subpriority = 0;
+    let isImportant = false;
 
     for ( const type of parser.getNodeTypes() ) {
         switch ( type ) {
@@ -410,7 +419,7 @@ export function parseNetworkFilter(parser) {
             processResourceType('image', type);
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
-            priority += 30;
+            isImportant = true;
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
             rule.condition.isUrlFilterCaseSensitive = true;
@@ -458,8 +467,7 @@ export function parseNetworkFilter(parser) {
             let value = parser.getNetOptionValue(type);
             const match = /:(\d+)$/.exec(value);
             if ( match ) {
-                const subpriority = parseInt(match[1], 10);
-                priority += Math.min(subpriority, 8);
+                subpriority = Math.min(parseInt(match[1], 10) || 0, 8);
                 value = value.slice(0, match.index);
             }
             if ( validRedirectResources.has(value) === false ) { return; }
@@ -467,7 +475,6 @@ export function parseNetworkFilter(parser) {
             rule.action.redirect = {
                 extensionPath: `/web_accessible_resources/${validRedirectResources.get(value)}`,
             };
-            priority += 11;
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM: {
@@ -478,6 +485,9 @@ export function parseNetworkFilter(parser) {
             const removeParams = [];
             if ( details.name ) {
                 removeParams.push(details.name);
+                if ( rule.condition.urlFilter === undefined ) {
+                    rule.condition.urlFilter = `^${details.name}=`;
+                }
             }
             rule.action.type = 'redirect';
             rule.action.redirect = {
@@ -486,7 +496,6 @@ export function parseNetworkFilter(parser) {
             defaultResourceTypes.add('main_frame');
             defaultResourceTypes.add('sub_frame');
             defaultResourceTypes.add('xmlhttprequest');
-            defaultUrlFilter = '?';
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
@@ -544,9 +553,6 @@ export function parseNetworkFilter(parser) {
             break;
         }
     }
-    if ( pattern === '*' && defaultUrlFilter !== '' ) {
-        rule.condition.urlFilter = defaultUrlFilter;
-    }
     if ( initiatorDomains.size !== 0 ) {
         rule.condition.initiatorDomains = Array.from(initiatorDomains).sort();
     }
@@ -583,7 +589,29 @@ export function parseNetworkFilter(parser) {
         if ( resourceTypes.size !== 0 ) { return; }
         rule.condition.excludedResourceTypes = Array.from(excludedResourceTypes).sort();
     }
-    if ( priority !== 0 ) {
+    let priority = 1;
+    if ( rule.action.type === 'block' ) {
+        priority = isImportant ? 40 : 10;
+    } else if ( rule.action.type === 'allow' ) {
+        priority = 30;
+    } else if ( rule.action.type === 'redirect' ) {
+        if ( rule.action.redirect.extensionPath ) {
+            if ( isException ) {
+                rule.action.type = 'block';
+                delete rule.action.redirect;
+                priority = 20;
+            } else {
+                priority = (isImportant ? 11 : 41) + subpriority;
+            }
+        } else if ( rule.action.redirect.transform?.queryTransform?.removeParams ) {
+            if ( isException ) {
+                rule.action.type = 'allow';
+                delete rule.action.redirect;
+            }
+        } else if ( rule.action.redirect.regexSubstitution ) {
+        }
+    }
+    if ( priority !== 1 ) {
         rule.priority = priority;
     }
     return rule;

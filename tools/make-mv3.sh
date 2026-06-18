@@ -124,6 +124,8 @@ cp platform/mv3/extension/lib/codemirror/codemirror-ubol/LICENSE \
     "$UBOL_DIR"/lib/codemirror/codemirror-quickstart.LICENSE
 mkdir -p "$UBOL_DIR"/lib/csstree
 cp "$UBO_DIR"/src/lib/csstree/* "$UBOL_DIR"/lib/csstree/
+cp platform/mv3/extension/lib/s14e-serializer/s14e-serializer.js \
+    "$UBOL_DIR"/lib/
 
 echo "*** uBOLite.mv3: Generating rulesets"
 UBOL_BUILD_DIR=$(mktemp -d)

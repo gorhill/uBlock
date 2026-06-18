@@ -86,6 +86,7 @@ export function makeCosmeticScripts(rulesetId, mapin) {
     const sortedHostnames = Array.from(allHostnames.keys()).toSorted(hostnameCompare);
 
     const data = {
+        rulesetId,
         selectors: Array.from(allSelectors.keys()),
         selectorLists: Array.from(allSelectorLists.keys()),
         selectorListRefs: sortedHostnames.map(a => allHostnames.get(a)),
@@ -103,6 +104,6 @@ export function makeCosmeticScripts(rulesetId, mapin) {
         selectorCount: allSelectors.size,
         hostnameCount: sortedHostnames.length,
         regexCount: allRegexesOrPaths.size,
-        json: JSON.stringify(data),
+        data,
     };
 }

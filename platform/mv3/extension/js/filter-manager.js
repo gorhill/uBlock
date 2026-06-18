@@ -30,6 +30,12 @@ import {
 } from './ext.js';
 
 import {
+    getCompiledListData,
+    getEnabledImportedLists,
+    updateImportedListData,
+} from './imported-lists.js';
+
+import {
     intersectHostnameIters,
     matchesFromHostnames,
     subtractHostnameIters,
@@ -302,16 +308,14 @@ export function setSandboxFilters(text = '') {
 
 export async function registerSandboxFilters() {
     if ( supportsUserScripts !== true ) { return false; }
+    console.trace('registerSandboxFilters');
     registerSandboxFilters.pendingOp =
         registerSandboxFilters.pendingOp.then(( ) => registerSandboxFilters.register());
     return registerSandboxFilters.pendingOp;
 }
 registerSandboxFilters.pendingOp = Promise.resolve();
 
-registerSandboxFilters.register = async function register() {
-    const filteringModeDetails = await getFilteringModeDetails();
-    const { none, basic, optimal, complete } = filteringModeDetails;
-    const notNone = [ ...basic, ...optimal, ...complete ];
+async function getUserList() {
     const customFilters = await getAllCustomFilters();
     const lines = [];
     for ( const [ hostname, selectors ] of customFilters ) {
@@ -326,80 +330,122 @@ registerSandboxFilters.register = async function register() {
             lines.push(sandboxFilters);
         }
     }
-    const text = lines.join('\n').trim();
-    const result = await parseRawFilters(text) || {};
-    // User scripts
-    const toRemove = await browser.userScripts.getScripts();
-    if ( toRemove.length !== 0 ) {
+    return lines.join('\n').trim();
+}
+
+registerSandboxFilters.register = async function register() {
+    const [
+        hasUserFilters,
+        hasImportedLists,
+    ] = await Promise.all([
+        getUserList().then(a => Boolean(a)),
+        getEnabledImportedLists().then(a => Boolean(a.length)),
+    ]);
+
+    let result;
+    if ( hasUserFilters || hasImportedLists ) {
+        result = await parseRawFilters() || {};
+    }
+
+    const scriptsToRemove = await browser.userScripts.getScripts();
+    if ( scriptsToRemove.length !== 0 ) {
         await browser.userScripts.unregister();
-        ubolLog(`Unregistered userscript ${toRemove.map(v => v.id)}`);
+        ubolLog(`Unregistered userscript ${scriptsToRemove.map(a => a.id).join()}`);
     }
+    if ( Boolean(result) === false ) { return true; }
+
+    const filteringModeDetails = await getFilteringModeDetails();
+    const { none, basic } = filteringModeDetails;
+
     const toAdd = [];
-    const hostnames = none.has('all-urls')
-        ? [ ...notNone ]
-        : [];
-    const excludeHostnames = none.has('all-urls') === false
-        ? [ ...none ]
-        : [];
-    const matches = hostnames.length !== 0
-        ? matchesFromHostnames(hostnames)
-        : [ '<all_urls>' ];
-    const excludeMatches = excludeHostnames.length !== 0
-        ? matchesFromHostnames(excludeHostnames)
-        : [];
-    if ( result.ISOLATED?.length ) {
-        const directive = {
-            id: 'user.isolated',
-            world: 'USER_SCRIPT',
-            allFrames: true,
-            js: [ { code: result.ISOLATED.join('\n\n') } ],
-            runAt: 'document_start',
-            matches: matches.slice(),
-        };
-        if ( excludeMatches.length !== 0 ) {
-            directive.excludeMatches = excludeMatches.slice();
-        }
-        toAdd.push(directive);
+    const {
+        scripts: sandboxScripts,
+        modified: sandboxModified,
+    } = await registerSandboxFilters.prepare('sandbox',
+        none,
+        result.sandbox
+    );
+    if ( sandboxScripts.length ) {
+        toAdd.push(...sandboxScripts);
     }
-    if ( result.MAIN?.length ) {
-        const directive = {
-            id: 'user.main',
-            world: 'MAIN',
-            allFrames: true,
-            js: [ { code: result.MAIN.join('\n\n') } ],
-            runAt: 'document_start',
-            matches: matches.slice(),
-        };
-        if ( excludeMatches.length !== 0 ) {
-            directive.excludeMatches = excludeMatches.slice();
-        }
-        toAdd.push(directive);
+    const {
+        scripts: importedScripts,
+        modified: importedModified,
+    } = await registerSandboxFilters.prepare('imported',
+        new Set([ ...none, ...basic ]),
+        result.imported
+    );
+    if ( importedScripts.length ) {
+        toAdd.push(...importedScripts);
     }
     if ( toAdd.length ) {
         await browser.userScripts.register(toAdd).then(( ) => {
             ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
         });
     }
+    return sandboxModified || importedModified;
+}
+
+registerSandboxFilters.prepare = async function(id, none, result) {
+    const scripts = [];
+    const excludeHostnames = none.has('all-urls') === false
+        ? [ ...none ]
+        : [];
+    const excludeMatches = excludeHostnames.length !== 0
+        ? matchesFromHostnames(excludeHostnames)
+        : [];
+    if ( result?.ISOLATED?.length ) {
+        for ( const script of result.ISOLATED ) {
+            const directive = {
+                id: script.id,
+                world: 'USER_SCRIPT',
+                allFrames: true,
+                js: [ { code: script.code } ],
+                runAt: 'document_start',
+                matches: matchesFromHostnames(script.hostnames),
+            };
+            if ( excludeMatches.length !== 0 ) {
+                directive.excludeMatches = excludeMatches.slice();
+            }
+            scripts.push(directive);
+        }
+    }
+    if ( result?.MAIN?.length ) {
+        for ( const script of result.MAIN ) {
+            const directive = {
+                id: script.id,
+                world: 'MAIN',
+                allFrames: true,
+                js: [ { code: script.code } ],
+                runAt: 'document_start',
+                matches: matchesFromHostnames(script.hostnames),
+            };
+            if ( excludeMatches.length !== 0 ) {
+                directive.excludeMatches = excludeMatches.slice();
+            }
+            scripts.push(directive);
+        }
+    }
     // DNR rules
-    const beforeRules = await localRead('sandboxFilters.dnrRules');
-    const afterRules = rulesetConfig.developerMode && result.dnrRules?.length
+    const storageId = `${id}Filters.dnrRules`;
+    const beforeRules = await localRead(storageId);
+    const afterRules = rulesetConfig.developerMode && result?.dnrRules?.length
         ? result.dnrRules
         : undefined;
     const modified = JSON.stringify(afterRules) !== JSON.stringify(beforeRules);
     if ( modified ) {
         if ( Array.isArray(afterRules) ) {
-            await localWrite('sandboxFilters.dnrRules', afterRules);
+            await localWrite(storageId, afterRules);
         } else {
-            await localRemove('sandboxFilters.dnrRules');
+            await localRemove(storageId);
         }
     }
-    return modified;
+    return { scripts, modified };
 }
 
 /******************************************************************************/
 
-async function parseRawFilters(text) {
-    if ( Boolean(text) === false ) { return; }
+async function parseRawFilters() {
     const {
         promise: offscreenPromise,
         resolve: offscreenResolve,
@@ -407,12 +453,29 @@ async function parseRawFilters(text) {
     const handler = (request, sender, callback) => {
         if ( typeof request !== 'object' ) { return; }
         switch ( request?.what ) {
-        case 'getRawFilters':
-            callback(text);
-            break;
-        case 'compiledRawFilters':
+        case 'compileFilters:getUserList':
+            getUserList().then(text => {
+                callback(text);
+            });
+            return true;
+        case 'compileFilters:result':
             offscreenResolve(request);
             break;
+        case 'compileFilters:getEnabledImportedLists':
+            getEnabledImportedLists().then(result => {
+                callback(result);
+            });
+            return true;
+        case 'compileFilters:getCompiledListData':
+            getCompiledListData(request.listid).then(result => {
+                callback(result);
+            });
+            return true;
+        case 'compileFilters:updateImportedListData':
+            updateImportedListData(request.listid, request).then(result => {
+                callback(result);
+            });
+            return true;
         default:
             break;
         }
@@ -422,13 +485,13 @@ async function parseRawFilters(text) {
         promise: timeoutPromise,
         resolve: timeoutResolve,
     } = Promise.withResolvers();
-    self.setTimeout(timeoutResolve, 2000);
+    self.setTimeout(timeoutResolve, 30000);
     const [ result ] = await Promise.all([
         Promise.race([ offscreenPromise, timeoutPromise ]),
         browser.offscreen.createDocument({
             url: '/js/offscreen/compile-filters.html',
             reasons: [ 'WORKERS' ],
-            justification: 'To compile custom filters in a modular way from service worker (service workers do not allow dynamic module import)',
+            justification: 'To compile custom & imported filters in a modular way from service worker (service workers do not allow dynamic module import)',
         }),
     ]);
     runtime.onMessage.removeListener(handler);

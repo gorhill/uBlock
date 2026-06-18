@@ -115,6 +115,14 @@
 <!-- -------- -->
 <section data-pane="rulesets">
     <div id="lists"></div>
+    <aside>
+        <details class="importRulesetURL"><summary data-i18n="customListImportLabel">_</summary>
+        <div>
+            <input type="url" spellcheck="false" placeholder="customListImportPlaceholder">
+            <button class="iconified dontshrink" type="button"><span class="fa-icon">check</span><span data-i18n="addButton">_</span><span class="hover"></span></button>
+        </div>
+        </details>
+    </aside>
 </section>
 
 <!-- -------- -->
@@ -199,6 +207,8 @@
             <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span>
             </label>
             <span class="iconbar"><!--
+             --><span class="fa-icon support doRemove">trash-o</span><!--
+             --><span class="fa-icon support undoRemove">undo</span><!--
              --><a class="fa-icon support" href="#" target="_blank">home</a>
             </span>
         </span>
