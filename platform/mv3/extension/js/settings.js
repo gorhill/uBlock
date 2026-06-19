@@ -227,15 +227,15 @@ dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
     dom.body.dataset.develop = `${state}`;
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="backupButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="backupButton"])', 'click', ( ) => {
     backupSettings();
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="restoreButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="restoreButton"])', 'click', ( ) => {
     restoreSettings();
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="resetToDefaultButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="resetToDefaultButton"])', 'click', ( ) => {
     resetSettings();
 });
 

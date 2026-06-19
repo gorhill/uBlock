@@ -65,7 +65,6 @@ import {
     getDueJobs,
     hostnameFromMatch,
     hostnamesFromMatches,
-    intFromVersion,
 } from './utils.js';
 
 import {
@@ -672,34 +671,10 @@ async function startSession() {
     // The default rulesets may have changed, find out new ruleset to enable,
     // obsolete ruleset to remove.
     if ( isNewVersion ) {
-        const previousVersion = rulesetConfig.version;
         ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
         rulesetConfig.version = currentVersion;
         await patchDefaultRulesets();
         saveRulesetConfig();
-        // https://github.com/uBlockOrigin/uBOL-home/issues/670
-        if ( intFromVersion(previousVersion) <= intFromVersion('2026.423.0000') ) {
-            const promises = [];
-            const customFilters = await getAllCustomFilters();
-            for ( const [ hostname, selectors ] of customFilters ) {
-                let modified = false;
-                for ( let i = 0; i < selectors.length; i++ ) {
-                    const selector = selectors[i];
-                    if ( selector.startsWith('0') === false ) { continue; }
-                    selectors[i] = selector.slice(1);
-                    modified = true;
-                }
-                if ( modified === false ) { continue; }
-                promises.push(
-                    removeAllCustomFilters(hostname).then(( ) =>
-                        addCustomFilters(hostname, selectors)
-                    )
-                );
-            }
-            if ( promises.length !== 0 ) {
-                await Promise.all(promises);
-            }
-        }
     }
 
     const {
@@ -709,7 +684,7 @@ async function startSession() {
     } = await enableRulesets(rulesetConfig.enabledRulesets);
     if ( stockUpdated || importedUpdated ) {
         rulesetConfig.enabledRulesets = enabledRulesets;
-        await saveRulesetConfig();
+        saveRulesetConfig();
     }
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest#rulesets
