@@ -27,6 +27,7 @@ import {
 
 import {
     enableRulesets,
+    getEnabledRulesets,
     getRulesetDetails,
     setStrictBlockMode,
 } from './ruleset-manager.js';
@@ -127,7 +128,7 @@ const adminSettings = {
             await registerContentScripts();
             const results = await Promise.all([
                 getAdminRulesets(),
-                dnr.getEnabledRulesets(),
+                getEnabledRulesets(),
             ]);
             const [ adminRulesets, enabledRulesets ] = results;
             broadcastMessage({ adminRulesets, enabledRulesets });

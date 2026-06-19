@@ -26,12 +26,8 @@ import { renderFilterLists } from './filter-lists.js';
 
 /******************************************************************************/
 
-let cachedRulesetData = {};
-
-/******************************************************************************/
-
 function renderAdminRules() {
-    const { disabledFeatures: forbid = [] } = cachedRulesetData;
+    const { disabledFeatures: forbid = [] } = self.cachedRulesetData;
     if ( forbid.length === 0 ) { return; }
     dom.body.dataset.forbid = forbid.join(' ');
     if ( forbid.includes('dashboard') ) {
@@ -42,18 +38,19 @@ function renderAdminRules() {
 /******************************************************************************/
 
 function renderWidgets() {
-    if ( cachedRulesetData.firstRun ) {
+    const data = self.cachedRulesetData;
+    if ( data.firstRun ) {
         dom.cl.add(dom.body, 'firstRun');
     }
 
     renderDefaultMode();
 
-    qs$('#autoReload input[type="checkbox"]').checked = cachedRulesetData.autoReload;
+    qs$('#autoReload input[type="checkbox"]').checked = data.autoReload;
 
     {
         const input = qs$('#showBlockedCount input[type="checkbox"]');
-        if ( cachedRulesetData.canShowBlockedCount ) {
-            input.checked = cachedRulesetData.showBlockedCount;
+        if ( data.canShowBlockedCount ) {
+            input.checked = data.showBlockedCount;
         } else {
             input.checked = false;
             dom.attr(input, 'disabled', '');
@@ -62,19 +59,19 @@ function renderWidgets() {
 
     {
         const input = qs$('#strictBlockMode input[type="checkbox"]');
-        const canStrictBlock = cachedRulesetData.hasOmnipotence;
-        input.checked = canStrictBlock && cachedRulesetData.strictBlockMode;
+        const canStrictBlock = data.hasOmnipotence;
+        input.checked = canStrictBlock && data.strictBlockMode;
         dom.attr(input, 'disabled', canStrictBlock ? null : '');
     }
 
     {
         const input = qs$('#popupBlockMode input[type="checkbox"]');
-        input.checked = cachedRulesetData.popupBlockMode;
+        input.checked = data.popupBlockMode;
     }
 
     {
-        const state = Boolean(cachedRulesetData.developerMode) &&
-            cachedRulesetData.disabledFeatures?.includes('develop') !== true;
+        const state = Boolean(data.developerMode) &&
+            data.disabledFeatures?.includes('develop') !== true;
         dom.body.dataset.develop = `${state}`;
         dom.prop('#developerMode input[type="checkbox"]', 'checked', state);
     }
@@ -83,7 +80,7 @@ function renderWidgets() {
 /******************************************************************************/
 
 function renderDefaultMode() {
-    const defaultLevel = cachedRulesetData.defaultFilteringMode;
+    const defaultLevel = self.cachedRulesetData.defaultFilteringMode;
     if ( defaultLevel !== 0 ) {
         qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
     } else {
@@ -96,6 +93,7 @@ function renderDefaultMode() {
 async function onFilteringModeChange(ev) {
     const input = ev.target;
     const newLevel = parseInt(input.value, 10);
+    const data = self.cachedRulesetData;
 
     switch ( newLevel ) {
     case 1: {
@@ -103,7 +101,7 @@ async function onFilteringModeChange(ev) {
             what: 'setDefaultFilteringMode',
             level: newLevel,
         });
-        cachedRulesetData.defaultFilteringMode = actualLevel;
+        data.defaultFilteringMode = actualLevel;
         break;
     }
     case 2:
@@ -116,20 +114,18 @@ async function onFilteringModeChange(ev) {
                 what: 'setDefaultFilteringMode',
                 level: newLevel,
             });
-            cachedRulesetData.defaultFilteringMode = actualLevel;
-            cachedRulesetData.hasOmnipotence = true;
+            data.defaultFilteringMode = actualLevel;
+            data.hasOmnipotence = true;
         }
         break;
     }
     default:
         break;
     }
-    renderFilterLists(cachedRulesetData);
     renderWidgets();
 }
 
-dom.on(
-    '#defaultFilteringMode',
+dom.on('#defaultFilteringMode',
     'change',
     '.filteringModeCard input[type="radio"]',
     ev => { onFilteringModeChange(ev); }
@@ -139,7 +135,7 @@ dom.on(
 
 async function backupSettings() {
     const api = await import('./backup-restore.js');
-    const data = await api.backupToObject(cachedRulesetData);
+    const data = await api.backupToObject(self.cachedRulesetData);
     if ( data instanceof Object === false ) { return; }
     const json = JSON.stringify(data, null, 2)  + '\n';
     const a = document.createElement('a');
@@ -231,15 +227,15 @@ dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
     dom.body.dataset.develop = `${state}`;
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="backupButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="backupButton"])', 'click', ( ) => {
     backupSettings();
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="restoreButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="restoreButton"])', 'click', ( ) => {
     restoreSettings();
 });
 
-dom.on('section[data-pane="settings"] [data-i18n="resetToDefaultButton"]', 'click', ( ) => {
+dom.on('section[data-pane="settings"] button:has([data-i18n="resetToDefaultButton"])', 'click', ( ) => {
     resetSettings();
 });
 
@@ -253,8 +249,9 @@ function listen() {
 listen.onmessage = ev => {
     const message = ev.data;
     if ( message instanceof Object === false ) { return; }
-    const local = cachedRulesetData;
+    const local = self.cachedRulesetData;
     let render = false;
+    let renderLists = false;
 
     if ( message.hasOmnipotence !== undefined ) {
         if ( message.hasOmnipotence !== local.hasOmnipotence ) {
@@ -308,33 +305,42 @@ listen.onmessage = ev => {
     if ( message.adminRulesets !== undefined ) {
         if ( hashFromIterable(message.adminRulesets) !== hashFromIterable(local.adminRulesets) ) {
             local.adminRulesets = message.adminRulesets;
-            render = true;
+            renderLists = true;
         }
     }
 
     if ( message.enabledRulesets !== undefined ) {
         local.enabledRulesets = message.enabledRulesets;
-        render = true;
+        renderLists = true;
     }
 
-    if ( render === false ) { return; }
-    renderFilterLists(cachedRulesetData);
-    renderWidgets();
+    if ( render ) {
+        renderWidgets();
+    }
+    if ( renderLists ) {
+        renderFilterLists();
+    }
 };
 
 /******************************************************************************/
+
+self.cachedRulesetData = {};
 
 sendMessage({
     what: 'getOptionsPageData',
 }).then(data => {
     if ( !data ) { return; }
-    cachedRulesetData = data;
+    self.cachedRulesetData = data;
+    const supports = []
     if ( data.supportsUserScripts ) {
-        dom.body.dataset.supports = 'user-scripts';
+        supports.push('user-scripts');
     }
+    if ( data.supportsCompiledFilters ) {
+        supports.push('compiled-filters');
+    }
+    dom.body.dataset.supports = supports.join(' ');
     try {
         renderAdminRules();
-        renderFilterLists(cachedRulesetData);
         renderWidgets();
     } catch(reason) {
         console.error(reason);

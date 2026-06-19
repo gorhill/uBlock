@@ -209,6 +209,9 @@ export function commit(rulesetId, template) {
         stats[world] = {
             code: content,
             hostnames: Array.from(worldDetails.matches).sort(),
+            hasRegexes: scriptletFromRegexes.length !== 0,
+            hasAncestors: worldDetails.hasAncestors,
+            hasEntities: worldDetails.hasEntities,
         };
     }
     return stats;

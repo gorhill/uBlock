@@ -35,12 +35,13 @@ export const webextFlavor = (( ) => {
 
 const notAnObject = a => typeof a !== 'object' || a === null;
 
-export const supportsUserScripts = (() => {
-    if ( browser.offscreen === undefined ) { return false; }
+/******************************************************************************/
+
+export function supportsUserScripts() {
     try { browser.userScripts.getScripts(); }
     catch { return false; }
     return true;
-})();
+}
 
 /******************************************************************************/
 

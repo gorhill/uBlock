@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as scrmgr from './scripting-manager.js';
-
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
@@ -42,13 +40,19 @@ import {
     getSandboxFilters,
     hasCustomFilters,
     injectCustomFilters,
-    registerSandboxFilters,
     removeAllCustomFilters,
     removeCustomFilters,
     setSandboxFilters,
     startCustomFilters,
     terminateCustomFilters,
 } from './filter-manager.js';
+
+import {
+    addImportedLists,
+    getImportedLists,
+    removeImportedLists,
+    updateImportedLists,
+} from './imported-lists.js';
 
 import {
     adminReadEx,
@@ -58,9 +62,9 @@ import {
 
 import {
     broadcastMessage,
+    getDueJobs,
     hostnameFromMatch,
     hostnamesFromMatches,
-    intFromVersion,
 } from './utils.js';
 
 import {
@@ -85,11 +89,12 @@ import {
     excludeFromStrictBlock,
     getDefaultRulesetsFromEnv,
     getEffectiveUserRules,
+    getEnabledRulesets,
     getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,
     setStrictBlockMode,
-    updateDynamicRules,
+    updateDynamicAndSessionRules,
     updateSessionRules,
     updateUserRules,
 } from './ruleset-manager.js';
@@ -104,19 +109,26 @@ import {
 } from './debug.js';
 
 import {
+    getRegisteredContentScripts,
+    pruneCSSCache,
+    registerContentScripts,
+} from './scripting-manager.js';
+
+import {
     gotoURL,
     hasBroadHostPermissions,
 } from './ext-utils.js';
 
 import { dnr } from './ext-compat.js';
+import { registerCompiledFilters } from './compiled-filters.js';
 import { setPopupBlockMode } from './prevent-popup.js';
+import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
-const { registerContentScripts } = scrmgr;
 
 let pendingPermissionRequest;
 
@@ -218,7 +230,7 @@ async function registerDeclarativeAssets(
     userRules = true
 ) {
     const [ shouldUpdateUserRules ] = await Promise.all([
-        userScripts ? registerSandboxFilters() : false,
+        userScripts ? registerCompiledFilters() : false,
         contentScripts ? registerContentScripts() : false,
     ]);
     if ( userRules && shouldUpdateUserRules ) {
@@ -228,12 +240,25 @@ async function registerDeclarativeAssets(
 
 /******************************************************************************/
 
+async function applyRulesets(rulesets) {
+    const result = await enableRulesets(rulesets);
+    const stockUpdated = result.stockUpdated ?? false;
+    const importedUpdated = result.importedUpdated ?? false;
+    if ( stockUpdated === false && importedUpdated === false ) { return; }
+    rulesetConfig.enabledRulesets = result.enabledRulesets;
+    await saveRulesetConfig();
+    await registerDeclarativeAssets(stockUpdated, importedUpdated);
+    broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
+}
+
+/******************************************************************************/
+
 async function setDeveloperMode(state) {
     rulesetConfig.developerMode = state === true;
     toggleDeveloperMode(rulesetConfig.developerMode);
     broadcastMessage({ developerMode: rulesetConfig.developerMode });
     await saveRulesetConfig();
-    await registerDeclarativeAssets(false, true, false);
+    await registerDeclarativeAssets(false, true, true);
     await updateUserRules();
     return rulesetConfig.developerMode;
 }
@@ -323,19 +348,17 @@ async function onMessage(request, sender) {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
-    const isTrustedOrigin = sender.origin === undefined ||
+    const isTrustedOrigin = sender?.origin === undefined ||
         sender.origin.toLowerCase() === UBOL_ORIGIN;
     if ( isTrustedOrigin === false ) { return; }
 
     switch ( request.what ) {
 
     case 'applyRulesets': {
-        const result = await enableRulesets(request.enabledRulesets);
-        if ( result === undefined || result.error ) { return; }
-        rulesetConfig.enabledRulesets = result.enabledRulesets;
-        await saveRulesetConfig();
-        await registerContentScripts();
-        broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
+        await applyRulesets(request.enabledRulesets);
+        if ( request.toRemove ) {
+            await removeImportedLists(request.toRemove);
+        }
         return;
     }
 
@@ -367,7 +390,7 @@ async function onMessage(request, sender) {
             hasBroadHostPermissions(),
             getDefaultFilteringMode(),
             getRulesetDetails(),
-            dnr.getEnabledRulesets(),
+            getEnabledRulesets(),
             getAdminRulesets(),
             adminReadEx('disabledFeatures'),
         ]);
@@ -388,12 +411,13 @@ async function onMessage(request, sender) {
             isSideloaded,
             developerMode: rulesetConfig.developerMode,
             disabledFeatures,
-            supportsUserScripts,
+            supportsCompiledFilters: supportsOffscreenDocument,
+            supportsUserScripts: supportsUserScripts(),
         };
     }
 
     case 'getEnabledRulesets':
-        return dnr.getEnabledRulesets();
+        return getEnabledRulesets();
 
     case 'getRulesetDetails': {
         const rulesetDetails = await getRulesetDetails();
@@ -570,10 +594,36 @@ async function onMessage(request, sender) {
         return customFiltersFromHostname(request.hostname);
 
     case 'getRegisteredContentScripts':
-        return scrmgr.getRegisteredContentScripts();
+        return getRegisteredContentScripts();
 
     case 'getConsoleOutput':
         return getConsoleOutput();
+
+    case 'importFilterList': {
+        const modified = await addImportedLists([ request.url ]);
+        if ( modified !== true ) { break; }
+        const rulesets = await getEnabledRulesets();
+        rulesets.push(request.url);
+        applyRulesets(rulesets);
+        if ( modified ) {
+            return registerDeclarativeAssets(false);
+        }
+        break;
+    }
+
+    case 'getImportedLists': {   
+        return getImportedLists();
+    }
+
+    case 'updateImportedLists': {
+        const count = await updateImportedLists();
+        if ( count === 0 ) { break; }
+        return registerDeclarativeAssets(false);
+    }
+
+    case 'pruneCSSCache': {   
+        return pruneCSSCache();
+    }
 
     default:
         break;
@@ -621,55 +671,50 @@ async function startSession() {
     // The default rulesets may have changed, find out new ruleset to enable,
     // obsolete ruleset to remove.
     if ( isNewVersion ) {
-        const previousVersion = rulesetConfig.version;
         ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
         rulesetConfig.version = currentVersion;
         await patchDefaultRulesets();
         saveRulesetConfig();
-        // https://github.com/uBlockOrigin/uBOL-home/issues/670
-        if ( intFromVersion(previousVersion) <= intFromVersion('2026.423.0000') ) {
-            const promises = [];
-            const customFilters = await getAllCustomFilters();
-            for ( const [ hostname, selectors ] of customFilters ) {
-                let modified = false;
-                for ( let i = 0; i < selectors.length; i++ ) {
-                    const selector = selectors[i];
-                    if ( selector.startsWith('0') === false ) { continue; }
-                    selectors[i] = selector.slice(1);
-                    modified = true;
-                }
-                if ( modified === false ) { continue; }
-                promises.push(
-                    removeAllCustomFilters(hostname).then(( ) =>
-                        addCustomFilters(hostname, selectors)
-                    )
-                );
-            }
-            if ( promises.length !== 0 ) {
-                await Promise.all(promises);
-            }
-        }
     }
 
-    const rulesetsUpdated = await enableRulesets(rulesetConfig.enabledRulesets);
+    const {
+        stockUpdated,
+        importedUpdated,
+        enabledRulesets,
+    } = await enableRulesets(rulesetConfig.enabledRulesets);
+    if ( stockUpdated || importedUpdated ) {
+        rulesetConfig.enabledRulesets = enabledRulesets;
+        saveRulesetConfig();
+    }
 
-    // We need to update the regex rules only when ruleset version changes.
-    if ( rulesetsUpdated === undefined ) {
-        if ( isNewVersion ) {
-            updateDynamicRules();
-        } else {
-            updateSessionRules();
-        }
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest#rulesets
+    // "The set of enabled static rulesets is persisted across sessions but not across extension updates"
+    // "[Dynamic] rules persist across sessions and extension updates"
+    // "[Session] rules do not persist across browser sessions"
+    if ( isNewVersion ) {
+        updateDynamicAndSessionRules();
+    } else {
+        updateSessionRules();
     }
 
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/scripting/RegisteredContentScript#persistacrosssessions
+    // "When an extension updates, content scripts are cleared"
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/userScripts#extension_updates
+    // "User scripts are cleared when an extension updates"
     const shouldInject = isNewVersion || permissionsUpdated ||
         isSideloaded && rulesetConfig.developerMode;
-    if ( shouldInject ) {
-        await registerDeclarativeAssets(true, true, false);
-        await updateUserRules();
+    if ( shouldInject || stockUpdated || importedUpdated ) {
+        await registerDeclarativeAssets(
+            shouldInject || stockUpdated,
+            shouldInject || importedUpdated,
+            false
+        );
+        if ( importedUpdated ) {
+            await updateUserRules();
+        }
     }
 
     // Cosmetic filtering-related content scripts cache fitlering data in
@@ -715,16 +760,21 @@ async function start() {
 
     if ( process.wakeupRun === false ) {
         await startSession();
-    } else {
-        scrmgr.onWakeupRun();
     }
 
-    const scripts = await scrmgr.getRegisteredContentScripts();
+    const scripts = await getRegisteredContentScripts();
     if ( scripts.length === 0 ) {
         await registerContentScripts();
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
+
+    if ( process.wakeupRun === false ) { return; }
+    getDueJobs().then(jobs => {
+        for ( const job of jobs ) {
+            onMessage({ what: job.name });
+        }
+    });
 }
 
 /******************************************************************************/
@@ -751,11 +801,12 @@ const isFullyInitialized = start().then(( ) => {
 });
 
 runtime.onMessage.addListener((request, sender, callback) => {
+    if ( request.what.includes(':') ) { return; }
     onMessage(request, sender).then(callback);
     return true;
 });
 
-if ( supportsUserScripts && runtime.onUserScriptMessage ) {
+if ( supportsUserScripts() && runtime.onUserScriptMessage ) {
     browser.userScripts.configureWorld({ messaging: true });
     runtime.onUserScriptMessage.addListener((request, sender, callback) => {
         onMessage(request, sender).then(callback);

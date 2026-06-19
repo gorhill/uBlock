@@ -54,11 +54,15 @@
   "host_permissions": [
     "<all_urls>"
   ],
+  "optional_permissions": [
+    "userScripts"
+  ],
   "permissions": [
     "activeTab",
     "declarativeNetRequest",
     "scripting",
-    "storage"
+    "storage",
+    "unlimitedStorage"
   ],
   "short_name": "uBO Lite",
   "version": "1.0",

@@ -25,28 +25,20 @@ import {
     localRead,
     localRemove,
     localWrite,
-    runtime,
-    supportsUserScripts,
 } from './ext.js';
 
 import {
     intersectHostnameIters,
+    isScriptlet,
     matchesFromHostnames,
     subtractHostnameIters,
 } from './utils.js';
 
-import {
-    ubolErr,
-    ubolLog,
-} from './debug.js';
-
-import { getFilteringModeDetails } from './mode-manager.js';
-import { rulesetConfig } from './config.js';
+import { ubolErr } from './debug.js';
 
 /******************************************************************************/
 
 const isProcedural = a => a.startsWith('{');
-const isScriptlet = a => a.startsWith('+js');
 const isCSS = a => isProcedural(a) === false && isScriptlet(a) === false;
 
 /******************************************************************************/
@@ -296,142 +288,4 @@ export function setSandboxFilters(text = '') {
     return text !== ''
         ? localWrite('sandboxFilters', text)
         : localRemove('sandboxFilters')
-}
-
-/******************************************************************************/
-
-export async function registerSandboxFilters() {
-    if ( supportsUserScripts !== true ) { return false; }
-    registerSandboxFilters.pendingOp =
-        registerSandboxFilters.pendingOp.then(( ) => registerSandboxFilters.register());
-    return registerSandboxFilters.pendingOp;
-}
-registerSandboxFilters.pendingOp = Promise.resolve();
-
-registerSandboxFilters.register = async function register() {
-    const filteringModeDetails = await getFilteringModeDetails();
-    const { none, basic, optimal, complete } = filteringModeDetails;
-    const notNone = [ ...basic, ...optimal, ...complete ];
-    const customFilters = await getAllCustomFilters();
-    const lines = [];
-    for ( const [ hostname, selectors ] of customFilters ) {
-        for ( const selector of selectors ) {
-            if ( isScriptlet(selector) === false ) { continue; }
-            lines.push(`${hostname}##${selector}`);
-        }
-    }
-    if ( rulesetConfig.developerMode ) {
-        const sandboxFilters = await getSandboxFilters();
-        if ( sandboxFilters ) {
-            lines.push(sandboxFilters);
-        }
-    }
-    const text = lines.join('\n').trim();
-    const result = await parseRawFilters(text) || {};
-    // User scripts
-    const toRemove = await browser.userScripts.getScripts();
-    if ( toRemove.length !== 0 ) {
-        await browser.userScripts.unregister();
-        ubolLog(`Unregistered userscript ${toRemove.map(v => v.id)}`);
-    }
-    const toAdd = [];
-    const hostnames = none.has('all-urls')
-        ? [ ...notNone ]
-        : [];
-    const excludeHostnames = none.has('all-urls') === false
-        ? [ ...none ]
-        : [];
-    const matches = hostnames.length !== 0
-        ? matchesFromHostnames(hostnames)
-        : [ '<all_urls>' ];
-    const excludeMatches = excludeHostnames.length !== 0
-        ? matchesFromHostnames(excludeHostnames)
-        : [];
-    if ( result.ISOLATED?.length ) {
-        const directive = {
-            id: 'user.isolated',
-            world: 'USER_SCRIPT',
-            allFrames: true,
-            js: [ { code: result.ISOLATED.join('\n\n') } ],
-            runAt: 'document_start',
-            matches: matches.slice(),
-        };
-        if ( excludeMatches.length !== 0 ) {
-            directive.excludeMatches = excludeMatches.slice();
-        }
-        toAdd.push(directive);
-    }
-    if ( result.MAIN?.length ) {
-        const directive = {
-            id: 'user.main',
-            world: 'MAIN',
-            allFrames: true,
-            js: [ { code: result.MAIN.join('\n\n') } ],
-            runAt: 'document_start',
-            matches: matches.slice(),
-        };
-        if ( excludeMatches.length !== 0 ) {
-            directive.excludeMatches = excludeMatches.slice();
-        }
-        toAdd.push(directive);
-    }
-    if ( toAdd.length ) {
-        await browser.userScripts.register(toAdd).then(( ) => {
-            ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
-        });
-    }
-    // DNR rules
-    const beforeRules = await localRead('sandboxFilters.dnrRules');
-    const afterRules = rulesetConfig.developerMode && result.dnrRules?.length
-        ? result.dnrRules
-        : undefined;
-    const modified = JSON.stringify(afterRules) !== JSON.stringify(beforeRules);
-    if ( modified ) {
-        if ( Array.isArray(afterRules) ) {
-            await localWrite('sandboxFilters.dnrRules', afterRules);
-        } else {
-            await localRemove('sandboxFilters.dnrRules');
-        }
-    }
-    return modified;
-}
-
-/******************************************************************************/
-
-async function parseRawFilters(text) {
-    if ( Boolean(text) === false ) { return; }
-    const {
-        promise: offscreenPromise,
-        resolve: offscreenResolve,
-    } = Promise.withResolvers();
-    const handler = (request, sender, callback) => {
-        if ( typeof request !== 'object' ) { return; }
-        switch ( request?.what ) {
-        case 'getRawFilters':
-            callback(text);
-            break;
-        case 'compiledRawFilters':
-            offscreenResolve(request);
-            break;
-        default:
-            break;
-        }
-    };
-    runtime.onMessage.addListener(handler);
-    const {
-        promise: timeoutPromise,
-        resolve: timeoutResolve,
-    } = Promise.withResolvers();
-    self.setTimeout(timeoutResolve, 2000);
-    const [ result ] = await Promise.all([
-        Promise.race([ offscreenPromise, timeoutPromise ]),
-        browser.offscreen.createDocument({
-            url: '/js/offscreen/compile-filters.html',
-            reasons: [ 'WORKERS' ],
-            justification: 'To compile custom filters in a modular way from service worker (service workers do not allow dynamic module import)',
-        }),
-    ]);
-    runtime.onMessage.removeListener(handler);
-    await browser.offscreen.closeDocument();
-    return result;
 }

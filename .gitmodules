@@ -4,3 +4,6 @@
 [submodule "publish-extension"]
 	path = publish-extension
 	url = https://github.com/gorhill/publish-extension.git
+[submodule "platform/mv3/extension/lib/s14e-serializer"]
+	path = platform/mv3/extension/lib/s14e-serializer
+	url = https://github.com/gorhill/s14e-serializer.git

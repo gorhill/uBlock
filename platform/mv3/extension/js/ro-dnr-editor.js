@@ -32,6 +32,7 @@ export class ReadOnlyDNREditor extends DNREditor {
         if ( hint === 'dnr.ro.dynamic' ) {
             const rules = await sendMessage({ what: 'getAllDynamicRules' });
             if ( Array.isArray(rules) === false ) { return; }
+            rules.sort((a, b) => a.id - b.id);
             this.id = 'dynamic';
             this.count = rules.length;
             return textFromRules(rules, { keepId: true });
@@ -39,6 +40,7 @@ export class ReadOnlyDNREditor extends DNREditor {
         if ( hint === 'dnr.ro.session' ) {
             const rules = await sendMessage({ what: 'getAllSessionRules' });
             if ( Array.isArray(rules) === false ) { return; }
+            rules.sort((a, b) => a.id - b.id);
             this.id = 'session';
             this.count = rules.length;
             return textFromRules(rules, { keepId: true });

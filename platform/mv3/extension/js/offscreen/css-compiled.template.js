@@ -21,7 +21,7 @@
 
 // Important!
 // Isolate from global scope
-(async function uBOL_cssSandbox() {
+(async function uBOL_cssCompiled() {
 
 /******************************************************************************/
 

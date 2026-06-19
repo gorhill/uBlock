@@ -105,6 +105,7 @@ cp platform/mv3/extension/*.json "$UBOL_DIR"/
 cp platform/mv3/extension/css/* "$UBOL_DIR"/css/
 cp -R platform/mv3/extension/js/* "$UBOL_DIR"/js/
 cp platform/mv3/"$PLATFORM"/ext-compat.js "$UBOL_DIR"/js/ 2>/dev/null || :
+cp platform/mv3/"$PLATFORM"/ext-offscreen.js "$UBOL_DIR"/js/ 2>/dev/null || :
 cp platform/mv3/"$PLATFORM"/css-api.js "$UBOL_DIR"/js/scripting/ 2>/dev/null || :
 cp platform/mv3/"$PLATFORM"/css-user.js "$UBOL_DIR"/js/scripting/ 2>/dev/null || :
 cp platform/mv3/extension/img/* "$UBOL_DIR"/img/
@@ -124,6 +125,8 @@ cp platform/mv3/extension/lib/codemirror/codemirror-ubol/LICENSE \
     "$UBOL_DIR"/lib/codemirror/codemirror-quickstart.LICENSE
 mkdir -p "$UBOL_DIR"/lib/csstree
 cp "$UBO_DIR"/src/lib/csstree/* "$UBOL_DIR"/lib/csstree/
+cp platform/mv3/extension/lib/s14e-serializer/s14e-serializer.js \
+    "$UBOL_DIR"/lib/
 
 echo "*** uBOLite.mv3: Generating rulesets"
 UBOL_BUILD_DIR=$(mktemp -d)
