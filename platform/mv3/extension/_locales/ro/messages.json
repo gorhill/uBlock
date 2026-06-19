@@ -136,11 +136,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Pentru a evita încărcarea voluntarilor cu rapoarte duplicate, vă rugăm să verificați dacă problema nu a fost deja raportată.",
+    "message": "Pentru a evita suprasolicitarea voluntarilor, vă rugăm să verificați dacă această problemă nu a fost deja raportată. <b>Megjegyzés:</b> a gombra kattintva az oldal forrása elküldésre kerül a GitHubnak.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Găsiți rapoarte similare",
+    "message": "Găsește sesizări similare pe GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -256,15 +256,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "Activați blocarea ferestrelor pop-up",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Când sunt active, filtrele potrivite vor închide automat filele nedorite de browser create de site-uri web.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Spațiu de testare pentru filtre",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

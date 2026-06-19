@@ -228,7 +228,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Listaus osotteista, joita ei suodateta.",
+    "message": "Listaus verkkosivustoista, joita ei suodateta.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -260,11 +260,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "Kun käytössä, suljetaan suodattimia vastaavat verkkosivustojen avaamat ei-toivotut selainvälilehdet automaattisesti.",
+    "message": "Kun käytössä, suljetaan suodattimia vastaavat verkkosivustojen avaamat ei-toivotut selaimen välilehdet automaattisesti.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Vapaa suodatinluonti",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

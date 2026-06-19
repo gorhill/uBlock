@@ -260,11 +260,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Pa vez gweredekaet, an ivinelloù dic'hoantaet krouet gant al lec'hiennoù a vo serret gant ar siloù.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Tachenn krouiñ siloù",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -280,7 +280,7 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Gwaredit hoc'h arventennoù personelaet en ur restr pe adsavit hoc'h arventennoù personelaet adalek ur restr.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
