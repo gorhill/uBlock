@@ -23,3 +23,9 @@
 // workaround.
 
 export const supportsOffscreenDocument = false;
+
+export async function createOffscreenDocument() {
+}
+
+export async function closeOffscreenDocument() {
+}
