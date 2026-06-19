@@ -51,6 +51,7 @@ import {
 
 import { getFilteringModeDetails } from './mode-manager.js';
 import { rulesetConfig } from './config.js';
+import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
@@ -148,11 +149,17 @@ async function register() {
         result = await parseRawFilters() || {};
     }
 
-    const scriptsToRemove = await browser.userScripts.getScripts();
-    if ( scriptsToRemove.length !== 0 ) {
-        await browser.userScripts.unregister();
-        ubolLog(`Unregistered userscript ${scriptsToRemove.map(a => a.id).join()}`);
+    if ( supportsUserScripts() ) {
+        try {
+            const scriptsToRemove = await browser.userScripts.getScripts();
+            if ( scriptsToRemove.length !== 0 ) {
+                await browser.userScripts.unregister();
+                ubolLog(`Unregistered userscript ${scriptsToRemove.map(a => a.id).join()}`);
+            }
+        } catch {
+        }
     }
+
     if ( Boolean(result) === false ) { return true; }
 
     const filteringModeDetails = await getFilteringModeDetails();
@@ -173,11 +180,15 @@ async function register() {
     if ( importedScripts.length ) {
         toAdd.push(...importedScripts);
     }
-    if ( toAdd.length ) {
-        await browser.userScripts.register(toAdd).then(( ) => {
-            ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
-        });
+    if ( supportsUserScripts() && toAdd.length ) {
+        try {
+            await browser.userScripts.register(toAdd).then(( ) => {
+                ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
+            });
+        } catch {
+        }
     }
+
     return sandboxModified || importedModified;
 }
 
@@ -193,6 +204,7 @@ async function parseRawFilters() {
         switch ( request?.what ) {
         case 'compileFilters:getUserList':
             getUserList().then(text => {
+                if ( text ) { ubolLog(`Compiling user filters`); }
                 callback(text);
             });
             return true;
@@ -201,16 +213,19 @@ async function parseRawFilters() {
             break;
         case 'compileFilters:getEnabledImportedLists':
             getEnabledImportedLists().then(result => {
+                if ( result?.length ) { ubolLog(`Compiling ${result.length} imported lists`); }
                 callback(result);
             });
             return true;
         case 'compileFilters:getImportedListCompiledData':
             getImportedListCompiledData(request.listid).then(result => {
+                if ( result?.serialized ) { ubolLog(`Reusing cached data for ${result.listid}`); }
                 callback(result);
             });
             return true;
         case 'compileFilters:updateImportedListData':
             updateImportedListData(request.listid, request).then(result => {
+                if ( result ) { ubolLog(`Updated cached data for ${result.listid}`); }
                 callback(result);
             });
             return true;
@@ -236,7 +251,7 @@ async function parseRawFilters() {
 /******************************************************************************/
 
 export async function registerCompiledFilters() {
-    if ( supportsUserScripts !== true ) { return false; }
+    if ( supportsOffscreenDocument !== true ) { return false; }
     pendingRegister = pendingRegister.then(( ) => register());
     return pendingRegister;
 }

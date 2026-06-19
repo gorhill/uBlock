@@ -26,12 +26,16 @@ import {
     localWrite,
 } from './ext.js';
 
+import {
+    registerJob,
+    removeJob,
+} from './utils.js';
+
+import { ubolLog } from './debug.js';
+
 /******************************************************************************/
 
-export async function getEnabledImportedLists() {
-    const importedLists = await localRead('rulesets.imported') || [];
-    return importedLists.filter(a => a.enabled);
-}
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 /******************************************************************************/
 
@@ -44,6 +48,28 @@ async function getCompiledListIds() {
         out.push(key.slice(prefix.length));
     }
     return out;
+}
+
+/******************************************************************************/
+
+async function scheduleImportedListsUpdate(lists) {
+    let earlierTime = 0;
+    for ( const list of lists ) {
+        const updateTime = list.time.updated + list.expires * MS_PER_DAY;
+        if ( earlierTime !== 0 && earlierTime < updateTime ) { continue; }
+        earlierTime = updateTime;
+    }
+    if ( earlierTime ) {
+        return registerJob('updateImportedLists', earlierTime);
+    }
+    return removeJob('updateImportedLists');
+}
+
+/******************************************************************************/
+
+export async function getEnabledImportedLists() {
+    const importedLists = await localRead('rulesets.imported') || [];
+    return importedLists.filter(a => a.enabled);
 }
 
 /******************************************************************************/
@@ -94,6 +120,7 @@ export async function saveImportedLists(lists) {
     await Promise.all([
         toRemove.length ? localRemove(toRemove) : false,
         localWrite('rulesets.imported', lists),
+        scheduleImportedListsUpdate(lists),
     ]);
 }
 
@@ -123,7 +150,10 @@ export async function enableImportedRulesets(rulesets) {
 /******************************************************************************/
 
 export async function getImportedListCompiledData(listid) {
-    return localRead(`rulesets.imported.compiled.${listid}`);
+    return {
+        listid,
+        serialized: await localRead(`rulesets.imported.compiled.${listid}`),
+    };
 }
 
 /******************************************************************************/
@@ -140,41 +170,48 @@ export async function updateImportedListData(listid, details) {
     list.time.updated = Date.now();
     if ( details.title ) { list.name = details.title; }
     if ( details.homeURL ) { list.homeURL = details.homeURL; }
+    if ( details.expires ) { list.expires = details.expires; }
     if ( details.filterStats ) { list.filters = details.filterStats; }
     if ( details.ruleStats ) { list.rules = details.ruleStats; }
     await saveImportedLists(lists);
+    return { listid };
 }
 
 /******************************************************************************/
 
 // URL will be ruleset id
 
-export async function addImportedList(url) {
+export async function addImportedLists(urls) {
     const lists = await getImportedLists();
-    if ( lists.some(a => a.id === url) ) { return; }
-    lists.push({
-        id: url,
-        name: url,
-        group: 'imported',
-        enabled: false,
-        homeURL: '',
-        expires: 7,
-        time: {
-            added: Date.now(),
-            updated: 0,
-        },
-        filters: {
-            total: 0,
-            accepted: 0,
-            rejected: 0,
-        },
-        rules: {
-            total: 0,
-            plain: 0,
-            regex: 0,
-        },
-    });
-    await saveImportedLists(lists);
+    const beforeCount = lists.length;
+    for ( const url of urls ) {
+        if ( lists.some(a => a.id === url) ) { continue; }
+        lists.push({
+            id: url,
+            name: url,
+            group: 'imported',
+            enabled: false,
+            homeURL: '',
+            expires: 7,
+            time: {
+                added: Date.now(),
+                updated: 0,
+            },
+            filters: {
+                total: 0,
+                accepted: 0,
+                rejected: 0,
+            },
+            rules: {
+                total: 0,
+                plain: 0,
+                regex: 0,
+            },
+        });
+    }
+    if ( lists.length !== beforeCount ) {
+        await saveImportedLists(lists);
+    }
     return true;
 }
 
@@ -187,4 +224,21 @@ export async function removeImportedLists(ids) {
     if ( afterLists.length === beforeLists.length ) { return false; }
     await saveImportedLists(afterLists);
     return true;
+}
+
+/******************************************************************************/
+
+export async function updateImportedLists() {
+    const lists = await getEnabledImportedLists();
+    const now = Date.now();
+    const toUpdate = [];
+    for ( const list of lists ) {
+        const updateTime = list.time.updated + list.expires * MS_PER_DAY;
+        if ( updateTime > now ) { continue; }
+        toUpdate.push(list.id);
+    }
+    if ( toUpdate.length === 0 ) { return 0; }
+    await localRemove(toUpdate.map(a => `rulesets.imported.compiled.${a}`));
+    ubolLog(`Will update imported filter lists: ${toUpdate.join()}`);
+    return toUpdate.length;
 }

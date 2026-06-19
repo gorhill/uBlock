@@ -260,10 +260,22 @@ body.noMoreRuleset .listEntry:has(> .detailbar input:not(:checked)) {
 :root.mobile .li.listEntry .iconbar {
     margin-top: 0.2em;
     }
+
+body:not([data-supports~="compiled-filters"]) section[data-pane="rulesets"] aside,
+body:not([data-supports~="compiled-filters"]) section[data-pane="rulesets"] #lists [data-role="rootnode"][data-nodeid="imported"] {
+    display: none;
+    }
 section[data-pane="rulesets"] #lists:has([data-nodeid="imported"].hideUnused) + aside {
     display: none;
 }
-body section[data-pane="rulesets"] .importRulesetURL > div {
+body section[data-pane="rulesets"] p[data-i18n="userScriptsInfo"] {
+    color: var(--ink-2);
+    font-size: small;
+    }
+body[data-supports~="user-scripts"] section[data-pane="rulesets"] p[data-i18n="userScriptsInfo"] {
+    display: none;
+    }
+body section[data-pane="rulesets"] .importRulesetURL > p {
     display: flex;
     gap: 1em;
     }
@@ -384,14 +396,13 @@ section[data-pane="filters"] aside p {
 section[data-pane="filters"] li.error[data-pretty] > div span[contenteditable] {
     color: var(--info3-ink);
     }
-body:not([data-supports~="user-scripts"]) section[data-pane="filters"] aside#sandboxEditor {
+body:not([data-supports~="compiled-filters"]) section[data-pane="filters"] aside#sandboxEditor,
+body:not([data-develop="true"]) section[data-pane="filters"] aside#sandboxEditor {
     display: none;
     }
 section[data-pane="filters"] aside#sandboxEditor .cm-scroller {
+    min-height: 120px;
     max-height: 480px;
-    }
-body:not([data-develop="true"]) section[data-pane="filters"] aside#sandboxEditor {
-    display: none;
     }
 
 @media (max-width: 480px) {

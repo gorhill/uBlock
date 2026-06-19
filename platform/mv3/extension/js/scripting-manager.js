@@ -24,7 +24,7 @@ import * as ut from './utils.js';
 import {
     browser,
     localKeys, localRemove, localWrite,
-    sessionKeys, sessionRead, sessionRemove, sessionWrite,
+    sessionKeys, sessionRead, sessionRemove,
     webextFlavor,
 } from './ext.js';
 import { ubolErr, ubolLog } from './debug.js';
@@ -358,7 +358,10 @@ registerContentScripts.register = async function register() {
         }
     }
 
-    await resetCSSCache();
+    await Promise.all([
+        resetCSSCache(),
+        ut.registerJob('pruneCSSCache', Date.now() + 15 * 60 * 1000),
+    ]);
 
     return true;
 };
@@ -372,11 +375,7 @@ export async function getRegisteredContentScripts() {
 
 /******************************************************************************/
 
-export async function onWakeupRun() {
-    const cleanupTime = await sessionRead('scripting.manager.cleanup.time') || 0;
-    const now = Date.now();
-    const since = now - cleanupTime;
-    if ( since < (15 * 60 * 1000) ) { return; } // 15 minutes
+export async function pruneCSSCache() {
     const MAX_CACHE_ENTRY_LOW = 256;
     const MAX_CACHE_ENTRY_HIGH = MAX_CACHE_ENTRY_LOW +
         Math.max(Math.round(MAX_CACHE_ENTRY_LOW / 8), 8);
@@ -390,7 +389,6 @@ export async function onWakeupRun() {
     }));
     entries.sort((a, b) => b.t - a.t);
     sessionRemove(entries.slice(MAX_CACHE_ENTRY_LOW).map(a => a.key));
-    sessionWrite('scripting.manager.cleanup.time', now)
 }
 
 /******************************************************************************/

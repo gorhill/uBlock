@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as scrmgr from './scripting-manager.js';
-
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
@@ -50,9 +48,10 @@ import {
 } from './filter-manager.js';
 
 import {
-    addImportedList,
+    addImportedLists,
     getImportedLists,
     removeImportedLists,
+    updateImportedLists,
 } from './imported-lists.js';
 
 import {
@@ -63,6 +62,7 @@ import {
 
 import {
     broadcastMessage,
+    getDueJobs,
     hostnameFromMatch,
     hostnamesFromMatches,
     intFromVersion,
@@ -110,6 +110,12 @@ import {
 } from './debug.js';
 
 import {
+    getRegisteredContentScripts,
+    pruneCSSCache,
+    registerContentScripts,
+} from './scripting-manager.js';
+
+import {
     gotoURL,
     hasBroadHostPermissions,
 } from './ext-utils.js';
@@ -117,13 +123,13 @@ import {
 import { dnr } from './ext-compat.js';
 import { registerCompiledFilters } from './compiled-filters.js';
 import { setPopupBlockMode } from './prevent-popup.js';
+import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
-const { registerContentScripts } = scrmgr;
 
 let pendingPermissionRequest;
 
@@ -343,7 +349,7 @@ async function onMessage(request, sender) {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
-    const isTrustedOrigin = sender.origin === undefined ||
+    const isTrustedOrigin = sender?.origin === undefined ||
         sender.origin.toLowerCase() === UBOL_ORIGIN;
     if ( isTrustedOrigin === false ) { return; }
 
@@ -406,7 +412,8 @@ async function onMessage(request, sender) {
             isSideloaded,
             developerMode: rulesetConfig.developerMode,
             disabledFeatures,
-            supportsUserScripts,
+            supportsCompiledFilters: supportsOffscreenDocument,
+            supportsUserScripts: supportsUserScripts(),
         };
     }
 
@@ -588,13 +595,13 @@ async function onMessage(request, sender) {
         return customFiltersFromHostname(request.hostname);
 
     case 'getRegisteredContentScripts':
-        return scrmgr.getRegisteredContentScripts();
+        return getRegisteredContentScripts();
 
     case 'getConsoleOutput':
         return getConsoleOutput();
 
     case 'importFilterList': {
-        const modified = await addImportedList(request.url);
+        const modified = await addImportedLists([ request.url ]);
         if ( modified !== true ) { break; }
         const rulesets = await getEnabledRulesets();
         rulesets.push(request.url);
@@ -607,6 +614,16 @@ async function onMessage(request, sender) {
 
     case 'getImportedLists': {   
         return getImportedLists();
+    }
+
+    case 'updateImportedLists': {
+        const count = await updateImportedLists();
+        if ( count === 0 ) { break; }
+        return registerDeclarativeAssets(false);
+    }
+
+    case 'pruneCSSCache': {   
+        return pruneCSSCache();
     }
 
     default:
@@ -768,16 +785,21 @@ async function start() {
 
     if ( process.wakeupRun === false ) {
         await startSession();
-    } else {
-        scrmgr.onWakeupRun();
     }
 
-    const scripts = await scrmgr.getRegisteredContentScripts();
+    const scripts = await getRegisteredContentScripts();
     if ( scripts.length === 0 ) {
         await registerContentScripts();
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
+
+    if ( process.wakeupRun === false ) { return; }
+    getDueJobs().then(jobs => {
+        for ( const job of jobs ) {
+            onMessage({ what: job.name });
+        }
+    });
 }
 
 /******************************************************************************/
@@ -809,7 +831,7 @@ runtime.onMessage.addListener((request, sender, callback) => {
     return true;
 });
 
-if ( supportsUserScripts && runtime.onUserScriptMessage ) {
+if ( supportsUserScripts() && runtime.onUserScriptMessage ) {
     browser.userScripts.configureWorld({ messaging: true });
     runtime.onUserScriptMessage.addListener((request, sender, callback) => {
         onMessage(request, sender).then(callback);

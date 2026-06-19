@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { localRead, localRemove, localWrite } from './ext.js';
+
 /******************************************************************************/
 
 export function parsedURLromOrigin(origin) {
@@ -182,3 +184,46 @@ export function intFromVersion(version) {
 /******************************************************************************/
 
 export const isScriptlet = a => a.startsWith('+js');
+
+/******************************************************************************/
+
+export async function registerJob(name, time) {
+    const jobs = await localRead('deferredJobs') || [];
+    const job = jobs.find(a => a.name === name);
+    if ( job ) {
+        job.time = time;
+    } else {
+        jobs.push({ name, time });
+    }
+    jobs.sort((a, b) => a.time - b.time);
+    return localWrite('deferredJobs', jobs);
+}
+
+export async function removeJob(name) {
+    const before = await localRead('deferredJobs');
+    const after = before.filter(a => a.name !== name);
+    if ( after.length === before.length ) { return; }
+    if ( after.length ) {
+        return localWrite('deferredJobs', after);
+    }
+    return localRemove('deferredJobs');
+}
+
+export async function getDueJobs() {
+    const jobs = await localRead('deferredJobs');
+    if ( Boolean(jobs) === false ) { return []; }
+    const now = Date.now();
+    let i = 0;
+    while ( i < jobs.length ) {
+        if ( jobs[i].time > now ) { break; }
+        i += 1;
+    }
+    const before = jobs.slice(0, i);
+    const after = jobs.slice(i);
+    if ( after.length ) {
+        await localWrite('deferredJobs', after);
+    } else {
+        await localRemove('deferredJobs');
+    }
+    return before;
+}

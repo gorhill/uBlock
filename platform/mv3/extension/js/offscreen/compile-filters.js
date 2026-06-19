@@ -320,7 +320,11 @@ async function updateList(list) {
     const text = await fetchList(context, asset);
     if ( Boolean(text) === false ) { return; }
 
-    const metadata = extractMetadataFromList(text, [ 'Title', 'Homepage' ])
+    const metadata = extractMetadataFromList(text, [
+        'Expires',
+        'Homepage',
+        'Title',
+    ])
     if ( /^https?:\/\/\S+/.test(metadata.homepage) === false ) {
         metadata.homepage = undefined;
     }
@@ -346,27 +350,15 @@ async function updateList(list) {
 
 /******************************************************************************/
 
-function shouldUpdateList(list) {
-    const lastUpdated = list.time?.updated ?? 0;
-    const updatePeriod = (list.expires ?? 7) * 24 * 60 * 60 * 1000;
-    const updateTime = lastUpdated + updatePeriod;
-    return Date.now() > updateTime;
-}
-
-/******************************************************************************/
-
 async function getCompiledListData(list) {
-    if ( shouldUpdateList(list) ) {
-        return updateList(list);
-    }
-    const serialized = await chrome.runtime.sendMessage({
+    const result = await chrome.runtime.sendMessage({
         what: 'compileFilters:getImportedListCompiledData',
         listid: list.id,
     });
-    if ( Boolean(serialized) === false ) {
+    if ( Boolean(result?.serialized) === false ) {
         return updateList(list);
     }
-    return s14e.deserialize(serialized);
+    return s14e.deserialize(result.serialized);
 }
 
 /******************************************************************************/

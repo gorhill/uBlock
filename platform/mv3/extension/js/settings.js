@@ -331,9 +331,14 @@ sendMessage({
 }).then(data => {
     if ( !data ) { return; }
     self.cachedRulesetData = data;
+    const supports = []
     if ( data.supportsUserScripts ) {
-        dom.body.dataset.supports = 'user-scripts';
+        supports.push('user-scripts');
     }
+    if ( data.supportsCompiledFilters ) {
+        supports.push('compiled-filters');
+    }
+    dom.body.dataset.supports = supports.join(' ');
     try {
         renderAdminRules();
         renderWidgets();
