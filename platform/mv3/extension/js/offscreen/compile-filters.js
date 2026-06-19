@@ -360,7 +360,7 @@ async function getCompiledListData(list) {
         return updateList(list);
     }
     const serialized = await chrome.runtime.sendMessage({
-        what: 'compileFilters:getCompiledListData',
+        what: 'compileFilters:getImportedListCompiledData',
         listid: list.id,
     });
     if ( Boolean(serialized) === false ) {
@@ -474,12 +474,12 @@ async function compileSandboxFilters() {
         compileSandboxFilters(),
         compileImportedList(),
     ]);
-    const sandboxCompiled = await toMv3Data('sandbox', sandboxResult);
-    const importedCompiled = await toMv3Data('imported', importedResult);
+    const sandboxCompiled = await toMv3Data('sandbox', sandboxResult) ?? {};
+    const importedCompiled = await toMv3Data('imported', importedResult) ?? {};
     const msg = {
         what: 'compileFilters:result',
-        sandbox: { },
-        imported: { },
+        sandbox: {},
+        imported: {},
     };
     if ( sandboxCompiled.isolated?.length ) {
         msg.sandbox.ISOLATED = sandboxCompiled.isolated;

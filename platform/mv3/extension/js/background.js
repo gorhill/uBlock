@@ -42,7 +42,6 @@ import {
     getSandboxFilters,
     hasCustomFilters,
     injectCustomFilters,
-    registerSandboxFilters,
     removeAllCustomFilters,
     removeCustomFilters,
     setSandboxFilters,
@@ -116,6 +115,7 @@ import {
 } from './ext-utils.js';
 
 import { dnr } from './ext-compat.js';
+import { registerCompiledFilters } from './compiled-filters.js';
 import { setPopupBlockMode } from './prevent-popup.js';
 import { toggleToolbarIcon } from './action.js';
 
@@ -225,7 +225,7 @@ async function registerDeclarativeAssets(
     userRules = true
 ) {
     const [ shouldUpdateUserRules ] = await Promise.all([
-        userScripts ? registerSandboxFilters() : false,
+        userScripts ? registerCompiledFilters() : false,
         contentScripts ? registerContentScripts() : false,
     ]);
     if ( userRules && shouldUpdateUserRules ) {
@@ -685,7 +685,6 @@ async function startSession() {
         }
     }
 
-    // 
     const {
         stockUpdated,
         importedUpdated,

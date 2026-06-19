@@ -105,6 +105,7 @@ cp platform/mv3/extension/*.json "$UBOL_DIR"/
 cp platform/mv3/extension/css/* "$UBOL_DIR"/css/
 cp -R platform/mv3/extension/js/* "$UBOL_DIR"/js/
 cp platform/mv3/"$PLATFORM"/ext-compat.js "$UBOL_DIR"/js/ 2>/dev/null || :
+cp platform/mv3/"$PLATFORM"/ext-offscreen.js "$UBOL_DIR"/js/ 2>/dev/null || :
 cp platform/mv3/"$PLATFORM"/css-api.js "$UBOL_DIR"/js/scripting/ 2>/dev/null || :
 cp platform/mv3/"$PLATFORM"/css-user.js "$UBOL_DIR"/js/scripting/ 2>/dev/null || :
 cp platform/mv3/extension/img/* "$UBOL_DIR"/img/

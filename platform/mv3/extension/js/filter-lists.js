@@ -367,12 +367,6 @@ function toggleHideUnusedLists(which) {
     localWrite('hideUnusedFilterLists', Array.from(hideUnusedSet));
 }
 
-dom.on('#lists', 'click', '.listEntry[data-nodeid] > .detailbar, .listExpander', ev => {
-    toggleHideUnusedLists(
-        dom.attr(ev.target.closest('[data-nodeid]'), 'data-nodeid')
-    );
-});
-
 // Initialize from saved state.
 localRead('hideUnusedFilterLists').then(value => {
     if ( Array.isArray(value) === false ) { return; }
@@ -416,8 +410,6 @@ const searchFilterLists = ( ) => {
 };
 
 const perListHaystack = new WeakMap();
-
-dom.on('#findInLists', 'input', searchFilterLists);
 
 /******************************************************************************/
 
@@ -484,39 +476,22 @@ const applyEnabledRulesets = (( ) => {
     }
 })();
 
-dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ev => {
-    const input = ev.target;
-    const listEntry = input.closest('.listEntry');
-    if ( listEntry === null ) { return; }
-    if ( listEntry.dataset.nodeid !== undefined ) {
-        const checkAll = input.checked ||
-            dom.cl.has(qs$(listEntry, ':scope > .detailbar .checkbox'), 'partial');
-        for ( const subListEntry of qsa$(listEntry, ':scope > .listEntries .listEntry[data-rulesetid]') ) {
-            dom.cl.add(subListEntry, 'toggled');
-            dom.prop(qsa$(subListEntry, ':scope > .detailbar input'), 'checked', checkAll);
-        }
-    } else {
-        dom.cl.add(listEntry, 'toggled');
-    }
-    updateNodes();
-    renderTotalRuleCounts();
-    applyEnabledRulesets();
-});
-
 /******************************************************************************/
 
-function importFromInput() {
+async function importFromInput() {
     const input = qs$('.importRulesetURL input[type="url"]');
     const url = input.value;
     if ( /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m.test(url) === false ) { return; }
-    sendMessage({ what: 'importFilterList', url });
+    dom.cl.add(dom.body, 'committing');
+    await sendMessage({ what: 'importFilterList', url });
     qs$('.importRulesetURL').open = false;
     input.value = '';
+    dom.cl.remove(dom.body, 'committing');
 }
-dom.on('section[data-pane="rulesets"] button:has([data-i18n="addButton"])', 'click', importFromInput);
 
 function removeImportedList(ev) {
     const listEntry = ev.target.closest('[data-role="leaf"]');
+    dom.cl.add(listEntry, 'toggled');
     const input = qs$(listEntry, 'input[type="checkbox"]');
     listEntry.dataset.remove = JSON.stringify(input.checked);
     input.checked = false;
@@ -525,10 +500,10 @@ function removeImportedList(ev) {
     renderTotalRuleCounts();
     applyEnabledRulesets();
 }
-dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .doRemove', removeImportedList);
 
 function unremoveImportedList(ev) {
     const listEntry = ev.target.closest('[data-role="leaf"]');
+    dom.cl.add(listEntry, 'toggled');
     const input = qs$(listEntry, 'input[type="checkbox"]');
     input.removeAttribute('disabled');
     input.checked = JSON.parse(listEntry.dataset.remove);
@@ -537,12 +512,45 @@ function unremoveImportedList(ev) {
     renderTotalRuleCounts();
     applyEnabledRulesets();
 }
-dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .undoRemove', unremoveImportedList);
 
 /******************************************************************************/
 
 async function start() {
-    renderFilterLists();
+    await renderFilterLists();
+
+    dom.on('#findInLists', 'input', searchFilterLists);
+    dom.on('#lists', 'click', '.listEntry[data-nodeid] > .detailbar, .listExpander', ev => {
+        toggleHideUnusedLists(
+            dom.attr(ev.target.closest('[data-nodeid]'), 'data-nodeid')
+        );
+    });
+    dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ev => {
+        const input = ev.target;
+        const listEntry = input.closest('.listEntry');
+        if ( listEntry === null ) { return; }
+        if ( listEntry.dataset.nodeid !== undefined ) {
+            const checkAll = input.checked ||
+                dom.cl.has(qs$(listEntry, ':scope > .detailbar .checkbox'), 'partial');
+            for ( const subListEntry of qsa$(listEntry, ':scope > .listEntries .listEntry[data-rulesetid]') ) {
+                dom.cl.add(subListEntry, 'toggled');
+                dom.prop(qsa$(subListEntry, ':scope > .detailbar input'), 'checked', checkAll);
+            }
+        } else {
+            dom.cl.add(listEntry, 'toggled');
+        }
+        updateNodes();
+        renderTotalRuleCounts();
+        applyEnabledRulesets();
+    });
+    dom.on('section[data-pane="rulesets"] button:has([data-i18n="addButton"])', 'click',
+        ( ) => { importFromInput(); }
+    );
+    dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .doRemove',
+        removeImportedList
+    );
+    dom.on('#lists', 'click', '[data-role="leaf"][data-imported] .undoRemove',
+        unremoveImportedList
+    );
 }
 
 dom.onFirstShown(start, qs$('section[data-pane="rulesets"]'));

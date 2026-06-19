@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { webext } from './ext-compat.js';
 
 /******************************************************************************/
@@ -36,7 +37,7 @@ export const webextFlavor = (( ) => {
 const notAnObject = a => typeof a !== 'object' || a === null;
 
 export const supportsUserScripts = (() => {
-    if ( browser.offscreen === undefined ) { return false; }
+    if ( supportsOffscreenDocument === false ) { return false; }
     try { browser.userScripts.getScripts(); }
     catch { return false; }
     return true;

@@ -122,7 +122,7 @@ export async function enableImportedRulesets(rulesets) {
 
 /******************************************************************************/
 
-export async function getCompiledListData(listid) {
+export async function getImportedListCompiledData(listid) {
     return localRead(`rulesets.imported.compiled.${listid}`);
 }
 

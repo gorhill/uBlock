@@ -17,6 +17,9 @@ body.loading {
 h3 {
     margin: 1em 0;
     }
+input, select {
+    min-height: 30px;
+    }
 aside {
     margin-block-start: 1em;
     }
