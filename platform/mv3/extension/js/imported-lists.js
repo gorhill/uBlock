@@ -55,6 +55,7 @@ async function getCompiledListIds() {
 async function scheduleImportedListsUpdate(lists) {
     let earlierTime = 0;
     for ( const list of lists ) {
+        if ( list.enabled !== true ) { continue; }
         const updateTime = list.time.updated + list.expires * MS_PER_DAY;
         if ( earlierTime !== 0 && earlierTime < updateTime ) { continue; }
         earlierTime = updateTime;
