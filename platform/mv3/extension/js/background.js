@@ -62,9 +62,10 @@ import {
 
 import {
     broadcastMessage,
-    getDueJobs,
     hostnameFromMatch,
     hostnamesFromMatches,
+    processDueJobs,
+    resetJobsAlarm,
 } from './utils.js';
 
 import {
@@ -776,13 +777,6 @@ async function start() {
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
-
-    if ( process.wakeupRun === false ) { return; }
-    getDueJobs().then(jobs => {
-        for ( const job of jobs ) {
-            onMessage({ what: job.name });
-        }
-    });
 }
 
 /******************************************************************************/
@@ -837,5 +831,15 @@ browser.permissions.onAdded.addListener((...args) => {
 browser.commands.onCommand.addListener((...args) => {
     isFullyInitialized.then(( ) => {
         onCommand(...args);
+    });
+});
+
+browser.alarms.onAlarm.addListener(alarm => {
+    if ( alarm.name !== 'deferredJobs' ) { return; }
+    isFullyInitialized.then(( ) => {
+        if ( process.wakeupRun === false ) {
+            return resetJobsAlarm();
+        }
+        processDueJobs(onMessage);
     });
 });

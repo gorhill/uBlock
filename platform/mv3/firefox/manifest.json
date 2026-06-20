@@ -59,6 +59,7 @@
   ],
   "permissions": [
     "activeTab",
+    "alarms",
     "declarativeNetRequest",
     "scripting",
     "storage",
