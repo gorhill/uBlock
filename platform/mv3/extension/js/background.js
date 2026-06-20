@@ -64,6 +64,7 @@ import {
     broadcastMessage,
     hostnameFromMatch,
     hostnamesFromMatches,
+    isScriptlet,
     processDueJobs,
     resetJobsAlarm,
 } from './utils.js';
@@ -554,27 +555,33 @@ async function onMessage(request, sender) {
     case 'addCustomFilters': {
         const modified = await addCustomFilters(request.hostname, request.selectors);
         if ( modified !== true ) { return; }
-        return registerDeclarativeAssets();
+        return registerDeclarativeAssets(true,
+            request.selectors.some(a => isScriptlet(a))
+        );
     }
 
     case 'addManyCustomFilters': {
         const promises = [];
+        let hasScriptletFilters = false;
         for ( const [ hostname, selectors ] of request.entries ) {
             if ( typeof hostname !== 'string' ) { continue; }
             if ( hostname === '' ) { continue; }
             if ( Array.isArray(selectors) === false ) { continue; }
             if ( selectors.length === 0 ) { continue; }
+            hasScriptletFilters ||= selectors.some(a => isScriptlet(a));
             promises.push(addCustomFilters(hostname, selectors));
         }
         const results = await Promise.all(promises);
         if ( results.some(a => a) === false ) { return; }
-        return registerDeclarativeAssets();
+        return registerDeclarativeAssets(true, hasScriptletFilters);
     }
 
     case 'removeCustomFilters': {
         const modified = await removeCustomFilters(request.hostname, request.selectors);
         if ( modified !== true ) { return; }
-        return registerDeclarativeAssets();
+        return registerDeclarativeAssets(true,
+            request.selectors.some(a => isScriptlet(a))
+        );
     }
 
     case 'removeAllCustomFilters': {
