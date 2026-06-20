@@ -109,7 +109,7 @@
   },
   "userScriptsInfo": {
     "message": "За да приложите козметични филтри или филтри за скриптове от импортирани списъци, трябва да предоставите на uBO Lite разрешение да изпълнява потребителски скриптове. Отворете страницата с разширенията на браузъра си (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> във Firefox), отворете подробностите за <b>uBO Lite</b> и активирайте опцията <b>Разрешаване на потребителски скриптове</b> (наричани още „непроверени скриптове от трети страни“).",
-    "description": "A notice to inform user that the enforcementof some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Списък с промени",

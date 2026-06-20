@@ -109,7 +109,7 @@
   },
   "userScriptsInfo": {
     "message": "Per aplicar filtres cosmètics o de scriptlets a partir de llistes importades, heu de concedir permís a l'uBO Lite per executar scripts d'usuari. Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> a Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenats «scripts de tercers no verificats»).",
-    "description": "A notice to inform user that the enforcementof some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Registre de canvis",

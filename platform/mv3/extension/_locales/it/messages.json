@@ -109,7 +109,7 @@
   },
   "userScriptsInfo": {
     "message": "Per applicare i filtri cosmetici o gli scriptlet provenienti da elenchi importati, è necessario concedere a uBO Lite l'autorizzazione a eseguire gli script utente. Apri la pagina delle estensioni del tuo browser (<code>chrome://extensions</code> su Chrome o <code>about:addons</code> su Firefox), apri i dettagli di <b>uBO Lite</b> e attiva l'opzione <b>Consenti script utente</b> (nota anche come \"script di terze parti non verificati\").",
-    "description": "A notice to inform user that the enforcementof some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Reg. modifiche",

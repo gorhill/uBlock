@@ -109,7 +109,7 @@
   },
   "userScriptsInfo": {
     "message": "Чтобы применять косметические фильтры или скриптлеты из импортированных списков, вы должны предоставить uBO Lite разрешение на запуск пользовательских скриптов. Откройте страницу расширений вашего браузера (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> в Firefox), откройте <b>uBO Lite</b> и включите <b>Разрешить пользовательские скрипты</b> (так называемые «непроверенные сторонние скрипты»).",
-    "description": "A notice to inform user that the enforcementof some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Список изменений",
