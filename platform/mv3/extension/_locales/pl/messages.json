@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Listy importowane",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Dodaj listę filtrów…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "Wklej tutaj adres URL listy filtrów, którą chcesz dodać",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open the <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "Aby wymusić filtry kosmetyczne lub skryptletów z importowanych list, musisz przyznać uBO Lite uprawnienia do uruchamiania skryptów użytkownika. Otwórz stronę rozszerzeń przeglądarki (<code>chrome://extensions</code> w Chrome lub <code>about:addons</code> w Firefoksie), otwórz szczegóły <b>uBO Lite</b> i włącz opcję <b>Zezwalaj na skrypty użytkownika</b> (nazywane również „niezweryfikowanymi skryptami zewnętrzymi”).",
     "description": "A notice to inform user that the enforcementof some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
