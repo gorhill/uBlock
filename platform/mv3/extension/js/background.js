@@ -700,6 +700,14 @@ async function startSession() {
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
+    // Toggling "user scripts" permission doesn't cause a permissions change
+    // event.
+    const userScriptsChanged = supportsUserScripts() !== rulesetConfig.userScripts;
+    if ( userScriptsChanged ) {
+        rulesetConfig.userScripts = !rulesetConfig.userScripts;
+        saveRulesetConfig();
+    }
+
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/scripting/RegisteredContentScript#persistacrosssessions
     // "When an extension updates, content scripts are cleared"
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/userScripts#extension_updates
@@ -709,7 +717,7 @@ async function startSession() {
     if ( shouldInject || stockUpdated || importedUpdated ) {
         await registerDeclarativeAssets(
             shouldInject || stockUpdated,
-            shouldInject || importedUpdated,
+            shouldInject || importedUpdated || userScriptsChanged,
             false
         );
         if ( importedUpdated ) {
