@@ -24,7 +24,7 @@
 export const supportsOffscreenDocument = chrome.offscreen !== undefined;
 
 export async function createOffscreenDocument(path) {
-    return browser.offscreen.createDocument({
+    return chrome.offscreen.createDocument({
         url: path,
         reasons: [ 'WORKERS' ],
         justification: 'To compile custom & imported filters in a modular way from service worker (service workers do not allow dynamic module import)',
@@ -32,5 +32,5 @@ export async function createOffscreenDocument(path) {
 }
 
 export async function closeOffscreenDocument() {
-    return browser.offscreen.closeDocument();
+    return chrome.offscreen.closeDocument();
 }
