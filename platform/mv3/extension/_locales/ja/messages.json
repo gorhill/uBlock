@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "インポートしたリスト",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "フィルターリストを追加…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "追加したいフィルターリストの URL を貼り付けてください",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "インポートしたリストから外観フィルターやスクリプトレットフィルターを適用するには、uBO Lite にユーザー スクリプトを実行する権限を付与する必要があります。ブラウザの拡張機能ページ（Chrome の場合は <code>chrome://extensions</code>、Firefox の場合は <code>about:addons</code>）を開き、<b>uBO Lite</b> の詳細を開いて、<b>ユーザー スクリプトを許可する</b>（「未検証のサードパーティ スクリプト」とも呼ばれます）をオンに切り替えてください。",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {

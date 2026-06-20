@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "가져온 목록",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "필터 목록 추가…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "여기에 추가하려는 필터 목록의 URL 붙여넣기",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "가져온 목록에서 요소 숨김 또는 스크립트 주입 필터를 적용하려면, uBO Lite에 사용자 스크립트 실행 권한을 부여해야 합니다. 브라우저의 확장 프로그램 페이지(Chrome은 <code>chrome://extensions</code>, Firefox는 <code>about:addons</code>)를 열고, <b>uBO Lite</b> 세부 정보를 연 뒤, <b>사용자 스크립트 허용</b>(혹은 \"검증되지 않은 타사 스크립트 허용\")을 켜세요.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
