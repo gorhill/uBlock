@@ -21,7 +21,7 @@
 
 // Chromium supports the offscreen API natively
 
-export const supportsOffscreenDocument = browser.offscreen !== undefined;
+export const supportsOffscreenDocument = chrome.offscreen !== undefined;
 
 export async function createOffscreenDocument(path) {
     return browser.offscreen.createDocument({
