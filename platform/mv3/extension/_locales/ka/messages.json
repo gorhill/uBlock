@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "შემოტანილი სიები",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "ფილტრის სიის დამატება…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "ჩასვით სიის ბმული დასამატებლად",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "გარეგნული ან მცირე სკრიპტის ფილტრების იძულებით ასამოქმედებლად შემოტანილი სიებიდან, uBO Lite უნდა იყოს სკრიპტების გაშვების ნებართვის მქონე. გახსენით ბრაუზერის გაფართოებების გვერდი (<code>chrome://extensions</code> Chrome-ში ან <code>about:addons</code> Firefox-ში), იხილეთ <b>uBO Lite</b> ვრცლად და გადართეთ <b>მომხმარებლის სკრიპტების ნებართვა</b> (აგრეთვე შეიძლება ეწეროს „დაუმოწმებელი გარეშე სკრიპტები“).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {

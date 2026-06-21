@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Om cosmetische of scriptletfilters vanuit geïmporteerde lijsten toe te passen, moet u uBO Lite toestemming geven voor het uitvoeren van gebruikersscripts. Open de extensiespagina van uw browser (<code>chrome://extensions</code> in Chrome of <code>about:addons</code> in Firefox), open de details van <b>uBO Lite</b>, en schakel <b>Gebruikersscripts toestaan</b> (ook wel aangeduid als ‘Niet-geverifieerde scripts van derden’ in).",
+    "message": "Om cosmetische of scriptletfilters vanuit geïmporteerde lijsten toe te passen, moet u uBO Lite toestemming geven voor het uitvoeren van gebruikersscripts. Open de extensiespagina van uw browser (<code>chrome://extensions</code> in Chrome of <code>about:addons</code> in Firefox), open de details van <b>uBO Lite</b>, en schakel <b>Gebruikersscripts toestaan</b> (ook wel aangeduid als ‘Niet-geverifieerde scripts van derden’) in.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {

@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "已导入的列表",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "添加过滤列表…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "在此处粘贴要添加的过滤列表的 URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -104,11 +104,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "在此粘贴要添加的特定元素过滤规则",
+    "message": "在此处粘贴要添加的特定元素/脚本过滤规则",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "要强制执行来自导入列表的元素或脚本过滤规则，您必须授予 uBO Lite 运行用户脚本的权限。打开浏览器的扩展页面（Chrome 中为 <code>chrome://extensions</code>，Firefox 中为 <code>about:addons</code>），打开 <b>uBO Lite</b> 详情</b>，然后开启 <b>允许用户脚本</b>（也称为“未经验证的第三方脚本”）。",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
