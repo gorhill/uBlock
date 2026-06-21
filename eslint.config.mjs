@@ -18,8 +18,6 @@ export default [ includeIgnoreFile(gitignorePath), {
     languageOptions: {
         globals: {
             ...globals.browser,
-            browser: "readonly",
-            chrome: "readonly",
             vAPI: "readonly",
         },
         sourceType: "module",
