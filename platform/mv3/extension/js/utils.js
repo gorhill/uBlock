@@ -132,36 +132,6 @@ export const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
-export const deepEquals = (a, b) => {
-    switch ( typeof a ) {
-    case 'undefined':
-    case 'boolean':
-    case 'number':
-    case 'string':
-        return a === b;
-    }
-    // case 'object':
-    if ( typeof b !== 'object' ) { return false; }
-    if ( a === null || b === null ) { return a === b; }
-    if ( Array.isArray(a) || Array.isArray(b) ) {
-        if ( Array.isArray(a) === false || Array.isArray(b) === false ) { return false; }
-        if ( a.length !== b.length ) { return false; }
-        for ( let i = 0; i < a.length; i++ ) {
-            if ( deepEquals(a[i], b[i]) === false ) { return false; }
-        }
-        return true;
-    }
-    const akeys = Object.keys(a);
-    const bkeys = Object.keys(b);
-    if ( akeys.length !== bkeys.length ) { return false; }
-    for ( const k of akeys ) {
-        if ( deepEquals(a[k], b[k]) === false ) { return false; }
-    }
-    return true;
-};
-
-/******************************************************************************/
-
 export const broadcastMessage = message => {
     const bc = new self.BroadcastChannel('uBOL');
     bc.postMessage(message);

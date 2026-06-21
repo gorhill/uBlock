@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { deepEquals } from './utils.js';
+import { deepEquals } from './deep-compare.js';
 
 export const webext = self.browser || self.chrome;
 export const dnr = webext.declarativeNetRequest || {};
