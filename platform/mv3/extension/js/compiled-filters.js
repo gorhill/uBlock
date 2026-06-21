@@ -119,9 +119,8 @@ async function prepare(id, none, result) {
     // DNR rules
     const storageId = `${id}Filters.dnrRules`;
     const beforeRules = await localRead(storageId);
-    const afterRules = rulesetConfig.developerMode && result?.dnrRules?.length
-        ? result.dnrRules
-        : undefined;
+    const afterRules = (id === 'imported' || rulesetConfig.developerMode) &&
+        result?.dnrRules?.length && result.dnrRules;
     const modified = JSON.stringify(afterRules) !== JSON.stringify(beforeRules);
     if ( modified ) {
         if ( Array.isArray(afterRules) ) {
