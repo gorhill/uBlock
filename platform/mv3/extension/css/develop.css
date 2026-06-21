@@ -12,6 +12,7 @@ section[data-pane="develop"] > div {
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
     }
 
 section[data-pane="develop"] > div > * {
@@ -22,8 +23,7 @@ section[data-pane="develop"] > div > * {
 .cm-container {
     flex-grow: 1;
     font-size: var(--monospace-size);
-    max-height: stretch;
-        max-height: -webkit-fill-available;
+    height: 90%;
     padding-bottom: 2em;
     }
 
