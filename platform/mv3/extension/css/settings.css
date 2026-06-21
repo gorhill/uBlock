@@ -282,6 +282,9 @@ body section[data-pane="rulesets"] .importRulesetURL > p {
 body section[data-pane="rulesets"] .importRulesetURL input {
     flex-grow: 1;
     }
+body section[data-pane="rulesets"] .importRulesetURL input:is(:placeholder-shown,:invalid) ~ button {
+    display: none;
+    }
 
 body section[data-pane="filters"] {
     padding-inline: 0;
