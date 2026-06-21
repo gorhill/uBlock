@@ -19,7 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { localRead, localRemove, localWrite } from './ext.js';
+import {
+    browser,
+    localRead, localRemove, localWrite,
+} from './ext.js';
 
 /******************************************************************************/
 
