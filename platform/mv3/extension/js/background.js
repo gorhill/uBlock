@@ -759,7 +759,7 @@ async function startSession() {
     // "User scripts are cleared when an extension updates"
     const shouldInject = isNewVersion || permissionsUpdated ||
         isSideloaded && rulesetConfig.developerMode;
-    if ( shouldInject || stockUpdated || importedUpdated ) {
+    if ( shouldInject || stockUpdated || importedUpdated || userScriptsChanged ) {
         await Promise.all([
             registerContentScripts(),
             updateCompiledFilters().then(( ) =>
