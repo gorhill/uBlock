@@ -486,7 +486,9 @@ export function parseNetworkFilter(parser) {
             if ( details.name ) {
                 removeParams.push(details.name);
                 if ( rule.condition.urlFilter === undefined ) {
-                    rule.condition.urlFilter = `^${details.name}=`;
+                    if ( rule.condition.regexFilter === undefined ) {
+                        rule.condition.urlFilter = `^${details.name}=`;
+                    }
                 }
             }
             rule.action.type = 'redirect';
