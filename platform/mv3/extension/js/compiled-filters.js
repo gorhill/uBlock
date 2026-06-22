@@ -50,7 +50,6 @@ import {
 } from './utils.js';
 
 import { getFilteringModeDetails } from './mode-manager.js';
-import { rulesetConfig } from './config.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { ubolLog } from './debug.js';
 
@@ -65,130 +64,11 @@ async function getUserList() {
             lines.push(`${hostname}##${selector}`);
         }
     }
-    if ( rulesetConfig.developerMode ) {
-        const sandboxFilters = await getSandboxFilters();
-        if ( sandboxFilters ) {
-            lines.push(sandboxFilters);
-        }
+    const sandboxFilters = await getSandboxFilters();
+    if ( sandboxFilters ) {
+        lines.push(sandboxFilters);
     }
     return lines.join('\n').trim();
-}
-
-/******************************************************************************/
-
-async function prepare(id, none, result) {
-    const scripts = [];
-    const excludeHostnames = none.has('all-urls') === false
-        ? [ ...none ]
-        : [];
-    const excludeMatches = excludeHostnames.length !== 0
-        ? matchesFromHostnames(excludeHostnames)
-        : [];
-    if ( result?.ISOLATED?.length ) {
-        for ( const script of result.ISOLATED ) {
-            const directive = {
-                id: script.id,
-                world: 'USER_SCRIPT',
-                allFrames: true,
-                js: [ { code: script.code } ],
-                runAt: 'document_start',
-                matches: matchesFromHostnames(script.hostnames),
-            };
-            if ( excludeMatches.length !== 0 ) {
-                directive.excludeMatches = excludeMatches.slice();
-            }
-            scripts.push(directive);
-        }
-    }
-    if ( result?.MAIN?.length ) {
-        for ( const script of result.MAIN ) {
-            const directive = {
-                id: script.id,
-                world: 'MAIN',
-                allFrames: true,
-                js: [ { code: script.code } ],
-                runAt: 'document_start',
-                matches: matchesFromHostnames(script.hostnames),
-            };
-            if ( excludeMatches.length !== 0 ) {
-                directive.excludeMatches = excludeMatches.slice();
-            }
-            scripts.push(directive);
-        }
-    }
-    // DNR rules
-    const storageId = `${id}Filters.dnrRules`;
-    const beforeRules = await localRead(storageId);
-    const afterRules = (id === 'imported' || rulesetConfig.developerMode) &&
-        result?.dnrRules?.length && result.dnrRules;
-    const modified = JSON.stringify(afterRules) !== JSON.stringify(beforeRules);
-    if ( modified ) {
-        if ( Array.isArray(afterRules) ) {
-            await localWrite(storageId, afterRules);
-        } else {
-            await localRemove(storageId);
-        }
-    }
-    return { scripts, modified };
-}
-
-/******************************************************************************/
-
-async function register() {
-    const [
-        hasUserFilters,
-        hasImportedLists,
-    ] = await Promise.all([
-        getUserList().then(a => Boolean(a)),
-        getEnabledImportedLists().then(a => Boolean(a.length)),
-    ]);
-
-    let result;
-    if ( hasUserFilters || hasImportedLists ) {
-        result = await parseRawFilters() || {};
-    }
-
-    if ( supportsUserScripts() ) {
-        try {
-            const scriptsToRemove = await browser.userScripts.getScripts();
-            if ( scriptsToRemove.length !== 0 ) {
-                await browser.userScripts.unregister();
-                ubolLog(`Unregistered userscript ${scriptsToRemove.map(a => a.id).join()}`);
-            }
-        } catch {
-        }
-    }
-
-    if ( Boolean(result) === false ) { return true; }
-
-    const filteringModeDetails = await getFilteringModeDetails();
-    const { none, basic } = filteringModeDetails;
-
-    const toAdd = [];
-    const {
-        scripts: sandboxScripts,
-        modified: sandboxModified,
-    } = await prepare('sandbox', none, result.sandbox);
-    if ( sandboxScripts.length ) {
-        toAdd.push(...sandboxScripts);
-    }
-    const {
-        scripts: importedScripts,
-        modified: importedModified,
-    } = await prepare('imported', new Set([ ...none, ...basic ]), result.imported);
-    if ( importedScripts.length ) {
-        toAdd.push(...importedScripts);
-    }
-    if ( supportsUserScripts() && toAdd.length ) {
-        try {
-            await browser.userScripts.register(toAdd).then(( ) => {
-                ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
-            });
-        } catch {
-        }
-    }
-
-    return sandboxModified || importedModified;
 }
 
 /******************************************************************************/
@@ -249,9 +129,183 @@ async function parseRawFilters() {
 
 /******************************************************************************/
 
-export async function registerCompiledFilters() {
+function prepareUserScripts(id, none, result) {
+    const out = [];
+    const excludeHostnames = none.has('all-urls') === false
+        ? [ ...none ]
+        : [];
+    const excludeMatches = excludeHostnames.length !== 0
+        ? matchesFromHostnames(excludeHostnames)
+        : [];
+    if ( result?.ISOLATED?.length ) {
+        for ( const script of result.ISOLATED ) {
+            const directive = {
+                id: script.id,
+                world: 'USER_SCRIPT',
+                allFrames: true,
+                js: [ { code: script.code } ],
+                runAt: 'document_start',
+                matches: matchesFromHostnames(script.hostnames),
+            };
+            if ( excludeMatches.length !== 0 ) {
+                directive.excludeMatches = excludeMatches.slice();
+            }
+            out.push(directive);
+        }
+    }
+    if ( result?.MAIN?.length ) {
+        for ( const script of result.MAIN ) {
+            const directive = {
+                id: script.id,
+                world: 'MAIN',
+                allFrames: true,
+                js: [ { code: script.code } ],
+                runAt: 'document_start',
+                matches: matchesFromHostnames(script.hostnames),
+            };
+            if ( excludeMatches.length !== 0 ) {
+                directive.excludeMatches = excludeMatches.slice();
+            }
+            out.push(directive);
+        }
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+async function saveRules(id, rules) {
+    const storageId = `${id}Filters.dnrRules`;
+    const beforeRules = await localRead(storageId);
+    const afterRules = rules?.length && rules;
+    const modified = JSON.stringify(afterRules) !== JSON.stringify(beforeRules);
+    if ( modified === false ) { return false; }
+    if ( Array.isArray(afterRules) ) {
+        await localWrite(storageId, afterRules);
+    } else {
+        await localRemove(storageId);
+    }
+    return true;
+}
+
+/******************************************************************************/
+
+async function saveUserScripts(result = {}) {
+    return Promise.all([
+        localWrite('sandboxFilters.userScripts', {
+            ISOLATED: result.sandbox?.ISOLATED ?? [],
+            MAIN: result.sandbox?.MAIN ?? [],
+        }),
+        localWrite('importedFilters.userScripts', {
+            ISOLATED: result.imported?.ISOLATED ?? [],
+            MAIN: result.imported?.MAIN ?? [],
+        }),
+    ]);
+}
+
+async function readUserScripts() {
+    const [
+        sandbox = {},
+        imported = {},
+    ] = await Promise.all([
+        localRead('sandboxFilters.userScripts'),
+        localRead('importedFilters.userScripts'),
+    ]);
+    return { sandbox, imported };
+}
+
+/******************************************************************************/
+
+async function register() {
+    if ( supportsUserScripts() ) {
+        try {
+            const toRemove = await browser.userScripts.getScripts();
+            if ( toRemove.length !== 0 ) {
+                await browser.userScripts.unregister();
+                ubolLog(`Unregistered userscript ${toRemove.map(a => a.id).join()}`);
+            }
+        } catch {
+        }
+    }
+
+    const [
+        { none, basic },
+        { sandbox, imported },
+    ] = await Promise.all([
+        getFilteringModeDetails(),
+        readUserScripts(),
+    ]);
+
+    const toAdd = [];
+    const sandboxScripts = await prepareUserScripts('sandbox',
+        none,
+        sandbox
+    );
+    if ( sandboxScripts.length ) {
+        toAdd.push(...sandboxScripts);
+    }
+    const importedScripts = await prepareUserScripts('imported',
+        new Set([ ...none, ...basic ]),
+        imported
+    );
+    if ( importedScripts.length ) {
+        toAdd.push(...importedScripts);
+    }
+    if ( supportsUserScripts() && toAdd.length ) {
+        try {
+            await browser.userScripts.register(toAdd).then(( ) => {
+                ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
+            });
+        } catch {
+        }
+    }
+}
+
+/******************************************************************************/
+
+async function update() {
+    const [
+        hasUserFilters,
+        hasImportedLists,
+    ] = await Promise.all([
+        getUserList().then(a => Boolean(a)),
+        getEnabledImportedLists().then(a => Boolean(a.length)),
+    ]);
+
+    let result;
+    if ( hasUserFilters || hasImportedLists ) {
+        result = await parseRawFilters();
+        if ( Boolean(result) === false ) { return; }
+    }
+
+    await Promise.all([
+        saveRules('sandbox', result?.sandbox?.dnrRules),
+        saveRules('imported', result?.imported?.dnrRules),
+        saveUserScripts(result),
+    ]);
+}
+
+/******************************************************************************/
+
+// This recompiles all sandbox and imported filters.
+
+export async function updateCompiledFilters() {
+    if ( supportsOffscreenDocument !== true ) { return false; }
+    pendingRegister = pendingRegister.then(( ) => update());
+    return pendingRegister;
+}
+
+/******************************************************************************/
+
+// This registers previously compiled external filters, according to current
+// filtering mode details.
+
+export async function registerUserScripts() {
     if ( supportsOffscreenDocument !== true ) { return false; }
     pendingRegister = pendingRegister.then(( ) => register());
     return pendingRegister;
 }
+
+/******************************************************************************/
+
 let pendingRegister = Promise.resolve();

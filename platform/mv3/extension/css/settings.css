@@ -399,8 +399,7 @@ section[data-pane="filters"] aside p {
 section[data-pane="filters"] li.error[data-pretty] > div span[contenteditable] {
     color: var(--info3-ink);
     }
-body:not([data-supports~="compiled-filters"]) section[data-pane="filters"] aside#sandboxEditor,
-body:not([data-develop="true"]) section[data-pane="filters"] aside#sandboxEditor {
+body:not([data-supports~="compiled-filters"]) section[data-pane="filters"] aside#sandboxEditor {
     display: none;
     }
 section[data-pane="filters"] aside#sandboxEditor .cm-scroller {
