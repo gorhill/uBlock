@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Danh sách đã nhập",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Thêm danh sách bộ lọc…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Paste here the URL of the filter list to add",
+    "message": "Dán URL của danh sách bộ lọc vào đây để thêm",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "Để áp dụng các bộ lọc giao diện hoặc tập lệnh từ danh sách đã nhập, bạn phải cấp quyền cho uBO Lite chạy các tập lệnh người dùng. Mở trang tiện ích mở rộng của trình duyệt (<code>chrome://extensions</code> trong Chrome hoặc <code>about:addons</code> trong Firefox), mở chi tiết <b>uBO Lite</b> và bật <b>Cho phép tập lệnh người dùng</b> (còn được gọi là “tập lệnh của bên thứ ba chưa được xác minh”).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {

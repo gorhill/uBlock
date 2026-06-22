@@ -960,7 +960,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, калі ласка, праверце, што пра гэтую праблему не паведамлялі раней.",
+    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, праверце, ці не паведамлялі пра гэтую праблему раней. <b>Заўвага:</b> націсканне кнопкі прывядзе да адпраўкі паходжання старонкі на GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
