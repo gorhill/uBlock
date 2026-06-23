@@ -612,6 +612,11 @@ export function parseNetworkFilter(parser) {
             }
         } else if ( rule.action.redirect.regexSubstitution ) {
         }
+    } else if ( rule.action.type === 'modifyHeaders' ) {
+        if ( isException ) {
+            rule.action.type = 'allow';
+            delete rule.action.responseHeaders;
+        }
     }
     if ( priority !== 1 ) {
         rule.priority = priority;
