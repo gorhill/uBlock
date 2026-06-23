@@ -505,7 +505,8 @@
   {
     "id": "pol-0",
     "group": "regions",
-    "lang": "szl pl _",
+    "parent": "🇵🇱pl: Polskie listy filtrów",
+    "lang": "szl pl",
     "name": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
     "tags": "ads polish polski",
     "enabled": false,
@@ -513,6 +514,20 @@
       "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt"
     ],
     "homeURL": "https://github.com/MajkiIT/polish-ads-filter"
+  },
+  {
+    "id": "pol-3",
+    "group": "regions",
+    "parent": "🇵🇱pl: Polskie listy filtrów",
+    "lang": "szl pl",
+    "name": "🇵🇱pl: CERT.PL's Warning List",
+    "tags": "malware polish polski",
+    "enabled": false,
+    "excludedPlatforms": [ "safari" ],
+    "urls": [
+      "https://hole.cert.pl/domains/v2/domains_ublock.txt"
+    ],
+    "homeURL": "https://cert.pl/lista-ostrzezen/"
   },
   {
     "id": "rou-1",
