@@ -672,7 +672,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Дзейная картка",
+    "message": "Бягучая ўкладка",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
@@ -1100,7 +1100,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "гадзіну таму назад",
+    "message": "гадзіну таму",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
