@@ -41,14 +41,18 @@
                 const hn1 = origin.slice(beg+3)
                 const end = hn1.indexOf(':');
                 const hn2 = end === -1 ? hn1 : hn1.slice(0, end);
-                const hnParts = hn2.split('.');
                 if ( hn2.length === 0 ) { return; }
-                const hns = [];
-                for ( let i = 0; i < hnParts.length; i++ ) {
-                    hns.push(`${hnParts.slice(i).join('.')}`);
+                const hns = [ hn2 ];
+                for ( let pos = 0; ; ) {
+                    pos = hn2.indexOf('.', pos) + 1;
+                    if ( pos === 0 ) { break; }
+                    hns.push(hn2.slice(pos));
                 }
                 return { hns, i };
-            }).filter(a => a !== undefined);
+            }).filter(a => a);
+            if ( this.entries.length ) {
+                this.entries[0].hns.push('*');
+            }
         },
         get topHostname() {
             if ( this.entries.length === 0 ) { this.compute(); }
@@ -62,11 +66,12 @@
             if ( this.entries.length === 0 ) { this.compute(); }
             if ( this.entries[0].ens === undefined ) {
                 const ens = [];
-                const hnparts =  this.entries[0].hns[0].split('.');
-                const n = hnparts.length - 1;
-                for ( let i = 0; i < n; i++ ) {
-                    for ( let j = n; j > i; j-- ) {
-                        ens.push(`${hnparts.slice(i,j).join('.')}.*`);
+                for ( let hn of this.entries[0].hns ) {
+                    for (;;) {
+                        const pos = hn.lastIndexOf('.');
+                        if ( pos === -1 ) { break; }
+                        hn = hn.slice(0, pos);
+                        ens.push(`${hn}.*`);
                     }
                 }
                 ens.sort((a, b) => {

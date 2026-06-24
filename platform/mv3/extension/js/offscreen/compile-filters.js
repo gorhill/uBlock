@@ -99,12 +99,12 @@ function compileScriptletFilter(parser, output) {
             continue;
         }
         details.matches ??= [];
-        if ( details.matches.includes('*') ) { continue; }
-        if ( hn === '*' ) {
+        if ( details.matches[0] === '*' ) { continue; }
+        if ( hn !== '*' ) {
+            details.matches.push(hn);
+        } else if ( parser.options.trustedSource ) {
             details.matches = [ '*' ];
-            continue;
         }
-        details.matches.push(hn);
     }
 }
 
@@ -121,7 +121,12 @@ export function compileCosmeticFilter(parser, output) {
         if ( not && exception ) { continue; }
         if ( not || exception ) {
             excludeMatches.push(hn);
-        } else if ( hn !== '*' ) {
+        } else if ( hn === '*' ) {
+            if ( parser.options.trustedSource !== true ) { continue; }
+            matches.length = 0;
+            matches.push('*');
+        } else {
+            if ( matches[0] === '*' ) { continue; }
             matches.push(hn);
         }
     }
@@ -237,7 +242,8 @@ export async function toMv3Data(rulesetid, compiledData) {
         const result = makeScriptlets.commit(rulesetid, template);
         if ( result.ISOLATED ) {
             const { hasRegexes, hasAncestors, hasEntities } = result.ISOLATED;
-            const hostnames = hasRegexes || hasAncestors || hasEntities
+            const hostnames = hasRegexes || hasAncestors || hasEntities ||
+                result.ISOLATED.hostnames.includes('*')
                 ? '*'
                 : result.ISOLATED.hostnames;
             isolated.push({
@@ -248,7 +254,8 @@ export async function toMv3Data(rulesetid, compiledData) {
         }
         if ( result.MAIN ) {
             const { hasRegexes, hasAncestors, hasEntities } = result.MAIN;
-            const hostnames = hasRegexes || hasAncestors || hasEntities
+            const hostnames = hasRegexes || hasAncestors || hasEntities ||
+                result.MAIN.hostnames.includes('*')
                 ? '*'
                 : result.MAIN.hostnames;
             main.push({
