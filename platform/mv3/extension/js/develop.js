@@ -52,8 +52,12 @@ class Editor {
             }),
         ]);
         const rulesetDetails = await sendMessage({ what: 'getRulesetDetails' });
+        const reImported = /^[a-z-]+:\/\//;
         const parent = qs$('#editors optgroup');
         for ( const details of rulesetDetails ) {
+            if ( reImported.test(details.id) ) {
+                if ( details.enabled !== true ) { continue; }
+            }
             const option = document.createElement('option');
             option.value = `dnr.ro.${details.id}`;
             option.textContent = details.name;

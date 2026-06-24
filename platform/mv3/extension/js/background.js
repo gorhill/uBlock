@@ -94,6 +94,7 @@ import {
     getEnabledRulesets,
     getEnabledRulesetsDetails,
     getRulesetDetails,
+    getRulesetRules,
     patchDefaultRulesets,
     setStrictBlockMode,
     updateDynamicAndSessionRules,
@@ -425,6 +426,9 @@ async function onMessage(request, sender) {
 
     case 'getEnabledRulesetsDetails':
         return getEnabledRulesetsDetails();
+
+    case 'getRulesetRules':
+        return getRulesetRules(request.id);
 
     case 'hasBroadHostPermissions':
         return hasBroadHostPermissions();

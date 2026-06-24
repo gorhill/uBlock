@@ -515,6 +515,29 @@ export async function getEnabledRulesets() {
 
 /******************************************************************************/
 
+export async function getRulesetRules(id) {
+    const rulesetDetails = await getRulesetDetails();
+    const ruleset = rulesetDetails.get(id);
+    if ( ruleset === undefined ) { return; }
+    if ( /^[a-z-]+:\/\//.test(id) ) {
+        const serialized = await localRead(`rulesets.imported.compiled.${id}`);
+        return { serialized };
+    }
+    if ( Boolean(ruleset.rules) === false ) { return; }
+    const { total, regex } = ruleset.rules;
+    const promises = [];
+    if ( total !== regex ) {
+        promises.push(fetchJSON(`/rulesets/main/${id}`));
+    }
+    if ( regex ) {
+        promises.push(fetchJSON(`/rulesets/regex/${id}`));
+    }
+    const result = await Promise.all(promises);
+    return { rules: result.flat() };
+}
+
+/******************************************************************************/
+
 async function updateEnabledRulesets(toEnable, toDisable, out) {
     const reImported = /^[a-z-]+:\/\//;
     const enableRulesetIds = toEnable.filter(a => reImported.test(a) === false);

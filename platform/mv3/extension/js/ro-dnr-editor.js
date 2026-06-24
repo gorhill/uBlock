@@ -19,10 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { runtime, sendMessage } from './ext.js';
 import { DNREditor } from './dnr-editor.js';
+import { deserialize } from '../lib/s14e-serializer.js';
 import { i18n$ } from './i18n.js';
 import { normalizeDNRRules } from './ext-compat.js';
+import { sendMessage } from './ext.js';
 import { textFromRules } from './dnr-parser.js';
 
 /******************************************************************************/
@@ -48,40 +49,12 @@ export class ReadOnlyDNREditor extends DNREditor {
         const match = /^dnr\.ro\.(.+)$/.exec(hint);
         if ( match === null ) { return; }
         this.id = match[1];
-        const allRulesetDetails = await sendMessage({ what: 'getRulesetDetails' });
-        const rulesetDetails = allRulesetDetails.find(a => a.id === this.id);
-        if ( rulesetDetails === undefined ) { return; }
-        const manifestRulesets = runtime.getManifest().declarative_net_request.rule_resources;
-        const mainPathMap = new Map(
-            manifestRulesets.map(({ id, path }) => [ id, path ])
-        );
-        const realms = {
-            plain: 'main',
-            regex: 'regex',
-        };
-        const promises = [];
-        for ( const [ realm, dir ] of Object.entries(realms) ) {
-            if ( Boolean(rulesetDetails.rules?.[realm]) === false ) { continue; }
-            const url = dir === 'main'
-                ? mainPathMap.get(this.id)
-                : `./rulesets/${dir}/${this.id}.json`;
-            promises.push(
-                fetch(url).then(response =>
-                    response.json()
-                ).then(rules =>
-                    normalizeDNRRules(rules)
-                )
-            );
-        }
-        const parts = await Promise.all(promises);
-        const allRules = [];
-        for ( const rules of parts ) {
-            for ( const rule of rules ) {
-                allRules.push(rule);
-            }
-        }
-        this.count = allRules.length;
-        return textFromRules(allRules, { keepId: true });
+        const result = await sendMessage({ what: 'getRulesetRules', id: this.id }) || {};
+        const allRules = result.serialized
+            ? deserialize(result.serialized).dnrRules ?? {}
+            : result.rules ?? {};
+        this.count = allRules.length ?? 0;
+        return textFromRules(normalizeDNRRules(allRules), { keepId: true });
     }
 
     on(editor) {
