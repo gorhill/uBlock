@@ -117,7 +117,7 @@ async function parseRawFilters() {
         promise: timeoutPromise,
         resolve: timeoutResolve,
     } = Promise.withResolvers();
-    self.setTimeout(timeoutResolve, 30000);
+    self.setTimeout(timeoutResolve, 60000);
     const [ result ] = await Promise.all([
         Promise.race([ offscreenPromise, timeoutPromise ]),
         createOffscreenDocument('/js/offscreen/compile-filters.html'),

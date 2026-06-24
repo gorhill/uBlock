@@ -322,7 +322,7 @@ registerContentScripts.register = async function register() {
         genericDetails,
     ] = await Promise.all([
         getFilteringModeDetails(),
-        getEnabledRulesetsDetails(),
+        getEnabledRulesetsDetails(true),
         getScriptletDetails(),
         getGenericDetails(),
     ]);

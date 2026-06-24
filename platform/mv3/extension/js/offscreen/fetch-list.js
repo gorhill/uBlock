@@ -23,19 +23,26 @@ import * as sfp from '../static-filtering-parser.js';
 
 /******************************************************************************/
 
-async function fetchText(url) {
+async function fetchText(url, progressFn) {
     const response = await fetch(url).catch(( ) => { });
-    if ( response === undefined ) {
+    if ( response?.ok !== true ) {
         return { url, error: `Fetching from "${url}" failed` };
     }
-    let text;
-    if ( response.ok ) {
-        text = await response.text().catch(( ) => { });
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    const parts = [];
+    try {
+        for (;;) {
+            const { done, value } = await reader.read();
+            if ( done ) { break; }
+            parts.push(decoder.decode(value, { stream: true }));
+            if ( progressFn ) { progressFn(); }
+        }
+    } catch {
+        return { url, error: `Fetching content from "${url}" failed` };
     }
-    if ( text === undefined ) {
-        return { url, error: `Fetching text content from "${url}" failed` };
-    }
-    return { url, content: text };
+    parts.push(decoder.decode());
+    return { url, content: parts.join('') };
 }
 
 /******************************************************************************/
@@ -51,7 +58,7 @@ function isTrusted(context, asset, url) {
 
 /******************************************************************************/
 
-export async function fetchList(context, asset) {
+export async function fetchList(context, asset, progressFn) {
     // Mind commit if present
     const effectiveURL = url => {
         return asset.commit
@@ -80,7 +87,7 @@ export async function fetchList(context, asset) {
                 newParts.push(`!#trusted on ${context.secret}`);
             }
             newParts.push(
-                fetchText(effectiveURL(part.url)).then(details => {
+                fetchText(effectiveURL(part.url), progressFn).then(details => {
                     const { url, error } = details;
                     if ( error !== undefined ) { return details; }
                     const content = details.content.trim();

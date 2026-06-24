@@ -328,7 +328,9 @@ async function updateList(list) {
         ],
     };
     const asset = { urls: [ list.id ] };
-    const text = await fetchList(context, asset);
+    const text = await fetchList(context, asset, ( ) => {
+        browser.runtime.sendMessage({ what: 'keepAlive' });
+    });
     if ( Boolean(text) === false ) { return; }
 
     const metadata = extractMetadataFromList(text, [

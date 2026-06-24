@@ -149,7 +149,7 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
         removeRuleIds.push(rule.id);
     }
 
-    const rulesetDetails = await getEnabledRulesetsDetails();
+    const rulesetDetails = await getEnabledRulesetsDetails(true);
 
     // Fetch regexes for all enabled rulesets
     const toFetch = [];
@@ -255,7 +255,7 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
         temporarilyExcluded = [],
     ] = await Promise.all([
         hasBroadHostPermissions(),
-        getEnabledRulesetsDetails(),
+        getEnabledRulesetsDetails(true),
         localRead('excludedStrictBlockHostnames'),
         sessionRead('excludedStrictBlockHostnames'),
     ]);
@@ -645,7 +645,7 @@ async function getStaticRulesets() {
 
 /******************************************************************************/
 
-async function getEnabledRulesetsDetails() {
+async function getEnabledRulesetsDetails(stockOnly = false) {
     const [
         rulesetIds,
         rulesetDetails,
@@ -653,8 +653,10 @@ async function getEnabledRulesetsDetails() {
         getEnabledRulesets(),
         getRulesetDetails(),
     ]);
+    const reImported = /^[a-z-]+:\/\//;
     const out = [];
     for ( const id of rulesetIds ) {
+        if ( stockOnly && reImported.test(id) ) { continue; }
         const ruleset = rulesetDetails.get(id);
         if ( ruleset === undefined ) { continue; }
         out.push(ruleset);
