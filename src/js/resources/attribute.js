@@ -90,10 +90,9 @@ export function setAttrFn(
     const start = ( ) => {
         if ( applySetAttr() === false ) { return; }
         observer = new MutationObserver(onDomChanged);
-        observer.observe(document.body, {
-            subtree: true,
-            childList: true,
-        });
+        const root = document.documentElement;
+        if ( root instanceof self.Node === false ) { return; }
+        observer.observe(root, { subtree: true, childList: true });
     };
     runAt(( ) => { start(); }, options.runAt || 'idle');
 }
