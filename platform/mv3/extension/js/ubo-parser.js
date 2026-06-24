@@ -38,8 +38,6 @@ const validResourceTypes = [
     'csp_report',
     'media',
     'websocket',
-    'webtransport',
-    'webbundle',
     'other',
 ];
 
