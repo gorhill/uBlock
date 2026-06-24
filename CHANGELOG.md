@@ -1,3 +1,4 @@
+- [Fix potential exception in set-attribute scriptlet](https://github.com/gorhill/uBlock/commit/37fe5d9cbe)
 - [Improve parsing/interpretation of consecutive `$$` in network filters](https://github.com/gorhill/uBlock/commit/347f9f7fda)
 - [Improve `googlesyndication_adsbygoogle` shim](https://github.com/gorhill/uBlock/commit/f5be2bbed0)
 - [Add `edit-object-on-[getter|setter]` scriptlets](https://github.com/gorhill/uBlock/commit/99e622831b)
