@@ -25,7 +25,7 @@ import redirectResourceMap from './redirect-resources.js';
 
 /******************************************************************************/
 
-const validResourceTypes = [
+const safeResourceTypes = [
     'main_frame',
     'sub_frame',
     'stylesheet',
@@ -250,10 +250,11 @@ export function validateRules(rules) {
 //   Block important: 40
 //   Redirect important: 41-49
 
-export function parseNetworkFilter(parser) {
+export function parseNetworkFilter(parser, details = {}) {
     if ( parser.isNetworkFilter() === false ) { return; }
     if ( parser.hasError() ) { return; }
 
+    const validResourceTypes = details.resourceTypes ?? safeResourceTypes;
     const rule = {
         action: { type: 'block' },
         condition: { },
@@ -624,7 +625,7 @@ export function parseNetworkFilter(parser) {
 
 /******************************************************************************/
 
-export function parseFilters(text) {
+export function parseFilters(text, details) {
     if ( text.startsWith('---') ) { return; }
     if ( text.endsWith('---') ) { return; }
     const lines = text.split(/\n/);
@@ -634,7 +635,7 @@ export function parseFilters(text) {
     for ( const line of lines ) {
         parser.parse(line);
         if ( parser.isNetworkFilter() === false ) { continue; }
-        const rule = parseNetworkFilter(parser);
+        const rule = parseNetworkFilter(parser, details);
         if ( rule === undefined ) { continue; }
         rules.push(rule);
     }

@@ -32,6 +32,10 @@ import { safeReplace } from './safe-replace.js';
 
 const browser = (self.browser || self.chrome);
 
+const resourceTypes = await browser.runtime.sendMessage({
+    what: 'compileFilters:getResourceTypes'
+});
+
 /******************************************************************************/
 
 function parseExpires(s) {
@@ -193,7 +197,9 @@ export function compileFilters(listid, text, context = {}) {
         }
         if ( parser.isNetworkFilter() ) {
             filterStats.total += 1;
-            const rule = parseNetworkFilter(parser);
+            const rule = parseNetworkFilter(parser, {
+                resourceTypes,
+            });
             if ( rule ) {
                 unminimizedRules.push(rule);
                 filterStats.accepted += 1;

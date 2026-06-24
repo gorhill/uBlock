@@ -49,6 +49,7 @@ import {
     matchesFromHostnames,
 } from './utils.js';
 
+import { dnr } from './ext-compat.js';
 import { getFilteringModeDetails } from './mode-manager.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { ubolLog } from './debug.js';
@@ -81,6 +82,9 @@ async function parseRawFilters() {
     const handler = (request, sender, callback) => {
         if ( typeof request !== 'object' ) { return; }
         switch ( request?.what ) {
+        case 'compileFilters:getResourceTypes':
+            callback(Object.values(dnr.ResourceType));
+            break;
         case 'compileFilters:getUserList':
             getUserList().then(text => {
                 if ( text ) { ubolLog(`Compiling user filters`); }
