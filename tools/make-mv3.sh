@@ -141,9 +141,6 @@ cp -R "$UBO_DIR"/src/js/resources "$UBOL_BUILD_DIR"/js/
 cp -R platform/mv3/scriptlets "$UBOL_BUILD_DIR"/
 cp -R platform/mv3/extension/js/offscreen "$UBOL_BUILD_DIR"/js/
 cp "$UBO_DIR"/src/js/regex-analyzer.js "$UBOL_BUILD_DIR"/js/offscreen/
-# cp platform/mv3/extension/js/offscreen/css-specific.template.js "$UBOL_BUILD_DIR"/scriptlets/
-# cp platform/mv3/extension/js/offscreen/css-procedural.template.js "$UBOL_BUILD_DIR"/scriptlets/
-# cp platform/mv3/extension/js/offscreen/scriptlet.template.js "$UBOL_BUILD_DIR"/scriptlets/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources
 cp "$UBO_DIR"/src/web_accessible_resources/* "$UBOL_BUILD_DIR"/web_accessible_resources/
 cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/

@@ -971,8 +971,12 @@ async function rulesetFromURLs(assetDetails) {
 
     if ( assetDetails.text === '' ) { return; }
 
+    const excludedResources = new Set([
+        'click2load.html',
+    ]);
     const extensionPaths = [];
     for ( const [ fname, details ] of redirectResourcesMap ) {
+        if ( excludedResources.has(fname) ) { continue; }
         const path = `/web_accessible_resources/${fname}`;
         extensionPaths.push([ fname, path ]);
         if ( details.alias === undefined ) { continue; }
