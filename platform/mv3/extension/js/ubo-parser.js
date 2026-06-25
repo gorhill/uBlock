@@ -602,7 +602,7 @@ export function parseNetworkFilter(parser, details = {}) {
                 delete rule.action.redirect;
                 priority = 20;
             } else {
-                priority = (isImportant ? 11 : 41) + subpriority;
+                priority = (isImportant ? 41 : 11) + subpriority;
             }
         } else if ( rule.action.redirect.transform?.queryTransform?.removeParams ) {
             if ( isException ) {
