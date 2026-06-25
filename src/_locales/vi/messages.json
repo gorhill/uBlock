@@ -1048,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Danh sách các bộ lọc của riêng uBO được lưu trữ miễn phí tại các <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> sau:",
+    "message": "Danh sách bộ lọc riêng của uBO được lưu trữ miễn phí trên các trang <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
