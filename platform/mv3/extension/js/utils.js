@@ -19,11 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import {
-    browser,
-    localRead, localRemove, localWrite,
-} from './ext.js';
-
 /******************************************************************************/
 
 export function parsedURLromOrigin(origin) {
@@ -157,65 +152,3 @@ export function intFromVersion(version) {
 /******************************************************************************/
 
 export const isScriptlet = a => a.startsWith('+js');
-
-/******************************************************************************/
-
-function setupJobsAlarm(jobs) {
-    if ( Boolean(jobs?.length) === false ) {
-        return browser.alarms.clear('deferredJobs');
-    }
-    return browser.alarms.create('deferredJobs', {
-        when: Math.max(jobs[0].time, Date.now() + 101),
-    });
-}
-
-export async function registerJob(name, time) {
-    const jobs = await localRead('deferredJobs') || [];
-    const job = jobs.find(a => a.name === name);
-    if ( job ) {
-        job.time = time;
-    } else {
-        jobs.push({ name, time });
-    }
-    jobs.sort((a, b) => a.time - b.time);
-    setupJobsAlarm(jobs);
-    return localWrite('deferredJobs', jobs);
-}
-
-export async function removeJob(name) {
-    const before = await localRead('deferredJobs');
-    const after = before.filter(a => a.name !== name);
-    if ( after.length === before.length ) { return; }
-    setupJobsAlarm(after);
-    if ( after.length ) {
-        return localWrite('deferredJobs', after);
-    }
-    return localRemove('deferredJobs');
-}
-
-export async function processDueJobs(dispatcher) {
-    const jobs = await localRead('deferredJobs');
-    if ( Boolean(jobs?.length) === false ) { return; }
-    const now = Date.now();
-    let i = 0;
-    while ( i < jobs.length ) {
-        if ( jobs[i].time > now ) { break; }
-        i += 1;
-    }
-    const toProcess = jobs.slice(0, i);
-    const toDefer = jobs.slice(i);
-    if ( toDefer.length ) {
-        setupJobsAlarm(toDefer);
-        await localWrite('deferredJobs', toDefer);
-    } else {
-        await localRemove('deferredJobs');
-    }
-    for ( const job of toProcess ) {
-        dispatcher({ what: job.name });
-    }
-}
-
-export async function resetJobsAlarm() {
-    const jobs = await localRead('deferredJobs');
-    setupJobsAlarm(jobs);
-}

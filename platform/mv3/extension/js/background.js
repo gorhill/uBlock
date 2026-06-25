@@ -65,8 +65,6 @@ import {
     hostnameFromMatch,
     hostnamesFromMatches,
     isScriptlet,
-    processDueJobs,
-    resetJobsAlarm,
 } from './utils.js';
 
 import {
@@ -121,6 +119,11 @@ import {
     gotoURL,
     hasBroadHostPermissions,
 } from './ext-utils.js';
+
+import {
+    processDueJobs,
+    resetJobsAlarm,
+} from './alarms.js';
 
 import {
     registerUserScripts,
@@ -896,7 +899,8 @@ browser.commands.onCommand.addListener((...args) => {
 browser.alarms.onAlarm.addListener(alarm => {
     if ( alarm.name !== 'deferredJobs' ) { return; }
     isFullyInitialized.then(( ) => {
-        if ( process.wakeupRun === false ) {
+        if ( process.wakeupRun === false && process.firstAlarm !== true ) {
+            process.firstAlarm = true;
             return resetJobsAlarm();
         }
         processDueJobs(onMessage);

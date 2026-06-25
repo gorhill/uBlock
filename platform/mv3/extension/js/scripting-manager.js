@@ -33,6 +33,7 @@ import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
 import { registerCustomFilters } from './filter-manager.js';
+import { registerJob } from './alarms.js';
 import { registerPreventPopup } from './prevent-popup.js';
 import { registerToolbarIconToggler } from './action.js';
 
@@ -360,7 +361,7 @@ registerContentScripts.register = async function register() {
 
     await Promise.all([
         resetCSSCache(),
-        ut.registerJob('pruneCSSCache', Date.now() + 15 * 60 * 1000),
+        registerJob('pruneCSSCache', Date.now() + 15 * 60 * 1000),
     ]);
 
     return true;
@@ -376,6 +377,7 @@ export async function getRegisteredContentScripts() {
 /******************************************************************************/
 
 export async function pruneCSSCache() {
+    registerJob('pruneCSSCache', Date.now() + 15 * 60 * 1000);
     const MAX_CACHE_ENTRY_LOW = 256;
     const MAX_CACHE_ENTRY_HIGH = MAX_CACHE_ENTRY_LOW +
         Math.max(Math.round(MAX_CACHE_ENTRY_LOW / 8), 8);

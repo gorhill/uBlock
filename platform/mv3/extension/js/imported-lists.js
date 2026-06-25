@@ -29,7 +29,7 @@ import {
 import {
     registerJob,
     removeJob,
-} from './utils.js';
+} from './alarms.js';
 
 import { ubolLog } from './debug.js';
 
