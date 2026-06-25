@@ -83,7 +83,7 @@ export async function fetchList(context, asset, progressFn) {
                 continue;
             }
             fetchedURLs.add(effectiveURL(part.url));
-            if ( isTrusted(context, asset) && context.secret ) {
+            if ( isTrusted(context, asset, part.url) && context.secret ) {
                 newParts.push(`!#trusted on ${context.secret}`);
             }
             newParts.push(

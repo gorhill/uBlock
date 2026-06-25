@@ -266,7 +266,7 @@ async function fetchListFromCache(assetDetails) {
     const context = {
         env,
         secret,
-        trustedPrefix: [ 'https://ublockorigin.github.io/uAssets/filters/' ],
+        trustedPrefixes: [ 'https://ublockorigin.github.io/uAssets/filters/' ],
     };
 
     const text = await fetchList(context, assetDetails);
