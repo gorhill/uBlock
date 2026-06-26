@@ -588,6 +588,7 @@ export function parseNetworkFilter(parser, details = {}) {
     }
     if ( excludedResourceTypes.size !== 0 ) {
         if ( resourceTypes.size !== 0 ) { return; }
+        excludedResourceTypes.add('main_frame');
         rule.condition.excludedResourceTypes = Array.from(excludedResourceTypes).sort();
     }
     let priority = 1;
