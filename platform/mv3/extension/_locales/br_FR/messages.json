@@ -19,6 +19,10 @@
     "message": "Arventennoù",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Siloù personelaet",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Diorren",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "Gwarez a-enep ar malware ha surentez",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Rannvroioù, broioù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Listennoù enporzhiet",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Ouzhpennañ ul listenn siloù…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Pegit amañ URL al listenn siloù a fell deoc'h ouzhpennañ",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Enporzhiañ / Ezporzhiañ",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Pegit amañ ar siloù kenedel/scriptlet resis da ouzhpennañ",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Deizlevr ar cheñchamantoù",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Sevel ur rentañ-kont nevez",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mod silañ dre ziouer",
@@ -243,6 +271,18 @@
     "message": "Stanket e vo ar merdeiñ etrezek lec'hiennoù a c'hallfe bezañ dañjerus, ha moaien a vo deoc'h dibab da genderc'hel pe get.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Enaouiñ stankañ ar pop-upoù",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Pa vez gweredekaet, an ivinelloù dic'hoantaet krouet gant al lec'hiennoù a vo serret gant ar siloù.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Tachenn krouiñ siloù",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mod diorroer",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Gweredekaat a ra ar fonksionelezhioù azasaet d'an implijerien deknikel.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Gwared",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Gwaredit hoc'h arventennoù personelaet en ur restr pe adsavit hoc'h arventennoù personelaet adalek ur restr.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Ar gwared a erlec'hio an holl arventennoù personelaet a-vremañ.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Kavout rolloù",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Pajenn stanket",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite en deus miret ar bajenn-mañ da gargañ:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Distreiñ",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Serriñ ar prenestr-mañ",
@@ -339,6 +391,10 @@
     "message": "Nullañ",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Ouzhpennañ",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Enporzhiañ hag ouzhpennañ",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Ezporzhiañ",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Gwarediñ…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Adsevel…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Adlakaat an arventennoù dre ziouer…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Hoc'h holl arventennoù personelaet a vo dilamet. Daoust hag a fell deoc'h adlakaat an arventennoù dre ziouer?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Arabat ouzhpennañ danvez a zeu diouzh mammennoù douetus.",

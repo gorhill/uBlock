@@ -20,6 +20,7 @@
 
 */
 
+import { offIdleFn, onIdleFn } from './utils.js';
 import { registerScriptlet } from './base.js';
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
@@ -31,7 +32,8 @@ export function setAttrFn(
     logPrefix,
     selector = '',
     attr = '',
-    value = ''
+    value = '',
+    options = {}
 ) {
     if ( selector === '' ) { return; }
     if ( attr === '' ) { return; }
@@ -88,12 +90,11 @@ export function setAttrFn(
     const start = ( ) => {
         if ( applySetAttr() === false ) { return; }
         observer = new MutationObserver(onDomChanged);
-        observer.observe(document.body, {
-            subtree: true,
-            childList: true,
-        });
+        const root = document.documentElement;
+        if ( root instanceof self.Node === false ) { return; }
+        observer.observe(root, { subtree: true, childList: true });
     };
-    runAt(( ) => { start(); }, 'idle');
+    runAt(( ) => { start(); }, options.runAt || 'idle');
 }
 registerScriptlet(setAttrFn, {
     name: 'set-attr.fn',
@@ -136,7 +137,6 @@ export function setAttr(
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('set-attr', selector, attr, value);
     const validValues = [ '', 'false', 'true' ];
-
     if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) ) {
             const n = parseInt(value, 10);
@@ -146,8 +146,8 @@ export function setAttr(
             return;
         }
     }
-
-    setAttrFn(false, logPrefix, selector, attr, value);
+    const options = safe.getExtraArgs(Array.from(arguments), 3);
+    setAttrFn(false, logPrefix, selector, attr, value, options);
 }
 registerScriptlet(setAttr, {
     name: 'set-attr.js',
@@ -186,7 +186,8 @@ export function trustedSetAttr(
 ) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-set-attr', selector, attr, value);
-    setAttrFn(true, logPrefix, selector, attr, value);
+    const options = safe.getExtraArgs(Array.from(arguments), 3);
+    setAttrFn(true, logPrefix, selector, attr, value, options);
 }
 registerScriptlet(trustedSetAttr, {
     name: 'trusted-set-attr.js',
@@ -240,14 +241,14 @@ export function removeAttr(
     let timerId;
     const rmattrAsync = ( ) => {
         if ( timerId !== undefined ) { return; }
-        timerId = safe.onIdle(( ) => {
+        timerId = onIdleFn(( ) => {
             timerId = undefined;
             rmattr();
         }, { timeout: 17 });
     };
     const rmattr = ( ) => {
         if ( timerId !== undefined ) {
-            safe.offIdle(timerId);
+            offIdleFn(timerId);
             timerId = undefined;
         }
         try {
@@ -297,6 +298,8 @@ registerScriptlet(removeAttr, {
         'ra.js',
     ],
     dependencies: [
+        offIdleFn,
+        onIdleFn,
         runAt,
         safeSelf,
     ],

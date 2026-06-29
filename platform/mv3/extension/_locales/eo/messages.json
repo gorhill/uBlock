@@ -4,23 +4,27 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An efficient content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "Rendimenta reklamoblokilo. Blokas reklamoj, spuriloj, miniloj de ĉifromono, kaj pli, tuj tiam instalis.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{ruleCount}} reguloj, konvertinte de {{filterCount}} retfiltriloj",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — Panelo",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
     "message": "Agordoj",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Propraj filtriloj",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
-    "message": "Develop",
+    "message": "Erarserĉilo",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -28,23 +32,23 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Reguloj pri privateco",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "reĝimo de filtrado",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "En tiu ĉi retejo",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Report an issue",
+    "message": "Raporti problemon",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Malfermi la stirpanelon",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -68,20 +72,44 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "Protekto kontraŭ fiprogramaro, sekureco",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Ĝenoj",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "Diversaĵoj",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Regionoj, lingvoj",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importi / Eksporti",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Kopiu ĉi tien apartaj ornamaj filtriloj por aldoni ilin",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Ŝanĝprotokolo",
@@ -104,91 +132,91 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Listoj de filtriloj",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Eksteraj dependaĵoj (kongruaj kun GPLv3):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Raporti problemon de filtrado",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Raportu problemojn pri specifaj retejoj ĉe la  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">cimspurilo <code>uBlockOrigin/uAssets</code></span>. <u>Tio postulas konton ĉe GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "Informo pri problemsolvado",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "Por eviti ŝarĝi volontulojn per duplikataj raportoj, bonvolu konfirmi ke la problemo ankoraŭ ne raportitas. <b>Noto:</b> klaki la butonon kaŭzas ke la HTTP-origino de la paĝo senditas al GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "Serĉi similajn raportojn ĉe GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "Adreso de la retpaĝo:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "La retpaĝo…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Elektu ion --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Videblas reklamoj aŭ restaĵoj de reklamoj",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Havas plustavolojn aŭ aliajn ĝenaĵojn",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "Detektas uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Havas problemojn pri privateco",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "Misfunkcias, se uBO Lite estas ŝaltita",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Malfermas nedeziratajn langetojn aŭ fenestrojn",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Sekvas malbon-programoj, trompo-retejoj",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the webpage as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Indiki ke la retpaĝo estas <a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">nelabortaŭga</a>",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Krei novan raporton ĉe GitHub",
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Defaŭlta reĝimo de filtrado",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "La defaŭltan reĝimon de filtrado superregas la retejo-specifa reĝimo de filtrado. Vi povas agordi la reĝimon po-reteje por la plej bona funkciado. Ĉiu reĝimo havas utilojn kaj malutilojn.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "neniu filtrado",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
@@ -196,183 +224,227 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "plej bona",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "plena",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Simpla reta filtrado per elektitaj filtriloj.\n\nNe postulas la permeson legi kaj redakti datumojn de ĉiuj retejoj.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "Kompleksa reta filtrado plus plua filtrado per elektitaj filtriloj.\n\nPostulas la permeson legi kaj redakti datumojn de ĉiuj retejoj.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Kompleksa reta filtrado plus specifa kaj ĝenerala plua filtrado per elektitaj filtriloj.\n\nPostulas la permeson legi kaj redakti datumojn de ĉiuj retejoj.\n\nĜenerala plua filtrado eble kaŭzas pliigi kvanton de uzataj retejaj rimedoj.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "Listo de retejoj por kiuj neniu filtrado okazos.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[nur domajnoj]\nekzemple.com\nludoj.ekzemple\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Agmaniero",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Aŭtomate reŝargi la paĝon ŝanĝinte reĝimon de filtrado",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Montri la nombron de blokitaj petoj sur la bildsimbolo",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Ŝalti striktan blokadon",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "La navigadon al eble nevolaj retejoj blokos, kaj vi povos elekti procedi.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Ŝalti blokadon de ŝprucfenestroj",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Dum ŝaltita, kongruaj filtriloj aŭtomate fermas nevolitajn langetojn kiujn kreas retejoj.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Provejo por kreado de filtriloj",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Reĝimo por programistoj",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "Permesas atingi funkciojn taŭgajn por spertuloj.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Savkopiado",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Savkopii viajn proprajn agordojn en dosieron, aŭ restaŭri viajn proprajn agordojn el dosiero.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Restaŭrado anstataŭigas viajn nunajn proprajn agordojn.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "Trovi listojn",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
-    "description": "Webpage title for the strict-blocked page"
+    "message": "Paĝon blokis",
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite blokas la ŝargadon de la sekva paĝo:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "La paĝon blokis ĉar estas kongrua filtrilo en {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "La blokita paĝo volas fordirekti al alia retejo. Se vi daŭras, vi navigos senpere al {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "sen parametroj",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
-    "description": "A button to go back to the previous webpage"
+    "message": "Reen",
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Fermi tiun ĉi fenestron",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Ne plu avertu min pri tiu ĉi retejo",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Procedi",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "Forigi elementon",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "Eliri la reĝimon de forigo de elementoj",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "Krei propran filtrilon",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "Forigi propran filtrilon",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Vido:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Detaloj de reĝimo de filtrado",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Propraj reguloj de DNR",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "DNR reguloj de …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "Dinamika regularo",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "Regularo de seanco",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "Konservi",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Malfari",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Aldoni",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "Importi kaj postaldoni…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Eksporti…",
     "description": "Text for buttons used to export content"
   },
+  "backupButton": {
+    "message": "Savkopii…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Restaŭri…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Remeti normajn agordojn…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Ĉiuj viaj propraj agordoj foriĝos. Ĉu vi vere volas remeti normajn agordojn?",
+    "description": "Message asking user to confirm reset to default settings"
+  },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "Ne aldonu regulojn el ne fidindaj fontoj",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Nombro de registrataj reguloj: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Movi la glitilon por elekti la plej bonan filtrilon",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Elekti",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Antaŭrigardi",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Krei",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Elektu filtrilon suban por lumigi kongruajn elementojn en la retejo. Alklaku la rubujon por forigi filtrilon.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

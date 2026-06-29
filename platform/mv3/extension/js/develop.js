@@ -52,8 +52,12 @@ class Editor {
             }),
         ]);
         const rulesetDetails = await sendMessage({ what: 'getRulesetDetails' });
+        const reImported = /^[a-z-]+:\/\//;
         const parent = qs$('#editors optgroup');
         for ( const details of rulesetDetails ) {
+            if ( reImported.test(details.id) ) {
+                if ( details.enabled !== true ) { continue; }
+            }
             const option = document.createElement('option');
             option.value = `dnr.ro.${details.id}`;
             option.textContent = details.name;
@@ -93,7 +97,9 @@ class Editor {
             readOnly: this.isReadOnly(),
         };
         viewConfig.panels = [ this.ioPanel, this.summaryPanel, ...this.panels ];
-        this.view = self.cm6.createEditorView(viewConfig, qs$('#cm-container'));
+        this.view = self.cm6.createEditorView(viewConfig,
+            qs$('section[data-pane="develop"] .cm-container')
+        );
         this.lastSavedText = text;
         self.cm6.foldAll(this.view);
         self.cm6.resetUndoRedo(this.view);
@@ -517,7 +523,7 @@ class Editor {
     importFromFile() {
         const editor = this.editor;
         if ( typeof editor.importFromFile !== 'function' ) { return; }
-        const input = qs$('input[type="file"]');
+        const input = qs$('section[data-pane="develop"] input[type="file"]');
         input.accept = editor.ioAccept || '';
         input.onchange = ev => {
             input.onchange = null;
@@ -619,15 +625,6 @@ async function start() {
     });
 }
 
-let observer = new IntersectionObserver(entries => {
-    for ( const entry of entries ) {
-        if ( entry.isIntersecting === false ) { continue; }
-        start();
-        observer.disconnect();
-        observer = null;
-        break;
-    }
-});
-observer.observe(qs$('section[data-pane="develop"]'));
+dom.onFirstShown(start, qs$('section[data-pane="develop"]'));
 
 /******************************************************************************/

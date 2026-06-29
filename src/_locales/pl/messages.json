@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Otwórz",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Utwórz nowy raport",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Znajdź podobne raporty",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Poniżej znajdują się informacje techniczne które mogą być użyteczne gdy wolontariusze próbują pomóc ci w rozwiązaniu problemu.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Ważne:</b> Potencjalnie prywatne lub wrażliwe informacje są domyślnie ocenzurowane. Ocenzurowanie może utrudnić rozwiązanie problemu.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Zgłoś problem z filtrem",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Oznacz stronę internetową jako „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Not Safe For Work (nieodpowiednią w pracy)”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Ocenzuruj",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Nie cenzuruj",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Polityka prywatności",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Błąd sieci: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Dodać następujący URL do twoich list filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subskrybuj",

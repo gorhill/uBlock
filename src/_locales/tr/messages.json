@@ -897,14 +897,14 @@
   },
   "supportOpenButton": {
     "message": "Aç",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "GitHub üzerinde yeni rapor oluştur",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "GitHub'da yeni rapor oluştur",
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "GitHub'da benzer raporları bul.",
+    "message": "GitHub'da benzer raporları bul",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Aşağıdaki, gönüllüler size bir sorunu çözmede yardım etmeye çalışırken, faydalı olabilecek teknik bilgidir.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Önemli:</b> Olası gizli ve hassas bilgiler öntanımlı olarak kısaltılır. Kısaltılmış bilgiler bir sorunu çözmeyi zorlaştırabilir.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Bir filtre sorunu bildirin",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Web sayfasını uygunsuz (“NSFW”) olarak etiketle (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Kısalt",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Kısaltma",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Gizlilik ilkesi",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Ağ hatası: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Bu URL, özel filtre listenize eklensin mi?\n\nBaşlık: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Abone ol",

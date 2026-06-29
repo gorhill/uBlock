@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "ਰਹੋ",
+    "message": "ਇੱਥੇ ਰਹੋ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "ਲੋਕਲ ਨਿਯਮ: ਇਹ ਕਾਲਮ ਨਿਯਮਾਂ ਲਈ ਹੈ, ਜੋ ਕਿ ਸਿਰਫ਼ ਲੋਕਲ ਸਾਈਟਾਂ ਉੱਤੇ ਹੀ ਲਾਗੂ ਹੁੰਦੇ ਹਨ।\nਲੋਕਲ ਨਿਯਮ ਗਲੋਬਲ ਨਿਯਮਾਂ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰਦੇ ਹਨ।",
+    "message": "ਲੋਕਲ ਨਿਯਮ: ਇਹ ਕਾਲਮ ਨਿਯਮਾਂ ਲਈ ਹੈ, ਜੋ ਕਿ ਸਿਰਫ਼ ਲੋਕਲ ਸਾਈਟਾਂ ਉੱਤੇ ਹੀ ਲਾਗੂ ਹੁੰਦੇ ਹਨ।",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "ਖੋਲ੍ਹੋ",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "ਨਵੀਂ ਰਿਪੋਰਟ ਬਣਾਓ",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "ਰਲਦੀਆਂ ਰਿਪੋਰਟਾਂ ਲੱਭੋ",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "ਹੇਠਾਂ ਤਕਨੀਕੀ ਜਾਣਕਾਰੀ ਦਿੱਤੀ ਹੈ, ਜੋ ਕਿ ਵਲੰਟੀਅਰਾਂ ਲਈ ਮਦਦਗਾਰ ਹੋ ਸਕਦੀ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਮੱਸਿਆ ਹੱਲ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ ਕਰਦੇ ਹਨ।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>ਖਾਸ:</b> ਸੰਭਾਵਿਤ ਤੌਰ ਉੱਤੇ ਪ੍ਰਾਈਵੇਟ ਜਾਂ ਸੰਵੇਦਨਸ਼ੀਲ ਜਾਣਕਾਰੀ ਨੂੰ ਮੂਲ ਰੂਪ ਵਿੱਚ ਛਾਂਟ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਛਾਂਂਟੀ ਕੀਤੀ ਜਾਣਕਾਰੀ ਸਮੱਸਿਆ ਨੂੰ ਹੱਲ ਕਰਨਾ ਵੱਧ ਔਖਾ ਬਣਾ ਸਕਦੀ ਹੈ।",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "ਫਿਲਟਰ ਮਸਲੇ ਬਾਰੇ ਰਿਪੋਰਟ ਕਰੋ",
@@ -1019,14 +1015,6 @@
     "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1060,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO ਦੀਆਂ ਆਪਣੀਆਂ ਫਿਲਟਰ ਸੂਚੀਆਂ <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> ਉੱਤੇ ਆਜ਼ਾਦ ਰੂਪ ਵਿੱਚ ਹੋਸਟ ਕੀਤੀਆਂ ਹਨ:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "ਨੈੱਟਵਰਕ ਗਲਤੀ: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "ਕੀ ਅੱਗੇ ਦਿੱਤੇ URL ਨੂੰ ਤੁਹਾਡੀਆਂ ਕਸਟਮ ਫਿਲਟਰ ਸੂਚੀਆਂ ਵਿੱਚ ਜੋੜਨਾ ਹੈ?\n\nਨਾਂ: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "ਮੈਂਬਰ ਬਣੋ",
@@ -1196,7 +1180,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "ਕਾਰਨ:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
@@ -1204,7 +1188,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ਟੋਹੀ",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {

@@ -13,17 +13,17 @@
 <title data-i18n="extName"></title>
 </head>
 
-<body class="loading">
+<body class="loading busy">
 
-<div id="main">
+<main>
     <div id="hostname"><span></span>&shy;<span></span></div>
     <!-- -------- -->
     <div class="filteringModeSlider">
         <div class="filteringModeButton"><div></div></div>
-        <span data-level="0"></span>
-        <span data-level="1"></span>
-        <span data-level="2"></span>
-        <span data-level="3"></span>
+        <span data-level="0" aria-label="filteringMode0Name"></span>
+        <span data-level="1" aria-label="filteringMode1Name"></span>
+        <span data-level="2" aria-label="filteringMode2Name"></span>
+        <span data-level="3" aria-label="filteringMode3Name"></span>
     </div>
     <!-- -------- -->
     <div id="filteringModeText"><label data-i18n="popupFilteringModeLabel">_</label><br><span>_</span><span></span></div>
@@ -52,7 +52,10 @@
         <span id="gotoMatchedRules" class="fa-icon tool" tabindex="0" title="Show matched rules">list-alt<span class="caption">Show matched rules</span></span>
         <span id="gotoDashboard" class="fa-icon tool enabled" tabindex="0" data-i18n-title="popupTipDashboard">cogs<span class="caption" data-i18n="popupTipDashboard"></span></span>
     </div>
-</div>
+</main>
+<aside>
+    <span class="fa-icon">spinner</span>
+</aside>
 
 <script src="js/theme.js" type="module"></script>
 <script src="js/fa-icons.js" type="module"></script>

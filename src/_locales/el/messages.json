@@ -8,11 +8,11 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ - Πίνακας ελέγχου",
+    "message": "uBlock₀ — Πίνακας ελέγχου",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Προειδοποίηση! Έχετε μη αποθηκευμένες αλλαγές",
+    "message": "Προειδοποίηση: έχετε μη αποθηκευμένες αλλαγές!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Κλικ: απενεργοποίηση/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο για αυτήν την σελίδα.",
+    "message": "Κλικ: απενεργοποίηση/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτήν την ιστοσελίδα.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
+    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Κάντε κλικ για ενεργοποίηση του uBlock₀ για αυτή την ιστοσελίδα.",
+    "message": "Κάντε κλικ για ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -100,11 +100,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Αποκλεισμένα σε αυτή τη σελίδα",
+    "message": "Αποκλεισμένα σε αυτήν τη σελίδα",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Φραγμένο από εγκατάσταση",
+    "message": "Αποκλεισμένο από εγκατάσταση",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Κάντε κλικ για να ανοίξετε τον πίνακα εργαλείων",
+    "message": "Ανοίξτε τον πίνακα ελέγχου",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Αναφέρετε ένα πρόβλημα σε αυτόν τον ιστότοπο",
+    "message": "Αναφέρετε ένα σφάλμα σε αυτόν τον ιστότοπο",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Άνοιγμα",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Δημιουργία νέας αναφοράς στο Github",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Εύρεση παρόμοιων αναφορών στο GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Παρακάτω υπάρχουν τεχνικές πληροφορίες που μπορεί να είναι χρήσιμες όταν εθελοντές προσπαθούν να σας βοηθήσουν να λύσετε ένα πρόβλημα.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Σημαντικό:</b> Πιθανώς ιδιωτικές ή ευαίσθητες πληροφορίες αναπροσαρμόζονται από προεπιλογή. Οι αναδιατυπωμένες πληροφορίες ενδέχεται να δυσκολέψουν την επίλυση ενός προβλήματος.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Αναφέρετε πρόβλημα φίλτρου",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Επισημάνετε την ιστοσελίδα ως &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Not Safe For Work&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Πολιτική απορρήτου",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Σφάλμα δικτύου: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Προσθήκη της ακόλουθης διεύθυνσης URL στις λίστες προσαρμοσμένων φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Εγγραφή",
@@ -1252,7 +1236,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Στοιχείο μπλοκ στο πλαίσιο...",
+    "message": "Αποκλεισμός στοιχείου σε frame…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

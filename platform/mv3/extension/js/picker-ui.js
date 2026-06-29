@@ -197,12 +197,12 @@ function updateElementCount(details) {
     if ( error ) {
         span.textContent = 'Error';
         span.setAttribute('title', error);
+        dom.attr('#create', 'disabled', '');
     } else {
         span.textContent = count;
         span.removeAttribute('title');
+        dom.attr('#create', 'disabled', null);
     }
-    const disabled = Boolean(count) === false ? '' : null;
-    dom.attr('#create', 'disabled', disabled);
     updatePreview();
 }
 
@@ -230,9 +230,9 @@ async function onCreateClicked() {
     if ( selector === undefined ) { return; }
     await toolOverlay.postMessage({ what: 'terminateCustomFilters' });
     await toolOverlay.sendMessage({
-        what: 'addCustomFilter',
+        what: 'addCustomFilters',
         hostname: toolOverlay.url.hostname,
-        selector,
+        selectors: [ selector ],
     });
     await toolOverlay.postMessage({ what: 'startCustomFilters' });
     qs$('textarea').value = '';

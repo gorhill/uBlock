@@ -19,6 +19,10 @@
     "message": "تنظیمات",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Custom filters",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Develop",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "محافظت در برابر بدافزار، امنیت",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "مناطق، زبانها",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Import / Export",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Specific cosmetic/scriptlet filters to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "گزارش دگرگونی",
@@ -120,7 +148,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "اطلاعات مشکل‌گشایی",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -132,23 +160,23 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "آدرس صفحه‌ی وب:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "The web page…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- یک گزینه را انتخاب کنید --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "تبلیغات یا باقی‌مانده‌هایی از آن نشان می‌دهد",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "دارای لایه‌های اضافی یا مشکلات مزاحم دیگر",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -156,7 +184,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "دارای ایراد مربوط به حریم خصوصی است",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -164,20 +192,20 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "تب یا پنجره‌ی ناخواسته باز می‌کند",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "منجر به بدافزار یا فیشینگ می‌شود",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the webpage as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
     "message": "Create new report on GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Default filtering mode",
@@ -212,7 +240,7 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher web page resources usage.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
@@ -243,6 +271,18 @@
     "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Enable pop-up blocking",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Developer mode",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Enables access to features suitable for technical users.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Backup",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Restoring will overwrite all your current custom settings.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Find lists",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Page blocked",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite has prevented the following page from loading:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Go back",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Close this window",
@@ -339,6 +391,10 @@
     "message": "Revert",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Add",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Import and append…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Export…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Back up…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Restore…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Reset to default settings…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Do not add content from untrusted sources",
@@ -372,7 +444,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

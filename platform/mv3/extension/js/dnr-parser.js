@@ -280,6 +280,8 @@ const perScopeParsers = {
         case 'excludedInitiatorDomains':
         case 'requestDomains':
         case 'excludedRequestDomains':
+        case 'topDomains':
+        case 'excludedTopDomains':
         case 'resourceTypes':
         case 'excludedResourceTypes':
         case 'requestMethods':
@@ -326,6 +328,16 @@ const perScopeParsers = {
     'condition.excludedRequestDomains': function(scope, rule, node) {
         if ( node.list !== true ) { return false; }
         rule.condition.excludedRequestDomains.push(node.val);
+        return true;
+    },
+    'condition.topDomains': function(scope, rule, node) {
+        if ( node.list !== true ) { return false; }
+        rule.condition.topDomains.push(node.val);
+        return true;
+    },
+    'condition.excludedTopDomains': function(scope, rule, node) {
+        if ( node.list !== true ) { return false; }
+        rule.condition.excludedTopDomains.push(node.val);
         return true;
     },
     'condition.resourceTypes': function(scope, rule, node) {
@@ -515,7 +527,7 @@ export function rulesFromText(text) {
         if ( indices.length === 0 ) { continue; }
         const result = ruleFromLines(lines, indices);
         if ( result.bad ) {
-            bad.push(...result.bad.slice(4));
+            bad.push(...result.bad.slice(0, 4));
         } else if ( result.rule ) {
             rules.push(result.rule);
         }

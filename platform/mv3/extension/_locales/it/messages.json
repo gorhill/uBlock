@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un efficiente bloccatore dei contenuti. Blocca annunci, tracker, minatori e altro ancora subito dopo l'installazione.",
+    "message": "Un efficiente blocca-contenuti. Blocca inserzioni, tracciatori, minatori e altro ancora subito dopo l'installazione.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -17,6 +17,10 @@
   },
   "settingsPageName": {
     "message": "Impostazioni",
+    "description": "appears as tab name in dashboard"
+  },
+  "customFiltersPageName": {
+    "message": "Filtri personalizzati",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -40,7 +44,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Segnala un problema con questo sito",
+    "message": "Segnala un problema",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domini che diffondono virus",
+    "message": "Protezione dai malware, sicurezza",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Lingue e regioni",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Elenchi importati",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Aggiungi elenco di filtri…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Incolla qui l'URL dell'elenco di filtri da aggiungere",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importa / Esporta",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Incolla qui i filtri cosmetici o scriptlet specifici da aggiungere.",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Per applicare i filtri cosmetici o gli scriptlet provenienti da elenchi importati, è necessario concedere a uBO Lite l'autorizzazione a eseguire gli script utente. Apri la pagina delle estensioni del tuo browser (<code>chrome://extensions</code> su Chrome o <code>about:addons</code> su Firefox), apri i dettagli di <b>uBO Lite</b> e attiva l'opzione <b>Consenti script utente</b> (nota anche come \"script di terze parti non verificati\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Reg. modifiche",
@@ -172,12 +200,12 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Contrassegna la pagina web come “NSFW”. (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Contrassegna la pagina web come “NSFW”. (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“non adatta ai minori”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
     "message": "Crea nuova segnalazione in GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Modalità di filtraggio predefinita",
@@ -243,6 +271,18 @@
     "message": "La navigazione verso siti potenzialmente indesiderati verrà bloccata e ti verrà offerta la possibilità di procedere.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Abilita il blocco dei pop-up",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Quando attivo, i filtri corrispondenti chiuderanno automaticamente le schede del browser indesiderate create dai siti web.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandbox per la creazione di filtri",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Modalità sviluppatore",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Abilita l'accesso a funzioni adatte a utenti tecnici.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Backup",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Copia le impostazioni personali in un file, o rimuovile da un file.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Il ripristino sovrascriverà le impostazioni personali in uso.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Trova elenchi",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Pagina bloccata",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite ha impedito alla seguente pagina di caricarsi:",
@@ -268,7 +320,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "La pagina bloccata vuole reindirizzare a un altro sito. Se scegli di procedere, navigherai direttamente su: {{url}}",
+    "message": "La pagina bloccata tenta di reindirizzare a un altro sito. Se scegli di procedere, navigherai direttamente verso: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Torna indietro",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Chiudi questa finestra",
@@ -292,7 +344,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Accedi alla modalità blocco rapido",
+    "message": "Rimuovi un elemento",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -339,6 +391,10 @@
     "message": "Ritorna",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Aggiungi",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importa e accoda…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Esporta…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Copia…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Ripristina…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Reimposta configurazione predefinita…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Le impostazioni personali saranno rimosse. Vuoi veramente reimpostare i valori predefiniti?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Non aggiungere contenuti da fonti non affidabili",

@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "मैलवेयर डोमेन",
+    "message": "मैलवेयर सुरक्षा, सिक्योरिटी",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "खोलें",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "नई रिपोर्ट बनाएं",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "ऐसी ही रिपोर्ट खोजें",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "नीचे तकनीकी जानकारी दी गई है जो तब उपयोगी हो सकती है जब स्वयंसेवक किसी समस्या का समाधान करने में आपकी सहायता करने का प्रयास कर रहे हों।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b> महत्वपूर्ण: </b> संभावित रूप से निजी या संवेदनशील जानकारी को डिफ़ॉल्ट रूप से संशोधित किया जाता है। संशोधित जानकारी किसी समस्या को हल करना अधिक कठिन बना सकती है।",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "फ़िल्टर समस्या की रिपोर्ट करें",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "वेब पेज को इस रूप में लेबल करें “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“काम करने के लिए सुरक्षित नहीं”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "संपादन",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "असंशोधित",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "गोपनीयता नीति",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "नेटवर्क त्रुटि: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: इस यूआरएल को अपने कस्टम लिस्ट में डालें?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "फ़िल्टर सूची का उपयोग करें",

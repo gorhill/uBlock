@@ -1625,6 +1625,8 @@ dom.on(document, 'keydown', ev => {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromCosmeticFilter',
                 url: targetRow.children[COLUMN_URL].textContent,
+                dochn: targetRow.dataset.dochn,
+                tophn: targetRow.dataset.tabhn,
                 rawFilter,
             });
             handleResponse(response);

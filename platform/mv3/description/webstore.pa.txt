@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) ਇੱਕ MV3-ਅਧਾਰਿਤ ਸਮੱਗਰੀ ਬਲਾਕਰ ਹੈ।
 
 ਮੂਲ ਨਿਯਮ-ਸਮੂਹ uBlock Origin ਦੇ ਮੂਲ ਫਿਲਟਰ-ਸਮੂਹ ਨਾਲ ਸੰਬੰਧਿਤ ਹੈ:
 

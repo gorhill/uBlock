@@ -42,7 +42,7 @@ function renderAdminRules() {
 
 const BLOCKING_MODE_MAX = 3;
 
-function setFilteringMode(level, commit = false) {
+async function setFilteringMode(level, commit = false) {
     const modeSlider = qs$('.filteringModeSlider');
     modeSlider.dataset.level = level;
     if ( qs$('.filteringModeSlider.moving') === null ) {
@@ -52,7 +52,9 @@ function setFilteringMode(level, commit = false) {
         );
     }
     if ( commit !== true ) { return; }
-    commitFilteringMode();
+    dom.cl.add(dom.body, 'busy');
+    await commitFilteringMode();
+    dom.cl.remove(dom.body, 'busy');
 }
 
 async function commitFilteringMode() {
@@ -189,27 +191,27 @@ dom.on(
     }
 );
 
-dom.on(
-    '.filteringModeSlider',
-    'mouseenter',
-    '.filteringModeSlider span[data-level]',
-    ev => {
-        const span = ev.target;
-        const level = parseInt(span.dataset.level, 10);
-        dom.text('#filteringModeText > span:nth-of-type(2)',
-            i18n$(`filteringMode${level}Name`)
-        );
-    }
-);
+if ( dom.cl.has(dom.html, 'mobile') === false ) {
+    dom.on('.filteringModeSlider',
+        'mouseenter',
+        '.filteringModeSlider span[data-level]',
+        ev => {
+            const span = ev.target;
+            const level = parseInt(span.dataset.level, 10);
+            dom.text('#filteringModeText > span:nth-of-type(2)',
+                i18n$(`filteringMode${level}Name`)
+            );
+        }
+    );
 
-dom.on(
-    '.filteringModeSlider',
-    'mouseleave',
-    '.filteringModeSlider span[data-level]',
-    ( ) => {
-        dom.text('#filteringModeText > span:nth-of-type(2)', '');
-    }
-);
+    dom.on('.filteringModeSlider',
+        'mouseleave',
+        '.filteringModeSlider span[data-level]',
+        ( ) => {
+            dom.text('#filteringModeText > span:nth-of-type(2)', '');
+        }
+    );
+}
 
 /******************************************************************************/
 
@@ -233,6 +235,7 @@ dom.on('#gotoReport', 'click', ev => {
     }
     if ( url === undefined ) { return; }
     const reportURL = new URL(runtime.getURL('/report.html'));
+    reportURL.searchParams.set('tabid', currentTab.id);
     reportURL.searchParams.set('url', tabURL.href);
     reportURL.searchParams.set('mode', popupPanelData.level);
     sendMessage({
@@ -281,6 +284,7 @@ dom.on('#gotoUnpicker', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
         files: [
+            '/js/scripting/css-procedural-api.js',
             '/js/scripting/tool-overlay.js',
             '/js/scripting/unpicker.js',
         ],
@@ -340,8 +344,6 @@ async function init() {
 
     dom.cl.toggle('#gotoUnpicker', 'enabled', popupPanelData.hasCustomFilters);
 
-    dom.cl.remove(dom.body, 'loading');
-
     return true;
 }
 
@@ -350,6 +352,8 @@ async function tryInit() {
         await init();
     } catch {
         setTimeout(tryInit, 100);
+    } finally {
+        dom.cl.remove(dom.body, 'loading', 'busy');
     }
 }
 

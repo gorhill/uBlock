@@ -194,6 +194,8 @@ export class ReadWriteDNREditor extends DNREditor {
                     { token: 'excludedInitiatorDomains:', after: '\n    - ' },
                     { token: 'requestDomains:', after: '\n    - ' },
                     { token: 'excludedRequestDomains:', after: '\n    - ' },
+                    { token: 'topDomains:', after: '\n    - ' },
+                    { token: 'excludedTopDomains:', after: '\n    - ' },
                     { token: 'resourceTypes:', after: '\n    - ' },
                     { token: 'excludedResourceTypes:', after: '\n    - ' },
                     { token: 'requestMethods:', after: '\n    - ' },

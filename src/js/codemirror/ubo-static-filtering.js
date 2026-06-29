@@ -23,6 +23,7 @@
 
 /******************************************************************************/
 
+import '../../lib/regexanalyzer/regex.js';
 import * as sfp from '../static-filtering-parser.js';
 import { dom, qs$ } from '../dom.js';
 import { tokenizableStrFromRegex } from '../regex-analyzer.js';
@@ -166,7 +167,6 @@ const uBOStaticFilteringMode = (( ) => {
         case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
         case sfp.NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK:
         case sfp.NODE_TYPE_NET_OPTION_NAME_GHIDE:
-        case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMAGE:
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
         case sfp.NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
@@ -184,9 +184,12 @@ const uBOStaticFilteringMode = (( ) => {
         case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
         case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
         case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REQUESTHEADER:
         case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
         case sfp.NODE_TYPE_NET_OPTION_NAME_SHIDE:
         case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_TOP:
         case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
         case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
         case sfp.NODE_TYPE_NET_OPTION_NAME_WEBRTC:
@@ -512,10 +515,12 @@ function initHints() {
         if ( patternNode === 0 ) { return; }
         const patternEnd = astParser.getNodeStringEnd(patternNode);
         const beg = cursor.ch;
-        if ( beg <= patternEnd ) {
-            return getNetPatternHints(cursor, line);
-        }
         const lineBefore = line.slice(0, beg);
+        if ( beg <= patternEnd ) {
+            if ( astParser.hasOptions() !== false || lineBefore.includes('$') === false ) {
+                return getNetPatternHints(cursor, line);
+            }
+        }
         const lineAfter = line.slice(beg);
         let matchLeft = /[^$,]*$/.exec(lineBefore);
         let matchRight = /^[^,]*/.exec(lineAfter);
@@ -531,7 +536,7 @@ function initHints() {
                 matchRight[0]
             );
         }
-        if ( /^(domain|from)=/.test(matchLeft[0]) ) {
+        if ( /^(domain|from|top)=/.test(matchLeft[0]) ) {
             return getOriginHints(cursor, line);
         }
     };

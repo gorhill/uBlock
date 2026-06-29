@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Whitelist",
+    "message": "Fertroude websites",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -268,7 +268,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} fan de {{total}}",
+    "message": "{{count}} fan {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} gebrûk fan {{total}}",
+    "message": "{{used}} fan de {{total}} brûkt",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -808,7 +808,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "type “{{type}}”",
+    "message": "type ‘{{type}}’",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
@@ -816,7 +816,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "fan “{{origin}}”",
+    "message": "fan ‘{{origin}}’",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Iepenje",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Nije melding meitsje",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Soartgelikense meldingen sykje",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Hjirûnder stiet technyske ynformaasje dy't handich wêze kin wannear't frijwilligers jo probearje te helpen by it oplossen fan in probleem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Wichtich:</b> mooglik gefoelige of priveegegevens wurde standert redigearre. Redigearre gegevens kinne it oplossen fan in probleem swierder meitsje.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "In filterprobleem melde",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "De webside labelje as ‘NSFW’ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">‘Not Safe For Work’</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redigearje",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Redigearje ûngedien meitsje",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Privacybelied",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Netwurkflater: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: De folgjende URL oan jo oanpaste filterlisten tafoegje?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Abonnearje",

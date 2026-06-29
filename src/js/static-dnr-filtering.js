@@ -112,7 +112,6 @@ function addExtendedToDNR(context, parser) {
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
             if ( exception ) { continue; }
-            if ( isRegexOrPath(hn) ) { continue; }
             let details = context.scriptletFilters.get(argsToken);
             if ( details === undefined ) {
                 context.scriptletFilters.set(argsToken, details = { args });
@@ -226,8 +225,6 @@ function addExtendedToDNR(context, parser) {
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not && exception ) { continue; }
-        // TODO: Support regex- and path-based entries
-        if ( isRegexOrPath(hn) ) { continue; }
         if ( not || exception ) {
             excludeMatches.push(hn);
         } else if ( hn !== '*' ) {

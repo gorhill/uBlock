@@ -12,11 +12,11 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "எச்சரிக்கை! உங்களிடம் சேமிக்கப்படாத மாற்றங்கள் உள்ளன",
+    "message": "எச்சரிக்கை: உங்களிடம் சேமிக்கப்படாத மாற்றங்கள் உள்ளன!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "இருங்கள்",
+    "message": "இங்கேயே இரு",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "இந்த தளத்தில் உள்ள அனைத்து பாப்அப்களையும் தடுக்க கிளிக் செய்க",
+    "message": "இந்தத் தளத்தில் உள்ள அனைத்து பாப்அப்களையும் தடுக்க கிளிக் செய்க",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "அக விதிகள்: இந்நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.அக விதிகள் உலகளாவிய விதிகளை மீறுகின்றன.",
+    "message": "அக விதிகள்: இந்நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "நிரல்",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "சட்டம்",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "வடிகட்டிப் பட்டியல்கள் அனைத்தும் ஏற்றப்படும் வரை வலைப்பின்னல் செயல்பாட்டை நிறுத்து",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "சமூக விட்ஜெட்கள்",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "குக்கீ அறிவிப்புகள்",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -536,11 +536,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "நம்பகமில்லாத மூலத்தில் இருக்கும் வடிகட்டிகளை சேர்க்காதே.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "என் தனிப்பட்ட வடிகட்டிகளை செயல்படுத்து",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "திற",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "புதிய புகாரை உருவாக்கு",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "ஒரேமாதிரியான புகார்களைக் கண்டறி",
@@ -912,7 +912,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Originன் அனைத்து அம்சங்களையும்ப் பற்றி அறிய <code>uBlock/wiki</code> இல் உள்ள ஆவணத்தைப் படிக்கவும்.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -948,16 +948,12 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "பிழைதீர்க்கும் தகவல்",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
     "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "வடிகட்டி சிக்கலைப் புகாரளி",
@@ -972,7 +968,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Verify that the issue still exists after reloading the problematic web page.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "தனியுரிமை கொள்கை",
@@ -1099,10 +1087,6 @@
     "message": "பிணையத்தில் பிழை: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
-  "subscriberConfirm": {
-    "message": "uBlock₀: பின்வரும் உரலியை உங்களுடைய தனிபயன் வடிகட்டியில் சேர்க்கலாமா?\n\nதலைப்பு: \"{{title}}\"\nஉரலி: {{url}}",
-    "description": "No longer used"
-  },
   "subscribeButton": {
     "message": "சந்தாதராகு",
     "description": "For the button used to subscribe to a filter list"
@@ -1144,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "பக்கம் தடுக்கப்பட்டது",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1188,7 +1172,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "தொடரவும்",
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
@@ -1196,7 +1180,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "காரணம்:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
@@ -1204,11 +1188,11 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "பின்தொடர்பான்",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "மதிப்பற்றது",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1316,7 +1300,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "தவறுகள்: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {

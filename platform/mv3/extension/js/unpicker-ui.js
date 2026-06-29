@@ -69,9 +69,9 @@ function onFilterClicked(ev) {
     if ( target === trashElem ) {
         dom.cl.add(filterElem, 'removed');
         dom.cl.remove(filterElem, 'on');
-        toolOverlay.sendMessage({ what: 'removeCustomFilter',
+        toolOverlay.sendMessage({ what: 'removeCustomFilters',
             hostname: toolOverlay.url.hostname,
-            selector,
+            selectors: [ selector ],
         }).then(( ) => {
             autoSelectFilter();
         });
@@ -80,9 +80,9 @@ function onFilterClicked(ev) {
     const undoElem = qs$(filterElem, ':scope > span.undo');
     if ( target === undoElem ) {
         dom.cl.remove(filterElem, 'removed');
-        toolOverlay.sendMessage({ what: 'addCustomFilter',
+        toolOverlay.sendMessage({ what: 'addCustomFilters',
             hostname: toolOverlay.url.hostname,
-            selector,
+            selectors: [ selector ],
         }).then(( ) => {
             dom.cl.remove('.customFilter.on', 'on');
             dom.cl.add(filterElem, 'on');
@@ -130,7 +130,7 @@ function populateFilters(selectors) {
 
 async function startUnpicker() {
     const selectors = await toolOverlay.sendMessage({
-        what: 'selectorsFromCustomFilters',
+        what: 'customFiltersFromHostname',
         hostname: toolOverlay.url.hostname,
     })
     if ( selectors.length === 0 ) {

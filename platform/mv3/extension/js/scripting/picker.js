@@ -238,34 +238,47 @@ const excludedSelectors = [
 /******************************************************************************/
 
 async function previewSelector(selector) {
-    if ( selector === previewedSelector ) { return; }
-    if ( previewedSelector !== '' ) {
-        if ( previewedSelector.startsWith('{') ) {
+    previewSelector.promise = previewSelector.promise.then(( ) =>
+        previewSelector.commit(selector)
+    );
+    return previewSelector.promise;
+}
+
+previewSelector.commit = async function(selector) {
+    if ( selector === previewSelector.selector ) { return; }
+    if ( previewSelector.selector !== '' ) {
+        if ( previewSelector.selector.startsWith('{') ) {
             if ( self.pickerProceduralFilteringAPI ) {
                 await self.pickerProceduralFilteringAPI.reset();
             }
         }
-        if ( previewedCSS !== '' ) {
-            await ubolOverlay.sendMessage({ what: 'removeCSS', css: previewedCSS });
-            previewedCSS = '';
+        if ( previewSelector.css !== '' ) {
+            await ubolOverlay.sendMessage({ what: 'removeCSS', css: previewSelector.css });
+            previewSelector.css = '';
         }
     }
-    previewedSelector = selector || '';
+    previewSelector.selector = selector || '';
     if ( selector === '' ) { return; }
     if ( selector.startsWith('{') ) {
         if ( self.ProceduralFiltererAPI === undefined ) { return; }
         if ( self.pickerProceduralFilteringAPI === undefined ) {
             self.pickerProceduralFilteringAPI = new self.ProceduralFiltererAPI();
         }
-        self.pickerProceduralFilteringAPI.addSelectors([ JSON.parse(selector) ]);
+        const pselector = JSON.parse(selector);
+        if ( pselector.cssable ) {
+            self.pickerProceduralFilteringAPI.addDeclaratives([ pselector ]);
+        } else {
+            self.pickerProceduralFilteringAPI.addProcedurals([ pselector ]);
+        }
         return;
     }
-    previewedCSS = `${selector}{display:none!important;}`;
-    await ubolOverlay.sendMessage({ what: 'insertCSS', css: previewedCSS });
-}
+    previewSelector.css = `${selector}{display:none!important;}`;
+    await ubolOverlay.sendMessage({ what: 'insertCSS', css: previewSelector.css });
+};
 
-let previewedSelector = '';
-let previewedCSS = '';
+previewSelector.promise = Promise.resolve();
+previewSelector.selector = '';
+previewSelector.css = '';
 
 /******************************************************************************/
 

@@ -19,21 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// ruleset: $rulesetId$
-
 // Important!
 // Isolate from global scope
 (function uBOL_cssSpecificImports() {
 
 /******************************************************************************/
 
-const argsList = self.$argsList$;
-const argsSeqs = self.$argsSeqs$;
-const hostnamesMap = new Map(self.$hostnamesMap$);
-const hasEntities = self.$hasEntities$;
+const rulesetId = self.$rulesetId$;
 
 self.specificImports = self.specificImports || [];
-self.specificImports.push({ argsList, argsSeqs, hostnamesMap, hasEntities });
+self.specificImports.push(rulesetId);
 
 /******************************************************************************/
 

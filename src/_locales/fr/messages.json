@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Règles locales : Cette colonne concerne des règles qui ne s'appliquent que sur le site actuellement visité.\nLes règles locales supplantent les règles globales.",
+    "message": "Règles locales : Cette colonne concerne des règles qui ne s'appliquent que sur le site actuellement visité.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Ouvrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Créer un nouveau rapport sur GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Trouver des rapports similaires sur GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Veuillez trouver ci-dessous les informations techniques pouvant aider les bénévoles à vous assister dans la résolution de problème.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Important :</b> Les informations potentiellement privées ou sensibles sont retirées par défaut. Ainsi éditées, elles peuvent compliquer la résolution de problème.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Rapporter un problème de filtre",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Marquer le site Web en tant que \"NSFW\" (<a href=\"https://fr.wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe For Work\", c'est-à-dire pour public averti/inapproprié au travail</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Retirer les informations potentiellement privées ou sensibles",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Restaurer les informations potentiellement privées ou sensibles",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Politique de confidentialité",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Erreur réseau : {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Ajouter le lien suivant à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nLien : {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Souscrire",

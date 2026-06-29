@@ -19,6 +19,10 @@
     "message": "Ynstellingen",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Oanpaste filters",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Untwikkelje",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malwaredomeinen",
+    "message": "Beskerming tsjin malware, befeiliging",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Gebieden, talen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Ymportearre listen",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Filterlist tafoegje…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Plak hjir de URL fan de ta te foegjen filterlist.",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Ymportearje / Eksportearje",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Plak hjir spesifike kosmetyske filters om ta te foegjen",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Om kosmetyske of scriptletfilters fan ymportearre listen út ta te passen, moatte jo uBO Lite tastimming jaan foar it útfieren fan brûkersscripts. Iepenje de útwreidingsside fan jo browser (<code>chrome://extensions</code> yn Chrome of <code>about:addons</code> yn Firefox), iepenje de details fan <b>uBO Lite</b>, en skeakelje <b>Brûkersscripts tastean</b> (ek wol oanjûn as ‘Net-ferifiearte scripts fan tredden’) yn.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Wizigingslochboek",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Nije melding meitsje",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Standert filtermodus",
@@ -243,6 +271,18 @@
     "message": "Navigaasje nei potinsjeel net-winske websites wurdt blokkearre, en jo krije de opsje om troch te gean.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Pop-upblokkearring ynskeakelje",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Wannear aktyf, slute oerienkommende filters automatysk net-winske browserljepblêden dy’t troch websites oanmakke binne.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandbox foar it oanmeitsjen fan filters",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Untwikkelersmodus",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Skeakelet tagong ta foar technyske brûkers geskikte funksjes yn.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Reservekopy",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Meitsje i reservekopy fan jo oanpaste ynstellingen neiei bestân, of set jo oanpaste ynstellingen werom fan in bestân út.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Weromsette oerskriuwt al jo aktuele oanpaste ynstellingen.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Listen sykje",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Side blokkearre",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite hat it laden fan de folgjende side opkeard:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Tebek",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Dit finster slute",
@@ -339,6 +391,10 @@
     "message": "Ungedien meitsje",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Tafoegje",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Ymportearje en tafoegje…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Eksportearje…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Reservekopy meitje…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Weromsette…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Standertynstellingen weromsette…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Al jo oanpaste ynstellingen sille fuortsmiten wurde. Wolle jo de standertynstellingen echt weromsette?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Foegje gjin ynhâld fan net-fertroude boarnen ta.",

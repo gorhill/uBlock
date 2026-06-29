@@ -27,6 +27,7 @@ import {
 
 import {
     enableRulesets,
+    getEnabledRulesets,
     getRulesetDetails,
     setStrictBlockMode,
 } from './ruleset-manager.js';
@@ -43,20 +44,23 @@ import {
 
 import { broadcastMessage } from './utils.js';
 import { dnr } from './ext-compat.js';
-import { registerInjectables } from './scripting-manager.js';
+import { registerContentScripts } from './scripting-manager.js';
+import { setPopupBlockMode } from './prevent-popup.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
 export async function loadAdminConfig() {
     const [
+        popupBlockMode,
         showBlockedCount,
         strictBlockMode,
     ] = await Promise.all([
+        adminReadEx('popupBlockMode'),
         adminReadEx('showBlockedCount'),
         adminReadEx('strictBlockMode'),
     ]);
-    applyAdminConfig({ showBlockedCount, strictBlockMode });
+    applyAdminConfig({ popupBlockMode, showBlockedCount, strictBlockMode });
 }
 
 /******************************************************************************/
@@ -75,6 +79,13 @@ function applyAdminConfig(config, apply = false) {
     while ( toApply.length !== 0 ) {
         const key = toApply.pop();
         switch ( key ) {
+        case 'popupBlockMode': {
+            const { popupBlockMode } = config;
+            setPopupBlockMode(popupBlockMode, true).then(( ) => {
+                broadcastMessage({ popupBlockMode });
+            });
+            break;
+        }
         case 'showBlockedCount': {
             if ( typeof dnr.setExtensionActionOptions !== 'function' ) { break; }
             const { showBlockedCount } = config;
@@ -114,10 +125,10 @@ const adminSettings = {
         if ( this.keys.has('rulesets') ) {
             ubolLog('admin setting "rulesets" changed');
             await enableRulesets(rulesetConfig.enabledRulesets);
-            await registerInjectables();
+            await registerContentScripts();
             const results = await Promise.all([
                 getAdminRulesets(),
-                dnr.getEnabledRulesets(),
+                getEnabledRulesets(),
             ]);
             const [ adminRulesets, enabledRulesets ] = results;
             broadcastMessage({ adminRulesets, enabledRulesets });
@@ -125,14 +136,21 @@ const adminSettings = {
         if ( this.keys.has('defaultFiltering') ) {
             ubolLog('admin setting "defaultFiltering" changed');
             await readFilteringModeDetails(true);
-            await registerInjectables();
+            await registerContentScripts();
             const defaultFilteringMode = await getDefaultFilteringMode();
             broadcastMessage({ defaultFilteringMode });
         }
         if ( this.keys.has('noFiltering') ) {
             ubolLog('admin setting "noFiltering" changed');
             const filteringModeDetails = await readFilteringModeDetails(true);
+            await registerContentScripts();
             broadcastMessage({ filteringModeDetails });
+        }
+        if ( this.keys.has('popupBlockMode') ) {
+            ubolLog('admin setting "popupBlockMode" changed');
+            const popupBlockMode = this.keys.get('popupBlockMode');
+            applyAdminConfig({ popupBlockMode }, true);
+            await registerContentScripts();
         }
         if ( this.keys.has('showBlockedCount') ) {
             ubolLog('admin setting "showBlockedCount" changed');

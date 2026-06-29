@@ -19,6 +19,10 @@
     "message": "Paramètres",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Filtres personnalisés",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Développement",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Régions, langues",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Listes importées",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Ajouter une liste de filtres…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Coller ici le lien de la liste de filtres à ajouter",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importer / Exporter",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Coller ici les filtres cosmétiques/scriptlets spécifiques à ajouter",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Pour forcer les filtres cosmétiques ou de type scriptlet présents dans les listes importées, vous devez accorder à uBO Lite la permission d'exécuter des scripts utilisateurs. Ouvrez la page des extensions de votre navigateur (<code>chrome://extensions</code> dans Chrome, ou <code>about:addons</code> dans Firefox), ouvrez la page des détails d'<b>uBO Lite</b>, et activez l'option <b>Autoriser les scripts utilisateurs</b> (aussi appelés \"scripts tiers non-vérifiés\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Journal des changements",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Créer un nouveau rapport sur GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mode de filtrage par défaut",
@@ -243,6 +271,18 @@
     "message": "La navigation vers des sites potentiellement indésirables sera bloquée, et vous aurez la possibilité de continuer",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Activer le blocage pop-up",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Lorsque cette option est activée, les filtres correspondants fermeront automatiquement les onglets de navigateur indésirés créés par les sites Web.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Bac à sable de création de filtres",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mode développeur",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Active l'accès aux fonctionnalités adaptées aux utilisateurs techniques.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Sauvegarde",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Sauvegardez vos paramètres personnalisés dans un fichier, ou restaurez vos paramètres personnalisés depuis un fichier.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "La restauration remplacera tous vos paramètres personnalisés actuels.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Trouver des listes",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Page bloquée",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite a empêché le chargement de cette page :",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Précédent",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Fermer cette fenêtre",
@@ -339,6 +391,10 @@
     "message": "Rétablir",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Ajouter",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importer",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Exporter",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Sauvegarder…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Restaurer…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Revenir aux paramètres par défaut",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Tous vos paramètres personnalisés seront supprimés. Voulez-vous vraiment revenir aux paramètres par défaut ?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Ne pas ajouter de contenu provenant de sources non fiables",

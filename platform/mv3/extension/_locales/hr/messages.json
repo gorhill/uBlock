@@ -19,6 +19,10 @@
     "message": "Postavke",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Prilagođeni filteri",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Razvoj",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Regije, jezici",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Uvoz / Izvoz",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Ovdje zalijepite određene vizualne filtere koje želite dodati",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Popis promjena",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Napravi novu prijavu na GitHub-u",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Zadani način filtriranja",
@@ -243,6 +271,18 @@
     "message": "Navigacija do potencijalno nepoželjnih stranica bit će blokirana i bit će vam ponuđena opcija za nastavak.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Omogući blokiranje skočnih prozora",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Kada su aktivni, odgovarajući filteri automatski će zatvoriti neželjene kartice preglednika koje su kreirale web-lokacije.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Igraonica za stvaranje filtera",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Način rada za programere",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Omogućuje pristup značajkama prikladnim za tehničke korisnike.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Sigurnosna kopija",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Napravite sigurnosnu kopiju prilagođenih postavki u datoteku ili ih vratite iz datoteke.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Vraćanje će prebrisati sve vaše trenutne prilagođene postavke.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Pronađi liste",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Stranica blokirana",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite je spriječio učitavanje sljedeće stranice:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Idi natrag",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Zatvori ovaj prozor",
@@ -339,6 +391,10 @@
     "message": "Poništi",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Dodaj",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Uvesti i dodati...",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Izvoz...",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Sigurnosno kopiranje…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Vraćanje…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Resetiraj na zadane postavke…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Sve Vaše prilagođene postavke će biti uklonjene. Želite li zaista resetirati na zadane postavke?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Ne dodavajte sadržaj iz nepouzdanih izvora",

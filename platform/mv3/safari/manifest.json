@@ -45,10 +45,12 @@
   ],
   "permissions": [
     "activeTab",
+    "alarms",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "scripting",
-    "storage"
+    "storage",
+    "unlimitedStorage"
   ],
   "short_name": "uBO Lite",
   "version": "1.0",

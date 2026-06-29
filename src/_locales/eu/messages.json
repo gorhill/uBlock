@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da. Tokiko arauek arau orokorrak gainidazten dituzte.",
+    "message": "Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domeinuak",
+    "message": "Malwarearen aurkako babesa, segurtasuna",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Ireki",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Txosten berri bat sortu",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Antzeko txostenak aurkitu",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Jarraian, boluntarioek arazo bat konpontzen laguntzen saiatzen direnean baliagarria izan daitekeen informazio teknikoa aurkituko duzu.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Garrantzitsua:</b> Pribatua edo sentikorra izan daitekeen informazioa modu lehenetsian idazten da. Idatzitako informazioak arazo bat konpontzea zaildu dezake.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Iragazkiko arazo baten berri eman",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Web orria «NSFW» moduan jarri (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work” </a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Erredaktatu",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Desegin erredakzioa",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Pribatutasun politika",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Sare-errorea: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Gehitu honako URL hauek zure iragazki pertsonalizatuen zerrendara?\n\nIzenburua: \"{{title}}\"\nURLa: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Harpidetu",

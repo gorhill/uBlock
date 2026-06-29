@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "חוקים לוקאליים: עמודה זו היא עבור חוקים אשר תקפים לאתר הנוכחי בלבד.\nחוקים לוקאליים דורסים את החוקים הגלובליים.",
+    "message": "חוקים לוקאליים: עמודה זו היא עבור חוקים אשר תקפים לאתר הנוכחי בלבד.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,14 +897,14 @@
   },
   "supportOpenButton": {
     "message": "לפתוח",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "צור דוח חדש",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "צור דוח חדש ב-GitHub",
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "חיפוש דוחות דומים",
+    "message": "מצא דיווחים דומים ב-GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "ראה מטה מידע טכני שיכול להיות מועיל למתנדב, כאשר הוא מנסה לעזור לך לפתור בעיה.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>חשוב:</b> מידע שהוא פוטנציאלי רגיש או פרטי מוסר בברירת מחדל. המידע שמוסר יכול לגרום לעיכוב בפתרון בעיות.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "דיווח על בעיית מסנן",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "תיוג דף האינטרנט כ- לב\"ל (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">'לא בטוח לעבודה'</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "הסר מידע פרטי או רגיש",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "שחזר מידע פרטי או רגיש",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "מדיניות פרטיות",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "בעיית רשת: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "הירשם כמנוי",
@@ -1288,7 +1272,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "מיתוג JavaScript",
+    "message": "כיבוי/הפעלה של JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {

@@ -12,11 +12,11 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "გაფრთხილება! ცვლილებები არ შენახულა",
+    "message": "გაფრთხილება! ცვლილებები არ შენახულა!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "დარჩენა",
+    "message": "დარჩი აქ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "მავნე დომენები",
+    "message": "მავნე პროგრამებისგან დაცვა, უსაფრთხოება",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "გახსნა",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "შექმენით ახალი მოსხენება",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "იპოვეთ მსგავსი მოხსენებები",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "ქვემოთ მოცემულია ტექნიკური ინფორმაცია, რომელიც გამოადგებათ მოხალისეებს, უკეთ დაგეხმარონ ხარვეზის აღმოფხვრაში.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>გაითვალისწინეთ:</b> მონაცემები, რომლებიც შესაძლოა პირადი და მნიშვნელოვანი იყოს, ნაგულისხმევად იკვეცება. ამასთანავე, შეკვეცილი ინფორმაციით სავარაუდოდ გართულდება ხარვეზის გამოსწორება.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "ფილტრის ხარვეზის მოხსენება",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "გვერდი მოინიშნოს, როგორც „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„შეუსაბამო“</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "შეკვეცილი",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "შეუკვეცელი",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "პირადულობის დებულება",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "ქსელის შეცდომა: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: გსურთ შემდეგი URL ბმულის საკუთარ ფილტრის წესებში ჩამატება?\n\nდასახელება: „{{title}}“\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "გამოწერა",

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Aturan lokal: kolom ini untuk aturan yang diterapkan ke situs yang sedang dikunjungi saja.\nAturan lokal menimpa aturan global.",
+    "message": "Aturan lokal: kolom ini untuk aturan yang diterapkan ke situs yang sedang dikunjungi saja.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokir elemen...",
+    "message": "Blok elemen",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Widget sosial",
+    "message": "Gawai sosial",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Impor...",
+    "message": "Impor…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Memperbarui...",
+    "message": "Memperbarui…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -592,7 +592,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Impor dari berkas...",
+    "message": "Impor dari berkas…",
     "description": ""
   },
   "rulesExport": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Buka",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Buat laporan baru di Github",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Temukan laporan serupa di Github",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Di bawah ini adalah informasi teknis yang mungkin berguna saat sukarelawan berusaha membantu memecahkan masalah Anda.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Penting:</b> Informasi yang sifatnya privat dan sensitif disensor secara bawaan. Informasi yang disensor mungkin akan membuat proses memecahkan masalah semakin sulit.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Laporkan masalah filter",
@@ -1012,20 +1008,12 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Mengarah ke perangkat lunak jahat, phishing",
+    "message": "Mengarah ke perangkat lunak jahat, pengelabuan",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
     "message": "Beri label halaman web sebagai “TAUSB” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Tidak Aman Untuk Saat Bekerja”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Sensor",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Batal sensor",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Kebijakan privasi",
@@ -1076,11 +1064,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Pulihkan dari berkas...",
+    "message": "Pulihkan dari berkas…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Kembalikan ke pengaturan bawaan...",
+    "message": "Kembalikan ke pengaturan bawaan…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Galat jaringan: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Tambah URL berikut ke ke daftar filter khusus Anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Berlangganan",
@@ -1256,7 +1240,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Berlangganan daftar filter...",
+    "message": "Berlangganan daftar filter…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

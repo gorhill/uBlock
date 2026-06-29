@@ -19,6 +19,10 @@
     "message": "Asetukset",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Omat suodattimet",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Kehitys",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Haittaohjelmia jakelevat verkkotunnukset",
+    "message": "Haittaohjelmasuojaus, tietoturva",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Alueet, kielet",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Tuodut listat",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Lisää suodatinlista…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Lisää lista liittämällä sen URL-osoite tähän",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Tuonti / Vienti",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Liitä lisättävät kosmeettiset/scriptlet-suodattimet tähän",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Tuotujen listojen kosmeetisten ja scriplet‑suodattimien käyttämiseksi, on uBO Litelle myönnettävä oikeus suorittaa käyttäjäskriptejä. Avaa selaimesi laajennussivu (<code>chrome://extensions</code> Chromessa, <code>about:addons</code> Firefoxissa), valitse <b>uBO Lite</b> ‑laajennuksen tiedot ja aktivoi käyttöoikeus <b>Salli käyttäjäskriptit</b> (Chrome) tai <b>Salli vahvistamattomien kolmannen osapuolen komentosarjojen pääsy tietoihisi</b> (Firefox).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Muutoshistoria",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Luo GitHubiin uusi ilmoitus",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Oletusarvoinen suodatustila",
@@ -216,7 +244,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Listaus osotteista, joita ei suodateta.",
+    "message": "Listaus verkkosivustoista, joita ei suodateta.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -243,6 +271,18 @@
     "message": "Potentiaalisesti ei-toivottujen sivustojen avaaminen estetään mahdollisuudella jatkaa.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Käytä ponnahdusestoa",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Kun käytössä, suljetaan suodattimia vastaavat verkkosivustojen avaamat ei-toivotut selaimen välilehdet automaattisesti.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Vapaa suodatinluonti",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Kehittäjätila",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Aktivoi teknisille käyttäjille suunnatut ominaisuudet.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Varmuuskopiointi",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Varmuuskopioi asetuksesi tiedostoon, tai palauta aiempi varmuuskopio.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Palautus korvaa kaikki nykyiset asetuksesi.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Etsi listoja",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Sivu estettiin",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite on estänyt seuraavan sivun latauksen:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Palaa takaisin",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Sulje tämä ikkuna",
@@ -339,6 +391,10 @@
     "message": "Palauta",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Lisää",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Tuo ja lisää…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Vie…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Varmuuskopioi…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Palauta…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Palauta oletusasetukset…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Kaikki tehndyt asetusmuutokset perutaan. Haluatko varmasti palauttaa oletusasetukset?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Älä lisää sisältöä lähteistä, joihin et luota.",

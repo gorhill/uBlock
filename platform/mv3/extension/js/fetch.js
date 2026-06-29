@@ -23,14 +23,10 @@ import { ubolErr } from './debug.js';
 
 /******************************************************************************/
 
-function fetchJSON(path) {
+export function fetchJSON(path) {
     return fetch(`${path}.json`).then(response =>
         response.json()
     ).catch(reason => {
         ubolErr(`fetchJSON/${reason}`);
     });
 }
-
-/******************************************************************************/
-
-export { fetchJSON };

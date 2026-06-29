@@ -19,6 +19,10 @@
     "message": "සැකසුම්",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Custom filters",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Develop",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "ද්වේශාංග වසම්",
+    "message": "අනිෂ්ට මෘදුකාංග ආරක්ෂාව, ආරක්ෂාව",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "කලාපීය, භාෂා",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Import / Export",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Specific cosmetic/scriptlet filters to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "වෙනස්කම් සටහන",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "නව වාර්තාවක් සාදන්න",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "පෙරනිමි පෙරීමේ ප්‍රකාරය",
@@ -243,6 +271,18 @@
     "message": "අනවශ්‍ය විය හැකි අඩවි වෙත සංචාලනය අවහිර කරනු ලබන අතර, ඉදිරියට යාමට ඔබට විකල්පය ලබා දෙනු ඇත.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Enable pop-up blocking",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Developer mode",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Enables access to features suitable for technical users.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Backup",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Restoring will overwrite all your current custom settings.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "ලැයිස්තු සොයන්න",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "පිටුව අවහිරයි",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite විසින් පහත පිටුව පූරණය වීම වළක්වා ඇත:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "ආපසු යන්න",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "මෙම කවුළුව වසන්න",
@@ -339,6 +391,10 @@
     "message": "Revert",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Add",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Import and append…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Export…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Back up…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Restore…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Reset to default settings…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Do not add content from untrusted sources",
@@ -372,7 +444,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

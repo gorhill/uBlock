@@ -248,6 +248,12 @@ if ( isBackgroundProcess !== true ) {
             elem.setAttribute('title', expandHtmlEntities(text));
         }
 
+        for ( const elem of root.querySelectorAll('[aria-label]') ) {
+            const text = i18n$(elem.getAttribute('aria-label'));
+            if ( !text ) { continue; }
+            elem.setAttribute('aria-label', expandHtmlEntities(text));
+        }
+
         for ( const elem of root.querySelectorAll('[placeholder]') ) {
             const text = i18n$(elem.getAttribute('placeholder'));
             if ( text === '' ) { continue; }

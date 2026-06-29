@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "อยู่ต่อ",
+    "message": "พักที่นี่",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "กฏเว็บเดียว: คอลัมน์นี้มีไว้สําหรับกฏบนเว็บไซต์นี้เท่านั้น\nกฏเว็บเดียวจะถูกใช้งานก่อนกฏครอบคลุม",
+    "message": "กฏเว็บเดียว: คอลัมน์นี้มีไว้สําหรับกฏบนเว็บไซต์นี้เท่านั้น",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "การป้องกันมัลแวร์, ความปลอดภัย",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "เปิด",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "สร้างรายงานใหม่",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "ค้นหารายงานคล้ายกันบน GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "ด้านล่างนี้เป็นข้อมูลทางเทคนิคซึ่งอาจเป็นประโยชน์ในกรณีที่อาสาสมัครพยายามให้การช่วยเหลือในการแก้ไขปัญหาให้คุณ",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>สำคัญ:</b> ข้อมูลที่อาจเป็นความลับหรือละเอียดอ่อนจะถูกแก้ไขตามค่าเริ่มต้น ข้อมูลที่แก้ไขอาจะทำให้การแก้ไขปัญหายากขึ้น",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "รายงานปัญหาตัวกรอง",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "ติดป้ายเว็บเพจว่าเป็น “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ไม่ปลอดภัยกับงาน (Not Safe For Work)”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "นโยบายความเป็นส่วนตัว",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "เครือข่ายผิดพลาด: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: เพิ่ม URL ต่อไปนี้ในรายการตัวกรองแบบกำหนดเองของคุณหรือไม่ ?\n\nชื่อ: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "สมัครสมาชิก",
@@ -1196,7 +1180,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "สาเหตุ",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {

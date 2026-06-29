@@ -19,6 +19,10 @@
     "message": "Indstillinger",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Tilpassede filtre",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Udvikl",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -40,7 +44,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Anmeld et problem på dette websted",
+    "message": "Anmeld et problem",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware-domæner",
+    "message": "Malware-beskyttelse, sikkerhed",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Regioner, sprog",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Importerede lister",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Tilføj filterliste…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Indsæt URL'en til filterlisten, som skal tilføjes, her",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Import/ Eksport",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "For at tilføje bestemte kosmetiske/scriplets-filtre, indsæt dem hér",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "For at håndhæve kosmetiske eller scriptlet-filtre fra importerede lister, giv uBO Lite tilladelse til at eksekvere brugerscripts. Åbn webbrowserens udvidelsesside (<code>chrome://extensions</code> i Chrome eller <code>about:addons</code> i Firefox), åbn <b>uBO Lite</b>-detaljerne og slå <b>Tillad brugerscripts</b> til (også kaldet \"ubekræftede tredjepartsscripts\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Ændringslog",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Opret ny anmeldelse på GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Standardfiltreringstilstand",
@@ -243,6 +271,18 @@
     "message": "Navigering til potentielt uønskede websteder blokeres, men man tilbydes muligheden for at fortsætte.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Aktivér pop op-blokering",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Når aktiv, lukker matchende filtre automatisk uønskede webbrowserfaner åbnet af websteder.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandkasse til filteroprettelse",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Udviklertilstand",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Aktiverer adgang til funktioner egnede for tekniske brugere.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Sikkerhedskopiér",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Sikkerhedskopiér tilpassede indstillinger til en fil, eller gendan tilpassede indstillinger fra en fil.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Gendannelse overskriver alle nuværende tilpassede indstillinger.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Find lister",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Side blokeret",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite har forhindret flg. side i at blive indlæst:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Gå tilbage",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Luk dette vindue",
@@ -292,7 +344,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Gå til elementdræber­tilstand",
+    "message": "Fjern et element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -339,6 +391,10 @@
     "message": "Tilbagefør",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Tilføj",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importér og tilføj…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Eksportér…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Sikkerhedskopiér…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Gendan…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Nulstil til standardstillinger…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Alle tilpassede indstillinger fjernes. Fortsæt nulstilling til standardindstillinger?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Tilføj ikke indhold fra ikke-betroede kilder.",

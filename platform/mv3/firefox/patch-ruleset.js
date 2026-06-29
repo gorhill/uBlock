@@ -22,8 +22,11 @@
 export function patchRuleset(ruleset) {
     const out = [];
     for ( const rule of ruleset ) {
-        const condition = rule.condition;
+        const { condition } = rule;
+        if ( Array.isArray(condition.topDomains) ) { continue; }
+        if ( Array.isArray(condition.excludedTopDomains) ) { continue; }
         if ( Array.isArray(condition.responseHeaders) ) { continue; }
+        if ( Array.isArray(condition.requestHeaders) ) { continue; }
         out.push(rule);
     }
     return out;

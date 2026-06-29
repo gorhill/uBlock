@@ -1,6 +1,7 @@
 :root {
     --filtering-mode-button-size: 60px; /* should be multiple of 4 */
     --filtering-mode-slider-width: calc(4 * var(--filtering-mode-button-size) + 3px);
+    --filtering-mode-slider-background: var(--surface-3);
     }
 
 .filteringModeSlider {
@@ -37,8 +38,8 @@
     }
 
 .filteringModeSlider[data-level="0"] .filteringModeButton > div {
-    background-color: var(--surface-2);
-    border-color: var(--surface-2);
+    background-color: var(--filtering-mode-slider-background);
+    border-color: var(--filtering-mode-slider-background);
     }
 
 .filteringModeSlider span[data-level] {
@@ -92,18 +93,18 @@
 
 
 .filteringModeSlider[data-level="0"] span[data-level] {
-    background-color: var(--surface-2);
-    border-color: var(--surface-2);
+    background-color: var(--filtering-mode-slider-background);
+    border-color: var(--filtering-mode-slider-background);
     }
 
 .filteringModeSlider[data-level="1"] span[data-level]:nth-of-type(1) ~ span[data-level] {
-    background-color: var(--surface-2);
-    border-color: var(--surface-2);
+    background-color: var(--filtering-mode-slider-background);
+    border-color: var(--filtering-mode-slider-background);
     }
 
 .filteringModeSlider[data-level="2"] span[data-level]:nth-of-type(2) ~ span[data-level] {
-    background-color: var(--surface-2);
-    border-color: var(--surface-2);
+    background-color: var(--filtering-mode-slider-background);
+    border-color: var(--filtering-mode-slider-background);
     }
 
 .filteringModeSlider[data-level]:not(.moving) span[data-level]:hover {

@@ -21,14 +21,13 @@
 
 import { dom, qs$ } from './dom.js';
 import { fetchJSON } from './fetch.js';
-import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { i18n$ } from './i18n.js';
 import { sendMessage } from './ext.js';
 import { urlSkip } from './urlskip.js';
 
 /******************************************************************************/
 
-const rulesetDetailsPromise = getEnabledRulesetsDetails();
+const rulesetDetailsPromise = sendMessage({ what: 'getEnabledRulesetsDetails' });
 
 /******************************************************************************/
 
@@ -36,11 +35,12 @@ function urlToFragment(raw) {
     try {
         const fragment = new DocumentFragment();
         const url = new URL(raw);
+        const href = url.href;
         const hn = url.hostname;
-        const i = raw.indexOf(hn);
+        const i = href.indexOf(hn);
         const b = document.createElement('b');
         b.append(hn);
-        fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
+        fragment.append(href.slice(0,i), b, href.slice(i+hn.length));
         return fragment;
     } catch {
     }
@@ -107,9 +107,32 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 
 /******************************************************************************/
 
+// Enforce popup filters
+
+(async ( ) => {
+    const currentConfig = await sendMessage({
+        what: 'getCurrentConfig',
+    });
+    // Enforce popup filtering in complete mode only
+    if ( currentConfig.popupBlockingMode !== true ) { return; }
+    const rulesetDetails = await rulesetDetailsPromise;
+    const toImport = [];
+    for ( const details of rulesetDetails ) {
+        if ( Boolean(details.popups) === false ) { continue; }
+        toImport.push(`/rulesets/scripting/popup/${details.id}.js`);
+    }
+    if ( toImport.length === 0 ) { return; }
+    await Promise.all(toImport.map(a => import(a)));
+    self.preventPopupTarget = toURL;
+    await import('/js/scripting/prevent-popup.js');
+})();
+
+/******************************************************************************/
+
 // https://github.com/gorhill/uBlock/issues/691
 //   Parse URL to extract as much useful information as possible. This is
 //   useful to assist the user in deciding whether to navigate to the web page.
+
 (( ) => {
     const reURL = /^https?:\/\//;
 
@@ -181,6 +204,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 /******************************************************************************/
 
 // Find which list caused the blocking.
+
 (async ( ) => {
     const rulesetDetails = await rulesetDetailsPromise;
     let iList = -1;
@@ -214,7 +238,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
     };
     const toFetch = [];
     for ( let i = 0; i < rulesetDetails.length; i++ ) {
-        if ( rulesetDetails[i].rules.strictblock === 0 ) { continue; }
+        if ( Boolean(rulesetDetails[i].rules.strictblock) === false ) { continue; }
         toFetch.push(searchInList(i));
     }
     if ( toFetch.length === 0 ) { return; }
@@ -232,11 +256,12 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 /******************************************************************************/
 
 // Offer to skip redirection whenever possible
+
 (async ( ) => {
     const rulesetDetails = await rulesetDetailsPromise;
     const toFetch = [];
     for ( const details of rulesetDetails ) {
-        if ( details.rules.urlskip === 0 ) { continue; }
+        if ( Boolean(details.rules?.urlskip) === false ) { continue; }
         toFetch.push(fetchJSON(`/rulesets/urlskip/${details.id}`));
     }
     if ( toFetch.length === 0 ) { return; }
@@ -274,6 +299,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 /******************************************************************************/
 
 // https://www.reddit.com/r/uBlockOrigin/comments/breeux/
+
 if ( window.history.length > 1 ) {
     dom.on('#back', 'click', ( ) => { window.history.back(); });
     qs$('#bye').style.display = 'none';

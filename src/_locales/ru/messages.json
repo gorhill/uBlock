@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локальные правила: этот столбец предназначен для правил, применяемых только к текущему сайту.\nЛокальные правила переопределяют глобальные.",
+    "message": "Локальные правила: этот столбец предназначен для правил, применяемых только к текущему сайту.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Открыть",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Создать новый отчёт в GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Найти похожие отчёты в GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Ниже представлена техническая информация, которая может быть полезна волонтерам, помогающим вам решить проблему.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Предположительно конфиденциальная информация редактируется по умолчанию. Отредактированная информация может усложнить диагностику проблемы.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Сообщить о проблемном фильтре",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Пометить веб-страницу как “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Редактировать",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Отменить редактирование",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Политика конфиденциальности",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Ошибка сети: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Добавить следующий адрес к пользовательским спискам фильтров?\n\nЗаголовок: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Подписаться",

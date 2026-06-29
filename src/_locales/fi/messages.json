@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Paikalliset säännöt: Sarake säännöille, joita käytetään vain nykyisellä sivustolla.\nPaikalliset säännöt ohittavat yleiset säännöt.",
+    "message": "Paikalliset säännöt: Sarake säännöille, joita käytetään vain nykyisellä sivustolla.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Avaa",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Luo GitHubiin uusi ilmoitus",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Etsi GitHubista vastaavia ilmoituksia",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Alla on teknisiä tietoja, jotka saattavat auttaa ongelmasi ratkonnassa auttavia vapaaehtoisia.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Tärkeää:</b> Mahdolliset yksityiset ja arkaluonteiset tiedot poistetaan oletusarvoisesti. Tietojen puuttuminen saattaa vaikeuttaa ongelman ratkaisemista.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Ilmoita suodatinongelmasta",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Luokittele verkkosivu ns. työpaikalle sopimattomaksi, \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe For Work\"</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Älä sisällytä",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Sisällytä",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Tietosuojakäytäntö",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Verkkovirhe: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Lisätäänkö seuraava URL-osoite omiin suodatinlistoihisi?\n\nOtsikko: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Tilaa",

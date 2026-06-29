@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reolennoù lec'hel: er bann-mañ e vez lakaet ar reolennoù ne dalvezont nemet d'al lec'hienn m'emaoc'h.\nAr reolennoù lec'hel a ya a-raok ar reolennoù hollek.",
+    "message": "Reolennoù lec'hel: er bann-mañ e vez lakaet ar reolennoù ne dalvezont nemet d'al lec'hienn m'emaoc'h.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Digeriñ",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Sevel ur rentañ-kont nevez",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Klask danevelloù koulz ha homañ",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Amañ dindan ez eus titouroù teknikel a c'hallfe sikour an dud a-youl vat a zo o klask diskoulmañ ur gudenn.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Talvoudus:</b> An titouroù a c'hallfe bezañ prevez pe kizidik a zo skarzhet ent-emgefreek. Pa vez skarzhet an titouroù mod-se e c'hall bezañ diaesoc'h da ziskoulmañ ur gudenn.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Danevelliñ ur gudenn gant ur sil",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Merkañ ar bejenn evel \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>) hag a dalv ez eus danvez noazus pe kizidik enni",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Politikerezh ar vuhez prevez",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Fazi rouedad: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Fellout a ra deoc'h ouzhpennañ an URL-mañ d'ho rolloù siloù?\n\nTitl: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Koumanantiñ",

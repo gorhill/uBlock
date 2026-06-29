@@ -68,7 +68,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klako: malŝalti/ŝalti uBlock₀ por ĉi tiu retejo.\n\nCtrl+klako: malŝalti uBlock₀ nur en ĉi tiu paĝo.",
+    "message": "Klako: malŝalti/ŝalti uBlock₀ por ĉi tiu retejo.\n\nStir+klako: malŝalti uBlock₀ nur en ĉi tiu paĝo.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Baskuligi la blokadon de grandaj aŭdvideaj elementoj por ĉi tiu retejo",
+    "message": "Baskuligi la blokadon de grandaj aŭdvidaj elementoj en tiu ĉi retejo",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -400,7 +400,7 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Altnivelaĵoj",
+    "message": "Altnivelaj agordoj",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
@@ -428,7 +428,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Ĝisdatigi listojn de filtriloj aŭtomate.",
+    "message": "Ĝisdatigi listojn de filtriloj aŭtomate",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Analizi kaj eltrudi ornamajn filtrilojn.",
+    "message": "Analizi kaj eltrudi ornamajn filtrilojn",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domajno kun fiprogramaro",
+    "message": "Protekto kontraŭ fiprogramaro, sekureco",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Importi...",
+    "message": "Importi…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -516,7 +516,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "malaktuala",
+    "message": "Malaktuala.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
@@ -524,11 +524,11 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Lasta ĝisdatigo: {{ago}}",
+    "message": "Lasta ĝisdatigo: {{ago}}.\nKlaku por ĝisdatigi nun.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Ĝisdatigo...",
+    "message": "Ĝisdatigo…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -592,11 +592,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importi el dosiero...",
+    "message": "Importi el dosiero…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksporti al dosiero",
+    "message": "Eksporti al dosiero…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -848,15 +848,15 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Teni maksimume {{input}} paĝo-ŝargojn en ĉiu langeto",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Teni maksimume {{input}} elementojn en ĉiu langeto",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "Uzi {{input}} liniojn en elemento en vertikale vasta reĝimo",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Malfermi",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Krei novan raporton",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Serĉi similajn raportojn",
@@ -920,7 +920,7 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Respondojn al demandoj kaj alian helpon provizas la subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
@@ -932,11 +932,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Atentu:</b> eviti la uzadon de aliaj, similaj reklamoblokiloj kun uBlock Origin, ĉar tio eblas kaŭzi filtradajn problemojn en apartaj retejoj.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Konsiletoj:</b> konfirmu vian filtradajn listojn estas aktuala. <span data-url=\"logger-ui.html#_\">La protokolilo</span> estas la ĉefa ilo por analizi problemojn kiuj rilatas al filtrado.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -955,24 +955,20 @@
     "message": "Jen teknikaj informoj eble utilaj al tiuj volontuloj, kiuj helpas vin solvi problemon.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Raporti problemon pri filtrado",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "Por eviti ŝarĝi volontulojn per duplikataj raportoj, bonvolu konfirmi ke la problemo ankoraŭ ne raportitas. <b>Noto:</b> klaki la butonon kaŭzas ke la HTTP-origino de la paĝo senditas al GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Filtradoj listoj ĝisdatiĝas tage. Konfirmu ke via problemo ankoraŭ ne riparitas per la plej novaj filtradaj listoj.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Konfirmu ke la problemo ankoraŭ ekzistas reŝarginte la probleman retpaĝon.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1004,7 +1000,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Misfunkcias, se uBlock Origin estas ŝaltita ",
+    "message": "Misfunkcias, se uBlock Origin estas ŝaltita",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -1012,20 +1008,12 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Sekvas malbon-programoj, trompo-retejoj",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
     "message": "Marki la paĝon kiel «<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">nelabortaŭgan</a>»",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Reguloj pri privateco",
@@ -1076,11 +1064,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restaŭri el dosiero...",
+    "message": "Restaŭri el dosiero…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Remeti normajn agordojn...",
+    "message": "Remeti normajn agordojn…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "{{url}} ne konekteblas",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Ĉu vi volas aldoni la sekvan ligilon al viaj tajloritaj listoj de filtriloj?\n\nTitolo: \"{{title}}\"\nLigilo: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Sekvi",
@@ -1172,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Ne plu avertu min pri tiu ĉi retejo",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1192,23 +1176,23 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "La blokita paĝo volas fordirekti al alia retejo. Se vi daŭras, vi navigos senpere al {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Kialo:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Malica",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Spurilo",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Malbona reputacio",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1264,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Vidi fontkodon...",
+    "message": "Vidi fontkodon…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1320,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Ne povas filtri ĝuste kiam la retumilo komenciĝis.\nReŝargu la paĝon por certigi ĝustan filtradon.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

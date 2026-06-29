@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reglas locais: esta columna é para as reglas que afectan só a un sitio. As reglas locais anteponse ás globais.",
+    "message": "Reglas locais: esta columna é para as reglas que afectan só a un sitio.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Abrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Crear nova denuncia",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Atopar denuncias parecidas",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "A información técnica seguinte podería ser útil para que as persoas que intentan axudar poidan resolver o problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> A potencial información privada ou sensible está editada por defecto. Ao editar a información poderías dificultar a resolución do problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Informar dun problema co filtrado",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Etiqueta a páxina como \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Non é Segura No Traballo\"</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Política de privacidade",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Erro da rede: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Engadir o seguinte enderezo á túa lista de filtros personalizados?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subscribir",

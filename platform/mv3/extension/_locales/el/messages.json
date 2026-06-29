@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Ένα πειραματικό εργαλείο φραγής περιεχομένου χωρίς δικαιώματα. Αποκλείει διαφημίσεις, ιχνηλάτες και πολλά άλλα μετά την εγκατάσταση.",
+    "message": "Ένα αποδοτικό πρόγραμμα φραγής περιεχομένου. Αποκλείει διαφημίσεις, ιχνηλάτες, εξορύκτες και άλλα αμέσως μετά την εγκατάσταση.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -19,12 +19,16 @@
     "message": "Ρυθμίσεις",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Προσαρμοσμένα φίλτρα",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Ανάπτυξη",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
-    "message": "Σχετικά",
+    "message": "Πληροφορίες",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -36,11 +40,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "Για αυτόν τον ιστότοπο",
+    "message": "Σε αυτόν τον ιστότοπο",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Αναφορά ενός ζητήματος σε αυτόν τον ιστότοπο",
+    "message": "Αναφορά σφάλματος",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -83,6 +87,30 @@
     "message": "Περιοχές, γλώσσες",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Εισαγόμενες λίστες φίλτρων",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Προσθήκη λίστας φίλτρων…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Επικολλήστε το URL της λίστας φίλτρων εδώ",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Εισαγωγή / Εξαγωγή",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Επικολλήστε εδώ συγκεκριμένα φίλτρα μορφοποίησης ή σεναρίων για προσθήκη",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "aboutChangelog": {
     "message": "Αρχείο αλλαγών",
     "description": ""
@@ -112,7 +140,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Αναφορά προβλήματος φίλτρου",
+    "message": "Αναφορά σφάλματος φίλτρου",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -128,7 +156,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Βρείτε παρόμοιες αναφορές στο GitHub",
+    "message": "Εύρεση παρόμοιων αναφορών στο GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -156,7 +184,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Έχει ζητήματα σχετικά με το απόρρητο",
+    "message": "Έχει σφάλματα σχετικά με το απόρρητο",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -176,8 +204,8 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Δημιουργία νέας αναφοράς",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Δημιουργία νέας αναφοράς στο GitHub",
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Προεπιλεγμένη λειτουργία φιλτραρίσματος",
@@ -216,7 +244,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Λίστα των hostnames για τα οποία δεν θα πραγματοποιηθεί φιλτράρισμα",
+    "message": "Λίστα ιστότοπων για τους οποίους δεν θα πραγματοποιείται φιλτράρισμα.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -236,31 +264,55 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Ενεργοποίηση αυστηρής φραγής",
+    "message": "Ενεργοποίηση αυστηρού αποκλεισμού",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
     "message": "Θα απετραπεί η πρόσβαση σε πιθανά ανεπιθύμητους ιστοτόπους. Θα σας προσφερθεί η επιλογή να συνεχίσετε.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Ενεργοποίηση αποκλεισμού αναδυόμενων",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Όταν είναι ενεργή, θα κλείνονται αυτόματα οι ανεπιθύμητες καρτέλες που δημιουργούν ιστοσελίδες οι οποίες αντιστοιχούν σε φίλτρα.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Αμμοδοχείο δημιουργίας φίλτρων",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Λειτουργία προγραμματιστή",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Ενεργοποίηση πρόσβασης σε δυνατότητες κατάλληλες για τεχνικούς χρήστες.",
+    "message": "Ενεργοποιεί πρόσβαση σε δυνατότητες κατάλληλες για τεχνικούς χρήστες.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "settingsBackupRestoreLabel": {
+    "message": "Αντίγραφα ασφαλείας",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Δημιουργήστε ένα αντίγραφο ασφαλείας των προσαρμοσμένων ρυθμίσεών σας ή επαναφέρετε τις προσαρμοσμένες ρυθμίσεις από ένα αρχείο αντιγράφου ασφαλείας.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Η επαναφορά θα έχει ως αποτέλεσμα την αντικατάσταση των τρεχόντων προσαρμοσμένων ρυθμίσεών σας.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "Εύρεση λιστών",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Αποκλησμένη σελίδα",
-    "description": "Webpage title for the strict-blocked page"
+    "message": "Αποκλεισμένη σελίδα",
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "Το uBO Lite εμπόδισε τη φόρτωση στης παρακάτω σελίδας:",
+    "message": "Το uBO Lite εμπόδισε τη φόρτωση της παρακάτω σελίδας:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -268,7 +320,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "Η αποκλεισμένη σελίδα θέλει να κάνει ανακατεύθυνση σε άλλο ιστότοπο. Αν επιλέξετε να συνεχίσετε, θα μεταβείτε απευθείας στο: {{url}}",
+    "message": "Η αποκλεισμένη σελίδα θέλει να κάνει ανακατεύθυνση σε άλλον ιστότοπο. Αν επιλέξετε να συνεχίσετε, θα μεταβείτε απευθείας στο: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Επιστροφή",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Κλείσιμο του παραθύρου",
@@ -339,6 +391,10 @@
     "message": "Επαναφορά",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Προσθήκη",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Εισαγωγή και προσθήκη…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Εξαγωγή…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Δημιουργία αντιγράφου ασφαλείας…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Επαναφορά ρυθμίσεων…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Επαναφορά στις προεπιλεγμένες ρυθμίσεις…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Όλες οι προσαρμοσμένες ρυθμίσεις σας θα διαγραφούν. Σίγουρα θέλετε να επαναφέρετε τις προεπιλεγμένες ρυθμίσεις;",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Να μην προστίθενται περιεχόμενο από μη αξιόπιστες πηγές.",

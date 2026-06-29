@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokalna pravila: ovaj stupac je za pravila koja su primjenjena samo za ovaj sajt.\nLokalna pravila nadglasaju globalna pravila.",
+    "message": "Lokalna pravila: ovaj stupac je za pravila koja su primjenjena samo za ovaj sajt.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Zlonamjerne domene",
+    "message": "Zaštita od zlonamjernog softvera, sigurnost",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Otvori",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Napravite novu prijavu",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Pronađite slične prijave",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Ispod se nalaze tehničke informacije koje bi vam mogle biti korisne kada vam dobrovoljci pokušavaju pomoći s rješenjem problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Važno:</b> Moguće privatna ili osjetljiva informacija je prema zadanim postavkama automatski zaklonjena. Zaklonjene informacije mogu otežati rješavanju problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Prijavite problem sa filterom",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Označite web stranicu kao “NSZP” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Ne-Sigurna-Za-Posao”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Zakloni",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Odzakloni",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Pravila privatnosti",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Greška sa mrežom: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Dodajte slijedeću URL adresu u vašu listu prilagođenih filtera?\n\nNaziv: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Pretplatite se",

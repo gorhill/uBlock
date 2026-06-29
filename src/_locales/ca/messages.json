@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Regles locals: les regles d'aquesta columna s'apliquen només al lloc actual.\nLes regles locals anul·len les regles globals.",
+    "message": "Regles locals: les regles d'aquesta columna s'apliquen només al lloc actual.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Obre",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Crea un informe nou al GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Cerca informes similars al GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "A continuació es mostra informació tècnica que pot ser útil quan els voluntaris intenten ajudar-vos a resoldre un problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Important:</b> Per defecte es redacta informació potencialment privada o confidencial. La informació redactada pot dificultar la resolució d'un problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Informeu d'un problema de filtre",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Marca aquesta pàgina com a &ldquo;NSFW&rdquo; (<a href=\"https://ca.wikipedia.org/wiki/NSFW\">&ldquo;No segur per al treball&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redacta",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "No redactis",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Política de privadesa",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Error de xarxa: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Voleu afegir aquest URL a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subscriu-me",
@@ -1200,7 +1184,7 @@
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Maliciós",
+    "message": "Perjudicial",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
@@ -1208,7 +1192,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "De mala reputació",
+    "message": "Mala reputació",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

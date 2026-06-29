@@ -373,13 +373,11 @@ vAPI.SafeAnimationFrame = class {
         let i = mutations.length;
         while ( i-- ) {
             const mutation = mutations[i];
-            let nodeList = mutation.addedNodes;
-            if ( nodeList.length !== 0 ) {
-                addedNodeLists.push(nodeList);
-            }
-            nodeList = mutation.removedNodes;
-            if ( nodeList.length !== 0 ) {
-                removedNodeLists.push(nodeList);
+            if ( mutation.addedNodes.length !== 0 ) {
+                addedNodeLists.push(mutation.addedNodes);
+            } 
+            if ( mutation.removedNodes.length !== 0 ) {
+                removedNodeLists.push(mutation.removedNodes);
             }
         }
         if ( addedNodeLists.length !== 0 || removedNodeLists.length !== 0 ) {
@@ -393,8 +391,6 @@ vAPI.SafeAnimationFrame = class {
         if ( domLayoutObserver !== undefined ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document, {
-            //attributeFilter: [ 'class', 'id' ],
-            //attributes: true,
             childList: true,
             subtree: true
         });
@@ -928,6 +924,22 @@ vAPI.DOMFilterer = class {
 // vAPI.domSurveyor
 
 {
+    const queriedHashes = new Set();
+    const newHashes = new Set();
+    const maxSurveyNodes = 65536;
+    const pendingLists = [];
+    const pendingNodes = [];
+    const processedSet = new Set();
+    const ignoreTags = Object.assign(Object.create(null), {
+        br: 1, head: 1, link: 1, meta: 1, script: 1, style: 1
+    });
+    let domObserver;
+    let domFilterer;
+    let hostname = '';
+    let domChanged = false;
+    let scannedCount = 0;
+    let stopped = false;
+
     // http://www.cse.yorku.ca/~oz/hash.html#djb2
     //   Must mirror cosmetic filtering compiler's version
     const hashFromStr = (type, s) => {
@@ -946,20 +958,12 @@ vAPI.DOMFilterer = class {
         }
     };
 
-    const queriedHashes = new Set();
-    const maxSurveyNodes = 65536;
-    const pendingLists = [];
-    const pendingNodes = [];
-    const processedSet = new Set();
-    let domFilterer;
-    let hostname = '';
-    let domChanged = false;
-    let scannedCount = 0;
-    let stopped = false;
+    const qsa = (context, selector) =>
+        Array.from(context.querySelectorAll(selector));
 
     const addPendingList = list => {
         if ( list.length === 0 ) { return; }
-        pendingLists.push(Array.from(list));
+        pendingLists.push(list);
     };
 
     const nextPendingNodes = ( ) => {
@@ -986,7 +990,7 @@ vAPI.DOMFilterer = class {
     };
 
     const hasPendingNodes = ( ) => {
-        return pendingLists.length !== 0;
+        return pendingLists.length !== 0 || newHashes.size !== 0 ;
     };
 
     // Extract all classes/ids: these will be passed to the cosmetic
@@ -997,18 +1001,18 @@ vAPI.DOMFilterer = class {
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
     // http://jsperf.com/enumerate-classes/6
 
-    const idFromNode = (node, out) => {
+    const idFromNode = node => {
         const raw = node.id;
         if ( typeof raw !== 'string' || raw.length === 0 ) { return; }
         const hash = hashFromStr(0x23 /* '#' */, raw.trim());
         if ( queriedHashes.has(hash) ) { return; }
         queriedHashes.add(hash);
-        out.push(hash);
+        newHashes.add(hash);
     };
 
     // https://github.com/uBlockOrigin/uBlock-issues/discussions/2076
     //   Performance: avoid using Element.classList
-    const classesFromNode = (node, out) => {
+    const classesFromNode = node => {
         const s = node.getAttribute('class');
         if ( typeof s !== 'string' ) { return; }
         const len = s.length;
@@ -1022,32 +1026,29 @@ vAPI.DOMFilterer = class {
             const hash = hashFromStr(0x2E /* '.' */, token);
             if ( queriedHashes.has(hash) ) { continue; }
             queriedHashes.add(hash);
-            out.push(hash);
+            newHashes.add(hash);
         }
     };
 
-    const getSurveyResults = (hashes, safeOnly) => {
-        if ( self.vAPI.messaging instanceof Object === false ) {
-            stop(); return;
-        }
-        const promise = hashes.length === 0
+    const getSurveyResults = safeOnly => {
+        if ( Boolean(self.vAPI?.messaging) === false ) { return stop(); }
+        const promise = newHashes.size === 0
             ? Promise.resolve(null)
             : self.vAPI.messaging.send('contentscript', {
                 what: 'retrieveGenericCosmeticSelectors',
                 hostname,
-                hashes,
+                hashes: Array.from(newHashes),
                 exceptions: domFilterer.exceptions,
                 safeOnly,
             });
         promise.then(response => {
             processSurveyResults(response);
         });
+        newHashes.clear();
     };
 
     const doSurvey = ( ) => {
-        if ( self.vAPI instanceof Object === false ) { return; }
         const t0 = performance.now();
-        const hashes = [];
         const nodes = pendingNodes;
         const deadline = t0 + 4;
         let scanned = 0;
@@ -1060,8 +1061,8 @@ vAPI.DOMFilterer = class {
                     if ( processedSet.has(node) ) { continue; }
                     processedSet.add(node);
                 }
-                idFromNode(node, hashes);
-                classesFromNode(node, hashes);
+                idFromNode(node);
+                classesFromNode(node);
                 scanned += 1;
             }
             if ( performance.now() >= deadline ) { break; }
@@ -1071,7 +1072,7 @@ vAPI.DOMFilterer = class {
             stop();
         }
         processedSet.clear();
-        getSurveyResults(hashes);
+        getSurveyResults();
     };
 
     const surveyTimer = new vAPI.SafeAnimationFrame(doSurvey);
@@ -1121,66 +1122,73 @@ vAPI.DOMFilterer = class {
         });
     };
 
-    const domWatcherInterface = {
-        onDOMCreated: function() {
-            domFilterer = vAPI.domFilterer;
-            // https://github.com/uBlockOrigin/uBlock-issues/issues/1692
-            //   Look-up safe-only selectors to mitigate probability of
-            //   html/body elements of erroneously being targeted.
-            const hashes = [];
-            if ( document.documentElement !== null ) {
-                idFromNode(document.documentElement, hashes);
-                classesFromNode(document.documentElement, hashes);
+    const onDomChanged = mutations => {
+        domChanged = true;
+        for ( const mutation of mutations ) {
+            if ( mutation.type === 'childList' ) {
+                const { addedNodes } = mutation;
+                if ( addedNodes.length === 0 ) { continue; }
+                for ( const node of addedNodes ) {
+                    if ( node.nodeType !== 1 ) { continue; }
+                    if ( ignoreTags[node.localName] ) { continue; }
+                    if ( node.parentElement === null ) { continue; }
+                    addPendingList([ node ]);
+                    if ( node.firstElementChild === null ) { continue; }
+                    addPendingList(qsa(node, '[id],[class]'));
+                }
+            } else if ( mutation.attributeName === 'class' ) {
+                classesFromNode(mutation.target);
+            } else {
+                idFromNode(mutation.target);
             }
-            if ( document.body !== null ) {
-                idFromNode(document.body, hashes);
-                classesFromNode(document.body, hashes);
-            }
-            if ( hashes.length !== 0 ) {
-                getSurveyResults(hashes, true);
-            }
-            addPendingList(document.querySelectorAll(
-                '[id]:not(html):not(body),[class]:not(html):not(body)'
-            ));
-            if ( hasPendingNodes() ) {
-                surveyTimer.start();
-            }
-        },
-        onDOMChanged: function(addedNodes) {
-            if ( addedNodes.length === 0 ) { return; }
-            domChanged = true;
-            for ( const node of addedNodes ) {
-                addPendingList([ node ]);
-                if ( node.firstElementChild === null ) { continue; }
-                addPendingList(
-                    node.querySelectorAll(
-                        '[id]:not(html):not(body),[class]:not(html):not(body)'
-                    )
-                );
-            }
-            if ( hasPendingNodes() ) {
-                surveyTimer.start(1);
-            }
+        }
+        if ( hasPendingNodes() ) {
+            surveyTimer.start();
         }
     };
 
     const start = details => {
-        if ( self.vAPI instanceof Object === false ) { return; }
-        if ( self.vAPI.domFilterer instanceof Object === false ) { return; }
-        if ( self.vAPI.domWatcher instanceof Object === false ) { return; }
+        if ( Boolean(self.vAPI?.domFilterer) === false ) { return stop(); }
         hostname = details.hostname;
-        self.vAPI.domWatcher.addListener(domWatcherInterface);
+        domFilterer = vAPI.domFilterer;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1692
+        //   Look-up safe-only selectors to mitigate probability of
+        //   html/body elements of erroneously being targeted.
+        if ( document.documentElement !== null ) {
+            idFromNode(document.documentElement);
+            classesFromNode(document.documentElement);
+        }
+        if ( document.body !== null ) {
+            idFromNode(document.body);
+            classesFromNode(document.body);
+        }
+        if ( newHashes.size !== 0 ) {
+            getSurveyResults(newHashes, true);
+        }
+        addPendingList(qsa(document, '[id],[class]'));
+        if ( hasPendingNodes() ) {
+            surveyTimer.start();
+        }
+        domObserver = new MutationObserver(onDomChanged);
+        domObserver.observe(document, {
+            attributeFilter: [ 'class', 'id' ],
+            attributes: true,
+            childList: true,
+            subtree: true
+        });
     };
 
     const stop = ( ) => {
         stopped = true;
         pendingLists.length = 0;
         surveyTimer.clear();
-        if ( self.vAPI instanceof Object === false ) { return; }
-        if ( self.vAPI.domWatcher instanceof Object ) {
-            self.vAPI.domWatcher.removeListener(domWatcherInterface);
+        if ( domObserver ) {
+            domObserver.disconnect();
+            domObserver = undefined;
         }
-        self.vAPI.domSurveyor = null;
+        if ( self.vAPI?.domSurveyor ) {
+            self.vAPI.domSurveyor = null;
+        }
     };
 
     self.vAPI.domSurveyor = { start, addHashes };

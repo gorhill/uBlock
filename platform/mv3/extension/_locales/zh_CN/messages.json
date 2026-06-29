@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一个不需要权限的内容屏蔽工具。安装即可屏蔽广告、跟踪器、挖矿脚本等网页内容。",
+    "message": "一款高效的内容屏蔽工具。安装即可屏蔽广告、跟踪器、挖矿脚本等网页内容。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -17,6 +17,10 @@
   },
   "settingsPageName": {
     "message": "设置",
+    "description": "appears as tab name in dashboard"
+  },
+  "customFiltersPageName": {
+    "message": "自定义过滤规则",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "恶意网站",
+    "message": "恶意软件防护、安全",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "区域、语言",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "已导入的列表",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "添加过滤列表…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "在此处粘贴要添加的过滤列表的 URL",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "导入/导出",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "在此处粘贴要添加的特定元素/脚本过滤规则",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "要强制执行来自导入列表的元素或脚本过滤规则，您必须授予 uBO Lite 运行用户脚本的权限。打开浏览器的扩展页面（Chrome 中为 <code>chrome://extensions</code>，Firefox 中为 <code>about:addons</code>），打开 <b>uBO Lite</b> 详情</b>，然后开启 <b>允许用户脚本</b>（也称为“未经验证的第三方脚本”）。",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "更新日志",
@@ -128,7 +156,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "找到相似报告",
+    "message": "在 GitHub 上寻找相似报告",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "创建新报告",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "默认过滤模式",
@@ -243,6 +271,18 @@
     "message": "导航至潜在不良网站的操作将被拦截，并且您将可以选择继续前往。",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "开启弹出窗口拦截",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "开启后，匹配的过滤器将自动关闭网站创建的不需要的浏览器标签页。",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "过滤器创建沙盒",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "开发者模式",
     "description": "Label for a checkbox in the options page"
@@ -251,20 +291,32 @@
     "message": "启用访问适合技术用户的功能。",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "备份",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "将自定义设置备份到文件，或从文件还原自定义设置。",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "还原将覆盖当前所有自定义设置。",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "查找列表",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "被拦截的页面",
-    "description": "Webpage title for the strict-blocked page"
+    "message": "页面已被拦截",
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite 已阻止加载以下页面：",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "该页面由于 {{listName}} 中的匹配过滤器而被阻止。",
+    "message": "该页面由于 {{listname}} 中的匹配过滤器而被阻止。",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
@@ -277,14 +329,14 @@
   },
   "strictblockBack": {
     "message": "返回",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "关闭此窗口",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "不要再警告我有关此网站",
+    "message": "不再针对此网站作出警告",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
@@ -296,19 +348,19 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "退出临时元素移除模式",
+    "message": "退出临时移除元素模式",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "创建自定义过滤器",
+    "message": "创建自定义过滤规则",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "移除自定义过滤器",
+    "message": "移除自定义过滤规则",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "视图:",
+    "message": "查看：",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
@@ -339,6 +391,10 @@
     "message": "还原",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "添加",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "导入并添加…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "导出…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "备份…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "还原…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "重置为默认设置…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "您的自定义设置将被清除。是否确定要重置为默认设置？",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "请勿添加来自不可信来源的内容",

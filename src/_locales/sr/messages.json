@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локална правила: ова колона је за правила која се примењују само на тренутном сајту.\nЛокална правила имају предност у односу на општа.",
+    "message": "Локална правила: ова колона је за правила која се примењују само на тренутни сајт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -324,7 +324,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Онемогући описе алатке",
+    "message": "Онемогућите описе алата",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -897,14 +897,14 @@
   },
   "supportOpenButton": {
     "message": "Отвори",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Креирај нови извештај",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Креирај нови извештај на GitHub-у",
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Пронађи сличне извештаје",
+    "message": "Пронађи сличне извештаје на GitHub-у",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -955,16 +955,12 @@
     "message": "Испод су техничке информације које могу бити корисне када волонтери покушавају да вам помогну да решите проблем.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Потенцијално приватне или осетљиве информације се подразумевано редигују. Редиговане информације могу отежати решавање проблема.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Пријављивање проблема са филтером",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Да не бисте оптерећивали волонтере дуплим извештајима, проверите да ли је проблем већ пријављен.",
+    "message": "Да бисте избегли оптерећење волонтера дуплим извештајима, проверите да ли је проблем већ пријављен. <b>Напомена:</b> кликом на дугме, порекло странице ће бити послато GitHub-у.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -1016,16 +1012,8 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Изначите веб страницу као „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Није безбедна за рад”</a>)",
+    "message": "Означите веб страницу као „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Није безбедна за рад”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Редигуј",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Поништи редиговање",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Политика приватности",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Грешка на мрежи: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Додати следећу URL адресу у вашу прилагођену листу филтера?\n\nНазив: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Претплати се",
@@ -1208,7 +1192,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Неугледан",
+    "message": "Неугледно",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

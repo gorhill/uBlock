@@ -19,6 +19,10 @@
     "message": "Configuración",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Filtros personalizados",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Desarrollo",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Regiones, idiomas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Listas importadas",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Agregar filtro de lista…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Pega aquí la URL del filtro de lista a agregar",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importar / Exportar",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Pega aquí los filtros cosméticos específicos a añadir",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Para aplicar filtros cosméticos o de scripts desde listas importadas, debes otorgar a uBO Lite permiso para correr scripts de usuario. Abre la página de extensiones de tu navegador. (<code>chrome://extensions</code> en Chrome o <code>about:addons</code> en Firefox), abre los <b>uBO Lite</b> detalles, y enciende <b>Permitir scripts de usuario</b> (tambien referido como \"scripts de terceros no verificados\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Registro de cambios",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Crear nuevo reporte en GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Modo de filtrado predeterminado",
@@ -243,6 +271,18 @@
     "message": "La navegación a sitios potencialmente no deseados será bloqueada, y se te ofrecerá la opción de continuar.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Habilitar el bloqueo de emergentes",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Cuando está activo, los filtros que coincidan cerraran automáticamente las pestañas no solicitadas creadas por los sitios web.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Caja de arena de creación de filtro",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Modo desarrollador",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Habilita acceso a características aptas para usuarios técnicos.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Respaldar",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Haz un respaldo de tu configuración personalizada en un archivo o restaura tu configuración personalizada desde uno.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "La restauración sobrescribirá toda tu configuración personalizada actual.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Encontrar listas",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Página bloqueada",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite impidió la carga de la página:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Regresar",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Cerrar esta ventana",
@@ -339,6 +391,10 @@
     "message": "Revertir",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Añadir",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importar y anexar…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Exportar…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Respaldar…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Restaurar…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Restablecer ajustes predeterminados…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Se borrará todas tus configuraciones personalizadas. ¿Seguro que quieres restablecer a la configuración predeterminada?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "No añadas contenido de fuentes no confiables",

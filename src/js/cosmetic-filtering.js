@@ -758,11 +758,9 @@ CosmeticFilteringEngine.prototype.retrieveSpecificSelectors = function(
         disableSurveyor: this.lowlyGeneric.size === 0,
     };
     const injectedCSS = [];
+    const exceptionSet = new Set();
 
-    if (
-        options.noSpecificCosmeticFiltering !== true ||
-        options.noGenericCosmeticFiltering !== true
-    ) {
+    if ( options.noSpecificCosmeticFiltering !== true ) {
         // Cached cosmetic filters: these are always declarative.
         const specificSet = new Set();
         if ( cacheEntry !== undefined ) {
@@ -785,7 +783,6 @@ CosmeticFilteringEngine.prototype.retrieveSpecificSelectors = function(
 
         // Split filters in different groups
         const proceduralSet = new Set();
-        const exceptionSet = new Set();
         for ( const s of allSet ) {
             const selector = s.slice(1);
             if ( s.charCodeAt(0) === 0x2D /* - */ ) {
@@ -837,44 +834,44 @@ CosmeticFilteringEngine.prototype.retrieveSpecificSelectors = function(
             }
             out.proceduralFilters.push(...proceduralSet);
         }
+    }
 
-        // Highly generic cosmetic filters: sent once along with specific ones.
-        // A most-recent-used cache is used to skip computing the resulting set
-        //   of high generics for a given set of exceptions.
-        // The resulting set of high generics is stored as a string, ready to
-        //   be used as-is by the content script. The string is stored
-        //   indirectly in the mru cache: this is to prevent duplication of the
-        //   string in memory, which I have observed occurs when the string is
-        //   stored directly as a value in a Map.
-        if ( options.noGenericCosmeticFiltering !== true ) {
-            const exceptionSetHash = out.exceptionFilters.join();
-            for ( const key in this.highlyGeneric ) {
-                const entry = this.highlyGeneric[key];
-                let str = entry.mru.lookup(exceptionSetHash);
-                if ( str === undefined ) {
-                    str = { s: entry.str, excepted: [] };
-                    let genericSet = entry.dict;
-                    let hit = false;
+    // Highly generic cosmetic filters: sent once along with specific ones.
+    // A most-recent-used cache is used to skip computing the resulting set
+    //   of high generics for a given set of exceptions.
+    // The resulting set of high generics is stored as a string, ready to
+    //   be used as-is by the content script. The string is stored
+    //   indirectly in the mru cache: this is to prevent duplication of the
+    //   string in memory, which I have observed occurs when the string is
+    //   stored directly as a value in a Map.
+    if ( options.noGenericCosmeticFiltering !== true ) {
+        const exceptionSetHash = out.exceptionFilters.join();
+        for ( const key in this.highlyGeneric ) {
+            const entry = this.highlyGeneric[key];
+            let str = entry.mru.lookup(exceptionSetHash);
+            if ( str === undefined ) {
+                str = { s: entry.str, excepted: [] };
+                let genericSet = entry.dict;
+                let hit = false;
+                for ( const exception of exceptionSet ) {
+                    if ( (hit = genericSet.has(exception)) ) { break; }
+                }
+                if ( hit ) {
+                    genericSet = new Set(entry.dict);
                     for ( const exception of exceptionSet ) {
-                        if ( (hit = genericSet.has(exception)) ) { break; }
-                    }
-                    if ( hit ) {
-                        genericSet = new Set(entry.dict);
-                        for ( const exception of exceptionSet ) {
-                            if ( genericSet.delete(exception) ) {
-                                str.excepted.push(exception);
-                            }
+                        if ( genericSet.delete(exception) ) {
+                            str.excepted.push(exception);
                         }
-                        str.s = Array.from(genericSet).join(',\n');
                     }
-                    entry.mru.add(exceptionSetHash, str);
+                    str.s = Array.from(genericSet).join(',\n');
                 }
-                if ( str.excepted.length !== 0 ) {
-                    out.exceptedFilters.push(...str.excepted);
-                }
-                if ( str.s.length !== 0 ) {
-                    injectedCSS.push(`${str.s}\n{display:none!important;}`);
-                }
+                entry.mru.add(exceptionSetHash, str);
+            }
+            if ( str.excepted.length !== 0 ) {
+                out.exceptedFilters.push(...str.excepted);
+            }
+            if ( str.s.length !== 0 ) {
+                injectedCSS.push(`${str.s}\n{display:none!important;}`);
             }
         }
     }

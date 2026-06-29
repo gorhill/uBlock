@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Manatili",
+    "message": "Manatili rito",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Mga lokal na patakaran: ang hanay na ito ay para sa mga patakarang ipinapatupad sa site site na ito lamang. Mas sinusunod ang mga lokal na patakaran kaysa sa mga pandaigdigang patakaran.",
+    "message": "Mga lokal na patakaran: ang hanay na ito ay para sa mga patakarang ipinapatupad sa site site na ito lamang.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Mga domain na may malware",
+    "message": "Proteksyon sa malware, seguridad",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,14 +897,14 @@
   },
   "supportOpenButton": {
     "message": "Buksan",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Gumawa ng bagong ulat",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Gumawa ng bagong ulat sa Github",
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Maghanap ng mga magkahawig na ulat",
+    "message": "Maghanap ng katulad ng ulat sa GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Nasa ibaba ang mga teknikal na impormasyon na maaaring makatulong sa mga volunteer na tumutulong masolusyonan ang problema mo.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Mahalaga:</b> Sa default, nakatago ang mga pribado o sensitibong impormasyon. Maaaring mas mahirap masolusyonan ang mga problema dahil sa pagtatago ng pribadong impormasyon.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Mag-ulat ng problema ng filter",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Markahan bilang hindi dapat tinitignan sa pook-trabahuan (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Itago",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Huwag itago",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Patakaran sa pagkapribado",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Error sa network: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Idagdag ang sumusunod na mga URL sa iyong listahan ng mga pinasadyang filter?\n\nPangalan: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subaybayan",

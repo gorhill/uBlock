@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.\nLokale regler har prioritet foran globale regler.",
+    "message": "Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Åpne",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Opprett ny rapport på GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Finn lignende rapporter på GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Nedenfor er teknisk informasjon som kan være nyttig når frivillige prøver å hjelpe deg med å løse et problem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Viktig:</b> Potensielt privat eller sensitiv informasjon blir redigert som standard. Redigert informasjon kan gjøre det vanskeligere å løse et problem.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Rapporter om filterproblem",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Merk nettsiden som “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>) (advarsel mot sider med upassende innhold)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Rediger",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Ikke rediger",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Personvernpraksis",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Nettverksfeil: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Legge til følgende nettadresse i din egendefinerte filterliste?\n\nTittel: \"{{title}}\"\nNettadresse: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Abonner",
@@ -1196,19 +1180,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Grunn:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Ondsinnet",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Sporer",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Tvilsom",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

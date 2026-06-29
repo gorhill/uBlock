@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Kekal",
+    "message": "Tinggal di sini",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Peraturan tempatan: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.\nPeraturan tempatan menolak peraturan global.",
+    "message": "Peraturan tempatan: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domain perisian hasad",
+    "message": "Perlindungan perisian hasad, keselamatan",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Buka",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Cipta laporan baru",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Cari laporan yang serupa",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Berikut adalah maklumat teknikal yang mungkin berguna ketika sukarelawan berusaha membantu anda menyelesaikan masalah.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Penting:</b>Maklumat yang bersifat sensitif dan peribadi dihitamkan secara lalai. Maklumat yang dihitamkan berkemungkinan sukar untuk menyelesaikan masalah. ",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Laporkan masalah berkaitan penapis",
@@ -1012,20 +1008,12 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Menghala to perisian merbahaya atau laman memancing data",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
     "message": "Labelkan laman web itu sebagai \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Hitamkan",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Nyahhitamkan",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Dasar privasi",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Ralat rangkaian: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Tambahkan URL berikut ke senarai penapis tersuai anda?\n\nTajuk: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Langgan",

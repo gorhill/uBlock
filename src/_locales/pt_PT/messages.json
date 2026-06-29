@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Regras locais: esta coluna é para as regras que se aplicam apenas a este site.\nAs regras locais sobrepõem-se às regras globais.",
+    "message": "Regras locais: esta coluna é para as regras que se aplicam apenas a este site.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Abrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Criar novo relatório no GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Encontrar relatórios semelhantes no GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudar-lhe a resolver um problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> a informação potencialmente privada ou sensível é redigida por predefinição. A informação redigida pode tornar mais difícil a resolução de um problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Relatar um problema de filtro",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Rotular a página web como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Não seguro para o trabalho”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redigir",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Não redigir",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Política de privacidade",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Erro de rede: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Adicionar o seguinte URL à sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subscrever",

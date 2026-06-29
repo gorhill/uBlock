@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локални правила: колона с правила, приложими само към текущият сайт. Локалните правила заместват глобалните.",
+    "message": "Локални правила: колона с правила, приложими само към текущият сайт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Отваряне",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Нов доклад",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Намиране на подобни доклади",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "По-долу е представена техническа информация, която може да е полезна, когато доброволците се опитват да ви помогнат да разрешите даден проблем.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Потенциално лична или чувствителна информация се редактира по подразбиране. Редактираната информация може да затрудни решаването на даден проблем.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Докладване на проблем с филтъра",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Маркиране на уеб страницата като &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;не е безопасна за работа&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Редактиран вид",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Нередактиран вид",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Политика за поверителност",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Грешка в мрежата: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Добавяне на следния адрес към списъците с потребителски филтри?\n\nИме: \"{{title}}\"\nURL адрес: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Абониране",

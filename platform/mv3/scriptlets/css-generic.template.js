@@ -25,62 +25,16 @@
 // Isolate from global scope
 (function uBOL_cssGenericImport() {
 
-/******************************************************************************/
+const lowlyGeneric = new Map(self.$lowlyGeneric$);
+const highlyGeneric = self.$highlyGeneric$;
+const exceptions = self.$exceptions$;
+const hostnames = self.$hostnames$;
+const hasEntities = self.$hasEntities$;
 
-const genericSelectorMap = self.$genericSelectorMap$;
-const genericExceptionSieve = self.$genericExceptionSieve$;
-const genericExceptionMap = self.$genericExceptionMap$;
-
-if ( genericSelectorMap ) {
-    const map = self.genericSelectorMap =
-        self.genericSelectorMap || new Map();
-    if ( map.size !== 0 ) {
-        for ( const entry of genericSelectorMap ) {
-            const before = map.get(entry[0]);
-            if ( before === undefined ) {
-                map.set(entry[0], entry[1]);
-            } else {
-                map.set(entry[0], `${before},\n${entry[1]}`);
-            }
-        }
-    } else {
-        self.genericSelectorMap = new Map(genericSelectorMap);
-    }
-    genericSelectorMap.length = 0;
-}
-
-if ( genericExceptionSieve ) {
-    const hashes = self.genericExceptionSieve =
-        self.genericExceptionSieve || new Set();
-    if ( hashes.size !== 0 ) {
-        for ( const hash of genericExceptionSieve ) {
-            hashes.add(hash);
-        }
-    } else {
-        self.genericExceptionSieve = new Set(genericExceptionSieve);
-    }
-    genericExceptionSieve.length = 0;
-}
-
-if ( genericExceptionMap ) {
-    const map = self.genericExceptionMap =
-        self.genericExceptionMap || new Map();
-    if ( map.size !== 0 ) {
-        for ( const entry of genericExceptionMap ) {
-            const before = map.get(entry[0]);
-            if ( before === undefined ) {
-                map.set(entry[0], entry[1]);
-            } else {
-                map.set(entry[0], `${before}\n${entry[1]}`);
-            }
-        }
-    } else {
-        self.genericExceptionMap = new Map(genericExceptionMap);
-    }
-    genericExceptionMap.length = 0;
-}
-
-/******************************************************************************/
+self.genericSelectorMaps = self.genericSelectorMaps ?? [];
+self.genericSelectorMaps.push(lowlyGeneric);
+self.genericDetails = self.genericDetails ?? [];
+self.genericDetails.push({ highlyGeneric, exceptions, hostnames, hasEntities });
 
 })();
 

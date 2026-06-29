@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Տեղական կանոններ. այս սյունակը նախատեսված է միայն այս կայքի վրա տարածվող կանոնների համար։\nՏեղական կանոնները վերասահմանում են համընդհանուր կանոնները։",
+    "message": "Տեղական կանոններ. այս սյունակը նախատեսված է միայն այս կայքի վրա տարածվող կանոնների համար։",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Վնասակար տիրույթներ",
+    "message": "Վնասակար ծրագրերից պաշտպանություն, անվտանգություն",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Բացել",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Նոր զեկույց ստեղծել",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Գտնել նման զեկույցներ",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Ցածում տեխնիկական տեղեկություն է, որը կարող է օգտակար լինել, երբ կամավորները փորձում են օգնել Ձեզ լուծել խնդիրը։",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Կարևոր է.</b> Հնարավոր անձնական կամ զգայուն տեղեկությունները խմբագրվում է լռելյայնորեն։ Վերամշակված տեղեկություները կարող է ավելի բարդացնել խնդրի լուծումը:",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Հաղորդել զտիչի խնդրի մասին",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Նշել վեբ էջը որպես «NSFW» (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">«Աշխատանքի համար անվտանգ չէ»</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Խմբագրել",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Չեղարկել խմբագրումը",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Գաղտնիության քաղաքականություն",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Ցանցի սխալ՝ {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Ավելացնե՞լ հետևյալ հասցեն զտիչների օգտվողային ցանկին։\n\nՎերնագիր՝ «{{title}}»\nURL՝ {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Բաժանորդագրվել",

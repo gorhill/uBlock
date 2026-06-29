@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Остани",
+    "message": "Остани тука",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локални правила: оваа колона е за правила што се однесуваат само на моменталниот сајт.\nЛокални правила надминуваат глобални правила.",
+    "message": "Локални правила: оваа колона е за правила што се однесуваат само на моменталниот сајт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Домени на малвер",
+    "message": "Заштита од малициозен софтвер, безбедност",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Отвори",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Создај нова пријава",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Најди слични пријави",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Подолу е техничка информација која може да биде корисна кога волонтерите се обидуваат да ви помогнат да решите проблем.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Важно:</b> Потенцијално приватни или осетливи информации се цензурирани по подразбирање. Цензурираните информации можат да го отежнат решавањето на проблемот.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Пријави проблем со филтерот",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Означи ја веб-страницата како “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Не е безбедно за работа”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redact",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Unredact",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Политика на приватност",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Мрежна грешка: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Дали да ја додадете следната URL адреса на вашите прилагодени листи со филтри?\n\nНаслов: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Пријави се",

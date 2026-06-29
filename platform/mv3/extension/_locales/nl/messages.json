@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Een efficiënte inhoudsblokkeerder. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
+    "message": "Een efficiënte inhoudsblokker. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -17,6 +17,10 @@
   },
   "settingsPageName": {
     "message": "Instellingen",
+    "description": "appears as tab name in dashboard"
+  },
+  "customFiltersPageName": {
+    "message": "Aangepaste filters",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Gebieden, talen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Geïmporteerde lijsten",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Filterlijst toevoegen…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Plak hier de URL van de toe te voegen filterlijst.",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Importeren / Exporteren",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Plak hier specifieke cosmetische of scriptletfilters om toe te voegen.",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Om cosmetische of scriptletfilters vanuit geïmporteerde lijsten toe te passen, moet u uBO Lite toestemming geven voor het uitvoeren van gebruikersscripts. Open de extensiespagina van uw browser (<code>chrome://extensions</code> in Chrome of <code>about:addons</code> in Firefox), open de details van <b>uBO Lite</b>, en schakel <b>Gebruikersscripts toestaan</b> (ook wel aangeduid als ‘Niet-geverifieerde scripts van derden’) in.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Wijzigingenlogboek",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Nieuwe melding op GitHub maken",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Standaard filtermodus",
@@ -216,7 +244,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Lijst van hostnamen waarvoor geen filtering plaatsvindt.",
+    "message": "Lijst van websites waarvoor geen filtering plaatsvindt.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -243,6 +271,18 @@
     "message": "Navigatie naar mogelijk ongewenste websites wordt geblokkeerd, en u krijgt de mogelijkheid om door te gaan.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Pop-upblokkering inschakelen",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Wanneer actief, sluiten overeenkomende filters automatisch ongewenste browsertabbladen die door websites zijn aangemaakt.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandbox voor het aanmaken van filters",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Ontwikkelaarsmodus",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Schakelt toegang tot voor technische gebruikers geschikte functies in.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Back-up",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Maak een back-up van uw aangepaste instellingen naar een bestand, of zet uw aangepaste instellingen terug vanuit een bestand.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Terugzetten overschrijft al uw huidige aangepaste instellingen.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Lijsten zoeken",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Pagina geblokkeerd",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite heeft het laden van de volgende pagina voorkomen:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Teruggaan",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Dit venster sluiten",
@@ -339,6 +391,10 @@
     "message": "Ongedaan maken",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Toevoegen",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importeren en toevoegen…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Exporteren…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Back-up maken…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Terugzetten…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Standaardinstellingen terugzetten…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Al uw aangepaste instellingen zullen worden verwijderd. Wilt u de standaardinstellingen echt terugzetten?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Voeg geen inhoud van niet-vertrouwde bronnen toe.",

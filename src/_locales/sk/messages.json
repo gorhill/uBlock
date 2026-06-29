@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia len pre aktuálny web.\nLokálne pravidlá prepisujú globálne pravidlá.",
+    "message": "Lokálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia len pre aktuálny web.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domény malvéru",
+    "message": "Ochrana pred škodlivým softvérom, bezpečnosť",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Otvoriť",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Vytvoriť nové hlásenie",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Vyhľadať podobné hlásenia",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Nasledujú technické informácie, ktoré môžu byť užitočné, keď sa vám dobrovoľníci pokúšajú pomôcť vyriešiť problém.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Dôležité:</b> Potenciálne súkromné alebo citlivé informácie sú štandardne upravované. Upravené informácie môžu sťažiť riešenie problému.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Nahlásiť problém s filtrom",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Označiť webstránku ako &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">Nie je bezpečné pre prácu&rdquo;)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Upraviť",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Neupravovať",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Zásady ochrany osobných údajov",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Chyba siete: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Pridať nasledujúcu URL do zoznamu vlastných filtrov?\n\nNázov: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Pridať",

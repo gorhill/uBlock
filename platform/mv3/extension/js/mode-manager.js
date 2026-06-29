@@ -21,7 +21,6 @@
 
 import {
     broadcastMessage,
-    hasBroadHostPermissions,
     hostnamesFromMatches,
     isDescendantHostnameOfIter,
     toBroaderHostname,
@@ -29,7 +28,7 @@ import {
 
 import {
     browser,
-    localRead, localWrite,
+    localRead, localRemove, localWrite,
     sessionRead, sessionWrite,
 } from './ext.js';
 
@@ -40,6 +39,8 @@ import {
 
 import { adminReadEx } from './admin.js';
 import { filteringModesToDNR } from './ruleset-manager.js';
+import { hasBroadHostPermissions } from './ext-utils.js';
+
 
 /******************************************************************************/
 
@@ -52,6 +53,13 @@ export const     MODE_NONE = 0;
 export const    MODE_BASIC = 1;
 export const  MODE_OPTIMAL = 2;
 export const MODE_COMPLETE = 3;
+
+export const defaultFilteringModes = {
+    none: [],
+    basic: [],
+    optimal: [ 'all-urls' ],
+    complete: [],
+};
 
 /******************************************************************************/
 
@@ -225,7 +233,7 @@ export async function readFilteringModeDetails(bypassCache = false) {
         }
     }
     let [
-        userModes = { optimal: [ 'all-urls' ] },
+        userModes = structuredClone(defaultFilteringModes),
         adminDefaultFiltering,
         adminNoFiltering,
     ] = await Promise.all([
@@ -330,16 +338,33 @@ export function setDefaultFilteringMode(afterLevel) {
 
 /******************************************************************************/
 
+export async function persistHostPermissions(iter) {
+    if ( iter === undefined ) {
+        const permissions = await browser.permissions.getAll();
+        iter = hostnamesFromMatches(permissions.origins) || [];
+    }
+    const hostnames = Array.from(iter);
+    return hostnames.length !== 0
+        ? localWrite('permissions.hostnames', hostnames)
+        : localRemove('permissions.hostnames');
+}
+
+/******************************************************************************/
+
 export async function syncWithBrowserPermissions() {
     const [
-        permissions,
+        beforePermissions,
+        afterPermissions,
         beforeMode,
     ] = await Promise.all([
+        localRead('permissions.hostnames'),
         browser.permissions.getAll(),
         getDefaultFilteringMode(),
     ]);
-    const allowedHostnames = new Set(hostnamesFromMatches(permissions.origins || []));
-    const hasBroadHostPermissions = allowedHostnames.has('all-urls');
+    const beforeAllowedHostnames = new Set(beforePermissions);
+    const afterAllowedHostnames = new Set(hostnamesFromMatches(afterPermissions.origins || []));
+    await persistHostPermissions(afterAllowedHostnames);
+    const hasBroadHostPermissions = afterAllowedHostnames.has('all-urls');
     const broadHostPermissionsToggled =
         hasBroadHostPermissions !== rulesetConfig.hasBroadHostPermissions;
     let modified = false;
@@ -357,18 +382,19 @@ export async function syncWithBrowserPermissions() {
     const afterMode = await getDefaultFilteringMode();
     if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
     const filteringModes = await getFilteringModeDetails();
-    if ( allowedHostnames.has('all-urls') === false ) {
-        const { optimal, complete } = filteringModes;
-        for ( const hn of optimal ) {
-            if ( allowedHostnames.has(hn) ) { continue; }
-            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
-            optimal.delete(hn);
+    if ( afterAllowedHostnames.has('all-urls') === false ) {
+        const { none, basic, optimal, complete } = filteringModes;
+        for ( const hn of new Set([ ...optimal, ...complete ]) ) {
+            if ( afterAllowedHostnames.has(hn) ) { continue; }
+            if ( isDescendantHostnameOfIter(hn, afterAllowedHostnames) ) { continue; }
+            applyFilteringMode(filteringModes, hn, afterMode);
             modified = true;
         }
-        for ( const hn of complete ) {
-            if ( allowedHostnames.has(hn) ) { continue; }
-            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
-            complete.delete(hn);
+        for ( const hn of afterAllowedHostnames ) {
+            if ( beforeAllowedHostnames.has(hn) ) { continue; }
+            if ( optimal.has(hn) || complete.has(hn) ) { continue; }
+            if ( basic.has(hn) || none.has(hn) ) { continue; }
+            applyFilteringMode(filteringModes, hn, MODE_OPTIMAL);
             modified = true;
         }
         if ( modified ) {

@@ -54,4 +54,3 @@ jobs:
           files: |
             dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
-            dist/build/uBlock0_${{ env.VERSION }}.thunderbird.xpi

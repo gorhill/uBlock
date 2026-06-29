@@ -1,4 +1,12 @@
- /* External CSS values override */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+@keyframes busy {
+    to { opacity: 90%; }
+}
+
+/* External CSS values override */
 .fa-icon.fa-icon-badged > .fa-icon-badge {
     bottom: auto;
     top: -20%;
@@ -30,13 +38,39 @@ a {
     outline: 0;
 }
 
-#main {
+main {
     align-self: flex-start;
     display: flex;
     flex-direction: column;
 }
-:root.portrait #main {
+body.busy main {
+    pointer-events: none;
+}
+:root.portrait main {
     align-self: inherit;
+}
+aside {
+    background-color: var(--surface-1);
+    bottom: 0;
+    display: none;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
+aside .fa-icon {
+    animation: spin 1s steps(8) infinite;
+    fill: var(--surface-3);
+    font-size: 4em;
+    margin: 2em;
+}
+body.busy aside {
+    animation: busy 0s step-start 1s;
+    animation-fill-mode: forwards;
+    display: block;
 }
 hr {
     margin: 0.5em 0;
@@ -185,7 +219,7 @@ body.needReload #refresh {
     overflow-y: auto;
     width: 100%;
 }
-:root.portrait #main {
+:root.portrait main {
     max-width: unset;
 }
 /* mouse-driven devices */

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "本地规则：此列的规则仅作用于当前网站。\n本地规则优先于全局规则。",
+    "message": "本地规则：此列的规则仅作用于当前网站。",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "一行一条网址。无效网址将被忽略。",
+    "message": "每行一个 URL。无效的 URL 将被忽略。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -744,7 +744,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "详细资料",
+    "message": "详情",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "打开",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "创建新报告",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "查找类似报告",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "以下生成的技术报告或有助于他人帮你解决问题。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>注意：</b>可能涉及隐私的内容已经过删改，需手动取消。删改部分有可能包括解决问题的关键信息。",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "报告过滤规则的问题",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "将该网页标记为 “NSFW”（<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“工作场所不宜”</a>）",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "自动删改",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "取消删改",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "隐私政策",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "网络错误：{{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "添加下列网址到您的自定义规则列表吗？\n\n标题： “{{title}}”\n网址： {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "订阅",

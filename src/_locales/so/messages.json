@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Joog",
+    "message": "Halkan joog",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "JavaScript",
+    "message": "Local rules: this column is for rules which apply to the current site only.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "Ilaalinta Malware-ka, amniga",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "{{Input}} Waqtiga",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Create new report on GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Find similar reports on GitHub",
@@ -955,10 +955,6 @@
     "message": "Jawaabaha su'aalaha iyo noocyada kale ee taageerada caawimada waxaa lagu bixiyaa subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
-  "supportS5P2": {
-    "message": "Arrimaha shaandhaynta/mareegaha ayaa jabay",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
-  },
   "supportS6H": {
     "message": "Report a filter issue",
     "description": "Header of 'Report a filter issue' section in Support pane"
@@ -972,7 +968,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Verify that the issue still exists after reloading the problematic web page.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Ka warbixi arrimaha shaandhaynta shabakadaha gaarka ah <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> soo saara raadraacayaasha</span >. Wuxuu u baahan yahay akoon GitHub",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "<b>Muhiim:</b> Iska ilaali isticmaalka xannibaadaha kale ee la midka ah oo ay la socdaan uBlock Origin, sababtoo ah tani waxay sababi kartaa arrimo shaandhaynta shabakadaha gaarka ah.",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "<b>Talooyin:</b> Hubi in liisaska shaandhayntaadu ay cusub yihiin. <span data-url=\"logger-ui.html#_\">Logger</span> waa aaladda koowaad ee lagu baadho arrimaha shaandhada la xiriira.",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "CDN si aan kala sooc lahayn loo soo doortay ayaa la isticmaalaa marka liiska shaandhada loo baahan yahay in la cusboonaysiiyo",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Ku soo celi faylka",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "my-ublock-backup_{{datetime}}.txt",

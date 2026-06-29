@@ -21,8 +21,12 @@
 */
 
 import {
+    collateFetchArgumentsFn,
+    lookupElementsFn,
     matchObjectPropertiesFn,
     parsePropertiesToMatchFn,
+    sleepFn,
+    trapPropertyFn,
 } from './utils.js';
 
 import { JSONPath } from './shared.js';
@@ -193,6 +197,7 @@ function editInboundObjectFn(
     const argPos = parseInt(argPosRaw, 10);
     if ( isNaN(argPos) ) { return; }
     const getArgPos = args => {
+        if ( Array.isArray(args) === false ) { return; }
         if ( argPos >= 0 ) {
             if ( args.length <= argPos ) { return; }
             return argPos;
@@ -216,11 +221,11 @@ function editInboundObjectFn(
         return objAfter;
     };
     proxyApplyFn(propChain, function(context) {
-        const i = getArgPos(context.args);
+        const i = getArgPos(context.callArgs);
         if ( i !== undefined ) {
-            const obj = editObj(context.args[i]);
+            const obj = editObj(context.callArgs[i]);
             if ( obj ) {
-                context.args[i] = obj;
+                context.callArgs[i] = obj;
             }
         }
         return context.reflect();
@@ -293,6 +298,434 @@ registerScriptlet(trustedEditInboundObject, {
     requiresTrust: true,
     dependencies: [
         editInboundObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editThisObjectFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+    order = ''
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-this-object`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    proxyApplyFn(propChain, function(context) {
+        const { thisArg } = context;
+        let r;
+        if ( order === 'after' ) {
+            r = context.reflect();
+        }
+        editObj(thisArg);
+        if ( order !== 'after' ) {
+            r = context.reflect();
+        }
+        return r;
+    });
+}
+registerScriptlet(editThisObjectFn, {
+    name: 'edit-this-object.fn',
+    dependencies: [
+        JSONPath,
+        proxyApplyFn,
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-this-object.js
+ * 
+ * @description
+ * Prune properties from an object through one of the object's own method.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param order
+ * If set to `after`, the `this` object will be edited after the trapped method
+ * is called. By default the `this` object is edited before calling the trapped
+ * method.
+ * 
+ * */
+
+function editThisObject(...args) {
+    editThisObjectFn(false, ...args);
+}
+registerScriptlet(editThisObject, {
+    name: 'edit-this-object.js',
+    dependencies: [
+        editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-this-object.js
+ * 
+ * @description
+ * Edit properties of an object through one of the object's own method.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param order
+ * If set to `after`, the `this` object will be edited after the trapped method
+ * is called. By default the `this` object is edited before calling the trapped
+ * method.
+ * 
+ * */
+
+function trustedEditThisObject(...args) {
+    editThisObjectFn(true, ...args);
+}
+registerScriptlet(trustedEditThisObject, {
+    name: 'trusted-edit-this-object.js',
+    requiresTrust: true,
+    dependencies: [
+        editThisObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editObjectOnGetterFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-object-on-getter`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    let currentValue = trapPropertyFn(propChain, {
+        get: function() {
+            if ( currentValue instanceof Object ) {
+                editObj(currentValue);
+            }
+            return currentValue;
+        },
+        set: function(a) {
+            currentValue = a;
+        }
+    });
+}
+registerScriptlet(editObjectOnGetterFn, {
+    name: 'edit-object-on-getter.fn',
+    dependencies: [
+        JSONPath,
+        safeSelf,
+        trapPropertyFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-object-on-getter.js
+ * 
+ * @description
+ * Prune properties from an object on read access.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function editObjectOnGetter(...args) {
+    editObjectOnGetterFn(false, ...args);
+}
+registerScriptlet(editObjectOnGetter, {
+    name: 'edit-object-on-getter.js',
+    dependencies: [
+        editObjectOnGetterFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-object-on-getter.js
+ * 
+ * @description
+ * Edit properties of an object on read access.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditObjectOnGetter(...args) {
+    editObjectOnGetterFn(true, ...args);
+}
+registerScriptlet(trustedEditObjectOnGetter, {
+    name: 'trusted-edit-object-on-getter.js',
+    requiresTrust: true,
+    dependencies: [
+        editObjectOnGetterFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editObjectOnSetterFn(
+    trusted = false,
+    propChain = '',
+    jsonq = '',
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-object-on-setter`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const editObj = objBefore => {
+        const objAfter = jsonp.apply(objBefore);
+        if ( objAfter === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel <= 1 ) { return; }
+        safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+    };
+    let currentValue = trapPropertyFn(propChain, {
+        get: function() {
+            return currentValue;
+        },
+        set: function(a) {
+            currentValue = a;
+            if ( currentValue instanceof Object ) {
+                editObj(currentValue);
+            }
+        }
+    });
+    if ( currentValue instanceof Object ) {
+        editObj(currentValue);
+    }
+}
+registerScriptlet(editObjectOnSetterFn, {
+    name: 'edit-object-on-setter.fn',
+    dependencies: [
+        JSONPath,
+        safeSelf,
+        trapPropertyFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-object-on-setter.js
+ * 
+ * @description
+ * Prune properties from an object on write access.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function editObjectOnSetter(...args) {
+    editObjectOnSetterFn(false, ...args);
+}
+registerScriptlet(editObjectOnSetter, {
+    name: 'edit-object-on-setter.js',
+    dependencies: [
+        editObjectOnSetterFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-object-on-setter.js
+ * 
+ * @description
+ * Edit properties of an object on write access.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the property to trap.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditObjectOnSetter(...args) {
+    editObjectOnSetterFn(true, ...args);
+}
+registerScriptlet(trustedEditObjectOnSetter, {
+    name: 'trusted-edit-object-on-setter.js',
+    requiresTrust: true,
+    dependencies: [
+        editObjectOnSetterFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+async function editElementObjectFn(
+    trusted = false,
+    selector = '',
+    jsonq = '',
+    timeout = ''
+) {
+    if ( selector === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-element-object`,
+        selector, jsonq, timeout
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const process = elems => {
+        for ( const elem of elems ) {
+            const r = jsonp.apply(elem);
+            if ( r === undefined ) { continue; }
+            safe.uboLog(logPrefix, 'Edited');
+        }
+    };
+    const until = timeout !== '' ? Date.now() + parseInt(timeout, 10) : 0;
+    do {
+        const r = lookupElementsFn(selector, until);
+        if ( Array.isArray(r) ) {
+            process(r);
+        } else if ( r instanceof Promise ) {
+            const elems = await r;
+            process(elems);
+        }
+        await sleepFn();
+    } while ( Date.now() < until );
+}
+registerScriptlet(editElementObjectFn, {
+    name: 'edit-element-object.fn',
+    dependencies: [
+        JSONPath,
+        lookupElementsFn,
+        safeSelf,
+        sleepFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-element-object.js
+ * 
+ * @description
+ * Prune properties of one or more elements matching a specific selector.
+ * Properties can only be removed.
+ * 
+ * @param selector
+ * The selector used to locate the elements on which the JSONPath query will
+ * be applied.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param timeout
+ * The maximum time (in milliseconds) to wait for matching elements before
+ * stopping. Defaults to 0, which executes a single lookup attempt without
+ * waiting.
+ * 
+ * */
+
+function editElementObject(...args) {
+    editElementObjectFn(false, ...args);
+}
+registerScriptlet(editElementObject, {
+    name: 'edit-element-object.js',
+    dependencies: [
+        editElementObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-element-this-object.js
+ * 
+ * @description
+ * Edit properties of one or more elements matching a specific selector.
+ * Properties can be assigned new values.
+ * 
+ * @param selector
+ * The selector used to locate the elements on which the JSONPath query will
+ * be applied.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * @param timeout
+ * The maximum time (in milliseconds) to wait for matching elements before
+ * stopping. Defaults to 0, which executes a single lookup attempt without
+ * waiting.
+ * 
+ * */
+
+function trustedEditElementObject(...args) {
+    editElementObjectFn(true, ...args);
+}
+registerScriptlet(trustedEditElementObject, {
+    name: 'trusted-edit-element-object.js',
+    requiresTrust: true,
+    dependencies: [
+        editElementObjectFn,
     ],
 });
 
@@ -568,18 +1001,8 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
         const args = context.callArgs;
         const fetchPromise = context.reflect();
         if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(...args);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return fetchPromise; }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -617,6 +1040,7 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
 registerScriptlet(jsonEditFetchResponseFn, {
     name: 'json-edit-fetch-response.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
@@ -715,17 +1139,8 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
             return context.reflect();
         }
         if ( propNeedles.size !== 0 ) {
-            const objs = [
-                resource instanceof Object ? resource : { url: `${resource}` }
-            ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(resource, options);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return context.reflect(); }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -744,6 +1159,7 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
 registerScriptlet(jsonEditFetchRequestFn, {
     name: 'json-edit-fetch-request.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
@@ -985,18 +1401,8 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '') {
         const args = context.callArgs;
         const fetchPromise = context.reflect();
         if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            const matched = matchObjectPropertiesFn(propNeedles, ...objs);
+            const props = collateFetchArgumentsFn(...args);
+            const matched = matchObjectPropertiesFn(propNeedles, props);
             if ( matched === undefined ) { return fetchPromise; }
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -1038,6 +1444,7 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '') {
 registerScriptlet(jsonlEditFetchResponseFn, {
     name: 'jsonl-edit-fetch-response.fn',
     dependencies: [
+        collateFetchArgumentsFn,
         JSONPath,
         jsonlEditFn,
         matchObjectPropertiesFn,

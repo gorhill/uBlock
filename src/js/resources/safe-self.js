@@ -47,6 +47,7 @@ export function safeSelf() {
         'Object_fromEntries': Object.fromEntries.bind(Object),
         'Object_getOwnPropertyDescriptor': Object.getOwnPropertyDescriptor.bind(Object),
         'Object_hasOwn': Object.hasOwn.bind(Object),
+        'Object_toString': Object.prototype.toString,
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
@@ -146,18 +147,6 @@ export function safeSelf() {
             }, []);
             return this.Object_fromEntries(entries);
         },
-        onIdle(fn, options) {
-            if ( self.requestIdleCallback ) {
-                return self.requestIdleCallback(fn, options);
-            }
-            return self.requestAnimationFrame(fn);
-        },
-        offIdle(id) {
-            if ( self.requestIdleCallback ) {
-                return self.cancelIdleCallback(id);
-            }
-            return self.cancelAnimationFrame(id);
-        }
     };
     scriptletGlobals.safeSelf = safe;
     if ( scriptletGlobals.bcSecret === undefined ) { return safe; }

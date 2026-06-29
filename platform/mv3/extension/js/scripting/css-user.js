@@ -30,16 +30,32 @@ const details = await chrome.runtime.sendMessage({
 }).catch(( ) => {
 });
 
-if ( details?.proceduralSelectors?.length ) {
-    if ( self.ProceduralFiltererAPI ) {
-        self.customProceduralFiltererAPI = new self.ProceduralFiltererAPI();
-        self.customProceduralFiltererAPI.addSelectors(
-            details.proceduralSelectors.map(a => JSON.parse(a))
-        );
-    }
+self.customFilters = details;
+
+if ( Boolean(details?.proceduralSelectors?.length) === false ) { return; }
+
+if ( self.ProceduralFiltererAPI === undefined ) {
+    self.ProceduralFiltererAPI = chrome.runtime.sendMessage({
+        what: 'injectCSSProceduralAPI'
+    }).catch(( ) => {
+    });
 }
 
-self.customFilters = details;
+await self.ProceduralFiltererAPI;
+
+self.customProceduralFiltererAPI = new self.ProceduralFiltererAPI();
+
+const selectors = details.proceduralSelectors.map(a => JSON.parse(a));
+
+const declaratives = selectors.filter(a => a.cssable);
+if ( declaratives.length !== 0 ) {
+    self.customProceduralFiltererAPI.addDeclaratives(declaratives);
+}
+
+const procedurals = selectors.filter(a => !a.cssable);
+if ( procedurals.length !== 0 ) {
+    self.customProceduralFiltererAPI.addProcedurals(procedurals);
+}
 
 /******************************************************************************/
 

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Bezatļauju satura aizturētājs. Aiztur reklāmas, izsekotājus, kriptoracējus un daudz ko citu uzreiz pēc uzstādīšanas.",
+    "message": "Iedarbīgs satura aizturētājs. Aiztur reklāmas, izsekotājus, kriptoracējus un vēl uzreiz pēc uzstādīšanas.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -17,6 +17,10 @@
   },
   "settingsPageName": {
     "message": "Iestatījumi",
+    "description": "appears as tab name in dashboard"
+  },
+  "customFiltersPageName": {
+    "message": "Pielāgoti atsijātāji",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Ļaunatūras domēni",
+    "message": "Aizsardzība pret ļaunprātīgām (inficētas vai satur vīrusus) vietnēm, drošība",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Apgabali, valodas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Ievietot/izgūt",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Šeit ir ielīmējami noteikti kosmētiskie aizturētāji, kurus pievienot",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Izmaiņu žurnāls",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Izveidot jaunu ziņojumu",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Noklusējuma aizturēšanas veids",
@@ -243,6 +271,18 @@
     "message": "Iespējami nevēlamu vietņu apmeklēšana tiks aizturēta, un tiks piedāvāta iespēja turpināt.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Iesspējot uzlecošos logu aizturēšanu",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Kad ieslēgts, atbilstošie aizturētāji automātiski aizvērs tīmekļvietņu izveidotas nevēlamas pārlūka cilnes.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Aizturētāju izveidošanas smilškaste",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Izstrādātāja režīms",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Iespējot piekļuvi iespējām, kas piemērotas tehniskiem lietotājiem.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Rezerves kopija",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Pielāgoto iestatījumu rezerves kopēšana datnē vai to atjaunošana no datnes.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Atjaunošana pārrakstīs visus pašreizējos pielāgotos iestatījumus.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Atrast sarakstus",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Lapa aizturēta",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite novērsa šīs lapas ielādēšanu:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Doties atpakaļ",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Aizvērt šo logu",
@@ -339,6 +391,10 @@
     "message": "Atjaunot",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Pievienot",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Ievietot un pievienot…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Izgūt…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Veikt rezerves kopēšanu…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Atjaunot…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Atiestatīt uz noklusējuma iestatījumiem…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Visi pielāgotie iestatījumi tiks noņemti. Vai tiešām atiestatīt uz noklusējuma iestatījumiem?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Nevajag pievienot saturu no neuzticamiem avotiem.",

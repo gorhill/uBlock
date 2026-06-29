@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Até que enfim, um bloqueador eficiente. Com baixo uso da CPU e da memória.",
+    "message": "Finalmente, um bloqueador eficiente. Com baixo uso de CPU e memória.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Ficar",
+    "message": "Ficar aqui",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Abrir",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Criar um novo relatório no GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Achar relatórios similares no GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Abaixo estão informações técnicas que poderiam ser úteis quando voluntários estão tentando ajudar você a resolver um problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> Informações potencialmente privadas ou sensíveis são eliminadas por padrão. As informações eliminadas podem dificultar a resolução de um problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Reportar um problema com o filtro",
@@ -1019,14 +1015,6 @@
     "message": "Rotular a página da web como \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Não é Seguro no Trabalho\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
-  "supportRedact": {
-    "message": "Redigir",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Não redigir",
-    "description": "Text for 'Unredact' button"
-  },
   "aboutPrivacyPolicy": {
     "message": "Política de privacidade",
     "description": "Link to privacy policy on GitHub (English)"
@@ -1080,7 +1068,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Redefinir pras configurações padrão…",
+    "message": "Reconfigurar tudo para o padrão…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1092,16 +1080,12 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nRedefinir o uBlock₀ para as configurações de fábrica?",
+    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nReconfigurar o uBlock₀ para as configurações de fábrica?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
     "message": "Erro da rede: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Adicionar a seguinte URL a sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Subscrever",

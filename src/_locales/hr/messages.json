@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokalna pravila: ovaj stupac je za pravila koja vrijede samo za trenutnu stranicu.\nLokalna pravila nadjačavaju globalna pravila.",
+    "message": "Lokalna pravila: ovaj stupac je za pravila koja vrijede samo za trenutnu stranicu.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Otvori",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Napravi novu prijavu na GitHub-u",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Nađi slične prijave na GitHub-u",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "U nastavku se nalaze tehničke informacije koje bi mogle biti korisne kada vam volonteri pokušavaju pomoći u rješavanju problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Važno:</b> Potencijalno privatni ili osjetljivi podaci redigirani su prema zadanim postavkama. Redaktirane informacije mogu otežati rješavanje problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Prijavi problem sa filterom",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Označite web stranicu kao “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“nije sigurno za pregledavanje na poslu“</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Redigiraj",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Vratiti na prijašnje",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Pravila privatnosti",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Mrežna greška {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Dodajte slijedeći izvor u vaš izbor filter lista?\n\nNaslov: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Prijava",

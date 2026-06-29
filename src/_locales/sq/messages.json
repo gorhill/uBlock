@@ -60,7 +60,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Ilustruesi i aseteve",
+    "message": "uBlock₀ — Treguesi i aseteve",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin. \nKëto kanë përparësi mbi rregullat globale.",
+    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domenet e rrezikshme, siguria",
+    "message": "Domenet e dëmshme, siguria",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Hap",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Krijoj raport të ri në GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Gjej raporte të ngjashme në GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Informacioni teknik i mëposhtëm u shërben personave të cilët përpiqen të zgjidhin problemin që keni.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Kujdes:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e problemit.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Raportoni problemet me filtrat",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Etiketoj faqen si “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“E papërshtatshme për punë”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Censuroj",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Nuk censuroj",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Politika e privatësisë",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Problem me rrjetin kompjuterik: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Do e shtoni adresën në listën e personalizuar të filtrave?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Abonohem",
@@ -1196,11 +1180,11 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Arsye:",
+    "message": "Arsyeja:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Me qëllim të keq",
+    "message": "Dëmtuese",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
@@ -1208,7 +1192,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "I papërshtatshëm",
+    "message": "Joserioze",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

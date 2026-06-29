@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Végre egy hatékony reklám- és követésblokkoló böngészőkhöz, amely kíméletes a processzorral és a memóriával.",
+    "message": "Végre egy hatékony blokkoló, amely kíméletes a processzorral és a memóriával.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Kattints a nagyméretű médiaelemek blokkolásához ezen a webhelyen",
+    "message": "Kattintson a nagy méretű médiaelemek blokkolásához ezen a webhelyen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Nagy média elemek",
+    "message": "Nagy médiaelemek",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Média elemek blokkolása, amelyek nagyobbak, mint {{input:number}} kB",
+    "message": "{{input}} kB-nál nagyobb médiaelemek blokkolása",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Megnyitás",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Hiba bejelentése",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Hasonló hibák keresése",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Az alábbi műszaki információk segíthetnek önkénteseinknek megoldani a problémáját.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Fontos:</b> Az esetleges személyes vagy érzékeny adatok alapértelmezés szerint eltávolításra kerülnek. A hiányzó információk megnehezíthetik a probléma megoldását.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Szűrőhibák bejelentése",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "A weboldal megjelölése felnőtt tartalomként",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Elrejtés",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Megjelenítés",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Adatvédelmi irányelvek",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Hálózati hiba: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Hozzáadja a következő webcímet a saját szűrőlistáihoz?\n\nNév: „{{title}}”\nWebcím: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Feliratkozás",

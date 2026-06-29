@@ -19,13 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import Regex from '../lib/regexanalyzer/regex.js';
-
 /******************************************************************************/
 
 // Depends on:
 // https://github.com/foo123/RegexAnalyzer
-const RegexAnalyzer = Regex && Regex.Analyzer || null;
+const RegexAnalyzer = globalThis.Regex && globalThis.Regex.Analyzer || null;
 
 export function isRE2(reStr) {
     if ( RegexAnalyzer === null ) { return true; }
@@ -38,6 +36,16 @@ export function isRE2(reStr) {
 
 export function tokenizableStrFromRegex(reStr) {
     return _literalStrFromRegex(reStr);
+}
+
+export function literalStrFromRegex(reStr) {
+    let literals = tokenizableStrFromRegex(reStr)
+        .split(/[\x00\x01]+/)
+        .sort((a, b) => b.length - a.length);
+    if ( literals.length > 1 ) {
+        literals = literals.filter(a => (/^(\.?com|\.?net|www\.?)$/).test(a) === false);
+    }
+    return literals[0] || '';
 }
 
 /******************************************************************************/

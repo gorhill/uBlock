@@ -55,6 +55,9 @@ export default new Map([
     [ 'ampproject_v0.js', {
         alias: 'ampproject.org/v0.js',
     } ],  
+    [ 'adthrive_abd.js', {
+        data: 'text',
+    } ],
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
     } ],
@@ -111,6 +114,9 @@ export default new Map([
         data: 'text',
     } ],
     [ 'hd-main.js', {
+    } ],
+    [ 'nitropay_ads.js', {
+        data: 'text',
     } ],
     [ 'nobab.js', {
         alias: [ 'bab-defuser.js', 'prevent-bab.js' ],
@@ -189,5 +195,8 @@ export default new Map([
     } ],
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
+    } ],
+    [ 'sensors-analytics.js', {
+        data: 'text',
     } ],
 ]);

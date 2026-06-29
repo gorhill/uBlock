@@ -47,6 +47,7 @@ export function setLocalStorageItemFn(
     trusted = false,
     key = '',
     value = '',
+    options = {}
 ) {
     if ( key === '' ) { return; }
 
@@ -86,6 +87,8 @@ export function setLocalStorageItemFn(
         }
     }
 
+    let modified = false;
+
     try {
         const storage = self[`${which}Storage`];
         if ( value === '$remove$' ) {
@@ -96,13 +99,24 @@ export function setLocalStorageItemFn(
                 const key = storage.key(i);
                 if ( pattern.test(key) ) { toRemove.push(key); }
             }
+            modified = toRemove.length !== 0;
             for ( const key of toRemove ) {
                 storage.removeItem(key);
             }
         } else {
-            storage.setItem(key, `${value}`);
+
+            const before = storage.getItem(key);
+            const after = `${value}`;
+            modified = after !== before;
+            if ( modified ) {
+                storage.setItem(key, after);
+            }
         }
     } catch {
+    }
+
+    if ( modified && typeof options.reload === 'number' ) {
+        setTimeout(( ) => { window.location.reload(); }, options.reload);
     }
 }
 registerScriptlet(setLocalStorageItemFn, {
@@ -178,23 +192,29 @@ registerScriptlet(removeCacheStorageItem, {
  **/
 
 export function setLocalStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('local', false, key, value);
+    const safe = safeSelf();
+    const options = safe.getExtraArgs(Array.from(arguments), 2)
+    setLocalStorageItemFn('local', false, key, value, options);
 }
 registerScriptlet(setLocalStorageItem, {
     name: 'set-local-storage-item.js',
     world: 'ISOLATED',
     dependencies: [
+        safeSelf,
         setLocalStorageItemFn,
     ],
 });
 
 export function setSessionStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('session', false, key, value);
+    const safe = safeSelf();
+    const options = safe.getExtraArgs(Array.from(arguments), 2)
+    setLocalStorageItemFn('session', false, key, value, options);
 }
 registerScriptlet(setSessionStorageItem, {
     name: 'set-session-storage-item.js',
     world: 'ISOLATED',
     dependencies: [
+        safeSelf,
         setLocalStorageItemFn,
     ],
 });
@@ -211,25 +231,31 @@ registerScriptlet(setSessionStorageItem, {
  **/
 
 export function trustedSetLocalStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('local', true, key, value);
+    const safe = safeSelf();
+    const options = safe.getExtraArgs(Array.from(arguments), 2)
+    setLocalStorageItemFn('local', true, key, value, options);
 }
 registerScriptlet(trustedSetLocalStorageItem, {
     name: 'trusted-set-local-storage-item.js',
     requiresTrust: true,
     world: 'ISOLATED',
     dependencies: [
+        safeSelf,
         setLocalStorageItemFn,
     ],
 });
 
 export function trustedSetSessionStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('session', true, key, value);
+    const safe = safeSelf();
+    const options = safe.getExtraArgs(Array.from(arguments), 2)
+    setLocalStorageItemFn('session', true, key, value, options);
 }
 registerScriptlet(trustedSetSessionStorageItem, {
     name: 'trusted-set-session-storage-item.js',
     requiresTrust: true,
     world: 'ISOLATED',
     dependencies: [
+        safeSelf,
         setLocalStorageItemFn,
     ],
 });

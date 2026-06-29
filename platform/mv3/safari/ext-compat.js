@@ -19,8 +19,49 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { deepEquals } from './deep-compare.js';
 
 export const webext = self.browser;
+
+/******************************************************************************/
+
+// Workaround for:
+// https://github.com/uBlockOrigin/uBOL-home/issues/515
+// https://bugs.webkit.org/show_bug.cgi?id=300236
+//
+// For each realm, we will force-reload registered rulesets once.
+
+const { windows } = webext;
+const  NORMAL_REALM = 0b01;
+const PRIVATE_REALM = 0b10;
+const ALL_REALMS = NORMAL_REALM | PRIVATE_REALM;
+
+let seenRealms = 0b00;
+let seenRealmsReady = webext.storage.session.get('safari.seenRealms').then(bin => {
+    seenRealms |= bin?.['safari.seenRealms'] ?? 0;
+}).catch(( ) => {
+});
+
+async function forceEnableRulesets(windowId) {
+    await seenRealmsReady;
+    if ( seenRealms === ALL_REALMS ) { return; }
+    if ( windowId === windows.WINDOW_ID_NONE ) { return; }
+    const details = await windows.get(windowId, { windowTypes: [ 'normal' ] });
+    const incognito = details?.incognito;
+    if ( typeof incognito !== 'boolean' ) { return; }
+    const currentRealm = incognito ? PRIVATE_REALM : NORMAL_REALM;
+    if ( (seenRealms & currentRealm) !== 0 ) { return; }
+    seenRealms |= currentRealm;
+    webext.storage.session.set({ 'safari.seenRealms': seenRealms });
+    const ids = await nativeDNR.getEnabledRulesets();
+    if ( ids.length === 0 ) { return; }
+    nativeDNR.updateEnabledRulesets({
+        disableRulesetIds: ids.slice(),
+        enableRulesetIds: ids.slice(),
+    });
+}
+
+windows.onFocusChanged.addListener(forceEnableRulesets);
 
 /******************************************************************************/
 
@@ -30,6 +71,7 @@ const nativeDNR = webext.declarativeNetRequest;
 
 const isSupportedRule = r => {
     if ( r.action.responseHeaders ) { return false; }
+    if ( r.action.requestHeaders ) { return false; }
     const { condition } = r;
     if ( condition.tabIds !== undefined ) { return false; }
     if ( condition.resourceTypes?.includes('object') ) {
@@ -72,14 +114,6 @@ const prepareUpdateRules = optionsBefore => {
     if ( addRulesAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
     if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
     return optionsAfter;
-};
-
-const ruleCompare = (a, b) => a.id - b.id;
-
-const isSameRules = (a, b) => {
-    a.sort(ruleCompare);
-    b.sort(ruleCompare);
-    return JSON.stringify(a) === JSON.stringify(b);
 };
 
 /******************************************************************************/
@@ -142,8 +176,10 @@ export const dnr = {
         if ( optionsAfter === undefined ) { return; }
         return nativeDNR.updateDynamicRules(optionsAfter);
     },
-    updateEnabledRulesets(...args) {
-        return nativeDNR.updateEnabledRulesets(...args);
+    async updateEnabledRulesets(...args) {
+        await nativeDNR.updateEnabledRulesets(...args);
+        seenRealms = 0b00;
+        await webext.storage.session.remove('safari.seenRealms');
     },
     async updateSessionRules(optionsBefore) {
         const optionsAfter = prepareUpdateRules(optionsBefore);
@@ -167,7 +203,7 @@ export const dnr = {
             }
             addRules.push(rule0);
         }
-        if ( isSameRules(addRules, beforeRules) ) { return false; }
+        if ( deepEquals(addRules, beforeRules) ) { return false; }
         return this.updateDynamicRules({
             addRules,
             removeRuleIds: beforeRules.map(r => r.id),

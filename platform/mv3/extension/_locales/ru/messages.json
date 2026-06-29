@@ -19,6 +19,10 @@
     "message": "Настройки",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Пользовательские фильтры",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Разработка",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Регионы, языки",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Импортированные списки",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Добавить список фильтров…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Вставьте сюда URL-адрес списка фильтров для добавления",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Импорт / Экспорт",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Вставьте сюда отдельные косметические фильтры/скриптлеты для добавления",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Чтобы применять косметические фильтры или скриптлеты из импортированных списков, вы должны предоставить uBO Lite разрешение на запуск пользовательских скриптов. Откройте страницу расширений вашего браузера (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> в Firefox), откройте <b>uBO Lite</b> и включите <b>Разрешить пользовательские скрипты</b> (так называемые «непроверенные сторонние скрипты»).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Список изменений",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Создать новый отчёт в GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Режим фильтрации по умолчанию",
@@ -243,6 +271,18 @@
     "message": "Переход к потенциально нежелательным сайтам будет заблокирован, и будет дана возможность продолжить переход на сайт",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Включить блокировку всплывающих окон",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Если активно, то подходящие фильтры будут автоматически закрывать нежелательные вкладки браузера, создаваемые веб-сайтами.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Песочница для создания фильтров",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Режим разработчика",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Включает доступ к функциям, предназначенным для технических пользователей.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Резервная копия",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Создайте резервную копию пользовательских настроек в файле, или восстановите настройки из файла.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Восстановление перезапишет все ваши текущие пользовательские настройки.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Найти списки",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Страница заблокирована",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite предотвратил загрузку следующей страницы:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Назад",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Закрыть это окно",
@@ -339,6 +391,10 @@
     "message": "Вернуть",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Добавить",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Импортировать и добавить…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Экспортировать…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Создать рез. копию…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Восстановить…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Сброс до настроек по умолчанию…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Все ваши пользовательские настройки будут удалены. Уверены, что хотите восстановить настройки по умолчанию?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Не добавлять содержимое из ненадёжных источников",

@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "\nI filtri cosmetici servono a nascondere gli elementi in una pagina web che sono considerati visivamente fastidiosi e che non possono essere bloccati dai motori di filtraggio basati sulle richieste di rete.",
+    "message": "I filtri cosmetici servono a nascondere elementi in una pagina web che sono considerati visivamente fastidiosi e che non possono essere bloccati dai motori di filtraggio basati sulle richieste di rete.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Non aggiungere filtri da fonti non affidabili.",
+    "message": "Non aggiungere filtri da fonti non attendibili.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Apri",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Crea una nuova segnalazione",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Trova segnalazioni simili",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Di seguito sono riportate informazioni tecniche che potrebbero essere utili quando i volontari cercheranno di aiutarti a risolvere un problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Importante:</b> Le informazioni potenzialmente private o sensibili vengono oscurate automaticamente. Le informazioni oscurate possono rendere più difficile risolvere un problema.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Segnala un problema con un filtro",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Etichetta la pagina web come &ldquo;NSFW&rdquo; (<a href=\"https://it.wikipedia.org/wiki/NSFW\">&ldquo;Not Safe For Work&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Oscura",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Non oscurare",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Informativa sulla privacy",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Errore di rete: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Aggiungere il seguente URL alla tua lista dei filtri personalizzata?\n\nTitolo: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Sottoscrivi",
@@ -1192,7 +1176,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "La pagina bloccata vuole reindirizzare a un altro sito. Se scegli di procedere, navigherai direttamente a: {{url}}",
+    "message": "La pagina bloccata tenta di reindirizzare a un altro sito. Se scegli di procedere, navigherai direttamente verso: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
@@ -1320,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Non è stato effettuato correttamente il filtraggio all'avvio del browser.\nRicarica la pagina per garantire un filtraggio adeguato.",
+    "message": "Non è stato effettuato correttamente il filtraggio all'avvio del browser. Ricarica la pagina per garantire un filtraggio adeguato.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

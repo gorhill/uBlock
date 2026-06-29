@@ -19,6 +19,10 @@
     "message": "Налады",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Уласныя фільтры",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Распрацоўка",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -40,7 +44,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Паведаміць пра праблему на гэтым вэб-сайце",
+    "message": "Паведаміць пра праблему",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Дамены шкодных праграм",
+    "message": "Абарона ад шкоднасных праграм, бяспека",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Рэгіёны, мовы",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Імпартаваныя спісы",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Дадаць спіс фільтраў…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Устаўце сюды URL-адрас спіса фільтраў, які трэба дадаць",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Імпартаваць/экспартаваць",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Устаўце сюды спецыяльныя касметычныя фільтры, якія трэба дадаць",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Каб прымяніць касметычныя фільтры або фільтры скрыптлетаў да імпартаваных спісаў, вы павінны даць uBO Lite дазвол на запуск карыстальніцкіх скрыптоў. Адкрыйце старонку пашырэнняў вашага браўзера (<code>chrome://extensions</code> у Chrome або <code>about:addons</code> у Firefox), адкрыйце падрабязнасці <b>uBO Lite</b> і ўключыце <b>Дазволіць карыстальніцкія скрыпты</b> (таксама вядомыя як «неправераныя староннія скрыпты»).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Журнал змяненняў",
@@ -124,11 +152,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, калі ласка, пераканайцеся, што пра гэтую праблему не паведамлялі раней.",
+    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, праверце, ці не паведамлялі пра гэтую праблему раней. <b>Заўвага:</b> націсканне кнопкі прывядзе да адпраўкі паходжання старонкі на GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Знайсці падобныя справаздачы",
+    "message": "Знайсці падобныя справаздачы на GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -176,8 +204,8 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Стварыць новую справаздачу",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Стварыць новую справаздачу на GitHub",
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Прадвызначаны рэжым фільтравання",
@@ -243,13 +271,37 @@
     "message": "Пераход да патэнцыйна непажаданых сайтаў будзе заблакаваны, і вам будзе прапанавана магчымасць працягнуць.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Уключыць блакаванне ўсплывальных вокнаў",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Калі актыўна, адпаведныя фільтры будуць аўтаматычна закрываць непажаданыя карткі браўзера, створаныя вэб-сайтамі.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Пясочніца стварэння фільтраў",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
-    "message": "Рэжым распрацоўніка",
+    "message": "Рэжым распрацоўшчыка",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
     "message": "Забяспечвае доступ да функцый, прыдатным для тэхнічных карыстальнікаў.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "settingsBackupRestoreLabel": {
+    "message": "Рэзервовая копія",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Стварыць рэзервовую копію ўласных налад у файл або аднавіць уласныя налады з файла.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Аднаўленне перазапіша ўсе вашыя бягучыя ўласныя налады.",
+    "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
     "message": "Знайсці спісы",
@@ -257,7 +309,7 @@
   },
   "strictblockTitle": {
     "message": "Старонка заблакаваная",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite  папярэдзіў чытанне наступнай старонкі:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Вярнуцца",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Закрыць гэтае акно",
@@ -292,7 +344,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Перайсці ў рэжым імгненнага хавання элементаў",
+    "message": "Выдаліць элемент",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -339,6 +391,10 @@
     "message": "Вярнуць",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Дадаць",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Імпартаваць ды дадаць…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Экспартаваць…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Стварыць копію…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Аднавіць…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Скінуць да прадвызначаных налад…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Усе карыстальніцкія налады будуць выдалены. Вы сапраўды хочаце скінуць налады да прадвызначаных?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Не дадавайце кантэнт з ненадзейных крыніц",

@@ -19,6 +19,10 @@
     "message": "הגדרות",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "מסננים בהתאמה אישית",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "פיתוח",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "תחומי תוכנות זדוניות",
+    "message": "הגנה מפני נוזקות, אבטחה",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "אזורים, שפות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "רשימות מיובאות",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "הוספת רשימת מסננים…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "העתיקו לכאן את ה URL של רשימת המסננים",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "יבוא / יצוא",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "העתיקו לכאן מסננים קוסמטים ספציפים לשם הוספה",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "בכדי לאפשר מסננים קוסמטיים או scriptlet מרשימות מיובאות, יש לאפשר ל uBO Lite להריץ סקריפטים של המשתמש. פתחו את התוספים או ההרחבות בדפדפן שלכם (<code>chrome://extensions</code> בכרום או <code>chrome://extensions</code> בפיירפוקס), פתחו את הפרטים של <b>uBO Lite</b>, ותנו <b>אישור לסקריפטים של משתמשים<b> (או \"לאפשר לתסריטי צד שלישי לא מאומתים לגשת לנתונים שלך\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "יומן שינויים",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "צור דיווח חדש",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "מצב סינון ברירת מחדל",
@@ -243,6 +271,18 @@
     "message": "ניווט אפשרי לאתרים לא רצויים יחסם ותהיה אפשרות להחליט להמשיך.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "הפעלת חסימה לפתיחת חלונות",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "כאשר פעיל, מסננים תואמים יסגרו בצורה אוטומטית לשוניות שנוצרו על ידי אתרים.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "ארגז חול ליצירת מסננים",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "מצב מפתחים",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "מאפשר גישה ליכולות עבור משתמשים טכניים.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "גיבוי / שחזור",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "גיבוי של ההגדרות האישיות לקובץ, או שחזור של ההגדרות האישיות מקובץ.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "השחזור יחליף את כל ההגדרות האישיות הנוכחיות.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "חיפוש רשימות",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "הדף נחסם",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite מנע טעינה של הדפים הבאים:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "חזור",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "סגור חלון זה",
@@ -292,11 +344,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "הסר אלמנט",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "צא ממצב מחיקת אלמנטים",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
@@ -339,6 +391,10 @@
     "message": "ביטול שינויים",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "הוספה",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "ייבא וצרף…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "ייצוא…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "גיבוי…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "שחזור…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "אפס להגדרות ברירת מחדל…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "כל ההגדרות האישיות שלך ימחקו. האם באמת לאפס להגדרות ברירת מחדל?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "אל תוסיפו תוכן ממקורות לא מהיימנים",

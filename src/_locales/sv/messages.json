@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokala regler: den här kolumnen avser endast regler som gäller för den aktuella webbplatsen.\nLokala regler åsidosätter globala regler.",
+    "message": "Lokala regler: den här kolumnen avser endast regler som gäller för den aktuella webbplatsen.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Öppna",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Skapa ny rapport på GitHub",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Hitta liknande rapporter på GitHub",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Nedan finns teknisk information som kan vara användbar när volontärer försöker hjälpa dig att lösa ett problem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Viktigt:</b> Potentiellt privat eller känslig information redigeras bort som standard. Bortredigerad information kan göra det svårare att lösa ett problem.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Rapportera ett filterproblem",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Märk webbsidan som \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Inte lämplig på jobbet”</a>)",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Bortredigerad",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Oredigerad",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Integritetspolicy",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Nätverksfel: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "Lägg till följande webbadress till dina anpassade filterlistor?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Prenumerera",

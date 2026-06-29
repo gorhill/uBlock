@@ -56,7 +56,7 @@ const mimeFromName = name => {
 };
 
 const removeTopCommentBlock = text => {
-    return text.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
+    return text.replace(/^\/\*[\S\s]+?\*\/\s*/g, '');
 };
 
 // vAPI.warSecret is optional, it could be absent in some environments,

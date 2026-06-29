@@ -19,6 +19,10 @@
     "message": "Ustawienia",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Własne filtry",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Programowanie",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domeny ze złośliwym oprogramowaniem",
+    "message": "Ochrona przed złośliwym oprogramowaniem, bezpieczeństwo",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Regiony, języki",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Listy importowane",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Dodaj listę filtrów…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Wklej tutaj adres URL listy filtrów, którą chcesz dodać",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Import i eksport",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Wklej tutaj określone filtry kosmetyczne do dodania",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Aby wymusić filtry kosmetyczne lub skryptletów z importowanych list, musisz przyznać uBO Lite uprawnienia do uruchamiania skryptów użytkownika. Otwórz stronę rozszerzeń przeglądarki (<code>chrome://extensions</code> w Chrome lub <code>about:addons</code> w Firefoksie), otwórz szczegóły <b>uBO Lite</b> i włącz opcję <b>Zezwalaj na skrypty użytkownika</b> (nazywane również „niezweryfikowanymi skryptami zewnętrzymi”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Informacje o wydaniu",
@@ -177,7 +205,7 @@
   },
   "supportReportSpecificButton": {
     "message": "Utwórz nowy raport",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Domyślny tryb filtrowania",
@@ -243,6 +271,18 @@
     "message": "Nawigacja do potencjalnie niepożądanych witryn zostanie zablokowana i pojawi się opcja kontynuowania.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Włącz blokowanie wyskakujących okienek",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Po aktywacji pasujące filtry będą automatycznie zamykać niechciane karty przeglądarki utworzone przez witryny internetowe.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Piaskownica tworzenia filtrów",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Tryb programisty",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Włącz dostęp do odpowiednich funkcji dla użytkowników technicznych.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Tworzenie i przywracanie kopii zapasowej",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Utwórz kopię zapasową własnych ustawień w pliku lub przywróć je z pliku.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Przywrócenie kopii zapasowej spowoduje nadpisanie wszystkich bieżących ustawień własnych.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Znajdź listy",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Strona zablokowana",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite nie pozwolił załadować się następującej stronie:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Wstecz",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Zamknij to okno",
@@ -339,6 +391,10 @@
     "message": "Przywróć",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Dodaj",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Importuj i dołącz…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Eksportuj…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Utwórz kopię zapasową…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Przywróć kopię zapasową…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Przywróć ustawienia domyślne…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Wszystkie ustawienia niestandardowe zostaną usunięte. Czy na pewno chcesz przywrócić ustawienia domyślne?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Nie dodawaj zawartości z niezaufanych źródeł",

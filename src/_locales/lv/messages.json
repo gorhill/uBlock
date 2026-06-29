@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Brīdinājums! Veiktās izmaiņas nav saglabātas",
+    "message": "Uzmanību! Ir nesaglabātas izmaiņas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Vietējie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies tikai uz konkrēto mājaslapu.\nVietējie ierobežojumi pārraksta globālos ierobežojumus.",
+    "message": "Vietējie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies tikai uz konkrēto mājaslapu.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "Atvērt",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "Izveidot jaunu ziņojumu",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "Meklēt līdzīgus ziņojumus",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "Zemāk ir tehniskā informācija, kas var būt noderīga, kad brīvprātīgie mēģinās palīdzēt atrisināt sarežģījumus.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>Svarīgi:</b> iespējami privāta vai jūtīga informācija pēc noklusējuma tiek izņemta. Aizvākta informācija var apgrūtināt sarežģījuma atrisināšanu.",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "Ziņot par aizturētāja nepilnībām",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "Iezīmēt tīmekļa lapu kā \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe for Work</a> (nav droša darbam))",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "Izņemt",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "Atdarīt izņemšanu",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "Privātuma nosacījumi",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "Tīkla kļūda: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "uBlock₀: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nNosaukums: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "Abonēt",

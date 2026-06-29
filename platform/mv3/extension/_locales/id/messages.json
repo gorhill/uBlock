@@ -19,6 +19,10 @@
     "message": "Pengaturan",
     "description": "appears as tab name in dashboard"
   },
+  "customFiltersPageName": {
+    "message": "Filter khusus",
+    "description": "appears as tab name in dashboard"
+  },
   "developPageName": {
     "message": "Mengembangkan",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
@@ -68,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domain malware",
+    "message": "Perlindungan malware, keamanan",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -82,6 +86,30 @@
   "3pGroupRegions": {
     "message": "Wilayah, bahasa",
     "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "customFiltersImportExportLabel": {
+    "message": "Impor / Ekspor",
+    "description": "Text label heading the import/export area of custom filters"
+  },
+  "customFiltersImportTextareaPlaceholder": {
+    "message": "Tambahkan filter kosmetik dengan menempel di sini",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Catatan perubahan",
@@ -128,7 +156,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Temukan laporan serupa",
+    "message": "Temukan laporan serupa di Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -176,8 +204,8 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Buat laporan baru",
-    "description": "Text for button which open an external webpage in Support pane"
+    "message": "Buat laporan baru di Github",
+    "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Mode filter bawaan",
@@ -243,6 +271,18 @@
     "message": "Navigasi ke situs yang mungkin tidak diinginkan akan diblokir, dan Anda akan ditawari opsi untuk melanjutkan.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Aktifkan pemblokiran pop-up",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Saat diaktifkan, filter pencocokan akan secara otomatis menutup tab browser yang tidak diinginkan yang dibuat oleh situs web.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Lingkungan uji coba pembuatan filter",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mode pengembang",
     "description": "Label for a checkbox in the options page"
@@ -251,13 +291,25 @@
     "message": "Mengaktifkan akses ke fitur yang sesuai untuk pengguna teknis.",
     "description": "Short description for a checkbox in the options page"
   },
+  "settingsBackupRestoreLabel": {
+    "message": "Cadangan",
+    "description": "The header text for the back up/restore section"
+  },
+  "settingsBackupRestoreSummary": {
+    "message": "Cadangkan settingan khusus ke berkas, atau pulihkan settingan khusus dari berkas.",
+    "description": "A summary description of the back up/restore section."
+  },
+  "settingsBackupRestoreLegend": {
+    "message": "Pemulihan akan menimpa semua settingan khusus saat ini.",
+    "description": "Important information about the back up/restore section."
+  },
   "findListsPlaceholder": {
     "message": "Temukan daftar",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
     "message": "Halaman diblokir",
-    "description": "Webpage title for the strict-blocked page"
+    "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
     "message": "uBO Lite telah mencegah pemuatan halaman berikut:",
@@ -277,7 +329,7 @@
   },
   "strictblockBack": {
     "message": "Kembali",
-    "description": "A button to go back to the previous webpage"
+    "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
     "message": "Tutup jendela ini",
@@ -292,11 +344,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Masuk ke mode penghapus elemen",
+    "message": "Menghapus elemen",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Keluar dari mode penghapus elemen",
+    "message": "Mbyll asgjësuesin e elementeve",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
@@ -308,7 +360,7 @@
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "Melihat",
+    "message": "Melihat:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
@@ -324,7 +376,7 @@
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Aturan dinamis ",
+    "message": "Aturan dinamis",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
@@ -339,6 +391,10 @@
     "message": "Kembalikan",
     "description": "Text for buttons used to revert changes"
   },
+  "addButton": {
+    "message": "Tambah",
+    "description": "Text for buttons used to add content"
+  },
   "importAndAppendButton": {
     "message": "Impor dan tambahkan…",
     "description": "Text for buttons used to import and append content"
@@ -346,6 +402,22 @@
   "exportButton": {
     "message": "Ekspor…",
     "description": "Text for buttons used to export content"
+  },
+  "backupButton": {
+    "message": "Cadangkan…",
+    "description": "Text for buttons used to back up content"
+  },
+  "restoreButton": {
+    "message": "Pulihkan…",
+    "description": "Text for buttons used to restore content"
+  },
+  "resetToDefaultButton": {
+    "message": "Kembalikan ke pengaturan bawaan…",
+    "description": "Text for buttons used to reset configurations to default"
+  },
+  "resetToDefaultConfirm": {
+    "message": "Semua pengaturan kustom kamu akan dihapus. Apakah kamu benar ingin kembali ke pengaturan bawaan?",
+    "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
     "message": "Jangan tambahkan konten dari sumber tidak terpercaya",

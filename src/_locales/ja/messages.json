@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "ローカルルール: この列のルールは現在のサイトだけに適用されます。\nローカルルールはグローバルルールを上書きします。",
+    "message": "ローカルルール: この列にあるルールは、現在のサイトのみに適用されます。",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -897,11 +897,11 @@
   },
   "supportOpenButton": {
     "message": "開く",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
     "message": "新しい報告を作成",
-    "description": "Text for button which open an external webpage in Support pane"
+    "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
     "message": "似た報告を探す",
@@ -954,10 +954,6 @@
   "supportS5P1": {
     "message": "以下の技術情報はボランティアが問題解決の手助けをするときに役立つことがあります。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
-  },
-  "supportS5P2": {
-    "message": "<b>重要:</b> 個人情報や機密情報の可能性のある情報は既定で削除されます。情報が削除されたことによって問題解決が困難になることがあります。",
-    "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
     "message": "フィルターの問題を報告する",
@@ -1018,14 +1014,6 @@
   "supportS6Checkbox1": {
     "message": "ウェブページに“NSFW” (閲覧注意、<a href=\"https://ja.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>) とラベルをつける",
     "description": "A checkbox to use for NSFW sites"
-  },
-  "supportRedact": {
-    "message": "編集済にする",
-    "description": "Text for 'Redact' button"
-  },
-  "supportUnredact": {
-    "message": "無編集にする",
-    "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
     "message": "プライバシーポリシー",
@@ -1098,10 +1086,6 @@
   "errorCantConnectTo": {
     "message": "ネットワークエラー: {{msg}}",
     "description": "English: Network error: {{msg}}"
-  },
-  "subscriberConfirm": {
-    "message": "以下の URL をカスタムフィルターリストに追加しますか？\n\nフィルター名: \"{{title}}\"\nURL: {{url}}",
-    "description": "No longer used"
   },
   "subscribeButton": {
     "message": "購読",
@@ -1196,19 +1180,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "理由:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "悪意のある",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "トラッカー",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "悪い評判",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

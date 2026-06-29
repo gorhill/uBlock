@@ -39,6 +39,7 @@
     "name": "Peter Lowe – Ads, trackers, and more",
     "group": "default",
     "enabled": true,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
     ],
@@ -50,6 +51,7 @@
     "group": "malware",
     "enabled": true,
     "trusted": true,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/badware.min.txt"
     ],
@@ -68,11 +70,12 @@
   },
   {
     "id": "adguard-mobile",
-    "name": "AdGuard – Mobile Ads",
+    "name": "AdGuard/uBO – Mobile Ads",
     "group": "ads",
     "enabled": false,
     "tags": "mobile",
     "urls": [
+      "https://ublockorigin.github.io/uAssets/filters/filters-mobile.txt",
       "https://filters.adtidy.org/extension/ublock/filters/11.txt"
     ],
     "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
@@ -99,13 +102,24 @@
   },
   {
     "id": "adguard-spyware-url",
-    "name": "AdGuard URL Tracking Protection",
+    "name": "AdGuard/uBO – URL Tracking Protection",
     "group": "privacy",
     "enabled": false,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
-      "https://filters.adtidy.org/extension/ublock/filters/17.txt"
+      "https://ublockorigin.github.io/uAssets/filters/privacy-removeparam.txt"
     ],
-    "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+    "homeURL": "https://github.com/uBlockOrigin/uAssets"
+  },
+  {
+    "id": "annoyances-ai",
+    "name": "EasyList – AI Widgets",
+    "group": "annoyances",
+    "enabled": false,
+    "urls": [
+      "https://ublockorigin.github.io/uAssets/thirdparties/easylist-ai.txt"
+    ],
+    "homeURL": "https://github.com/easylist/easylist#fanboy-lists"
   },
   {
     "id": "annoyances-cookies",
@@ -180,16 +194,6 @@
     "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
-    "id": "stevenblack-hosts",
-    "name": "Steven Black’s Unified Hosts (adware + malware)",
-    "enabled": false,
-    "excludedPlatforms": [ "safari" ],
-    "urls": [
-      "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-    ],
-    "homeURL": "https://github.com/StevenBlack/hosts#readme"
-  },
-  {
     "id": "ubol-tests",
     "name": "uBO Lite Test Filters",
     "enabled": false,
@@ -210,6 +214,18 @@
       "https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt"
     ],
     "homeURL": "https://github.com/AnXh3L0/blocklist"
+  },
+  {
+    "id": "ara-0",
+    "group": "regions",
+    "lang": "ar kab",
+    "name": "🇪🇬eg 🇸🇦sa 🇲🇦ma 🇩🇿dz: Liste AR",
+    "tags": "ads arabic اَلْعَرَبِيَّةُ",
+    "enabled": false,
+    "urls": [
+      "https://raw.githubusercontent.com/easylist/listear/master/Liste_AR.txt"
+    ],
+    "homeURL": "https://forums.lanik.us/viewforum.php?f=98"
   },
   {
     "id": "bgr-0",
@@ -266,9 +282,9 @@
     "name": "🇪🇪ee: Eesti saitidele kohandatud filter",
     "enabled": false,
     "urls": [
-      "https://ubol-et.adblock.ee/list.txt"
+      "https://ubo-et.lepik.io/list.txt"
     ],
-    "homeURL": "https://github.com/sander85/uBOL-et"
+    "homeURL": "https://github.com/sander85/uBO-et"
   },
   {
     "id": "fin-0",
@@ -286,7 +302,7 @@
     "id": "fra-0",
     "group": "regions",
     "lang": "ar br ff fr lb oc son",
-    "name": "🇫🇷fr 🇨🇦ca: AdGuard Français",
+    "name": "🇫🇷fr 🇧🇪be 🇨🇦ca: AdGuard Français",
     "tags": "ads french",
     "enabled": false,
     "urls": [
@@ -418,11 +434,11 @@
     "id": "kor-1",
     "group": "regions",
     "lang": "ko",
-    "name": "🇰🇷kr: List-KR",
+    "name": "🇰🇷kr: List-KR Classic",
     "tags": "ads korean 한국어",
     "enabled": false,
     "urls": [
-      "https://cdn.jsdelivr.net/gh/List-KR/List-KR@latest/filter-uBlockOrigin.txt"
+      "https://cdn.jsdelivr.net/npm/@list-kr/filterslists@latest/dist/filterslist-uBlockOrigin-classic.txt"
     ],
     "homeURL": "https://github.com/List-KR/List-KR#readme"
   },
@@ -489,7 +505,8 @@
   {
     "id": "pol-0",
     "group": "regions",
-    "lang": "szl pl _",
+    "parent": "🇵🇱pl: Polskie listy filtrów",
+    "lang": "szl pl",
     "name": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
     "tags": "ads polish polski",
     "enabled": false,
@@ -497,6 +514,20 @@
       "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt"
     ],
     "homeURL": "https://github.com/MajkiIT/polish-ads-filter"
+  },
+  {
+    "id": "pol-3",
+    "group": "regions",
+    "parent": "🇵🇱pl: Polskie listy filtrów",
+    "lang": "szl pl",
+    "name": "🇵🇱pl: CERT.PL's Warning List",
+    "tags": "malware polish polski",
+    "enabled": false,
+    "excludedPlatforms": [ "safari" ],
+    "urls": [
+      "https://hole.cert.pl/domains/v2/domains_ublock.txt"
+    ],
+    "homeURL": "https://cert.pl/lista-ostrzezen/"
   },
   {
     "id": "rou-1",
@@ -519,9 +550,10 @@
     "tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek uk",
     "enabled": false,
     "urls": [
-      "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt"
+      "https://raw.githubusercontent.com/easylist/ruadlist/{commit}/RuAdList-uBO.txt"
     ],
-    "homeURL": "https://forums.lanik.us/viewforum.php?f=102"
+    "homeURL": "https://forums.lanik.us/viewforum.php?f=102",
+    "commit": "master"
   },
   {
     "id": "rus-1",

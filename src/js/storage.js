@@ -433,7 +433,10 @@ onBroadcast(msg => {
                 }
             }).filter(prefix => prefix !== undefined);
     }
+    const match = /^[a-z-]+:\/\/[^/]+\//.exec(assetKey);
+    const assetOrigin = match && match[0];
     for ( const prefix of this.parsedTrustedListPrefixes ) {
+        if ( assetOrigin && prefix.length < assetOrigin.length ) { continue; }
         if ( assetKey.startsWith(prefix) ) { return true; }
     }
     return false;

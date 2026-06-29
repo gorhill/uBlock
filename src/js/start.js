@@ -157,13 +157,6 @@ const onVersionReady = async lastVersion => {
         return;
     }
 
-    // Remove cache items with obsolete names
-    if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b5') ) {
-        io.remove(`compiled/${µb.pslAssetKey}`);
-        io.remove('compiled/redirectEngine/resources');
-        io.remove('selfie/main');
-    }
-
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
     redirectEngine.invalidateResourcesSelfie(io);

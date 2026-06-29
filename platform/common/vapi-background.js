@@ -48,7 +48,7 @@ vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 vAPI.app = {
     name: manifest.name.replace(/ dev\w+ build/, ''),
     version: (( ) => {
-        let version = manifest.version;
+        let version = manifest.version_name || manifest.version;
         const match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
         if ( match && match[2] ) {
             const v = parseInt(match[2], 10);
