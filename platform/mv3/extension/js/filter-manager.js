@@ -25,24 +25,20 @@ import {
     localRead,
     localRemove,
     localWrite,
-    runtime,
 } from './ext.js';
 
 import {
     intersectHostnameIters,
+    isScriptlet,
     matchesFromHostnames,
     subtractHostnameIters,
 } from './utils.js';
 
-import {
-    ubolErr,
-    ubolLog,
-} from './debug.js';
+import { ubolErr } from './debug.js';
 
 /******************************************************************************/
 
 const isProcedural = a => a.startsWith('{');
-const isScriptlet = a => a.startsWith('+js');
 const isCSS = a => isProcedural(a) === false && isScriptlet(a) === false;
 
 /******************************************************************************/
@@ -204,6 +200,8 @@ export async function registerCustomFilters(context) {
         id: 'css-user',
         js: [ '/js/scripting/css-user.js' ],
         matches: matchesFromHostnames(hostnames),
+        allFrames: true,
+        matchOriginAsFallback: true,
         runAt: 'document_start',
     };
     if ( excludeHostnames.length !== 0 ) {
@@ -281,117 +279,13 @@ async function removeCustomFiltersByKey(key, toRemove) {
 
 /******************************************************************************/
 
-export function isUserScriptsAvailable() {
-    if ( browser.offscreen === undefined ) { return false; }
-    try {
-        chrome.userScripts.getScripts();
-    } catch {
-        return false;
-    }
-    return true;
+export function getSandboxFilters() {
+    return localRead('sandboxFilters');
 }
 
-export async function registerCustomScriptlets(context) {
-    if ( isUserScriptsAvailable() === false ) { return; }
-    const { none, basic, optimal, complete } = context.filteringModeDetails;
-    const notNone = [ ...basic, ...optimal, ...complete ];
-    if ( registerCustomScriptlets.promise ) {
-        registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(
-            registerCustomScriptlets.create
-        );
-    } else {
-        registerCustomScriptlets.promise = registerCustomScriptlets.create();
-    }
-    registerCustomScriptlets.promise = registerCustomScriptlets.promise.then(worlds =>
-        registerCustomScriptlets.register(worlds, none, notNone)
-    );
-    return registerCustomScriptlets.promise;
+export function setSandboxFilters(text = '') {
+    text = text.trim();
+    return text !== ''
+        ? localWrite('sandboxFilters', text)
+        : localRemove('sandboxFilters')
 }
-
-registerCustomScriptlets.register = async function(worlds, none, notNone) {
-    if ( Boolean(worlds) === false ) { return; }
-    const toAdd = [];
-    const prepare = world => {
-        let { hostnames } = world;
-        let excludeHostnames = [];
-        if ( none.has('all-urls') ) {
-            hostnames = intersectHostnameIters(hostnames, notNone);
-        } else if ( none.size !== 0 ) {
-            hostnames = [ ...subtractHostnameIters(hostnames, none) ];
-            excludeHostnames = Array.from(none);
-        }
-        if ( hostnames.length === 0 ) { return; }
-        const directive = {
-            allFrames: true,
-            js: [ { code: world.code } ],
-            matches: matchesFromHostnames(hostnames),
-            runAt: 'document_start',
-        };
-        if ( excludeHostnames.length !== 0 ) {
-            directive.excludeMatches = matchesFromHostnames(excludeHostnames);
-        }
-        return directive;
-    };
-    if ( worlds.ISOLATED ) {
-        const directive = prepare(worlds.ISOLATED);
-        if ( directive ) {
-            directive.id = 'user.isolated';
-            directive.world = 'USER_SCRIPT';
-            toAdd.push(directive);
-        }
-    }
-    if ( worlds.MAIN ) {
-        const directive = prepare(worlds.MAIN);
-        if ( directive ) {
-            directive.id = 'user.main';
-            directive.world = 'MAIN';
-            toAdd.push(directive);
-        }
-    }
-    if ( toAdd.length === 0 ) { return; }
-    await browser.userScripts.register(toAdd).then(( ) => {
-        ubolLog(`Registered userscript ${toAdd.map(v => v.id)}`);
-    });
-};
-
-registerCustomScriptlets.create = async function() {
-    const toRemove = await browser.userScripts.getScripts();
-    if ( toRemove.length !== 0 ) {
-        await browser.userScripts.unregister();
-        ubolLog(`Unregistered userscript ${toRemove.map(v => v.id)}`);
-    }
-    const customFilters = await getAllCustomFilters();
-    if ( customFilters.some(a => a[1].some(b => isScriptlet(b))) === false ) { return; }
-    const { promise: offscreenPromise, resolve: offscreenResolve } = Promise.withResolvers();
-    const handler = (msg, sender, callback) => {
-        if ( typeof msg !== 'object' ) { return; }
-        switch ( msg?.what ) {
-        case 'getAllCustomFilters':
-            getAllCustomFilters().then(result => {
-                callback(result);
-            });
-            break;
-        case 'registerCustomScriptlets':
-            offscreenResolve(msg);
-            break;
-        default:
-            break;
-        }
-    };
-    const { promise: timeoutPromise, resolve: timeoutResolve } = Promise.withResolvers();
-    self.setTimeout(timeoutResolve, 1000);
-    runtime.onMessage.addListener(handler);
-    const [ worlds ] = await Promise.all([
-        Promise.race([ offscreenPromise, timeoutPromise ]),
-        browser.offscreen.createDocument({
-            url: '/js/offscreen/compile-scriptlets.html',
-            reasons: [ 'WORKERS' ],
-            justification: 'To compile custom user script-based filters in a modular way from service worker (service workers do not allow dynamic module import)',
-        }),
-    ]);
-    runtime.onMessage.removeListener(handler);
-    await browser.offscreen.closeDocument();
-    return worlds;
-};
-
-registerCustomScriptlets.promise = null;

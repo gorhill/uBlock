@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Остани",
+    "message": "Остани тука",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локални правила: оваа колона е за правила што се однесуваат само на моменталниот сајт.\nЛокални правила надминуваат глобални правила.",
+    "message": "Локални правила: оваа колона е за правила што се однесуваат само на моменталниот сајт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Домени на малвер",
+    "message": "Заштита од малициозен софтвер, безбедност",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {

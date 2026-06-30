@@ -87,6 +87,18 @@
     "message": "Regije, jezici",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Uvoz / Izvoz",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Ovdje zalijepite određene vizualne filtere koje želite dodati",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Popis promjena",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Navigacija do potencijalno nepoželjnih stranica bit će blokirana i bit će vam ponuđena opcija za nastavak.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Omogući blokiranje skočnih prozora",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Kada su aktivni, odgovarajući filteri automatski će zatvoriti neželjene kartice preglednika koje su kreirale web-lokacije.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Igraonica za stvaranje filtera",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Način rada za programere",

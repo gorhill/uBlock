@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokalna pravila: ovaj stupac je za pravila koja vrijede samo za trenutnu stranicu.\nLokalna pravila nadjačavaju globalna pravila.",
+    "message": "Lokalna pravila: ovaj stupac je za pravila koja vrijede samo za trenutnu stranicu.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

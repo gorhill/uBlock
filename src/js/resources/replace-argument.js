@@ -82,7 +82,7 @@ export function trustedReplaceArgument(
         replacer = ( ) => value;
     }
     const reCondition = extraArgs.condition
-        ? safe.patternToRegex(extraArgs.condition)
+        ? safe.patternToRegex(`${extraArgs.condition}`)
         : /^/;
     const getArg = context => {
         if ( argposRaw === 'this' ) { return context.thisArg; }

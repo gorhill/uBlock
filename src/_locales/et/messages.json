@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Kohalikud reeglid: selle veeru reeglid kehtivad ainult praegusele saidile.\nKohalikud reeglid kirjutavad üldised reeglid üle.",
+    "message": "Kohalikud reeglid: selle veeru reeglid kehtivad ainult praegusele saidile.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.\nLokale regler har prioritet foran globale regler.",
+    "message": "Lokale regler: Denne kolonnen er for regler som bare gjelder for det gjeldende nettstedet.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

@@ -37,6 +37,7 @@ const textEncode = (( ) => {
         [ 'windows-1250', 'windows-1250' ],
         [ 'cp1250', 'windows-1250' ],
         [ 'x-cp1250', 'windows-1250' ],
+        [ 'iso-8859-2', 'windows-1250' ],
 
         [ 'windows-1251', 'windows-1251' ],
         [ 'cp1251', 'windows-1251' ],

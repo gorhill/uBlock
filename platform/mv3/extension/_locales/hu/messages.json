@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Engedélyt nem igénylő tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászokat és egyebeket.",
+    "message": "Egy hatékony tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászokat és egyebeket.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware domainek",
+    "message": "Kártevővédelem, biztonság",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -87,6 +87,18 @@
     "message": "Régiók, nyelvek",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Importált listák",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Szűrőlista hozzáadása…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Illessze be ide a hozzáadandó szűrőlista webcímét",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importálás/exportálás",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Illessze be ide a hozzáadandó kozmetikai szűrőket",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Az importált listákból származó kozmetikai szűrők alkalmazásához engedélyezni kell az uBO Lite számára, hogy felhasználói parancsfájlokat futtatsson. Nyissa meg a böngészőkiegészítők vagy bővítmények oldalát (<code>chrome://extensions</code> a Chrome-ban vagy <code>about:addons</code> a Firefoxban), nyissa meg a <b>uBO Lite</b> részleteit, és kapcsolja be a <b>Felhasználói parancsfájlok engedélyezése</b> lehetőséget (más néven „nem ellenőrzött külső parancsfájlok”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Változások listája",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Az esetleges nem kívánatos webhelyekre való navigáció blokkolva lesz, és rákérdez arra, hogy folytatja-e.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Felugró ablakok blokkolásának engedélyezése",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Ha aktív, a megfelelő szűrők automatikusan bezárják a webhelyek által létrehozott kéretlen böngészőlapokat.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Szűrőlétrehozási homokozó",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Fejlesztői mód",

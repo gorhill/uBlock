@@ -41,14 +41,18 @@
                 const hn1 = origin.slice(beg+3)
                 const end = hn1.indexOf(':');
                 const hn2 = end === -1 ? hn1 : hn1.slice(0, end);
-                const hnParts = hn2.split('.');
                 if ( hn2.length === 0 ) { return; }
-                const hns = [];
-                for ( let i = 0; i < hnParts.length; i++ ) {
-                    hns.push(`${hnParts.slice(i).join('.')}`);
+                const hns = [ hn2 ];
+                for ( let pos = 0; ; ) {
+                    pos = hn2.indexOf('.', pos) + 1;
+                    if ( pos === 0 ) { break; }
+                    hns.push(hn2.slice(pos));
                 }
                 return { hns, i };
-            }).filter(a => a !== undefined);
+            }).filter(a => a);
+            if ( this.entries.length ) {
+                this.entries[0].hns.push('*');
+            }
         },
         get topHostname() {
             if ( this.entries.length === 0 ) { this.compute(); }
@@ -62,11 +66,12 @@
             if ( this.entries.length === 0 ) { this.compute(); }
             if ( this.entries[0].ens === undefined ) {
                 const ens = [];
-                const hnparts =  this.entries[0].hns[0].split('.');
-                const n = hnparts.length - 1;
-                for ( let i = 0; i < n; i++ ) {
-                    for ( let j = n; j > i; j-- ) {
-                        ens.push(`${hnparts.slice(i,j).join('.')}.*`);
+                for ( let hn of this.entries[0].hns ) {
+                    for (;;) {
+                        const pos = hn.lastIndexOf('.');
+                        if ( pos === -1 ) { break; }
+                        hn = hn.slice(0, pos);
+                        ens.push(`${hn}.*`);
                     }
                 }
                 ens.sort((a, b) => {
@@ -101,144 +106,6 @@
     };
 
 })(self.isolatedAPI);
-
-
-(api => {
-    if ( typeof api === 'object' ) { return; }
-
-    const cosmeticAPI = self.cosmeticAPI = {};
-    const { isolatedAPI } = self;
-    const topHostname = isolatedAPI.contexts.topHostname;
-    const thisHostname = document.location.hostname || '';
-
-    const sessionRead = async function(key) {
-        try {
-            const bin = await chrome.storage.session.get(key);
-            return bin?.[key] ?? undefined;
-        } catch {
-        }
-    };
-
-    const sessionWrite = function(key, data) {
-        try {
-            chrome.storage.session.set({ [key]: data });
-        } catch {
-        }
-    };
-
-    const localRead = async function(key) {
-        try {
-            const bin = await chrome.storage.local.get(key);
-            return bin?.[key] ?? undefined;
-        } catch {
-        }
-    };
-
-    const selectorsFromListIndex = (data, ilist) => {
-        const list = JSON.parse(`[${data.selectorLists[ilist]}]`);
-        const { result } = data;
-        for ( const iselector of list ) {
-            if ( iselector >= 0 ) {
-                result.selectors.add(data.selectors[iselector]);
-            } else {
-                result.exceptions.add(data.selectors[~iselector]);
-            }
-        }
-    };
-
-    const selectorsFromHostnames = (haystack, needles, data) => {
-        let listref = -1;
-        for ( const needle of needles ) {
-            listref = isolatedAPI.binarySearch(haystack, needle, listref);
-            if ( listref >= 0 ) {
-                selectorsFromListIndex(data, data.selectorListRefs[listref]);
-            } else {
-                listref = ~listref;
-            }
-        }
-    };
-
-    const selectorsFromRuleset = async (realm, rulesetId, result) => {
-        const data = await localRead(`css.${realm}.${rulesetId}`);
-        if ( typeof data !== 'object' || data === null ) { return; }
-        data.result = result;
-        selectorsFromHostnames(data.hostnames, isolatedAPI.contexts.hostnames, data);
-        if ( data.hasEntities ) {
-            selectorsFromHostnames(data.hostnames, isolatedAPI.contexts.entities, data);
-        }
-        const { regexes } = data;
-        for ( let i = 0, n = regexes.length; i < n; i += 3 ) {
-            if ( thisHostname.includes(regexes[i+0]) === false ) { continue; }
-            if ( typeof regexes[i+1] === 'string' ) {
-                regexes[i+1] = new RegExp(regexes[i+1]);
-            }
-            if ( regexes[i+1].test(thisHostname) === false ) { continue; }
-            selectorsFromListIndex(data, regexes[i+2]);
-        }
-    };
-
-    const fillCache = async function(realm, rulesetIds) {
-        const selectors = new Set();
-        const exceptions = new Set();
-        const result = { selectors, exceptions };
-        const [ filteringModeDetails ] = await Promise.all([
-            localRead('filteringModeDetails'),
-            ...rulesetIds.map(a => selectorsFromRuleset(realm, a, result)),
-        ]);
-        const skip = filteringModeDetails?.none.some(a => {
-            if ( topHostname.endsWith(a) === false ) { return false; }
-            const n = a.length;
-            return topHostname.length === n || topHostname.at(-n-1) === '.';
-        });
-        for ( const selector of exceptions ) {
-            selectors.delete(selector);
-        }
-        if ( skip ) {
-            selectors.clear();
-        }
-        cacheEntry[realm.charAt(0)] = Array.from(selectors).map(a =>
-            a.startsWith('{') ? JSON.parse(a) : a
-        );
-    };
-
-    const readCache = async ( ) => {
-        cacheEntry = await sessionRead(cacheKey) || {};
-    };
-
-    const cacheKey =
-        `cache.css.${topHostname !== thisHostname ? `${topHostname}/` : ''}${thisHostname || ''}`;
-    let clientCount = 0;
-    let cacheEntry;
-
-    cosmeticAPI.getSelectors = async function(realm, rulesetIds) {
-        clientCount += 1;
-        const slot = realm.charAt(0);
-        if ( cacheEntry === undefined ) {
-            cacheEntry = readCache();
-        }
-        if ( cacheEntry instanceof Promise ) {
-            await cacheEntry;
-        }
-        if ( cacheEntry[slot] === undefined ) {
-            cacheEntry[slot] = fillCache(realm, rulesetIds);
-        }
-        if ( cacheEntry[slot] instanceof Promise ) {
-            await cacheEntry[slot];
-        }
-        return cacheEntry[slot];
-    };
-
-    cosmeticAPI.release = function() {
-        clientCount -= 1;
-        if ( clientCount !== 0 ) { return; }
-        self.cosmeticAPI = undefined;
-        const now = Math.round(Date.now() / 15000);
-        const since = now - (cacheEntry.t || 0);
-        if ( since <= 1 ) { return; }
-        cacheEntry.t = now;
-        sessionWrite(cacheKey, cacheEntry);
-    };
-})(self.cosmeticAPI);
 
 /******************************************************************************/
 

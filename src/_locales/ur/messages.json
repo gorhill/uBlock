@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "مقامی اصول: اس کالم میں وہ اصول ہیں جو صرف موجودہ سائٹ پر لاگو ہوں گے.\nمقامی اصول کو گلوبل اصولوں پر ترجیح دی جائے گی.",
+    "message": "مقامی اصول: اس کالم میں وہ اصول ہیں جو صرف موجودہ سائٹ پر لاگو ہوں گے.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

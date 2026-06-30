@@ -21,7 +21,7 @@
 
 /******************************************************************************/
 
-function parsedURLromOrigin(origin) {
+export function parsedURLromOrigin(origin) {
     try {
         return new URL(origin);
     } catch {
@@ -30,7 +30,7 @@ function parsedURLromOrigin(origin) {
 
 /******************************************************************************/
 
-const toBroaderHostname = hn => {
+export const toBroaderHostname = hn => {
     if ( hn === '*' ) { return ''; }
     const pos = hn.indexOf('.');
     return pos !== -1 ? hn.slice(pos+1) : '*';
@@ -40,7 +40,7 @@ const toBroaderHostname = hn => {
 
 // Is hna descendant hostname of hnb?
 
-const isDescendantHostname = (hna, hnb) => {
+export const isDescendantHostname = (hna, hnb) => {
     if ( hnb === 'all-urls' ) { return true; }
     if ( hna.endsWith(hnb) === false ) { return false; }
     if ( hna === hnb ) { return false; }
@@ -54,7 +54,7 @@ const isDescendantHostname = (hna, hnb) => {
  * @param iterb - an iterable representing the haystack of hostnames.
  */
 
-const isDescendantHostnameOfIter = (hna, iterb) => {
+export const isDescendantHostnameOfIter = (hna, iterb) => {
     const setb = iterb instanceof Set ? iterb : new Set(iterb);
     if ( setb.has('all-urls') || setb.has('*') ) { return true; }
     let hn = hna;
@@ -74,7 +74,7 @@ const isDescendantHostnameOfIter = (hna, iterb) => {
  * @param iterb - an iterable which hostnames must be matched.
  */
 
-const intersectHostnameIters = (itera, iterb) => {
+export const intersectHostnameIters = (itera, iterb) => {
     const setb = iterb instanceof Set ? iterb : new Set(iterb);
     if ( setb.has('all-urls') || setb.has('*') ) { return Array.from(itera); }
     const out = [];
@@ -86,7 +86,7 @@ const intersectHostnameIters = (itera, iterb) => {
     return out;
 };
 
-const subtractHostnameIters = (itera, iterb) => {
+export const subtractHostnameIters = (itera, iterb) => {
     const setb = iterb instanceof Set ? iterb : new Set(iterb);
     if ( setb.has('all-urls') || setb.has('*') ) { return []; }
     const out = [];
@@ -130,52 +130,9 @@ export const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
-export const deepEquals = (a, b) => {
-    switch ( typeof a ) {
-    case 'undefined':
-    case 'boolean':
-    case 'number':
-    case 'string':
-        return a === b;
-    }
-    // case 'object':
-    if ( typeof b !== 'object' ) { return false; }
-    if ( a === null || b === null ) { return a === b; }
-    if ( Array.isArray(a) || Array.isArray(b) ) {
-        if ( Array.isArray(a) === false || Array.isArray(b) === false ) { return false; }
-        if ( a.length !== b.length ) { return false; }
-        for ( let i = 0; i < a.length; i++ ) {
-            if ( deepEquals(a[i], b[i]) === false ) { return false; }
-        }
-        return true;
-    }
-    const akeys = Object.keys(a);
-    const bkeys = Object.keys(b);
-    if ( akeys.length !== bkeys.length ) { return false; }
-    for ( const k of akeys ) {
-        if ( deepEquals(a[k], b[k]) === false ) { return false; }
-    }
-    return true;
-};
-
-/******************************************************************************/
-
-const broadcastMessage = message => {
+export const broadcastMessage = message => {
     const bc = new self.BroadcastChannel('uBOL');
     bc.postMessage(message);
-};
-
-/******************************************************************************/
-
-// Important: We need to sort the arrays for fast comparison
-const strArrayEq = (a = [], b = [], sort = true) => {
-    const alen = a.length;
-    if ( alen !== b.length ) { return false; }
-    if ( sort ) { a.sort(); b.sort(); }
-    for ( let i = 0; i < alen; i++ ) {
-        if ( a[i] !== b[i] ) { return false; }
-    }
-    return true;
 };
 
 /******************************************************************************/
@@ -194,13 +151,4 @@ export function intFromVersion(version) {
 
 /******************************************************************************/
 
-export {
-    broadcastMessage,
-    parsedURLromOrigin,
-    toBroaderHostname,
-    isDescendantHostname,
-    isDescendantHostnameOfIter,
-    intersectHostnameIters,
-    subtractHostnameIters,
-    strArrayEq,
-};
+export const isScriptlet = a => a.startsWith('+js');

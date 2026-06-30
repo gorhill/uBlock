@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Zablokovat prvek...",
+    "message": "Zablokovat prvek…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Ochrana před malwarem, bezpečnost",
+    "message": "Ochrana před malwarem, zabezpečení",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Importovat...",
+    "message": "Importovat…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Aktualizování...",
+    "message": "Aktualizování…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Importovat a připojit...",
+    "message": "Importovat a připojit…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportovat...",
+    "message": "Exportovat…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -592,11 +592,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importovat ze souboru...",
+    "message": "Importovat ze souboru…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportovat do souboru...",
+    "message": "Exportovat do souboru…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importovat a připojit...",
+    "message": "Importovat a připojit…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Exportovat...",
+    "message": "Exportovat…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -976,7 +976,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Webová stránka...",
+    "message": "Webová stránka…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1056,7 +1056,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Zálohovat do souboru...",
+    "message": "Zálohovat do souboru…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1064,11 +1064,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Obnovit ze souboru...",
+    "message": "Obnovit ze souboru…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Obnovit výchozí nastavení...",
+    "message": "Obnovit výchozí nastavení…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1136,7 +1136,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Kvůli následujícímu filtru:",
+    "message": "Toto se stalo kvůli následujícímu filtru:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1208,7 +1208,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -1236,11 +1236,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Zablokovat prvek v rámci...",
+    "message": "Zablokovat prvek v rámci…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Přihlásit se k odběru seznamu filtrů...",
+    "message": "Přihlásit se k odběru seznamu filtrů…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Zobrazit zdrojový kód...",
+    "message": "Zobrazit zdrojový kód…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {

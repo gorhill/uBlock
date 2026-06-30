@@ -24,19 +24,14 @@
  * Implement the parsing of uBO-flavored JSON path queries.
  * 
  * Reference to original JSON path syntax:
- * https://goessner.net/articles/JsonPath/index.html
+ * https://www.rfc-editor.org/info/rfc9535/
  * 
  * uBO-flavored JSON path implementation differs as follow:
+ *   - Array slice operator not supported
+ *   - Selectors can be a `/`-delimited regex, i.e. `$./pattern/`
+ *   - Onle a single filter selector is allowed in filter selector syntax
  * 
- * - Both $ and @ are implicit. Though you can use them, you do not have to.
- *   Use $ only when the implicit context is not that of root. Example:
- *   -     Official: $..book[?(@.isbn)]
- *   - uBO-flavored: ..book[?(.isbn)]
- * 
- * - uBO-flavor syntax does not (yet) support:
- *   - Array slice operator
- * 
- * - Regarding filter expressions, uBO-flavored JSON path supports a limited
+ * - uBO-flavored JSON path supports a limited set of filter selectors:
  *   set of expressions since unlike the official implementation, uBO can't use
  *   JS eval() to evaluate arbitrary JS expressions. The operand MUST be valid
  *   JSON. The currently supported expressions are:
@@ -49,8 +44,13 @@
  *   - ^=: stringified value starts with 
  *   - $=: stringified value ends with
  *   - *=: stringified value includes
- *   - =/.../: regular expression matches
+ *   - =/.../: true if the regular expression matches the stringified value
  * 
+ * - uBO-flavored JSON path supports assignement operator:
+ *   - =[any well-formed JSON value]
+ *   - =repl(...): [to be documented] i.e. {"regex":"...","flags":"i","replacement":"..."}
+ *   - =call(...): [to be documented] i.e. ["${obj}","setAttribute","${key}"]
+ *  * 
  * - Examples (from "JSONPath examples" at reference link)
  *   - .store.book[*].author
  *   - ..author
@@ -85,6 +85,10 @@ export class JSONPath {
         return (stringifier || JSON.stringify)(obj, ...args)
             .replace(/\//g, '\\/');
     }
+    static keys = Object.keys;
+    static entries = Object.entries;
+    static hasOwn = Object.hasOwn;
+    static Regex = RegExp;
     get value() {
         return this.#compiled && this.#compiled.rval;
     }
@@ -97,14 +101,17 @@ export class JSONPath {
     }
     compile(query) {
         this.#compiled = undefined;
+        const v2 = query.startsWith('v2:');
+        if ( v2 ) { query = query.slice(3); }
         const r = this.#compile(query, 0);
         if ( r === undefined ) { return; }
         if ( r.i !== query.length ) {
             let val;
             if ( query.startsWith('=', r.i) ) {
-                if ( /^=repl\(.+\)$/.test(query.slice(r.i)) ) {
-                    r.modify = 'repl';
-                    val = query.slice(r.i+6, -1);
+                const match = this.#reRval.exec(query.slice(r.i));
+                if ( match ) {
+                    r.modify = match[1];
+                    val = match[2];
                 } else {
                     val = query.slice(r.i+1);
                 }
@@ -115,11 +122,12 @@ export class JSONPath {
             try { r.rval = JSON.parse(val); }
             catch { return; }
         }
+        r.v2 = v2;
         this.#compiled = r;
     }
     evaluate(root) {
         if ( this.valid === false ) { return []; }
-        this.#root = root;
+        this.#root = { '$': root };
         const paths = this.#evaluate(this.#compiled.steps, []);
         this.#root = null;
         return paths;
@@ -133,6 +141,7 @@ export class JSONPath {
         if ( i === 0 ) { this.#root = null; return; }
         while ( i-- ) {
             const { obj, key } = this.#resolvePath(paths[i]);
+            if ( obj === undefined ) { continue; }
             if ( rval !== undefined ) {
                 this.#modifyVal(obj, key);
             } else if ( Array.isArray(obj) && typeof key === 'number' ) {
@@ -159,9 +168,12 @@ export class JSONPath {
     #CURRENT = 2;
     #CHILDREN = 3;
     #DESCENDANTS = 4;
+    #QUANTIFIER = 5;
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
-    #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\]/;
+    #reExpr = /^\s*([!=^$*]=|[<>]=?)\s*(.+?)\]/;
     #reIndice = /^-?\d+/;
+    #reRval = /^=([a-z]+)\((.+)\)$/;
+    #reQuantifier = /^\{(\d+|\d+,\d+|\d+,|,\d+)\};\$/;
     #root;
     #compiled;
     #compile(query, i) {
@@ -197,24 +209,54 @@ export class JSONPath {
                 }
                 continue;
             }
+            if ( c === 0x3B /* ; */ ) {
+                if ( query.startsWith(';$', i) === false ) { return; }
+                steps.push(
+                    { mv: this.#QUANTIFIER, min: 1, max: 1e6 },
+                    { mv: this.#ROOT }
+                );
+                i += 2;
+                mv = this.#UNDEFINED;
+                continue;
+            }
+            if ( c === 0x7B /* { */ ) {
+                const match = this.#reQuantifier.exec(query.slice(i));
+                if ( match === null ) { return; }
+                const comma = match[1].indexOf(',');
+                let min, max;
+                if ( comma === -1 ) {
+                    min = max = parseInt(match[1]);
+                } else {
+                    min = parseInt(match[1].slice(0, comma)) || 0;
+                    max = parseInt(match[1].slice(comma+1)) || 1e6;
+                }
+                steps.push(
+                    { mv: this.#QUANTIFIER, min, max },
+                    { mv: this.#ROOT }
+                );
+                i += match[0].length;
+                mv = this.#UNDEFINED;
+                continue;
+            }
             if ( c !== 0x5B /* [ */ ) {
                 if ( mv === this.#UNDEFINED ) {
                     const step = steps.at(-1);
                     if ( step === undefined ) { return; }
-                    i = this.#compileExpr(query, step, i);
+                    const j = this.#compileExpr(query, step, i);
+                    if ( j ) { i = j; }
                     break;
                 }
-                const s = this.#consumeUnquotedIdentifier(query, i);
-                if  ( s === undefined ) { return; }
-                steps.push({ mv, k: s });
-                i += s.length;
+                const r = this.#consumeUnquotedIdentifier(query, i);
+                if  ( r === undefined ) { return; }
+                steps.push({ mv, k: r.s });
+                i = r.i;
                 mv = this.#UNDEFINED;
                 continue;
             }
             // Bracket accessor syntax
             if ( query.startsWith('[?', i) ) {
-                const not = query.charCodeAt(i+2) === 0x21 /* ! */;
-                const j = i + 2 + (not ? 1 : 0);
+                const not = query.charCodeAt(i+2) === 0x21 /* ! */ ? 1 : 0;
+                const j = i + 2 + not;
                 const r = this.#compile(query, j);
                 if ( r === undefined ) { return; }
                 if ( query.startsWith(']', r.i) === false ) { return; }
@@ -251,12 +293,26 @@ export class JSONPath {
                 resultset = [ [ '$' ] ];
                 break;
             case this.#CURRENT:
+                if ( step.op ) {
+                    const { obj, key } = this.#resolvePath(pathin);
+                    if ( obj === undefined ) { return []; }
+                    const outcome = this.#evaluateExpr(step, obj, key);
+                    if ( outcome !== true ) { break; }
+                }
                 resultset = [ pathin ];
                 break;
             case this.#CHILDREN:
-            case this.#DESCENDANTS:
+            case this.#DESCENDANTS: {
+                if ( resultset.length === 0 ) { break; }
                 resultset = this.#getMatches(resultset, step);
                 break;
+            }
+            case this.#QUANTIFIER: {
+                const { length } = resultset;
+                if ( length < step.min || length > step.max ) { return []; }
+                resultset = [];
+                break;
+            }
             default:
                 break;
             }
@@ -267,60 +323,71 @@ export class JSONPath {
         const listout = [];
         for ( const pathin of listin ) {
             const { value: owner } = this.#resolvePath(pathin);
-            if ( step.k === '*' ) {
-                this.#getMatchesFromAll(pathin, step, owner, listout);
-            } else if ( step.k !== undefined ) {
-                this.#getMatchesFromKeys(pathin, step, owner, listout);
-            } else if ( step.steps ) {
+            if ( owner === undefined ) { continue; }
+            if ( step.steps ) {
                 this.#getMatchesFromExpr(pathin, step, owner, listout);
+                continue;
+            }
+            const iter = this.#expandKey(owner, step.k);
+            if ( iter ) {
+                for ( const k of iter ) {
+                    const outcome = this.#evaluateExpr(step, owner, k);
+                    if ( outcome !== true ) { continue; }
+                    listout.push([ ...pathin, k ]);
+                }
+            }
+            if ( step.mv !== this.#DESCENDANTS ) { continue; }
+            for ( const { obj, key, path } of this.#getDescendants(owner, true) ) {
+                const iter = this.#expandKey(obj[key], step.k);
+                if ( iter === undefined ) { continue; }
+                for ( const k of iter ) {
+                    const outcome = this.#evaluateExpr(step, obj[key], k);
+                    if ( outcome !== true ) { continue; }
+                    listout.push([ ...pathin, ...path, k ]);
+                }
             }
         }
         return listout;
     }
-    #getMatchesFromAll(pathin, step, owner, out) {
-        const recursive = step.mv === this.#DESCENDANTS;
-        for ( const { path } of this.#getDescendants(owner, recursive) ) {
-            out.push([ ...pathin, ...path ]);
-        }
-    }
-    #getMatchesFromKeys(pathin, step, owner, out) {
-        const kk = Array.isArray(step.k) ? step.k : [ step.k ];
-        for ( const k of kk ) {
-            const normalized = this.#evaluateExpr(step, owner, k);
-            if ( normalized === undefined ) { continue; }
-            out.push([ ...pathin, normalized ]);
-        }
-        if ( step.mv !== this.#DESCENDANTS ) { return; }
-        for ( const { obj, key, path } of this.#getDescendants(owner, true) ) {
-            for ( const k of kk ) {
-                const normalized = this.#evaluateExpr(step, obj[key], k);
-                if ( normalized === undefined ) { continue; }
-                out.push([ ...pathin, ...path, normalized ]);
+    #expandKey(owner, k) {
+        if ( typeof owner !== 'object' ) { return; }
+        if ( Array.isArray(k) ) {
+            const out = [];
+            for ( const a of k ) {
+                const iter = this.#expandKey(owner, a);
+                if ( iter === undefined ) { continue; }
+                out.push(...iter);
             }
+            return out;
         }
+        if ( typeof k === 'number' ) {
+            if ( Array.isArray(owner) === false ) { return; }
+            return [ k >= 0 ? k : owner.length + k ];
+        }
+        if ( k === '*' ) {
+            if ( Array.isArray(owner) ) { return owner.keys(); }
+            return JSONPath.keys(owner);
+        }
+        if ( k instanceof JSONPath.Regex ) {
+            const out = [];
+            for ( const key of JSONPath.keys(owner) ) {
+                if ( k.test(key) === false ) { continue; }
+                out.push(key);
+            }
+            return out;
+        }
+        return [ k ];
     }
     #getMatchesFromExpr(pathin, step, owner, out) {
         const recursive = step.mv === this.#DESCENDANTS;
-        if ( Array.isArray(owner) === false ) {
-            const r = this.#evaluate(step.steps, pathin);
-            if ( r.length !== 0 ) { out.push(pathin); }
-            if ( recursive !== true ) { return; }
-        }
-        for ( const { obj, key, path } of this.#getDescendants(owner, recursive) ) {
-            if ( Array.isArray(obj[key]) ) { continue; }
-            const q = [ ...pathin, ...path ];
+        const v2 = this.#compiled.v2 || recursive || Array.isArray(owner);
+        for ( const { path } of this.#getDescendants(owner, recursive) ) {
+            const q = v2 ? [ ...pathin, ...path ] : pathin;
             const r = this.#evaluate(step.steps, q);
-            if ( r.length === 0 ) { continue; }
+            if ( Boolean(r?.length) === false ) { continue; }
             out.push(q);
+            if ( v2 === false ) { break; }
         }
-    }
-    #normalizeKey(owner, key) {
-        if ( typeof key === 'number' ) {
-            if ( Array.isArray(owner) ) {
-                return key >= 0 ? key : owner.length + key;
-            }
-        }
-        return key;
     }
     #getDescendants(v, recursive) {
         const iterator = {
@@ -349,7 +416,7 @@ export class JSONPath {
                     if ( Array.isArray(v) ) {
                         this.stack.push({ obj: v, keys: v.keys() });
                     } else if ( typeof v === 'object' && v !== null ) {
-                        this.stack.push({ obj: v, keys: Object.keys(v).values() });
+                        this.stack.push({ obj: v, keys: JSONPath.keys(v).values() });
                     }
                 }
                 return this;
@@ -363,7 +430,7 @@ export class JSONPath {
         if ( Array.isArray(v) ) {
             iterator.stack.push({ obj: v, keys: v.keys() });
         } else if ( typeof v === 'object' && v !== null ) {
-            iterator.stack.push({ obj: v, keys: Object.keys(v).values() });
+            iterator.stack.push({ obj: v, keys: JSONPath.keys(v).values() });
         }
         return iterator;
     }
@@ -372,12 +439,12 @@ export class JSONPath {
         for (;;) {
             const c0 = query.charCodeAt(i);
             if ( c0 === 0x5D /* ] */ ) { break; }
-            if ( c0 === 0x2C /* , */ ) {
+            if ( c0 === 0x2C /* , */ || c0 === 0x20 /* SPACE */) {
                 i += 1;
                 continue;
             }
-            if ( c0 === 0x27 /* ' */ ) {
-                const r = this.#untilChar(query, 0x27 /* ' */, i+1)
+            if ( c0 === 0x22 /* " */ || c0 === 0x27 /* ' */ ) {
+                const r = this.#untilChar(query, c0, i+1);
                 if ( r === undefined ) { return; }
                 keys.push(r.s);
                 i = r.i;
@@ -391,17 +458,24 @@ export class JSONPath {
                 i += match[0].length;
                 continue;
             }
-            const s = this.#consumeUnquotedIdentifier(query, i);
-            if ( s === undefined ) { return; }
-            keys.push(s);
-            i += s.length;
+            const r = this.#consumeUnquotedIdentifier(query, i);
+            if ( r === undefined ) { return; }
+            keys.push(r.s);
+            i = r.i;
         }
         return { s: keys.length === 1 ? keys[0] : keys, i };
     }
     #consumeUnquotedIdentifier(query, i) {
+        if ( query.charCodeAt(i) === 0x2F /* / */ ) {
+            const r = this.#untilChar(query, 0x2F, i+1);
+            if ( r === undefined ) { return; }
+            let re;
+            try { re = new JSONPath.Regex(r.s); } catch { return; }
+            return { s: re, i: r.i };
+        }
         const match = this.#reUnquotedIdentifier.exec(query.slice(i));
         if ( match === null ) { return; }
-        return match[0];
+        return { s: match[0], i: i + match[0].length };
     }
     #untilChar(query, targetCharCode, i) {
         const len = query.length;
@@ -433,22 +507,27 @@ export class JSONPath {
             if ( r === undefined ) { return i; }
             const match = /^[i]/.exec(query.slice(r.i));
             try {
-                step.rval = new RegExp(r.s, match && match[0] || undefined);
-            } catch {
-                return i;
-            }
+                step.rval = new JSONPath.Regex(r.s, match && match[0] || undefined);
+            } catch { return; }
             step.op = 're';
             if ( match ) { r.i += match[0].length; }
             return r.i;
         }
         const match = this.#reExpr.exec(query.slice(i));
-        if ( match === null ) { return i; }
-        try {
-            step.rval = JSON.parse(match[2]);
-            step.op = match[1];
-        } catch {
+        if ( match === null ) { return; }
+        const op = match[1], rval = match[2];
+        if ( rval.charCodeAt(0) === 0x27 /* ' */ ) {
+            const r = this.#untilChar(rval, 0x27, 1);
+            if ( r === undefined ) { return; }
+            step.rval = r.s;
+            step.op = op;
+        } else {
+            try {
+                step.rval = JSON.parse(rval);
+                step.op = op;
+            } catch { return; }
         }
-        return i + match[1].length + match[2].length;
+        return i + match[0].length - 1;
     }
     #resolvePath(path) {
         if ( path.length === 0 ) { return { value: this.#root }; }
@@ -456,34 +535,30 @@ export class JSONPath {
         let obj = this.#root
         for ( let i = 0, n = path.length-1; i < n; i++ ) {
             obj = obj[path[i]];
+            if ( obj instanceof Object === false ) { return {}; }
         }
         return { obj, key, value: obj[key] };
     }
-    #evaluateExpr(step, owner, key) {
+    #evaluateExpr(step, owner, k) {
         if ( owner === undefined || owner === null ) { return; }
-        if ( typeof key === 'number' ) {
-            if ( Array.isArray(owner) === false ) { return; }
-        }
-        const k = this.#normalizeKey(owner, key);
-        const hasOwn = Object.hasOwn(owner, k);
+        const hasOwn = owner[k] !== undefined || JSONPath.hasOwn(owner, k);
         if ( step.op !== undefined && hasOwn === false ) { return; }
         const target = step.not !== true;
         const v = owner[k];
-        let outcome = false;
         switch ( step.op ) {
-        case '==': outcome = (v === step.rval) === target; break;
-        case '!=': outcome = (v !== step.rval) === target; break;
-        case  '<': outcome = (v < step.rval) === target; break;
-        case '<=': outcome = (v <= step.rval) === target; break;
-        case  '>': outcome = (v > step.rval) === target; break;
-        case '>=': outcome = (v >= step.rval) === target; break;
-        case '^=': outcome = `${v}`.startsWith(step.rval) === target; break;
-        case '$=': outcome = `${v}`.endsWith(step.rval) === target; break;
-        case '*=': outcome = `${v}`.includes(step.rval) === target; break;
-        case 're': outcome = step.rval.test(`${v}`); break;
-        default: outcome = hasOwn === target; break;
+        case '==': return (v === step.rval) === target;
+        case '!=': return (v !== step.rval) === target;
+        case  '<': return (v < step.rval) === target;
+        case '<=': return (v <= step.rval) === target;
+        case  '>': return (v > step.rval) === target;
+        case '>=': return (v >= step.rval) === target;
+        case '^=': return `${v}`.startsWith(step.rval) === target;
+        case '$=': return `${v}`.endsWith(step.rval) === target;
+        case '*=': return `${v}`.includes(step.rval) === target;
+        case 're': return step.rval.test(`${v}`);
+        default: break;
         }
-        if ( outcome ) { return k; }
+        return hasOwn === target;
     }
     #modifyVal(obj, key) {
         let { modify, rval } = this.#compiled;
@@ -499,9 +574,21 @@ export class JSONPath {
             const lval = obj[key];
             if ( lval instanceof Object === false ) { return; }
             if ( Array.isArray(lval) ) { return; }
-            for ( const [ k, v ] of Object.entries(rval) ) {
+            for ( const [ k, v ] of JSONPath.entries(rval) ) {
                 lval[k] = v;
             }
+            break;
+        }
+        case 'call': {
+            const entries = rval.slice();
+            if ( entries.length < 2 ) { break; }
+            entries.forEach((a, i, aa) => {
+                if ( a === '${obj}' ) { aa[i] = obj; }
+                else if ( a === '${key}' ) { aa[i] = key; }
+                else if ( a === '${val}' ) { aa[i] = obj[key]; }
+            });
+            const instance = entries[0] ?? self;
+            instance[entries[1]](...entries.slice(2));
             break;
         }
         case 'repl': {
@@ -511,10 +598,9 @@ export class JSONPath {
                 this.#compiled.re = null;
                 try {
                     this.#compiled.re = rval.regex !== undefined
-                        ? new RegExp(rval.regex, rval.flags)
-                        : new RegExp(rval.pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-                } catch {
-                }
+                        ? new JSONPath.Regex(rval.regex, rval.flags)
+                        : new JSONPath.Regex(rval.pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                } catch { }
             }
             if ( this.#compiled.re === null ) { return; }
             obj[key] = lval.replace(this.#compiled.re, rval.replacement);

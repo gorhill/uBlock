@@ -20,37 +20,54 @@
 */
 
 (function() {
-    'use strict';
-    const init = ( ) => {
-        window.adsbygoogle = {
-            loaded: true,
-            push: function() {
-            }
-        };
-        const phs = document.querySelectorAll('.adsbygoogle');
-        const css = 'height:1px!important;max-height:1px!important;max-width:1px!important;width:1px!important;';
-        for ( let i = 0; i < phs.length; i++ ) {
-            const id = `aswift_${i}`;
-            if ( document.querySelector(`iframe#${id}`) !== null ) { continue; }
-            const fr = document.createElement('iframe');
-            fr.id = id;
-            fr.style = css;
-            const cfr = document.createElement('iframe');
-            cfr.id = `google_ads_frame${i}`;
-            fr.appendChild(cfr);
-            const ph = phs[i];
-            ph.appendChild(fr);
-            ph.setAttribute('data-adsbygoogle-status', 'done');
+    self.adsbygoogle = self.adsbygoogle || {
+        loaded: true,
+        push: function() {
+            ;
         }
     };
-    if (
-        document.querySelectorAll('.adsbygoogle').length === 0 &&
-        document.readyState === 'loading'
-    ) {
-        window.addEventListener('DOMContentLoaded', init, { once: true });
-    } else {
-        init();
-    }
+    let adCount = 1;
+    const setupAd = (placeholder) => {
+        const fr = document.createElement('iframe');
+        fr.id = `aswift_${adCount}`;
+        fr.setAttribute('name', fr.id);
+        adCount += 1;
+        placeholder.dataset.adsbygoogleStatus = 'loading';
+        placeholder.dataset.adStatus = 'loading';
+        placeholder.appendChild(fr);
+        fr.addEventListener('load', ( ) => {
+            placeholder.dataset.adsbygoogleStatus = 'done';
+            placeholder.dataset.adStatus = 'filled';
+            fr.dataset.loadComplete = 'true';
+        }, { once: true });
+        fr.contentWindow.location = 'data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCiAgICA8aGVhZD48dGl0bGU+PC90aXRsZT48L2hlYWQ+DQogICAgPGJvZHk+PC9ib2R5Pg0KPC9odG1sPg==';
+    };
+    const process = ( ) => {
+        const phs = document.querySelectorAll('.adsbygoogle:not([data-ad-status][data-adsbygoogle-status])');
+        for ( const ph of phs ) {
+            setupAd(ph);
+        }
+    };
+    process();
+
+    let observer = new MutationObserver(( ) => {
+        if ( process.timer !== undefined ) { return; }
+        process.timer = self.requestAnimationFrame(( ) => {
+            process.timer = undefined;
+            process();
+        },);
+    });
+    observer.observe(document, {
+        attributes: true,
+        attributeFilter: [ 'class' ],
+        childList: true,
+        subtree: true,
+    });
+
+    setTimeout(( ) => {
+        observer.disconnect();
+        observer = undefined;
+    }, 20000);
 })();
 
 /*

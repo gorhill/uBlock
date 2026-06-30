@@ -87,6 +87,18 @@
     "message": "Регионы, языки",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Импортированные списки",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Добавить список фильтров…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Вставьте сюда URL-адрес списка фильтров для добавления",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Импорт / Экспорт",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Вставьте сюда отдельные косметические фильтры/скриптлеты для добавления",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Чтобы применять косметические фильтры или скриптлеты из импортированных списков, вы должны предоставить uBO Lite разрешение на запуск пользовательских скриптов. Откройте страницу расширений вашего браузера (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> в Firefox), откройте <b>uBO Lite</b> и включите <b>Разрешить пользовательские скрипты</b> (так называемые «непроверенные сторонние скрипты»).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Список изменений",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Переход к потенциально нежелательным сайтам будет заблокирован, и будет дана возможность продолжить переход на сайт",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Включить блокировку всплывающих окон",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Если активно, то подходящие фильтры будут автоматически закрывать нежелательные вкладки браузера, создаваемые веб-сайтами.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Песочница для создания фильтров",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Режим разработчика",

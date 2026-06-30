@@ -13,3 +13,7 @@ Imported version 1.2.0 of the library from
 https://github.com/foo123/RegexAnalyzer/blob/1.2.0/src/js/Regex.js
 
 Minimally modified the code to make it ECMAscript `export`-/`import`-friendly.
+
+2026-05-13
+
+Expose `Regex` object as a property of `globalThis`.

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Aturan lokal: kolom ini untuk aturan yang diterapkan ke situs yang sedang dikunjungi saja.\nAturan lokal menimpa aturan global.",
+    "message": "Aturan lokal: kolom ini untuk aturan yang diterapkan ke situs yang sedang dikunjungi saja.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokir elemen...",
+    "message": "Blok elemen",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Impor...",
+    "message": "Impor…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Memperbarui...",
+    "message": "Memperbarui…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -592,7 +592,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Impor dari berkas...",
+    "message": "Impor dari berkas…",
     "description": ""
   },
   "rulesExport": {
@@ -1064,11 +1064,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Pulihkan dari berkas...",
+    "message": "Pulihkan dari berkas…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Kembalikan ke pengaturan bawaan...",
+    "message": "Kembalikan ke pengaturan bawaan…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1240,7 +1240,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Berlangganan daftar filter...",
+    "message": "Berlangganan daftar filter…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

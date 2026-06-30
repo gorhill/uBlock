@@ -25,7 +25,7 @@ import redirectResourceMap from './redirect-resources.js';
 
 /******************************************************************************/
 
-const validResourceTypes = [
+const safeResourceTypes = [
     'main_frame',
     'sub_frame',
     'stylesheet',
@@ -38,8 +38,6 @@ const validResourceTypes = [
     'csp_report',
     'media',
     'websocket',
-    'webtransport',
-    'webbundle',
     'other',
 ];
 
@@ -157,7 +155,7 @@ function mergeArrays(rules, propertyPath) {
 
 /******************************************************************************/
 
-function minimizeRuleset(rules) {
+export function minimizeRuleset(rules) {
     rules = mergeArrays(rules, 'condition.requestDomains');
     rules = mergeArrays(rules, 'condition.excludedRequestDomains');
     rules = mergeArrays(rules, 'condition.initiatorDomains');
@@ -174,7 +172,7 @@ function minimizeRuleset(rules) {
 
 /******************************************************************************/
 
-function minimizeRules(rules) {
+export function minimizeRules(rules) {
     const hostnameListProp = [
         'requestDomains',
         'excludedRequestDomains',
@@ -215,7 +213,7 @@ function dropEntities(rule, prop) {
 
 /******************************************************************************/
 
-function validateRules(rules) {
+export function validateRules(rules) {
     const out = [];
     for ( const rule of rules ) {
         const { condition } = rule;
@@ -243,15 +241,26 @@ function validateRules(rules) {
 
 /******************************************************************************/
 
-export function parseNetworkFilter(parser) {
+// Priority:
+//   Removeparam: 1-4
+//   Block: 10 (default priority)
+//   Redirect: 11-19
+//   Excepted redirect: 21-29
+//   Allow: 30
+//   Block important: 40
+//   Redirect important: 41-49
+
+export function parseNetworkFilter(parser, details = {}) {
     if ( parser.isNetworkFilter() === false ) { return; }
     if ( parser.hasError() ) { return; }
 
+    const validResourceTypes = details.resourceTypes ?? safeResourceTypes;
     const rule = {
         action: { type: 'block' },
         condition: { },
     };
-    if ( parser.isException() ) {
+    const isException = parser.isException();
+    if ( isException ) {
         rule.action.type = 'allow';
     }
 
@@ -275,12 +284,12 @@ export function parseNetworkFilter(parser) {
     }
 
     const defaultResourceTypes = new Set();
-    let defaultUrlFilter = '';
-
     const initiatorDomains = new Set();
     const excludedInitiatorDomains = new Set();
     const requestDomains = new Set();
     const excludedRequestDomains = new Set();
+    const topDomains = new Set();
+    const excludedTopDomains = new Set();
     const requestMethods = new Set();
     const excludedRequestMethods = new Set();
     const resourceTypes = new Set();
@@ -298,7 +307,8 @@ export function parseNetworkFilter(parser) {
         }
     };
 
-    let priority = 0;
+    let subpriority = 0;
+    let isImportant = false;
 
     for ( const type of parser.getNodeTypes() ) {
         switch ( type ) {
@@ -389,6 +399,7 @@ export function parseNetworkFilter(parser) {
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_RESPONSEHEADER: {
             const details = sfp.parseHeaderValue(parser.getNetOptionValue(type));
+            if ( details.bad ) { return; }
             const headerInfo = {
                 header: details.name,
             };
@@ -396,14 +407,18 @@ export function parseNetworkFilter(parser) {
                 if ( details.isRegex ) { return; }
                 headerInfo.values = [ details.value ];
             }
-            rule.condition.responseHeaders = [ headerInfo ];
+            if ( details.not ) {
+                rule.condition.excludedResponseHeaders = [ headerInfo ];
+            } else {
+                rule.condition.responseHeaders = [ headerInfo ];
+            }
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMAGE:
             processResourceType('image', type);
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
-            priority += 30;
+            isImportant = true;
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
             rule.condition.isUrlFilterCaseSensitive = true;
@@ -451,8 +466,7 @@ export function parseNetworkFilter(parser) {
             let value = parser.getNetOptionValue(type);
             const match = /:(\d+)$/.exec(value);
             if ( match ) {
-                const subpriority = parseInt(match[1], 10);
-                priority += Math.min(subpriority, 8);
+                subpriority = Math.min(parseInt(match[1], 10) || 0, 8);
                 value = value.slice(0, match.index);
             }
             if ( validRedirectResources.has(value) === false ) { return; }
@@ -460,7 +474,6 @@ export function parseNetworkFilter(parser) {
             rule.action.redirect = {
                 extensionPath: `/web_accessible_resources/${validRedirectResources.get(value)}`,
             };
-            priority += 11;
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM: {
@@ -471,6 +484,11 @@ export function parseNetworkFilter(parser) {
             const removeParams = [];
             if ( details.name ) {
                 removeParams.push(details.name);
+                if ( rule.condition.urlFilter === undefined ) {
+                    if ( rule.condition.regexFilter === undefined ) {
+                        rule.condition.urlFilter = `^${details.name}=`;
+                    }
+                }
             }
             rule.action.type = 'redirect';
             rule.action.redirect = {
@@ -479,7 +497,6 @@ export function parseNetworkFilter(parser) {
             defaultResourceTypes.add('main_frame');
             defaultResourceTypes.add('sub_frame');
             defaultResourceTypes.add('xmlhttprequest');
-            defaultUrlFilter = '?';
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
@@ -498,6 +515,22 @@ export function parseNetworkFilter(parser) {
             }
             for ( const hn of excluded.good ) {
                 excludedRequestDomains.add(hn);
+            }
+            break;
+        }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_TOP: {
+            const { included, excluded } = parseHostnameList(
+                parser.getNetFilterTopOptionIterator()
+            );
+            if ( included.good.length === 0 ) {
+                if ( included.bad.length !== 0 ) { return; }
+            }
+            if ( excluded.bad.length !== 0 ) { return; }
+            for ( const hn of included.good ) {
+                topDomains.add(hn);
+            }
+            for ( const hn of excluded.good ) {
+                excludedTopDomains.add(hn);
             }
             break;
         }
@@ -521,9 +554,6 @@ export function parseNetworkFilter(parser) {
             break;
         }
     }
-    if ( pattern === '*' && defaultUrlFilter !== '' ) {
-        rule.condition.urlFilter = defaultUrlFilter;
-    }
     if ( initiatorDomains.size !== 0 ) {
         rule.condition.initiatorDomains = Array.from(initiatorDomains).sort();
     }
@@ -535,6 +565,12 @@ export function parseNetworkFilter(parser) {
     }
     if ( excludedRequestDomains.size !== 0 ) {
         rule.condition.excludedRequestDomains = Array.from(excludedRequestDomains).sort();
+    }
+    if ( topDomains.size !== 0 ) {
+        rule.condition.topDomains = Array.from(topDomains).sort();
+    }
+    if ( excludedTopDomains.size !== 0 ) {
+        rule.condition.excludedTopDomains = Array.from(excludedTopDomains).sort();
     }
     if ( requestMethods.size !== 0 ) {
         rule.condition.requestMethods = Array.from(requestMethods).sort();
@@ -552,9 +588,37 @@ export function parseNetworkFilter(parser) {
     }
     if ( excludedResourceTypes.size !== 0 ) {
         if ( resourceTypes.size !== 0 ) { return; }
+        excludedResourceTypes.add('main_frame');
         rule.condition.excludedResourceTypes = Array.from(excludedResourceTypes).sort();
     }
-    if ( priority !== 0 ) {
+    let priority = 1;
+    if ( rule.action.type === 'block' ) {
+        priority = isImportant ? 40 : 10;
+    } else if ( rule.action.type === 'allow' ) {
+        priority = 30;
+    } else if ( rule.action.type === 'redirect' ) {
+        if ( rule.action.redirect.extensionPath ) {
+            if ( isException ) {
+                rule.action.type = 'block';
+                delete rule.action.redirect;
+                priority = 20;
+            } else {
+                priority = (isImportant ? 41 : 11) + subpriority;
+            }
+        } else if ( rule.action.redirect.transform?.queryTransform?.removeParams ) {
+            if ( isException ) {
+                rule.action.type = 'allow';
+                delete rule.action.redirect;
+            }
+        } else if ( rule.action.redirect.regexSubstitution ) {
+        }
+    } else if ( rule.action.type === 'modifyHeaders' ) {
+        if ( isException ) {
+            rule.action.type = 'allow';
+            delete rule.action.responseHeaders;
+        }
+    }
+    if ( priority !== 1 ) {
         rule.priority = priority;
     }
     return rule;
@@ -562,7 +626,7 @@ export function parseNetworkFilter(parser) {
 
 /******************************************************************************/
 
-export function parseFilters(text) {
+export function parseFilters(text, details) {
     if ( text.startsWith('---') ) { return; }
     if ( text.endsWith('---') ) { return; }
     const lines = text.split(/\n/);
@@ -572,7 +636,7 @@ export function parseFilters(text) {
     for ( const line of lines ) {
         parser.parse(line);
         if ( parser.isNetworkFilter() === false ) { continue; }
-        const rule = parseNetworkFilter(parser);
+        const rule = parseNetworkFilter(parser, details);
         if ( rule === undefined ) { continue; }
         rules.push(rule);
     }

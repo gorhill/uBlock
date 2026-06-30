@@ -87,6 +87,18 @@
     "message": "Regions, llengües",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Llistes importades",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Afegeix una llista de filtres…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Enganxeu aquí l'URL de la llista de filtres per a afegir-la",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importa/Exporta",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Enganxeu aquí els filtres cosmètics que voleu afegir",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Per a aplicar filtres cosmètics o de scripts mitjançant llistes importades, doneu permís a l'uBO Lite d'execució de scripts d'usuari. Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> al Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenats «scripts de tercers no verificats»).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Registre de canvis",
@@ -140,7 +156,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Cerca d'informes semblants",
+    "message": "Cerca informes similars al GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -188,7 +204,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crea un informe nou",
+    "message": "Crea un informe nou al GitHub",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -255,6 +271,18 @@
     "message": "Es blocarà la navegació en webs potencialment no desitjables, oferint-vos la possibilitat de continuar.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Activa el bloqueig de finestres emergents",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "En activar-se, els filtres coincidents tancaran automàticament les pestanyes del navegador no desitjades creades pels llocs web.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Entorn de proves per a la creació de filtres",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mode de desenvolupador",
     "description": "Label for a checkbox in the options page"
@@ -316,7 +344,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Accedeix al mode d'eliminació d'elements",
+    "message": "Elimina un element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

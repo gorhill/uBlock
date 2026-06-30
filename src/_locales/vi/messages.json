@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Quy tắc nội bộ: cột này dành cho quy tắc chỉ áp dụng cho trang hiện tại.\nQuy tắc nội bộ sẽ thay thế quy tắc chung.",
+    "message": "Quy tắc nội bộ: cột này dành cho quy tắc chỉ áp dụng cho trang hiện tại.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Đang cập nhật...",
+    "message": "Đang cập nhật…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -904,7 +904,7 @@
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Tìm các báo cáo tương tự",
+    "message": "Tìm các báo cáo tương tự trên Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -1048,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Danh sách các bộ lọc của riêng uBO được lưu trữ miễn phí tại các <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> sau:",
+    "message": "Danh sách bộ lọc riêng của uBO được lưu trữ miễn phí trên các trang <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1132,7 +1132,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBloc Origin đã chặn tải trang sau:",
+    "message": "uBlock Origin đã chặn tải trang sau:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {

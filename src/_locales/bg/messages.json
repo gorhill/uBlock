@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локални правила: колона с правила, приложими само към текущият сайт. Локалните правила заместват глобалните.",
+    "message": "Локални правила: колона с правила, приложими само към текущият сайт.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

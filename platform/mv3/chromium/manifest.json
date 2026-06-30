@@ -42,10 +42,12 @@
   "options_page": "dashboard.html",
   "permissions": [
     "activeTab",
+    "alarms",
     "declarativeNetRequest",
     "offscreen",
     "scripting",
     "storage",
+    "unlimitedStorage",
     "userScripts"
   ],
   "short_name": "AdNauseam",

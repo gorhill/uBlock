@@ -35,11 +35,12 @@ function urlToFragment(raw) {
     try {
         const fragment = new DocumentFragment();
         const url = new URL(raw);
+        const href = url.href;
         const hn = url.hostname;
-        const i = raw.indexOf(hn);
+        const i = href.indexOf(hn);
         const b = document.createElement('b');
         b.append(hn);
-        fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
+        fragment.append(href.slice(0,i), b, href.slice(i+hn.length));
         return fragment;
     } catch {
     }
@@ -109,12 +110,11 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 // Enforce popup filters
 
 (async ( ) => {
-    const filteringMode = await sendMessage({
-        what: 'getFilteringMode',
-        hostname: toURL.hostname,
+    const currentConfig = await sendMessage({
+        what: 'getCurrentConfig',
     });
     // Enforce popup filtering in complete mode only
-    if ( filteringMode < 3 ) { return; }
+    if ( currentConfig.popupBlockingMode !== true ) { return; }
     const rulesetDetails = await rulesetDetailsPromise;
     const toImport = [];
     for ( const details of rulesetDetails ) {

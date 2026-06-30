@@ -87,6 +87,18 @@
     "message": "Региони, езици",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Импортирани списъци",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Добавяне на списък с филтри…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Поставете тук URL адреса на списъка с филтри, който искате да добавите",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Импортиране / експортиране",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Поставете тук конкретни козметични филтри, които искате да добавите",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "За да приложите козметични филтри или филтри за скриптове от импортирани списъци, трябва да предоставите на uBO Lite разрешение да изпълнява потребителски скриптове. Отворете страницата с разширенията на браузъра си (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> във Firefox), отворете подробностите за <b>uBO Lite</b> и активирайте опцията <b>Разрешаване на потребителски скриптове</b> (наричани още „непроверени скриптове от трети страни“).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Списък с промени",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Навигацията към потенциално нежелани сайтове ще бъде блокирана и ще ви бъде предложена възможността да продължите.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Активиране на блокирането на изскачащи прозорци",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Когато тази функция е активирана, филтрите за съвпадение автоматично затварят нежеланите раздели в браузъра, създадени от уебсайтове.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Тестова среда за създаване на филтри",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Режим за програмисти",

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "දේශීය නීති: මෙම තීරුව වත්මන් අඩවියට පමණක් අදාළ වන නීති සඳහා වේ.\nදේශීය නීති ගෝලීය නීති අභිබවා යයි.",
+    "message": "දේශීය නීති: මෙම තීරුව වත්මන් අඩවියට පමණක් අදාළ වන නීති සඳහා වේ.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

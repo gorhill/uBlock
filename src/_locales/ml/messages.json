@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "താമസിക്കുക",
+    "message": "ഇവിടെ തുടരുക",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "പ്രാദേശിക നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ നിലവിലെ സൈറ്റിലെ മാത്രം പ്രയോഗിക്കുന്ന.\nപ്രാദേശിക നിയമങ്ങൾ ആഗോള നിയമങ്ങൾ അതിലംഘിച്ച് പ്രവർത്തിക്കുന്നതായിരിക്കും.",
+    "message": "പ്രാദേശിക നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ നിലവിലെ സൈറ്റിലെ മാത്രം പ്രയോഗിക്കുന്ന.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "മാല്‍വെയര്‍ ഡൊമൈനുകള്‍",
+    "message": "മാൽവെയർ സംരക്ഷണം, സുരക്ഷ",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {

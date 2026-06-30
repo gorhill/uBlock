@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Ένα πειραματικό εργαλείο φραγής περιεχομένου χωρίς δικαιώματα. Αποκλείει διαφημίσεις, ιχνηλάτες και πολλά άλλα μετά την εγκατάσταση.",
+    "message": "Ένα αποδοτικό πρόγραμμα φραγής περιεχομένου. Αποκλείει διαφημίσεις, ιχνηλάτες, εξορύκτες και άλλα αμέσως μετά την εγκατάσταση.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
-    "message": "Σχετικά",
+    "message": "Πληροφορίες",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -40,11 +40,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "Για αυτόν τον ιστότοπο",
+    "message": "Σε αυτόν τον ιστότοπο",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Αναφορά ενός ζητήματος σε αυτόν τον ιστότοπο",
+    "message": "Αναφορά σφάλματος",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -87,13 +87,29 @@
     "message": "Περιοχές, γλώσσες",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Εισαγόμενες λίστες φίλτρων",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Προσθήκη λίστας φίλτρων…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Επικολλήστε το URL της λίστας φίλτρων εδώ",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Εισαγωγή / Εξαγωγή",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Επικολλήστε εδώ για προσθέσετε φίλτρα για συγκεκριμένα διακοσμητικά",
+    "message": "Επικολλήστε εδώ συγκεκριμένα φίλτρα μορφοποίησης ή σεναρίων για προσθήκη",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Αρχείο αλλαγών",
@@ -124,7 +140,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Αναφορά προβλήματος φίλτρου",
+    "message": "Αναφορά σφάλματος φίλτρου",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -140,7 +156,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Βρείτε παρόμοιες αναφορές στο GitHub",
+    "message": "Εύρεση παρόμοιων αναφορών στο GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -168,7 +184,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Έχει ζητήματα σχετικά με το απόρρητο",
+    "message": "Έχει σφάλματα σχετικά με το απόρρητο",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -188,7 +204,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Δημιουργία νέας αναφοράς",
+    "message": "Δημιουργία νέας αναφοράς στο GitHub",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -228,7 +244,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Λίστα των hostnames για τα οποία δεν θα πραγματοποιηθεί φιλτράρισμα",
+    "message": "Λίστα ιστότοπων για τους οποίους δεν θα πραγματοποιείται φιλτράρισμα.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -248,19 +264,31 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Ενεργοποίηση αυστηρής φραγής",
+    "message": "Ενεργοποίηση αυστηρού αποκλεισμού",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
     "message": "Θα απετραπεί η πρόσβαση σε πιθανά ανεπιθύμητους ιστοτόπους. Θα σας προσφερθεί η επιλογή να συνεχίσετε.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Ενεργοποίηση αποκλεισμού αναδυόμενων",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Όταν είναι ενεργή, θα κλείνονται αυτόματα οι ανεπιθύμητες καρτέλες που δημιουργούν ιστοσελίδες οι οποίες αντιστοιχούν σε φίλτρα.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Αμμοδοχείο δημιουργίας φίλτρων",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Λειτουργία προγραμματιστή",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Ενεργοποίηση πρόσβασης σε δυνατότητες κατάλληλες για τεχνικούς χρήστες.",
+    "message": "Ενεργοποιεί πρόσβαση σε δυνατότητες κατάλληλες για τεχνικούς χρήστες.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {

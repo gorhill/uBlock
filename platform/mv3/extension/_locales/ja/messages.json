@@ -87,6 +87,18 @@
     "message": "地域・言語",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "インポートしたリスト",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "フィルターリストを追加…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "追加したいフィルターリストの URL を貼り付けてください",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "インポート又はエクスポート",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "ここに追加したいコスメティックフィルターをペースト",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "インポートしたリストから外観フィルターやスクリプトレットフィルターを適用するには、uBO Lite にユーザー スクリプトを実行する権限を付与する必要があります。ブラウザの拡張機能ページ（Chrome の場合は <code>chrome://extensions</code>、Firefox の場合は <code>about:addons</code>）を開き、<b>uBO Lite</b> の詳細を開いて、<b>ユーザー スクリプトを許可する</b>（「未検証のサードパーティ スクリプト」とも呼ばれます）をオンに切り替えてください。",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "更新履歴",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "望ましくない可能性のあるサイトへのナビゲーションはブロックされ、次に進むためのオプションが表示されます。",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "ポップアップブロックを有効化",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "有効にすると、一致するフィルターはウェブサイトによって作成された不要なブラウザータブを自動的に閉じます。",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "フィルター作成サンドボックス",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "開発者モード",

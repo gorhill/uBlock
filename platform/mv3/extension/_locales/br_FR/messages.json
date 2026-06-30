@@ -87,13 +87,29 @@
     "message": "Rannvroioù, broioù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Listennoù enporzhiet",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Ouzhpennañ ul listenn siloù…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Pegit amañ URL al listenn siloù a fell deoc'h ouzhpennañ",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Enporzhiañ / Ezporzhiañ",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Eilañ amañ ar siloù kenedel resis da ouzhpennañ",
+    "message": "Pegit amañ ar siloù kenedel/scriptlet resis da ouzhpennañ",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Deizlevr ar cheñchamantoù",
@@ -255,6 +271,18 @@
     "message": "Stanket e vo ar merdeiñ etrezek lec'hiennoù a c'hallfe bezañ dañjerus, ha moaien a vo deoc'h dibab da genderc'hel pe get.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Enaouiñ stankañ ar pop-upoù",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Pa vez gweredekaet, an ivinelloù dic'hoantaet krouet gant al lec'hiennoù a vo serret gant ar siloù.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Tachenn krouiñ siloù",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Mod diorroer",
     "description": "Label for a checkbox in the options page"
@@ -268,7 +296,7 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "Gwaredit hoc'h arventennoù personelaet en ur restr pe adsavit hoc'h arventennoù personelaet adalek ur restr.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {

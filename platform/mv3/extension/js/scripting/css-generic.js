@@ -253,7 +253,7 @@ for ( const entry of genericDetails ) {
         if ( i >= 0 ) {
             exceptions[i].split('\n').forEach(a => exceptionSet.add(a));
         } else {
-            i = ~i;
+            i = ~i + 1;
         }
     }
     if ( entry.hasEntities ) {
@@ -263,7 +263,7 @@ for ( const entry of genericDetails ) {
             if ( i >= 0 ) {
                 exceptions[i].split('\n').forEach(a => exceptionSet.add(a));
             } else {
-                i = ~i;
+                i = ~i + 1;
             }
         }
     }

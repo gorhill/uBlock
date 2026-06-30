@@ -1,3 +1,25 @@
+- [Fix broken rendering of final URL in strict-block page](https://github.com/gorhill/uBlock/commit/fe8ce9804c)
+- [Fix potential exception in set-attribute scriptlet](https://github.com/gorhill/uBlock/commit/37fe5d9cbe)
+- [Improve parsing/interpretation of consecutive `$$` in network filters](https://github.com/gorhill/uBlock/commit/347f9f7fda)
+- [Improve `googlesyndication_adsbygoogle` shim](https://github.com/gorhill/uBlock/commit/f5be2bbed0)
+- [Add `edit-object-on-[getter|setter]` scriptlets](https://github.com/gorhill/uBlock/commit/99e622831b)
+- [JSONPath: Test presence/absence of property w/ quantifier extension](https://github.com/gorhill/uBlock/commit/b901692d57)
+- [Prefix JSONPath queries with `v2:` to benefit increased rfc9535 conformance](https://github.com/gorhill/uBlock/commit/5d9ac5d0bf)
+- [Add regex-based selectors to JSONPath](https://github.com/gorhill/uBlock/commit/cfc3b05c93)
+- [Improve JSONPath; add `[trusted-]edit-element-object` scriptlets](https://github.com/gorhill/uBlock/commit/fdc1a4e743)
+- [Improve JSONPath: add support for double quote for names](https://github.com/gorhill/uBlock/commit/fe45329032)
+- [Add `edit-this-object`/`trusted-edit-this-object` scriptlets](https://github.com/gorhill/uBlock/commit/2695b9f7d6)
+- [Minor improvement to `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/da9287257d)
+- [Fix test for header matching when using negated value](https://github.com/gorhill/uBlock/commit/09e46b744e)
+- [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/32a4d640fb)
+    - <https://github.com/gorhill/uBlock/commit/aa028eacd0>
+- [Improve `google-ima` shim](https://github.com/gorhill/uBlock/commit/9e5299e7f4)
+- [Add ISO-8859-2 as alias of Windows-1250 in text encoder](https://github.com/gorhill/uBlock/commit/3f0c4e1110)
+
+----------
+
+# 1.71.0
+
 - [Improve `freeze-element-property` scriptlet](https://github.com/gorhill/uBlock/commit/b91798c6f4)
 - [Add support for network filter option `top=`](https://github.com/gorhill/uBlock/commit/aebc108e36)
 - [Fix JS code extraction from web accessible resources](https://github.com/gorhill/uBlock/commit/a8bbd1a466)

@@ -45,6 +45,7 @@
   ],
   "permissions": [
     "activeTab",
+    "alarms",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "scripting",

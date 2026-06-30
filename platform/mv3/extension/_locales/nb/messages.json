@@ -87,6 +87,18 @@
     "message": "Regioner, språk",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Imported lists",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Add filter list…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL of the filter list to add",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importér/Eksportér",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Lim inn her spesifikke kosmetiske filtre som skal legges til",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Endringslogg",
@@ -255,12 +271,24 @@
     "message": "Navigering til potensielt uønskede nettsteder blir blokkert, og du får tilbud om å fortsette.",
     "description": "Short description for a checkbox in the options page"
   },
+  "enablePopupBlockLabel": {
+    "message": "Aktiver popup blokkering",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Når denne er aktiv vil matchende filtre automatisk lukke uønskede nettleserfaner laget av nettsiden.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Filter-creation sandbox",
+    "description": "Header for filter-creation section in the dashboard"
+  },
   "developerModeLabel": {
     "message": "Utviklermodus",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Aktiver tilgang til funksjoner som er egnet for tekniske brukere.",
+    "message": "Aktiverer tilgang til funksjoner som er egnet for tekniske brukere.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
@@ -268,11 +296,11 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Sikkerhetskopier dine egendefinerte regler, eller gjenopprett dine egendefinerte regler fra en fil.",
+    "message": "Sikkerhetskopier dine egendefinerte innstillinger til en fil, eller gjenopprett dine egendefinerte innstillinger fra en fil.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Gjenoppretting vil overskrive dine nåværende egendefinerte regler.",
+    "message": "Gjenoppretting vil overskrive dine nåværende egendefinerte innstillinger.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -388,7 +416,7 @@
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "Alle dine egendefinerte innstillinger vil bli fjernet. Vil du virkelig tilbakestille til standardinnstillingene?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

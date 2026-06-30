@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Vietējie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies tikai uz konkrēto mājaslapu.\nVietējie ierobežojumi pārraksta globālos ierobežojumus.",
+    "message": "Vietējie ierobežojumi: šī kolonna paredzēta ierobežojumiem, kas attieksies tikai uz konkrēto mājaslapu.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

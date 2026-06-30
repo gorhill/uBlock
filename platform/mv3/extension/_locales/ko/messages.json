@@ -87,6 +87,18 @@
     "message": "지역, 언어",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "가져온 목록",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "필터 목록 추가…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "여기에 추가하려는 필터 목록의 URL 붙여넣기",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "가져오기 / 내보내기",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "여기에 추가하려는 요소 숨김 필터 붙여넣기",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "가져온 목록에서 요소 숨김 또는 스크립트 주입 필터를 적용하려면, uBO Lite에 사용자 스크립트 실행 권한을 부여해야 합니다. 브라우저의 확장 프로그램 페이지(Chrome은 <code>chrome://extensions</code>, Firefox는 <code>about:addons</code>)를 열고, <b>uBO Lite</b> 세부 정보를 연 뒤, <b>사용자 스크립트 허용</b>(혹은 \"검증되지 않은 타사 스크립트 허용\")을 켜세요.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "변경 로그",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "잠재적으로 유해할 수 있는 사이트로의 접속이 차단되며, 계속 진행할지 여부를 선택할 수 있는 옵션이 제공됩니다.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "팝업 차단 활성화",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "활성화되면, 일치하는 필터가 웹사이트에서 열린 원치 않는 브라우저 탭을 자동으로 닫습니다.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "필터 제작용 샌드박스",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "개발자 모드",

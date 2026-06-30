@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia len pre aktuálny web.\nLokálne pravidlá prepisujú globálne pravidlá.",
+    "message": "Lokálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia len pre aktuálny web.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domény malvéru",
+    "message": "Ochrana pred škodlivým softvérom, bezpečnosť",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {

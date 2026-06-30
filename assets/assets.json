@@ -667,7 +667,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇫🇷fr 🇨🇦ca: AdGuard Français",
+		"title": "🇫🇷fr 🇧🇪be 🇨🇦ca: AdGuard Français",
 		"tags": "ads french",
 		"lang": "ar br ff fr kab lb oc son",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/16.txt",

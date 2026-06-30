@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import '../lib/regexanalyzer/regex.js';
+
 import * as sfp from './static-filtering-parser.js';
 
 import { dropTask, queueTask } from './tasks.js';
@@ -3100,7 +3102,7 @@ class FilterOnHeaders {
         const { bad, name, not, value } = refs.$parsed;
         if ( bad ) { return false; }
         const headerValue = $httpHeaders.lookup(name);
-        if ( headerValue === undefined ) { return false; }
+        if ( headerValue === undefined ) { return not; }
         if ( value === '' ) { return true; }
         let { re } = refs.$parsed;
         if ( re === undefined ) {

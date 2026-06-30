@@ -87,6 +87,18 @@
     "message": "Regionen, Sprachen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Importierte Listen",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Filterliste hinzufügen …",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "URL der neuen Filterliste zum Hinzufügen einfügen",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importieren und exportieren",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Kosmetische Filter oder Scriptlets zum Hinzufügen einfügen",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "uBO Lite benötigt die Berechtigung zum Ausführen von Nutzerscripts, um kosmetische Filter oder Scriptlet-Filter aus importierten Listen anzuwenden. Die Option befindet sich in den Browser-Einstellungen für Erweiterungen (<code>chrome://extensions</code> in Chrome oder <code>about:addons</code> in Firefox). Anschließend die Details von <b>uBO Lite</b> öffnen und <b>Nutzerscripts zulassen</b> aktivieren (in Firefox „Nicht verifizierten Skripten von Drittanbietern den Zugriff auf Ihre Daten erlauben“).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Die Navigation zu potenziell unerwünschten Websites wird verhindert, jedoch wird eine Möglichkeit zum Fortfahren angeboten.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Pop-ups blockieren",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Dadurch werden unerwünschte Browser-Tabs, die durch Websites geöffnet wurden, mithilfe von Filtern geschlossen.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Testumgebung zum Erstellen von Filtern",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Entwicklermodus",

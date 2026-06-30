@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reolennoù lec'hel: er bann-mañ e vez lakaet ar reolennoù ne dalvezont nemet d'al lec'hienn m'emaoc'h.\nAr reolennoù lec'hel a ya a-raok ar reolennoù hollek.",
+    "message": "Reolennoù lec'hel: er bann-mañ e vez lakaet ar reolennoù ne dalvezont nemet d'al lec'hienn m'emaoc'h.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

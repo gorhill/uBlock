@@ -19,8 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* $rulesetId$ */
+/******************************************************************************/
 
-$selectorList$ {
-    opacity: 0 !important; // ADN
+export function hostnameCompare(a, b) {
+    const d = a.length - b.length;
+    if ( d !== 0 ) { return d; }
+    return a < b ? -1 : 1;
+}
+
+export function isHnRegexOrPath(hn) {
+    return hn.includes('/');
 }

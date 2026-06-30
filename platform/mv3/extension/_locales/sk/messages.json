@@ -87,6 +87,18 @@
     "message": "Regióny, jazyky",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Importované zoznamy",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Pridať zoznam filtrov…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Sem vložte URL zoznamu filtrov, ktorý chcete pridať",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Import/export",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Sem vložte špecifické kozmetické filtre, ktoré chcete pridať",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Ak chcete vynútiť kozmetické filtre alebo skriptletov z importovaných zoznamov, musíte udeliť rozšíreniu uBO Lite oprávnenie na spúšťanie používateľských skriptov. Otvorte stránku s rozšíreniami v prehliadači (<code>chrome://extensions</code> v prehliadači Chrome alebo <code>about:addons</code> vo Firefoxe), otvorte podrobnosti o <b>uBO Lite</b> a zapnite možnosť <b>Povoliť používateľské skripty</b> (tiež označované ako \"neoverené skripty tretích strán\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Zoznam zmien",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Navigácia na potenciálne nežiaduce stránky sa zablokuje a ponúkne sa vám možnosť pokračovať.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Povoliť blokovanie vyskakovacích okien",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Ak je zapnuté, príslušné filtre automaticky zatvoria nepotrebné karty prehliadača, ktoré otvorili webové stránky.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandbox na vytváranie filtrov",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Vývojársky režim",

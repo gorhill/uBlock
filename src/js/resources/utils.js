@@ -62,6 +62,82 @@ registerScriptlet(getExceptionTokenFn, {
 
 /******************************************************************************/
 
+export function trapPropertyFn(propChain, handler) {
+    if ( propChain === '' ) { return; }
+    let owner = self;
+    let prop = propChain;
+    for (;;) {
+        const pos = prop.indexOf('.');
+        if ( pos === -1 ) { break; }
+        owner = owner[prop.slice(0, pos)];
+        if ( owner instanceof Object === false ) { return; }
+        prop = prop.slice(pos + 1);
+    }
+    const safe = safeSelf();
+    if ( trapPropertyFn.db === undefined ) {
+        trapPropertyFn.db = new WeakMap();
+        trapPropertyFn.entryFromContext = (owner, prop) => {
+            const handlers = trapPropertyFn.db.get(owner);
+            return handlers?.get(prop);
+        };
+        trapPropertyFn.getter = (owner, prop) => {
+            const entry = trapPropertyFn.entryFromContext(owner, prop);
+            if ( entry === undefined ) { return; }
+            let r = entry.value;
+            for ( const desc of entry.stack ) {
+                try { r = desc.get(); } catch { }
+            }
+            return r;
+        };
+        trapPropertyFn.setter = (owner, prop, value) => {
+            const entry = trapPropertyFn.entryFromContext(owner, prop);
+            if ( entry === undefined ) { return; }
+            entry.value = value;
+            for ( const desc of entry.stack ) {
+                try { desc.set(value); } catch { }
+            }
+        };
+    }
+    const { db } = trapPropertyFn;
+    const handlers = db.get(owner) || new Map();
+    if ( handlers.size === 0 ) {
+        db.set(owner, handlers);
+    }
+    const entry = handlers.get(prop) || {
+        value: owner[prop],
+        stack: [],
+    };
+    entry.stack.push(handler);
+    if ( entry.stack.length > 1 ) { return entry.value; }
+    handlers.set(prop, entry);
+    const desc = safe.Object_getOwnPropertyDescriptor(owner, prop);
+    if ( desc instanceof safe.Object ) {
+        if ( desc.get || desc.set ) {
+            entry.stack.push(desc);
+        }
+    }
+    try {
+        safe.Object_defineProperty(owner, prop, {
+            get() {
+                return trapPropertyFn.getter(this, prop);
+            },
+            set(value) {
+                trapPropertyFn.setter(this, prop, value);
+            }
+        });
+    } catch {
+    }
+    return entry.value;
+}
+registerScriptlet(trapPropertyFn, {
+    name: 'trap-property-access.fn',
+    dependencies: [
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+
 export function collateFetchArgumentsFn(resource, options) {
     const safe = safeSelf();
     const props = [
@@ -241,3 +317,144 @@ registerScriptlet(generateContentFn, {
 });
 
 /******************************************************************************/
+
+export function onIdleFn(fn, options) {
+    if ( self.requestIdleCallback ) {
+        return self.requestIdleCallback(fn, options);
+    }
+    return self.requestAnimationFrame(fn);
+}
+registerScriptlet(onIdleFn, {
+    name: 'on-idle.fn',
+});
+
+export function offIdleFn(id) {
+    if ( self.requestIdleCallback ) {
+        return self.cancelIdleCallback(id);
+    }
+    return self.cancelAnimationFrame(id);
+}
+registerScriptlet(offIdleFn, {
+    name: 'off-idle.fn',
+});
+
+/******************************************************************************/
+
+export function sleepFn(ms = 0) {
+    const nap = ( ) => {
+        return new Promise(resolve => {
+            self.requestAnimationFrame(resolve);
+        });
+    }
+    const until = Date.now() + ms;
+    const sleep = async resolve => {
+        do {
+            await nap();
+        } while ( Date.now() < until );
+        resolve();
+    };
+    return new Promise(resolve => { sleep(resolve); });
+}
+registerScriptlet(sleepFn, {
+    name: 'sleep.fn',
+});
+
+/******************************************************************************/
+
+export function lookupElementsFn(directive, until = 0) {
+    if ( lookupElementsFn.querySelectorEx === undefined ) {
+        lookupElementsFn.getShadowRoot = elem => {
+            if ( elem.openOrClosedShadowRoot ) { // Firefox
+                return elem.openOrClosedShadowRoot;
+            }
+            if ( typeof chrome === 'object' ) { // Chromium
+                if ( chrome.dom && chrome.dom.openOrClosedShadowRoot ) {
+                    return chrome.dom.openOrClosedShadowRoot(elem);
+                }
+            }
+            return elem.shadowRoot;
+        };
+        lookupElementsFn.queryOrEvaluateSelector = (selector, context) => {
+            if ( selector.startsWith('xpath:') === false ) {
+                return Array.from(context.querySelectorAll(selector));
+            }
+            const result = document.evaluate(selector.slice(6), context, null, 7, null);
+            const out = [];
+            if ( result.resultType === 7 ) {
+                for ( let i = 0; i < result.snapshotLength; i++ ) {
+                    out[i] = result.snapshotItem(i);
+                }
+            }
+            return out;
+        }
+        lookupElementsFn.querySelectorEx = (selector, context = document) => {
+            const pos = selector.indexOf(' >>> ');
+            if ( pos === -1 ) {
+                return lookupElementsFn.queryOrEvaluateSelector(selector, context);
+            }
+            const outside = selector.slice(0, pos).trim();
+            const inside = selector.slice(pos + 5).trim();
+            const elems = lookupElementsFn.queryOrEvaluateSelector(outside, context);
+            const out = [];
+            for ( let i = 0; i < elems.length; i++ ) {
+                const shadowRoot = lookupElementsFn.getShadowRoot(elems[i]);
+                if ( Boolean(shadowRoot) === false ) { continue; }
+                lookupElementsFn.querySelectorEx(inside, shadowRoot).forEach(a => out.push(a));
+            }
+            return out;
+        };
+        lookupElementsFn.lookup = directive => {
+            const beVisible = directive.startsWith('when-visible:');
+            const selector = beVisible ? directive.slice(13) : directive;
+            const elems = lookupElementsFn.querySelectorEx(selector);
+            if ( beVisible !== true ) { return elems; }
+            return elems.filter(a => a.checkVisibility({
+                opacityProperty: true,
+                visibilityProperty: true,
+            }));
+        };
+        lookupElementsFn.lookupAsync = details => {
+            const elems = lookupElementsFn.lookup(details.directive);
+            if ( elems.length || Date.now() >= details.until ) {
+                if ( details.observer ) {
+                    details.observer.disconnect();
+                    details.observer = undefined;
+                }
+                if ( details.timer ) {
+                    offIdleFn(details.timer);
+                    details.timer = undefined;
+                }
+                return details.resolve(elems);
+            }
+            if ( details.observer === undefined ) {
+                details.observer = new MutationObserver(( ) => {
+                    lookupElementsFn.lookupAsync(details);
+                });
+                details.observer.observe(document, {
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                });
+            }
+            if ( details.timer === undefined ) {
+                details.timer = onIdleFn(( ) => {
+                    details.timer = undefined;
+                    lookupElementsFn.lookupAsync(details);
+                }, { timeout: 151 });
+            }
+        };
+    }
+    if ( until === 0 ) {
+        return lookupElementsFn.lookup(directive);
+    }
+    return new Promise(resolve => {
+        lookupElementsFn.lookupAsync({ directive, until, resolve });
+    });
+}
+registerScriptlet(lookupElementsFn, {
+    name: 'lookup-elements.fn',
+    dependencies: [
+        offIdleFn,
+        onIdleFn,
+    ],
+});

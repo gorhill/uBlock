@@ -87,6 +87,18 @@
     "message": "אזורים, שפות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "רשימות מיובאות",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "הוספת רשימת מסננים…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "העתיקו לכאן את ה URL של רשימת המסננים",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "יבוא / יצוא",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "העתיקו לכאן מסננים קוסמטים ספציפים לשם הוספה",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "בכדי לאפשר מסננים קוסמטיים או scriptlet מרשימות מיובאות, יש לאפשר ל uBO Lite להריץ סקריפטים של המשתמש. פתחו את התוספים או ההרחבות בדפדפן שלכם (<code>chrome://extensions</code> בכרום או <code>chrome://extensions</code> בפיירפוקס), פתחו את הפרטים של <b>uBO Lite</b>, ותנו <b>אישור לסקריפטים של משתמשים<b> (או \"לאפשר לתסריטי צד שלישי לא מאומתים לגשת לנתונים שלך\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "יומן שינויים",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "ניווט אפשרי לאתרים לא רצויים יחסם ותהיה אפשרות להחליט להמשיך.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "הפעלת חסימה לפתיחת חלונות",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "כאשר פעיל, מסננים תואמים יסגרו בצורה אוטומטית לשוניות שנוצרו על ידי אתרים.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "ארגז חול ליצירת מסננים",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "מצב מפתחים",

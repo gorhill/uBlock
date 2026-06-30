@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSONPath: rfc9535 conformance</title>
+<style>
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+.test {
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    font-family: monospace;
+}
+.test .fail {
+    background-color: #fcc;
+}
+.test > div:first-of-type {
+    background-color: #eee;
+    padding: 0.5em;
+}
+.test > div:not(:first-of-type) {
+    padding: 0.25em;
+    white-space: pre-line;
+}
+</style>
+</head>
+<body>
+<h2>JSONPath: rfc9535 conformance</h2>
+<main>
+</main>
+
+<template id="test-result">
+    <div class="test">
+        <div></div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+    </div>
+</template>
+
+<script type="module" src="./jsonpath-tests.js"></script>
+
+</body>
+</html>

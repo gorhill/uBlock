@@ -37,6 +37,14 @@ const notAnObject = a => typeof a !== 'object' || a === null;
 
 /******************************************************************************/
 
+export function supportsUserScripts() {
+    try { browser.userScripts.getScripts(); }
+    catch { return false; }
+    return true;
+}
+
+/******************************************************************************/
+
 // The extension's service worker can be evicted at any time, so when we
 // send a message, we try a few more times when the message fails to be sent.
 

@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локальні правила: цей стовпчик для правил, що застосовуються лише цього сайту.\nЛокальні правила замінюють глобальні.",
+    "message": "Локальні правила: цей стовпчик для правил, що застосовуються лише цього сайту.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Оновлюється...",
+    "message": "Оновлюється…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -976,7 +976,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Вебсторінка...",
+    "message": "Вебсторінка…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1240,7 +1240,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Підписатися на список фільтрів...",
+    "message": "Підписатися на список фільтрів…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Перегляд джерела...",
+    "message": "Перегляд джерела…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {

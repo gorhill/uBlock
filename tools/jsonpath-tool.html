@@ -84,6 +84,7 @@ section .cm-lineWrapping {
     // http://localhost:8000/tools/jsonpath-tool.html
 
     import { JSONPath } from '../src/js/jsonpath.js';
+    //import { JSONPath } from 'https://raw.rawgit.net/gorhill/uBlock/refs/tags/1.71.0/src/js/jsonpath.js';
 
     let aLastText = JSON.stringify({
       store: {
@@ -172,6 +173,17 @@ section .cm-lineWrapping {
         aDoc: aLastText,
         aUpdateListener: info => {
             if ( info.docChanged === false ) { return; }
+            for ( const transaction of info.transactions ) {
+                if ( transaction.isUserEvent('input.paste') === false ) { continue; }
+                const { doc } = info.state;
+                const before = doc.toString();
+                let insert;
+                try { insert = JSON.stringify(JSON.parse(before), null, 2); }
+                catch { }
+                if ( Boolean(insert) === false ) { break; }
+                info.view.dispatch({ changes: { from: 0, to: doc.length, insert } });
+                return;
+            }
             if ( processTimer !== undefined ) { return; }
             processTimer = setTimeout(( ) => {
                 processTimer = undefined;

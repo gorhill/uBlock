@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as scrmgr from './scripting-manager.js';
-
 import {
     MODE_BASIC,
     MODE_OPTIMAL,
@@ -39,13 +37,22 @@ import {
     addCustomFilters,
     customFiltersFromHostname,
     getAllCustomFilters,
+    getSandboxFilters,
     hasCustomFilters,
     injectCustomFilters,
     removeAllCustomFilters,
     removeCustomFilters,
+    setSandboxFilters,
     startCustomFilters,
     terminateCustomFilters,
 } from './filter-manager.js';
+
+import {
+    addImportedLists,
+    getImportedLists,
+    removeImportedLists,
+    updateImportedLists,
+} from './imported-lists.js';
 
 import {
     adminReadEx,
@@ -57,7 +64,7 @@ import {
     broadcastMessage,
     hostnameFromMatch,
     hostnamesFromMatches,
-    intFromVersion,
+    isScriptlet,
 } from './utils.js';
 
 import {
@@ -65,6 +72,7 @@ import {
     localRead, localRemove, localWrite,
     runtime,
     sessionAccessLevel,
+    supportsUserScripts,
     webextFlavor,
 } from './ext.js';
 
@@ -80,14 +88,14 @@ import {
     enableRulesets,
     excludeFromStrictBlock,
     getDefaultRulesetsFromEnv,
-    getEffectiveDynamicRules,
-    getEffectiveSessionRules,
     getEffectiveUserRules,
+    getEnabledRulesets,
     getEnabledRulesetsDetails,
     getRulesetDetails,
+    getRulesetRules,
     patchDefaultRulesets,
     setStrictBlockMode,
-    updateDynamicRules,
+    updateDynamicAndSessionRules,
     updateSessionRules,
     updateUserRules,
 } from './ruleset-manager.js';
@@ -102,11 +110,29 @@ import {
 } from './debug.js';
 
 import {
+    getRegisteredContentScripts,
+    pruneCSSCache,
+    registerContentScripts,
+} from './scripting-manager.js';
+
+import {
     gotoURL,
     hasBroadHostPermissions,
 } from './ext-utils.js';
 
+import {
+    processDueJobs,
+    resetJobsAlarm,
+} from './alarms.js';
+
+import {
+    registerUserScripts,
+    updateCompiledFilters,
+} from './compiled-filters.js';
+
 import { dnr } from './ext-compat.js';
+import { setPopupBlockMode } from './prevent-popup.js';
+import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { toggleToolbarIcon } from './action.js';
 
 // ADN imports 
@@ -121,7 +147,6 @@ import { startVisitQueue } from './adn/visitor.js';
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
-const { registerInjectables } = scrmgr;
 
 let pendingPermissionRequest;
 
@@ -158,7 +183,7 @@ async function onPermissionGrantedThruExtension(details, origins) {
     if ( beforeLevel === details.afterLevel ) { return; }
     const afterLevel = await setFilteringMode(details.hostname, details.afterLevel);
     if ( afterLevel !== details.afterLevel ) { return; }
-    await registerInjectables();
+    await registerContentScripts();
     if ( rulesetConfig.autoReload !== true ) { return; }
     await reloadTab(details.tabId, details.url);
 }
@@ -167,7 +192,7 @@ async function onPermissionGrantedThruExtension(details, origins) {
 async function onPermissionGrantedThruBrowser(origins) {
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return; }
-    await registerInjectables();
+    await registerContentScripts();
     if ( rulesetConfig.autoReload !== true ) { return; }
     if ( origins.length !== 1 ) { return; }
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
@@ -200,7 +225,7 @@ async function onPermissionsAdded(permissions) {
 async function onPermissionsRemoved() {
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return false; }
-    registerInjectables();
+    registerContentScripts();
     return true;
 }
 
@@ -217,93 +242,84 @@ onPermissionsChanged.pending = [];
 
 /******************************************************************************/
 
-function setDeveloperMode(state) {
-    rulesetConfig.developerMode = state === true;
-    toggleDeveloperMode(rulesetConfig.developerMode);
-    broadcastMessage({ developerMode: rulesetConfig.developerMode });
-    return Promise.all([
-        updateUserRules(),
-        saveRulesetConfig(),
-    ]);
+async function applyRulesets(rulesets) {
+    const result = await enableRulesets(rulesets);
+    const stockUpdated = result.stockUpdated ?? false;
+    const importedUpdated = result.importedUpdated ?? false;
+    if ( (stockUpdated || importedUpdated) === false ) { return; }
+    rulesetConfig.enabledRulesets = result.enabledRulesets;
+    await saveRulesetConfig();
+    const promises = [];
+    if ( importedUpdated ) {
+        promises.push(
+            updateCompiledFilters().then(( ) =>
+                Promise.all([ registerUserScripts(), updateUserRules() ])
+            )
+        );
+    }
+    if ( stockUpdated ) {
+        promises.push(registerContentScripts());
+    }
+    await Promise.all(promises);
+    broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
 }
 
 /******************************************************************************/
 
-function onMessage(request, sender, callback) {
+async function setDeveloperMode(state) {
+    rulesetConfig.developerMode = state === true;
+    toggleDeveloperMode(rulesetConfig.developerMode);
+    broadcastMessage({ developerMode: rulesetConfig.developerMode });
+    await saveRulesetConfig();
+    return rulesetConfig.developerMode;
+}
+
+/******************************************************************************/
+
+async function onMessage(request, sender) {
 
     const tabId = sender?.tab?.id ?? false;
     const frameId = tabId && (sender?.frameId ?? false);
 
-    // Does not require trusted origin.
+    // Does not require extension to be fully initialized
+
+    // Does not require a trusted origin.
 
     switch ( request.what ) {
 
     case 'insertCSS':
         if ( frameId === false ) { return false; }
         // https://bugs.webkit.org/show_bug.cgi?id=262491
-        if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
-        browser.scripting.insertCSS({
+        if ( frameId !== 0 && webextFlavor === 'safari' ) { return; }
+        return browser.scripting.insertCSS({
             css: request.css,
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
             ubolErr(`insertCSS/${reason}`);
         });
-        return false;
 
     case 'removeCSS':
         if ( frameId === false ) { return false; }
         // https://bugs.webkit.org/show_bug.cgi?id=262491
-        if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
-        browser.scripting.removeCSS({
+        if ( frameId !== 0 && webextFlavor === 'safari' ) { return; }
+        return browser.scripting.removeCSS({
             css: request.css,
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
             ubolErr(`removeCSS/${reason}`);
         });
-        return false;
-
-    case 'toggleToolbarIcon': {
-        if ( tabId ) {
-            toggleToolbarIcon(tabId);
-        }
-        return false;
-    }
-
-    case 'startCustomFilters':
-        if ( frameId === false ) { return false; }
-        startCustomFilters(tabId, frameId).then(( ) => {
-            callback();
-        });
-        return true;
-
-    case 'terminateCustomFilters':
-        if ( frameId === false ) { return false; }
-        terminateCustomFilters(tabId, frameId).then(( ) => {
-            callback();
-        });
-        return true;
-
-    case 'injectCustomFilters':
-        if ( frameId === false ) { return false; }
-        injectCustomFilters(tabId, frameId, request.hostname).then(selectors => {
-            callback(selectors);
-        });
-        return true;
 
     case 'injectCSSProceduralAPI':
-        browser.scripting.executeScript({
+        return browser.scripting.executeScript({
             files: [ '/js/scripting/css-procedural-api.js' ],
             target: { tabId, frameIds: [ frameId ] },
             injectImmediately: true,
         }).catch(reason => {
             ubolErr(`executeScript/${reason}`);
-        }).then(( ) => {
-            callback();
         });
-        return true;
-			
+
 		// start of ADN cases
 		case 'adFound':
 		case 'registerAd': {
@@ -466,119 +482,131 @@ function onMessage(request, sender, callback) {
         break;
     }
 
-    // Does require trusted origin.
+    // Requires extension to be fully initialized
+
+    await isFullyInitialized;
+
+    // Does not require a trusted origin.
+
+    switch ( request.what ) {
+
+    case 'toggleToolbarIcon': {
+        if ( tabId ) {
+            toggleToolbarIcon(tabId);
+        }
+        return;
+    }
+
+    case 'startCustomFilters':
+        if ( frameId === false ) { return; }
+        return startCustomFilters(tabId, frameId);
+
+    case 'terminateCustomFilters':
+        if ( frameId === false ) { return; }
+        return terminateCustomFilters(tabId, frameId);
+
+    case 'injectCustomFilters':
+        if ( frameId === false ) { return; }
+        return injectCustomFilters(tabId, frameId, request.hostname);
+
+    default:
+        break;
+    }
+
+    // Requires a trusted origin.
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
-    if ( sender.origin !== undefined ) {
-        if ( sender.origin.toLowerCase() !== UBOL_ORIGIN ) { return; }
-    }
+    const isTrustedOrigin = sender?.origin === undefined ||
+        sender.origin.toLowerCase() === UBOL_ORIGIN;
+    if ( isTrustedOrigin === false ) { return; }
 
     switch ( request.what ) {
 
     case 'applyRulesets': {
-        enableRulesets(request.enabledRulesets).then(result => {
-            if ( result === undefined || result.error ) {
-                callback(result);
-                return;
-            }
-            rulesetConfig.enabledRulesets = result.enabledRulesets;
-            return saveRulesetConfig().then(( ) => {
-                return registerInjectables();
-            }).then(( ) => {
-                callback(result);
-            });
-        }).finally(( ) => {
-            broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
-        });
-        return true;
+        await applyRulesets(request.enabledRulesets);
+        if ( request.toRemove ) {
+            await removeImportedLists(request.toRemove);
+        }
+        return;
     }
 
-    case 'getDefaultConfig':
-        getDefaultRulesetsFromEnv().then(rulesets => {
-            callback({
-                autoReload: defaultConfig.autoReload,
-                developerMode: defaultConfig.developerMode,
-                showBlockedCount: defaultConfig.showBlockedCount,
-                strictBlockMode: defaultConfig.strictBlockMode,
-                rulesets,
-                filteringModes: Object.assign(defaultFilteringModes),
-            });
-        });
-        return true;
+    case 'getDefaultConfig': {
+        const rulesets = await getDefaultRulesetsFromEnv();
+        return {
+            autoReload: defaultConfig.autoReload,
+            developerMode: defaultConfig.developerMode,
+            showBlockedCount: defaultConfig.showBlockedCount,
+            strictBlockMode: defaultConfig.strictBlockMode,
+            popupBlockMode: defaultConfig.popupBlockMode,
+            rulesets,
+            filteringModes: Object.assign(defaultFilteringModes),
+        };
+    }
 
-    case 'getOptionsPageData':
-        Promise.all([
+    case 'getCurrentConfig':
+        return rulesetConfig;
+
+    case 'getOptionsPageData': {
+        const [
+            hasOmnipotence,
+            defaultFilteringMode,
+            rulesetDetails,
+            enabledRulesets,
+            adminRulesets,
+            disabledFeatures,
+        ] = await Promise.all([
             hasBroadHostPermissions(),
             getDefaultFilteringMode(),
             getRulesetDetails(),
-            dnr.getEnabledRulesets(),
+            getEnabledRulesets(),
             getAdminRulesets(),
             adminReadEx('disabledFeatures'),
-        ]).then(results => {
-            const [
-                hasOmnipotence,
-                defaultFilteringMode,
-                rulesetDetails,
-                enabledRulesets,
-                adminRulesets,
-                disabledFeatures,
-            ] = results;
-            callback({
-                hasOmnipotence,
-                defaultFilteringMode,
-                enabledRulesets,
-                adminRulesets,
-                maxNumberOfEnabledRulesets: dnr.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
-                rulesetDetails: Array.from(rulesetDetails.values()),
-                autoReload: rulesetConfig.autoReload,
-                showBlockedCount: rulesetConfig.showBlockedCount,
-                canShowBlockedCount,
-                strictBlockMode: rulesetConfig.strictBlockMode,
-                firstRun: process.firstRun,
-                isSideloaded,
-                developerMode: rulesetConfig.developerMode,
-                disabledFeatures,
-            });
-            process.firstRun = false;
-        });
-        return true;
+        ]);
+        process.firstRun = false;
+        return {
+            hasOmnipotence,
+            defaultFilteringMode,
+            enabledRulesets,
+            adminRulesets,
+            maxNumberOfEnabledRulesets: dnr.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
+            rulesetDetails: Array.from(rulesetDetails.values()),
+            autoReload: rulesetConfig.autoReload,
+            showBlockedCount: rulesetConfig.showBlockedCount,
+            canShowBlockedCount,
+            strictBlockMode: rulesetConfig.strictBlockMode,
+            popupBlockMode: rulesetConfig.popupBlockMode,
+            firstRun: process.firstRun,
+            isSideloaded,
+            developerMode: rulesetConfig.developerMode,
+            disabledFeatures,
+            supportsCompiledFilters: supportsOffscreenDocument,
+            supportsUserScripts: supportsUserScripts(),
+        };
+    }
 
     case 'getEnabledRulesets':
-        dnr.getEnabledRulesets().then(rulesets => {
-            callback(rulesets);
-        });
-        return true;
+        return getEnabledRulesets();
 
-    case 'getRulesetDetails':
-        getRulesetDetails().then(rulesetDetails => {
-            callback(Array.from(rulesetDetails.values()));
-        });
-        return true;
+    case 'getRulesetDetails': {
+        const rulesetDetails = await getRulesetDetails();
+        return Array.from(rulesetDetails.values());
+    }
 
     case 'getEnabledRulesetsDetails':
-        getEnabledRulesetsDetails().then(rulesetDetails => {
-            callback(rulesetDetails);
-        });
-        return true;
+        return getEnabledRulesetsDetails();
+
+    case 'getRulesetRules':
+        return getRulesetRules(request.id);
 
     case 'hasBroadHostPermissions':
-        hasBroadHostPermissions().then(result => {
-            callback(result);
-        });
-        return true;
+        return hasBroadHostPermissions();
 
     case 'setAutoReload':
         rulesetConfig.autoReload = request.state && true || false;
-        saveRulesetConfig().then(( ) => {
-            callback();
-            broadcastMessage({ autoReload: rulesetConfig.autoReload });
-        });
-        return true;
-
-    case 'getShowBlockedCount':
-        callback(rulesetConfig.showBlockedCount);
-        break;
+        await saveRulesetConfig();
+        broadcastMessage({ autoReload: rulesetConfig.autoReload });
+        return;
 
     case 'setShowBlockedCount':
         rulesetConfig.showBlockedCount = request.state && true || false;
@@ -587,225 +615,240 @@ function onMessage(request, sender, callback) {
                 displayActionCountAsBadgeText: rulesetConfig.showBlockedCount,
             });
         }
-        saveRulesetConfig().then(( ) => {
-            callback();
-            broadcastMessage({ showBlockedCount: rulesetConfig.showBlockedCount });
-        });
-        return true;
+        await saveRulesetConfig();
+        broadcastMessage({ showBlockedCount: rulesetConfig.showBlockedCount });
+        return;
 
     case 'setStrictBlockMode':
-        setStrictBlockMode(request.state).then(( ) => {
-            callback();
-            broadcastMessage({ strictBlockMode: rulesetConfig.strictBlockMode });
-        });
-        return true;
+        await setStrictBlockMode(request.state);
+        broadcastMessage({ strictBlockMode: rulesetConfig.strictBlockMode });
+        return;
+
+    case 'setPopupBlockMode':
+        await setPopupBlockMode(request.state);
+        await registerContentScripts();
+        broadcastMessage({ popupBlockMode: rulesetConfig.popupBlockMode });
+        return;
 
     case 'setDeveloperMode':
-        setDeveloperMode(request.state).then(( ) => {
-            callback();
-        });
-        return true;
+        return setDeveloperMode(request.state);
 
     case 'popupPanelData': {
-        Promise.all([
+        const results = await Promise.all([
             hasBroadHostPermissions(),
             getFilteringMode(request.hostname),
             adminReadEx('disabledFeatures'),
             hasCustomFilters(request.hostname),
-        ]).then(results => {
-            callback({
-                hasOmnipotence: results[0],
-                level: results[1],
-                autoReload: rulesetConfig.autoReload,
-                isSideloaded,
-                developerMode: rulesetConfig.developerMode,
-                disabledFeatures: results[2],
-                hasCustomFilters: results[3],
-            });
-        });
-        return true;
+        ]);
+        return {
+            hasOmnipotence: results[0],
+            level: results[1],
+            autoReload: rulesetConfig.autoReload,
+            isSideloaded,
+            developerMode: rulesetConfig.developerMode,
+            disabledFeatures: results[2],
+            hasCustomFilters: results[3],
+        };
     }
 
     case 'getFilteringMode': {
-        getFilteringMode(request.hostname).then(actualLevel => {
-            callback(actualLevel);
-        });
-        return true;
+        return getFilteringMode(request.hostname);
     }
 
     case 'gotoURL':
-        gotoURL(request.url, request.type);
-        break;
+        return gotoURL(request.url, request.type);
 
     case 'setFilteringMode': {
-        getFilteringMode(request.hostname).then(beforeLevel => {
-            if ( request.level === beforeLevel ) { return beforeLevel; }
-            return setFilteringMode(request.hostname, request.level);
-        }).then(afterLevel => {
-            registerInjectables();
-            callback(afterLevel);
-        });
-        return true;
+        const beforeLevel = await getFilteringMode(request.hostname);
+        if ( request.level === beforeLevel ) { return beforeLevel; }
+        const afterLevel = await setFilteringMode(request.hostname, request.level);
+        await Promise.all([ registerContentScripts(), registerUserScripts() ]);
+        return afterLevel;
     }
 
     case 'setPendingFilteringMode':
         pendingPermissionRequest = request;
-        break;
+        return;
 
     case 'getDefaultFilteringMode': {
-        getDefaultFilteringMode().then(level => {
-            callback(level);
-        });
-        return true;
+        return getDefaultFilteringMode();
     }
 
-    case 'setDefaultFilteringMode':
-        getDefaultFilteringMode().then(beforeLevel =>
-            setDefaultFilteringMode(request.level).then(afterLevel =>
-                ({ beforeLevel, afterLevel })
-            )
-        ).then(({ beforeLevel, afterLevel }) => {
-            if ( afterLevel !== beforeLevel ) {
-                registerInjectables();
-            }
-            callback(afterLevel);
-        });
-        return true;
+    case 'setDefaultFilteringMode': {
+        const beforeLevel = await getDefaultFilteringMode();
+        const afterLevel = await setDefaultFilteringMode(request.level);
+        if ( afterLevel !== beforeLevel ) {
+            await Promise.all([ registerContentScripts(), registerUserScripts() ]);
+        }
+        return afterLevel;
+    }
 
     case 'getFilteringModeDetails':
-        getFilteringModeDetails(true).then(details => {
-            callback(details);
-        });
-        return true;
+        return getFilteringModeDetails(true);
 
-    case 'setFilteringModeDetails':
-        setFilteringModeDetails(request.modes).then(( ) => {
-            registerInjectables();
-            getDefaultFilteringMode().then(defaultFilteringMode => {
-                broadcastMessage({ defaultFilteringMode });
-            });
-            getFilteringModeDetails(true).then(details => {
-                callback(details);
-            });
-        });
-        return true;
-
-    case 'excludeFromStrictBlock': {
-        excludeFromStrictBlock(request.hostname, request.permanent).then(( ) => {
-            callback();
-        });
-        return true;
+    case 'setFilteringModeDetails': {
+        await setFilteringModeDetails(request.modes);
+        await Promise.all([ registerContentScripts(), registerUserScripts() ]);
+        const defaultFilteringMode = await getDefaultFilteringMode();
+        broadcastMessage({ defaultFilteringMode });
+        return getFilteringModeDetails(true);
     }
 
+    case 'excludeFromStrictBlock':
+        return excludeFromStrictBlock(request.hostname, request.permanent);
+
     case 'getMatchedRules':
-        getMatchedRules(request.tabId).then(entries => {
-            callback(entries);
-        });
-        return true;
+        return getMatchedRules(request.tabId);
 
     case 'showMatchedRules':
         browser.windows.create({
             type: 'popup',
             url: `/matched-rules.html?tab=${request.tabId}`,
         });
-        break;
+        return;
 
-    case 'getEffectiveDynamicRules':
-        getEffectiveDynamicRules().then(result => {
-            callback(result);
-        });
-        return true;
+    case 'getAllDynamicRules':
+        return dnr.getDynamicRules();
 
-    case 'getEffectiveSessionRules':
-        getEffectiveSessionRules().then(result => {
-            callback(result);
-        });
-        return true;
+    case 'getAllSessionRules':
+        return dnr.getSessionRules();
 
     case 'getEffectiveUserRules':
-        getEffectiveUserRules().then(result => {
-            callback(result);
-        });
-        return true;
+        return getEffectiveUserRules();
 
     case 'updateUserDnrRules':
-        updateUserRules().then(result => {
-            callback(result);
-        });
-        return true;
+        return updateUserRules();
 
-    case 'addCustomFilters':
-        addCustomFilters(request.hostname, request.selectors).then(modified => {
-            if ( modified !== true ) { return; }
-            return registerInjectables();
-        }).then(( ) => {
-            callback();
-        })
-        return true;
+    case 'getAllCustomFilters':
+        return getAllCustomFilters();
+
+    case 'addCustomFilters': {
+        const modified = await addCustomFilters(request.hostname, request.selectors);
+        if ( modified !== true ) { return; }
+        const hasScriptletFilters = request.selectors.some(a => isScriptlet(a));
+        const hasPlainFilters = request.selectors.some(a => isScriptlet(a) === false);
+        const promises = [];
+        if ( hasPlainFilters ) {
+            promises.push(registerContentScripts());
+        }
+        if ( hasScriptletFilters ) {
+            promises.push(
+                updateCompiledFilters().then(( ) => registerUserScripts())
+            );
+        }
+        await Promise.all(promises);
+        return;
+    }
 
     case 'addManyCustomFilters': {
         const promises = [];
+        let hasScriptletFilters = false;
+        let hasPlainFilters = false;
         for ( const [ hostname, selectors ] of request.entries ) {
             if ( typeof hostname !== 'string' ) { continue; }
             if ( hostname === '' ) { continue; }
             if ( Array.isArray(selectors) === false ) { continue; }
             if ( selectors.length === 0 ) { continue; }
+            hasScriptletFilters ||= selectors.some(a => isScriptlet(a));
+            hasPlainFilters ||= selectors.some(a => isScriptlet(a) === false);
             promises.push(addCustomFilters(hostname, selectors));
         }
-        Promise.all(promises).then(results => {
-            if ( results.some(a => a) === false ) { return; }
-            return registerInjectables();
-        }).then(( ) => {
-            callback();
-        });
-        return true;
+        const results = await Promise.all(promises);
+        if ( results.some(a => a) === false ) { return; }
+        promises.length = 0;
+        if ( hasPlainFilters ) {
+            promises.push(registerContentScripts());
+        }
+        if ( hasScriptletFilters ) {
+            promises.push(
+                updateCompiledFilters().then(( ) => registerUserScripts())
+            );
+        }
+        await Promise.all(promises);
+        return;
     }
 
-    case 'removeCustomFilters':
-        removeCustomFilters(request.hostname, request.selectors).then(modified => {
-            if ( modified !== true ) { return; }
-            return registerInjectables();
-        }).then(( ) => {
-            callback();
-        });
-        return true;
+    case 'removeCustomFilters': {
+        const { selectors } = request;
+        const modified = await removeCustomFilters(request.hostname, selectors);
+        if ( modified !== true ) { return; }
+        const hasScriptletFilters = selectors.some(a => isScriptlet(a));
+        const hasPlainFilters = selectors.some(a => isScriptlet(a) === false);
+        const promises = [];
+        if ( hasPlainFilters ) {
+            promises.push(registerContentScripts());
+        }
+        if ( hasScriptletFilters ) {
+            promises.push(
+                updateCompiledFilters().then(( ) => registerUserScripts())
+            );
+        }
+        await Promise.all(promises);
+        return;
+    }
 
-    case 'removeAllCustomFilters':
-        removeAllCustomFilters(request.hostname).then(modified => {
-            if ( modified !== true ) { return; }
-            return registerInjectables();
-        }).then(( ) => {
-            callback();
-        });
-        return true;
+    case 'removeAllCustomFilters': {
+        const modified = await removeAllCustomFilters(request.hostname);
+        if ( modified !== true ) { return; }
+        await Promise.all([
+            registerContentScripts(),
+            updateCompiledFilters().then(( ) => registerUserScripts()),
+        ]);
+        return;
+    }
+
+    case 'getSandboxFilters':
+        return getSandboxFilters();
+
+    case 'setSandboxFilters': {
+        await setSandboxFilters(request.text);
+        await updateCompiledFilters();
+        await Promise.all([ registerUserScripts(), updateUserRules() ]);
+        return;
+    }
 
     case 'customFiltersFromHostname':
-        customFiltersFromHostname(request.hostname).then(selectors => {
-            callback(selectors);
-        });
-        return true;
-
-    case 'getAllCustomFilters':
-        getAllCustomFilters().then(data => {
-            callback(data);
-        });
-        return true;
+        return customFiltersFromHostname(request.hostname);
 
     case 'getRegisteredContentScripts':
-        scrmgr.getRegisteredContentScripts().then(ids => {
-            callback(ids);
-        });
-        return true;
+        return getRegisteredContentScripts();
 
     case 'getConsoleOutput':
-        callback(getConsoleOutput());
-        break;
+        return getConsoleOutput();
+
+    case 'importFilterList': {
+        const modified = await addImportedLists([ request.url ]);
+        if ( modified !== true ) { break; }
+        const rulesets = await getEnabledRulesets();
+        rulesets.push(request.url);
+        await applyRulesets(rulesets);
+        return;
+    }
+
+    case 'getImportedLists': {
+        return getImportedLists();
+    }
+
+    case 'updateImportedLists': {
+        const count = await updateImportedLists();
+        if ( count === 0 ) { break; }
+        await updateCompiledFilters();
+        await Promise.all([ registerUserScripts(), updateUserRules() ]);
+        return;
+    }
+
+    case 'pruneCSSCache': {
+        return pruneCSSCache();
+    }
+
+    // This is used to ensure we are not suspended while busy fetching filter
+    // lists from remote servers.
+    case 'keepAlive':
+        return;
 
     default:
         break;
     }
-
-    return false;
 }
 
 /******************************************************************************/
@@ -856,59 +899,71 @@ async function startSession() {
     // The default rulesets may have changed, find out new ruleset to enable,
     // obsolete ruleset to remove.
     if ( isNewVersion ) {
-        const previousVersion = rulesetConfig.version;
         ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
         rulesetConfig.version = currentVersion;
         await patchDefaultRulesets();
         saveRulesetConfig();
-        // https://github.com/uBlockOrigin/uBOL-home/issues/670
-        if ( intFromVersion(previousVersion) <= intFromVersion('2026.423.0000') ) {
-            const promises = [];
-            const customFilters = await getAllCustomFilters();
-            for ( const [ hostname, selectors ] of customFilters ) {
-                let modified = false;
-                for ( let i = 0; i < selectors.length; i++ ) {
-                    const selector = selectors[i];
-                    if ( selector.startsWith('0') === false ) { continue; }
-                    selectors[i] = selector.slice(1);
-                    modified = true;
-                }
-                if ( modified === false ) { continue; }
-                promises.push(
-                    removeAllCustomFilters(hostname).then(( ) =>
-                        addCustomFilters(hostname, selectors)
-                    )
-                );
-            }
-            if ( promises.length !== 0 ) {
-                await Promise.all(promises);
-            }
-        }
     }
 
-    const rulesetsUpdated = await enableRulesets(rulesetConfig.enabledRulesets);
+    const {
+        stockUpdated,
+        importedUpdated,
+        enabledRulesets,
+    } = await enableRulesets(rulesetConfig.enabledRulesets);
+    if ( stockUpdated || importedUpdated ) {
+        rulesetConfig.enabledRulesets = enabledRulesets;
+        saveRulesetConfig();
+    }
 
     await dnr.updateEnabledRulesets({
         enableRulesetIds: rulesetConfig.adnAllowEnabled ? ['adn-allow'] : [],
         disableRulesetIds: rulesetConfig.adnAllowEnabled ? [] : ['adn-allow'],
     }).catch(() => {});
 
-    // We need to update the regex rules only when ruleset version changes.
-    if ( rulesetsUpdated === undefined ) {
-        if ( isNewVersion ) {
-            updateDynamicRules();
-        } else {
-            updateSessionRules();
-        }
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest#rulesets
+    // "The set of enabled static rulesets is persisted across sessions but not across extension updates"
+    // "[Dynamic] rules persist across sessions and extension updates"
+    // "[Session] rules do not persist across browser sessions"
+    if ( isNewVersion ) {
+        updateDynamicAndSessionRules();
+    } else {
+        updateSessionRules();
     }
 
     // Permissions may have been removed while the extension was disabled
     const permissionsUpdated = await syncWithBrowserPermissions();
 
+    // Toggling "user scripts" permission doesn't cause a permissions change
+    // event.
+    const userScriptsChanged = supportsUserScripts() !== rulesetConfig.userScripts;
+    if ( userScriptsChanged ) {
+        rulesetConfig.userScripts = !rulesetConfig.userScripts;
+        saveRulesetConfig();
+    }
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/scripting/RegisteredContentScript#persistacrosssessions
+    // "When an extension updates, content scripts are cleared"
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/userScripts#extension_updates
+    // "User scripts are cleared when an extension updates"
+    const promises = [];
     const shouldInject = isNewVersion || permissionsUpdated ||
         isSideloaded && rulesetConfig.developerMode;
-    if ( shouldInject ) {
-        await registerInjectables();
+    if ( shouldInject || stockUpdated ) {
+        promises.push(registerContentScripts());
+    }
+    if ( importedUpdated ) {
+        promises.push(
+            updateCompiledFilters().then(( ) =>
+                Promise.all([ registerUserScripts(), updateUserRules() ])
+            )
+        );
+    } else if ( shouldInject ) {
+        promises.push(registerUserScripts(), updateUserRules());
+    } else if ( userScriptsChanged ) {
+        promises.push(registerUserScripts());
+    }
+    if ( promises.length ) {
+        await Promise.all(promises);
     }
 
     // Cosmetic filtering-related content scripts cache fitlering data in
@@ -930,7 +985,7 @@ async function startSession() {
         if ( enableOptimal === false ) {
             const afterLevel = await setDefaultFilteringMode(MODE_BASIC);
             if ( afterLevel === MODE_BASIC ) {
-                registerInjectables();
+                await registerContentScripts();
                 process.firstRun = false;
             }
         }
@@ -954,13 +1009,11 @@ async function start() {
 
     if ( process.wakeupRun === false ) {
         await startSession();
-    } else {
-        scrmgr.onWakeupRun();
     }
 
-    const scripts = await scrmgr.getRegisteredContentScripts();
+    const scripts = await getRegisteredContentScripts();
     if ( scripts.length === 0 ) {
-        registerInjectables();
+        await registerContentScripts();
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
@@ -990,12 +1043,18 @@ const isFullyInitialized = start().then(( ) => {
 });
 
 runtime.onMessage.addListener((request, sender, callback) => {
-    isFullyInitialized.then(( ) => {
-        const r = onMessage(request, sender, callback);
-        if ( r !== true ) { callback(); }
-    });
+    if ( request.what.includes(':') ) { return; }
+    onMessage(request, sender).then(callback);
     return true;
 });
+
+if ( supportsUserScripts() && runtime.onUserScriptMessage ) {
+    browser.userScripts.configureWorld({ messaging: true });
+    runtime.onUserScriptMessage.addListener((request, sender, callback) => {
+        onMessage(request, sender).then(callback);
+        return true;
+    });
+}
 
 browser.permissions.onRemoved.addListener((...args) => {
     isFullyInitialized.then(( ) => {
@@ -1012,5 +1071,16 @@ browser.permissions.onAdded.addListener((...args) => {
 browser.commands.onCommand.addListener((...args) => {
     isFullyInitialized.then(( ) => {
         onCommand(...args);
+    });
+});
+
+browser.alarms.onAlarm.addListener(alarm => {
+    if ( alarm.name !== 'deferredJobs' ) { return; }
+    isFullyInitialized.then(( ) => {
+        if ( process.wakeupRun === false && process.firstAlarm !== true ) {
+            process.firstAlarm = true;
+            return resetJobsAlarm();
+        }
+        processDueJobs(onMessage);
     });
 });

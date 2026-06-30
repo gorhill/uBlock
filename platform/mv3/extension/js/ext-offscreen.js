@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    AdNauseam Lite - a comprehensive, MV3-compliant content blocker
-    Copyright (C) 2014-present Raymond Hill
+    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
+    Copyright (C) 2026-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,19 +19,18 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// Important!
-// Isolate from global scope
-(function uBOL_cssProceduralImport() {
+// Chromium supports the offscreen API natively
 
-/******************************************************************************/
+export const supportsOffscreenDocument = chrome.offscreen !== undefined;
 
-const rulesetId = self.$rulesetId$;
+export async function createOffscreenDocument(path) {
+    return chrome.offscreen.createDocument({
+        url: path,
+        reasons: [ 'WORKERS' ],
+        justification: 'To compile custom & imported filters in a modular way from service worker (service workers do not allow dynamic module import)',
+    });
+}
 
-self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push(rulesetId);
-
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
+export async function closeOffscreenDocument() {
+    return chrome.offscreen.closeDocument();
+}

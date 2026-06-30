@@ -41,7 +41,9 @@ import {
     collateFetchArgumentsFn,
     getExceptionTokenFn,
     getRandomTokenFn,
+    lookupElementsFn,
     matchObjectPropertiesFn,
+    onIdleFn,
     parsePropertiesToMatchFn,
 } from './utils.js';
 import { runAt, runAtHtmlElementFn } from './run-at.js';
@@ -668,6 +670,7 @@ builtinScriptlets.push({
     fn: removeClass,
     world: 'ISOLATED',
     dependencies: [
+        'on-idle.fn',
         'run-at.fn',
         'safe-self.fn',
     ],
@@ -718,7 +721,7 @@ function removeClass(
             }
         }
         if ( skip ) { return; }
-        timer = safe.onIdle(rmclass, { timeout: 67 });
+        timer = onIdleFn(rmclass, { timeout: 67 });
     };
     const observer = new MutationObserver(mutationHandler);
     const start = ( ) => {
@@ -1623,7 +1626,7 @@ builtinScriptlets.push({
     ],
 });
 function breakOnCall(target) {
-    proxyApplyFn(target, function fetch(context) {
+    proxyApplyFn(target, function(context) {
         debugger;  // eslint-disable-line no-debugger
         return context.reflect();
     });
@@ -1818,6 +1821,7 @@ builtinScriptlets.push({
     dependencies: [
         'get-all-cookies.fn',
         'get-all-local-storage.fn',
+        'lookup-elements.fn',
         'run-at-html-element.fn',
         'safe-self.fn',
     ],
@@ -1874,31 +1878,6 @@ function trustedClickElement(
         }
     }
 
-    const getShadowRoot = elem => {
-        // Firefox
-        if ( elem.openOrClosedShadowRoot ) {
-            return elem.openOrClosedShadowRoot;
-        }
-        // Chromium
-        if ( typeof chrome === 'object' ) {
-            if ( chrome.dom && chrome.dom.openOrClosedShadowRoot ) {
-                return chrome.dom.openOrClosedShadowRoot(elem);
-            }
-        }
-        return elem.shadowRoot;
-    };
-
-    const querySelectorEx = (selector, context = document) => {
-        const pos = selector.indexOf(' >>> ');
-        if ( pos === -1 ) { return context.querySelector(selector); }
-        const outside = selector.slice(0, pos).trim();
-        const inside = selector.slice(pos + 5).trim();
-        const elem = context.querySelector(outside);
-        if ( elem === null ) { return null; }
-        const shadowRoot = getShadowRoot(elem);
-        return shadowRoot && querySelectorEx(inside, shadowRoot);
-    };
-
     const steps = safe.String_split.call(selectors, /\s*,\s*/).map(a => {
         if ( /^\d+$/.test(a) ) { return parseInt(a, 10); }
         return a;
@@ -1914,8 +1893,10 @@ function trustedClickElement(
         steps.unshift(clickDelay);
     }
     if ( typeof steps.at(-1) !== 'number' ) {
-        steps.push(10000);
+        steps.push(11000);
     }
+
+    const timeout = steps.pop();
 
     const waitForTime = ms => {
         return new Promise(resolve => {
@@ -1926,66 +1907,18 @@ function trustedClickElement(
             }, ms);
         });
     };
-    waitForTime.cancel = ( ) => {
-        const { timer } = waitForTime;
-        if ( timer === undefined ) { return; }
-        clearTimeout(timer);
-        waitForTime.timer = undefined;
-    };
 
-    const waitForElement = selector => {
-        return new Promise(resolve => {
-            const elem = querySelectorEx(selector);
-            if ( elem !== null ) {
-                elem.click();
-                resolve();
-                return;
-            }
-            safe.uboLog(logPrefix, `Waiting for ${selector}`);
-            const observer = new MutationObserver(( ) => {
-                const elem = querySelectorEx(selector);
-                if ( elem === null ) { return; }
-                waitForElement.cancel();
-                elem.click();
-                resolve();
-            });
-            observer.observe(document, {
-                attributes: true,
-                childList: true,
-                subtree: true,
-            });
-            waitForElement.observer = observer;
+    const waitForElement = directive => {
+        safe.uboLog(logPrefix, `Waiting for ${directive}`);
+        return lookupElementsFn(directive, Date.now() + timeout).then(elems => {
+            if ( elems.length === 0 ) { return false; }
+            elems[0].click();
+            safe.uboLog(logPrefix, `Clicked ${directive}`);
+            return true;
         });
-    };
-    waitForElement.cancel = ( ) => {
-        const { observer } = waitForElement;
-        if ( observer === undefined ) { return; }
-        waitForElement.observer = undefined;
-        observer.disconnect();
-    };
-
-    const waitForTimeout = ms => {
-        waitForTimeout.cancel();
-        waitForTimeout.timer = setTimeout(( ) => {
-            waitForTimeout.timer = undefined;
-            terminate();
-            safe.uboLog(logPrefix, `Timed out after ${ms} ms`);
-        }, ms);
-    };
-    waitForTimeout.cancel = ( ) => {
-        if ( waitForTimeout.timer === undefined ) { return; }
-        clearTimeout(waitForTimeout.timer);
-        waitForTimeout.timer = undefined;
-    };
-
-    const terminate = ( ) => {
-        waitForTime.cancel();
-        waitForElement.cancel();
-        waitForTimeout.cancel();
     };
 
     const process = async ( ) => {
-        waitForTimeout(steps.pop());
         while ( steps.length !== 0 ) {
             const step = steps.shift();
             if ( step === undefined ) { break; }
@@ -1995,10 +1928,11 @@ function trustedClickElement(
                 continue;
             }
             if ( step.startsWith('!') ) { continue; }
-            await waitForElement(step);
-            safe.uboLog(logPrefix, `Clicked ${step}`);
+            const clicked = await waitForElement(step);
+            if ( clicked ) { continue; }
+            safe.uboLog(logPrefix, `Timed out waiting on ${step}`);
+            break;
         }
-        terminate();
     };
 
     runAtHtmlElementFn(process);

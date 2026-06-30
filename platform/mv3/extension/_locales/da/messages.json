@@ -87,13 +87,29 @@
     "message": "Regioner, sprog",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Importerede lister",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Tilføj filterliste…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Indsæt URL'en til filterlisten, som skal tilføjes, her",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Import/ Eksport",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Indsæt bestemte kosmetiske filtre hér for at tilføje",
+    "message": "For at tilføje bestemte kosmetiske/scriplets-filtre, indsæt dem hér",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "For at håndhæve kosmetiske eller scriptlet-filtre fra importerede lister, giv uBO Lite tilladelse til at eksekvere brugerscripts. Åbn webbrowserens udvidelsesside (<code>chrome://extensions</code> i Chrome eller <code>about:addons</code> i Firefox), åbn <b>uBO Lite</b>-detaljerne og slå <b>Tillad brugerscripts</b> til (også kaldet \"ubekræftede tredjepartsscripts\").",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Ændringslog",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Navigering til potentielt uønskede websteder blokeres, men man tilbydes muligheden for at fortsætte.",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Aktivér pop op-blokering",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Når aktiv, lukker matchende filtre automatisk uønskede webbrowserfaner åbnet af websteder.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Sandkasse til filteroprettelse",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Udviklertilstand",

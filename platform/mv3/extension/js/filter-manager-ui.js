@@ -590,6 +590,29 @@ function exportToFile() {
 
 /******************************************************************************/
 
+async function startsSandboxEditor() {
+    if ( startsSandboxEditor.editor ) { return; }
+
+    const { FilterEditor } = await import('./filter-editor.js');
+
+    const SandboxFilterEditor = class extends FilterEditor {
+        async saveContent() {
+            if ( this.contentChanged() === false ) { return; }
+            await sendMessage({ what: 'setSandboxFilters', text:  this.getContent() });
+            await super.saveContent();
+        }
+        async loadContent() {
+            const text = await sendMessage({ what: 'getSandboxFilters' });
+            await super.loadContent(text);
+        }
+    }
+
+    startsSandboxEditor.editor = new SandboxFilterEditor(qs$('#sandboxEditor .cm-container'));
+    await startsSandboxEditor.editor.loadContent();
+}
+
+/******************************************************************************/
+
 async function start() {
     renderCustomFilters();
 
@@ -610,6 +633,8 @@ async function start() {
             debounceRenderCustomFilters();
         }
     });
+
+    dom.onFirstShown(startsSandboxEditor, qs$('section[data-pane="filters"] aside#sandboxEditor'));
 }
 
 /******************************************************************************/

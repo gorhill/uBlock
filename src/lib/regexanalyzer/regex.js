@@ -2271,6 +2271,10 @@ var Regex = {
     Analyzer    : Analyzer,
     Composer    : Composer
 };
+/* Add as global value */
+if ( globalThis ) {
+    globalThis.Regex = Regex;
+}
 /* export the module */
 return Regex;
 })();

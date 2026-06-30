@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Προειδοποίηση! Έχετε μη αποθηκευμένες αλλαγές",
+    "message": "Προειδοποίηση: έχετε μη αποθηκευμένες αλλαγές!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Κλικ: απενεργοποίηση/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο για αυτήν την σελίδα.",
+    "message": "Κλικ: απενεργοποίηση/ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτήν την ιστοσελίδα.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
+    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Κάντε κλικ για ενεργοποίηση του uBlock₀ για αυτή την ιστοσελίδα.",
+    "message": "Κάντε κλικ για ενεργοποίηση του uBlock₀ για αυτόν τον ιστότοπο.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -100,11 +100,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Αποκλεισμένα σε αυτή τη σελίδα",
+    "message": "Αποκλεισμένα σε αυτήν τη σελίδα",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Φραγμένο από εγκατάσταση",
+    "message": "Αποκλεισμένο από εγκατάσταση",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Κάντε κλικ για να ανοίξετε τον πίνακα εργαλείων",
+    "message": "Ανοίξτε τον πίνακα ελέγχου",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Αναφέρετε ένα πρόβλημα σε αυτόν τον ιστότοπο",
+    "message": "Αναφέρετε ένα σφάλμα σε αυτόν τον ιστότοπο",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {

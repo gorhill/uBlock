@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Лакальныя правілы: гэты слупок для правіл, якія прымяняюцца толькі на гэтым сайце.\nЛакальныя правілы перавызначаюць глабальныя.",
+    "message": "Лакальныя правілы: гэты слупок для правіл, якія прымяняюцца толькі на гэтым сайце.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Дамены шкодных праграм",
+    "message": "Абарона ад шкоднасных праграм, бяспека",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Імпартаваць і дадаць",
+    "message": "Імпартаваць і дадаць…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Экспартаваць",
+    "message": "Экспартаваць…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Экспартаваць у файл",
+    "message": "Экспартаваць у файл…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Імпартаваць і дадаць",
+    "message": "Імпартаваць і дадаць…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Экспартаваць",
+    "message": "Экспартаваць…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -672,7 +672,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Дзейная картка",
+    "message": "Бягучая ўкладка",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
@@ -900,11 +900,11 @@
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Стварыць новую справаздачу",
+    "message": "Стварыць новую справаздачу на GitHub",
     "description": "Text for button which open an external web page in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Знайсці падобныя справаздачы",
+    "message": "Знайсці падобныя справаздачы на GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -960,7 +960,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, калі ласка, праверце, што пра гэтую праблему не паведамлялі раней.",
+    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, праверце, ці не паведамлялі пра гэтую праблему раней. <b>Заўвага:</b> націсканне кнопкі прывядзе да адпраўкі паходжання старонкі на GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -1100,7 +1100,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "гадзіну таму назад",
+    "message": "гадзіну таму",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -1136,7 +1136,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "З-за наступнага фільтра",
+    "message": "Гэта адбылося з-за наступнага фільтра:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1144,7 +1144,7 @@
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Знойдзены ў:",
+    "message": "Фільтр быў знойдзены ў:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {

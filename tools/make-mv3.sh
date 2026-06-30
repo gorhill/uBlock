@@ -56,7 +56,7 @@ ADNL_DIR=$(pwd)
 cd - > /dev/null
 
 mkdir -p "$ADNL_DIR"/css/fonts
-mkdir -p "$ADNL_DIR"/js
+mkdir -p "$ADNL_DIR"/js/offscreen
 mkdir -p "$ADNL_DIR"/img
 mkdir -p "$ADNL_DIR"/lib
 
@@ -74,7 +74,7 @@ else
     ADN_DIR=.
 fi
 
-echo "*** uBOLite.mv3: Copying common files"
+echo "*** AdnauseamLite.mv3: Copying common files"
 cp -R "$ADN_DIR"/src/css/fonts/Inter "$ADNL_DIR"/css/fonts/
 cp -R "$ADN_DIR"/src/css/fonts/Noto_Sans "$ADNL_DIR"/css/fonts/
 cp -R "$ADN_DIR"/src/css/fonts/Roboto_Flex "$ADNL_DIR"/css/fonts/
@@ -94,17 +94,19 @@ cp "$ADN_DIR"/src/js/fa-icons.js "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/js/i18n.js "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/js/jsonpath.js "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/js/redirect-resources.js "$ADNL_DIR"/js/
+cp "$ADN_DIR"/src/js/regex-analyzer.js "$ADNL_DIR"/js/offscreen/
+cp -R "$ADN_DIR"/src/js/resources "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/js/static-filtering-parser.js "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/js/urlskip.js "$ADNL_DIR"/js/
 cp "$ADN_DIR"/src/lib/punycode.js "$ADNL_DIR"/js/
-cp -R "$ADN_DIR"/src/lib/regexanalyzer "$ADN_DIR"/lib/
-
+cp -R "$ADN_DIR"/src/lib/regexanalyzer "$ADNL_DIR"/lib/
 
 cp -R "$ADN_DIR/src/img/flags-of-the-world" "$ADNL_DIR"/img
 
 cp LICENSE.txt "$ADNL_DIR"/
 
-echo "*** uBOLite.mv3: Copying mv3-specific files"
+echo "*** AdNauseamLite.mv3: Copying mv3-specific files"
+
 cp platform/mv3/"$MANIFEST_DIR"/manifest.json "$ADNL_DIR"/
 cp platform/mv3/extension/*.html "$ADNL_DIR"/
 cp platform/mv3/extension/*.json "$ADNL_DIR"/
@@ -116,6 +118,7 @@ cp platform/mv3/"$PLATFORM"/css-user.js "$ADNL_DIR"/js/scripting/ 2>/dev/null ||
 cp platform/mv3/extension/img/* "$ADNL_DIR"/img/
 cp platform/mv3/"$PLATFORM"/img/* "$ADNL_DIR"/img/ 2>/dev/null || :
 cp -R platform/mv3/extension/_locales "$ADNL_DIR"/
+cp platform/mv3/README.md "$ADNL_DIR/"
 
 # Merge MV2 locale messages (messages.json + adnauseam.json) into MV3 locales
 # Priority: MV3 messages.json > MV2 adnauseam.json > MV2 messages.json
@@ -142,8 +145,6 @@ for mv3_locale_dir in "$ADNL_DIR"/_locales/*/; do
     fi
 done
 
-cp platform/mv3/README.md "$ADNL_DIR/"
-
 # Libraries
 mkdir -p "$ADNL_DIR"/lib/codemirror
 cp platform/mv3/extension/lib/codemirror/* \
@@ -156,6 +157,8 @@ cp platform/mv3/extension/lib/codemirror/codemirror-ubol/LICENSE \
     "$ADNL_DIR"/lib/codemirror/codemirror-quickstart.LICENSE
 mkdir -p "$ADNL_DIR"/lib/csstree
 cp "$ADN_DIR"/src/lib/csstree/* "$ADNL_DIR"/lib/csstree/
+cp platform/mv3/extension/lib/s14e-serializer/s14e-serializer.js \
+    "$ADNL_DIR"/lib/
 
 # AdNauseam libraries
 cp platform/mv3/extension/lib/yamd5.js "$ADNL_DIR"/lib/
@@ -196,7 +199,7 @@ cp "$ADN_DIR"/src/lib/yamd5.js "$ADNL_DIR"/lib/
 sed -i '' "s|from './adn-utils.js'|from './vault-adn-utils.js'|" "$ADNL_DIR"/js/adn/vault.js
 sed -i '' "s|from \"./adn-utils.js\"|from \"./vault-adn-utils.js\"|" "$ADNL_DIR"/js/adn/notifications.js
 
-echo "*** uBOLite.mv3: Generating rulesets"
+echo "*** AdnauseamLite.mv3: Generating rulesets"
 UBOL_BUILD_DIR=$(mktemp -d)
 mkdir -p "$UBOL_BUILD_DIR"
 ./tools/make-nodejs.sh "$UBOL_BUILD_DIR"
@@ -204,14 +207,11 @@ cp platform/mv3/*.json "$UBOL_BUILD_DIR"/
 cp platform/mv3/*.js "$UBOL_BUILD_DIR"/
 cp platform/mv3/*.mjs "$UBOL_BUILD_DIR"/
 cp platform/mv3/extension/js/utils.js "$UBOL_BUILD_DIR"/js/
-cp platform/mv3/extension/js/make-scriptlets.js "$UBOL_BUILD_DIR"/js/
-cp platform/mv3/extension/js/safe-replace.js "$UBOL_BUILD_DIR"/js/
-cp "$ADN_DIR"/src/js/regex-analyzer.js "$UBOL_BUILD_DIR"/js/
 cp -R "$ADN_DIR"/src/lib/regexanalyzer "$UBOL_BUILD_DIR"/
 cp -R "$ADN_DIR"/src/js/resources "$UBOL_BUILD_DIR"/js/
-
 cp -R platform/mv3/scriptlets "$UBOL_BUILD_DIR"/
-cp platform/mv3/extension/js/scriptlet.template.js "$UBOL_BUILD_DIR"/scriptlets/
+cp -R platform/mv3/extension/js/offscreen "$UBOL_BUILD_DIR"/js/
+cp "$ADN_DIR"/src/js/regex-analyzer.js "$UBOL_BUILD_DIR"/js/offscreen/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources
 cp "$ADN_DIR"/src/web_accessible_resources/* "$UBOL_BUILD_DIR"/web_accessible_resources/
 cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/
@@ -219,7 +219,7 @@ cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/
 cd "$UBOL_BUILD_DIR"
 node --no-warnings make-rulesets.js output="$ADNL_DIR" platform="$PLATFORM"
 if [ -n "$BEFORE" ]; then
-    echo "*** uBOLite.mv3: salvaging rule ids to minimize diff size"
+    echo "*** AdnauseamLite.mv3: salvaging rule ids to minimize diff size"
     echo "    before=$BEFORE/$PLATFORM"
     echo "    after=$ADNL_DIR"
     node salvage-ruleids.mjs before="$BEFORE"/"$PLATFORM" after="$ADNL_DIR"
@@ -227,7 +227,7 @@ fi
 cd - > /dev/null
 rm -rf "$UBOL_BUILD_DIR"
 
-echo "*** uBOLite.$PLATFORM: extension ready"
+echo "*** AdnauseamLite.$PLATFORM: extension ready"
 echo "Extension location: $ADNL_DIR/"
 
 # Local build
@@ -241,7 +241,7 @@ if [ -z "$TAGNAME" ]; then
         && mv "$tmp_manifest" "$ADNL_DIR/manifest.json"
     # Use a different extension id than the official one
     if [ "$PLATFORM" = "firefox" ]; then
-        jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$ADNL_DIR/manifest.json"  > "$tmp_manifest" \
+        jq '.browser_specific_settings.gecko.id = "AdnauseamLite.dev@raymondhill.net"' "$ADNL_DIR/manifest.json"  > "$tmp_manifest" \
             && mv "$tmp_manifest" "$ADNL_DIR/manifest.json"
     fi
 else
@@ -253,7 +253,7 @@ fi
 # Platform-specific steps
 if [ "$PLATFORM" = "edge" ]; then
     # For Edge, declared rulesets must be at package root
-    echo "*** uBOLite.edge: Modify reference implementation for Edge compatibility"
+    echo "*** AdnauseamLite.edge: Modify reference implementation for Edge compatibility"
     mv "$ADNL_DIR"/rulesets/main/* "$ADNL_DIR/"
     rmdir "$ADNL_DIR/rulesets/main"
     node platform/mv3/edge/patch-extension.js packageDir="$ADNL_DIR"
@@ -267,8 +267,8 @@ if [ "$FULL" = "yes" ]; then
     if [ "$PLATFORM" = "firefox" ]; then
         EXTENSION="xpi"
     fi
-    echo "*** uBOLite.mv3: Creating publishable package..."
-    UBOL_PACKAGE_NAME="uBOLite_$TAGNAME.$PLATFORM.$EXTENSION"
+    echo "*** AdnauseamLite.mv3: Creating publishable package..."
+    UBOL_PACKAGE_NAME="AdnauseamLite_$TAGNAME.$PLATFORM.$EXTENSION"
     UBOL_PACKAGE_DIR=$(mktemp -d)
     mkdir -p "$UBOL_PACKAGE_DIR"
     cp -R "$ADNL_DIR"/* "$UBOL_PACKAGE_DIR"/

@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Домени шкідливих програм",
+    "message": "Захист від шкідливих програм, безпека",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -87,6 +87,18 @@
     "message": "Регіони, мови",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
+  "3pGroupImported": {
+    "message": "Імпортовані списки",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "customListImportLabel": {
+    "message": "Додати список фільтрів…",
+    "description": "Text label heading the import area of custom filter lists"
+  },
+  "customListImportPlaceholder": {
+    "message": "Вставте сюди URL-адресу списку фільтрів, який потрібно додати",
+    "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
   "customFiltersImportExportLabel": {
     "message": "Імпорт / Експорт",
     "description": "Text label heading the import/export area of custom filters"
@@ -94,6 +106,10 @@
   "customFiltersImportTextareaPlaceholder": {
     "message": "Вставте сюди конкретні косметичні фільтри, які потрібно додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
+  },
+  "userScriptsInfo": {
+    "message": "Щоб застосувати косметичні фільтри або фільтри на основі скриптів із імпортованих списків, необхідно надати uBO Lite дозвіл на виконання користувацьких скриптів. Відкрийте сторінку розширень у браузері (<code>chrome://extensions</code> у Chrome або <code>about:addons</code> у Firefox), перейдіть до детальної інформації про <b>uBO Lite</b> та увімкніть опцію <b>«Дозволити користувацькі скрипти»</b> (також відомі як «неперевірені сторонні скрипти»).",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
     "message": "Журнал змін",
@@ -254,6 +270,18 @@
   "enableStrictBlockLegend": {
     "message": "Перехід до потенційно небажаних сайтів буде заблоковано, та вам буде запропоновано можливість продовжити",
     "description": "Short description for a checkbox in the options page"
+  },
+  "enablePopupBlockLabel": {
+    "message": "Увімкнути блокування спливних вікон",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enablePopupBlockLegend": {
+    "message": "Якщо увімкнено, фільтри автоматично закриватимуть небажані вкладки браузера, створені вебсайтами.",
+    "description": "Short description for a checkbox in the options page"
+  },
+  "sandboxEditorLabel": {
+    "message": "Пісочниця створення фільтру",
+    "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
     "message": "Режим розробника",

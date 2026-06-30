@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { rulesetConfig, saveRulesetConfig } from './config.js';
 import { matchesFromHostnames } from './utils.js';
 
 /******************************************************************************/
@@ -26,6 +27,7 @@ import { matchesFromHostnames } from './utils.js';
 // https://github.com/uBlockOrigin/uBOL-home/issues/632
 
 export async function registerPreventPopup(context) {
+    if ( rulesetConfig.popupBlockMode !== true ) { return; }
     const js = [];
     for ( const { id, popups } of context.rulesetsDetails ) {
         if ( popups === undefined ) { continue; }
@@ -40,11 +42,11 @@ export async function registerPreventPopup(context) {
     const { none, basic, optimal, complete } = context.filteringModeDetails;
     let matches = [];
     let excludeMatches = [];
-    if ( complete.has('all-urls') ) {
+    if ( complete.has('all-urls') || optimal.has('all-urls') ) {
         matches = [ '*' ];
-        excludeMatches = [ ...none, ...basic, ...optimal ];
+        excludeMatches = [ ...none, ...basic ];
     } else {
-        matches = [ ...complete ];
+        matches = [ ...complete, ...optimal ];
     }
     if ( matches.length === 0 ) { return; }
 
@@ -56,4 +58,15 @@ export async function registerPreventPopup(context) {
         runAt: 'document_start',
     };
     context.toAdd.push(directive);
+}
+
+/******************************************************************************/
+
+export async function setPopupBlockMode(state, force = false) {
+    const newState = Boolean(state);
+    if ( force === false ) {
+        if ( newState === rulesetConfig.popupBlockMode ) { return; }
+    }
+    rulesetConfig.popupBlockMode = state;
+    await saveRulesetConfig();
 }

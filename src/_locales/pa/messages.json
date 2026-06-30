@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "ਰਹੋ",
+    "message": "ਇੱਥੇ ਰਹੋ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "ਲੋਕਲ ਨਿਯਮ: ਇਹ ਕਾਲਮ ਨਿਯਮਾਂ ਲਈ ਹੈ, ਜੋ ਕਿ ਸਿਰਫ਼ ਲੋਕਲ ਸਾਈਟਾਂ ਉੱਤੇ ਹੀ ਲਾਗੂ ਹੁੰਦੇ ਹਨ।\nਲੋਕਲ ਨਿਯਮ ਗਲੋਬਲ ਨਿਯਮਾਂ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰਦੇ ਹਨ।",
+    "message": "ਲੋਕਲ ਨਿਯਮ: ਇਹ ਕਾਲਮ ਨਿਯਮਾਂ ਲਈ ਹੈ, ਜੋ ਕਿ ਸਿਰਫ਼ ਲੋਕਲ ਸਾਈਟਾਂ ਉੱਤੇ ਹੀ ਲਾਗੂ ਹੁੰਦੇ ਹਨ।",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
