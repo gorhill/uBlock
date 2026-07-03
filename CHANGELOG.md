@@ -1,3 +1,9 @@
+- [Add missing test against `null` object](https://github.com/gorhill/uBlock/commit/74e6c8fe3f)
+
+----------
+
+# 1.72.0
+
 - [Fix broken rendering of final URL in strict-block page](https://github.com/gorhill/uBlock/commit/fe8ce9804c)
 - [Fix potential exception in set-attribute scriptlet](https://github.com/gorhill/uBlock/commit/37fe5d9cbe)
 - [Improve parsing/interpretation of consecutive `$$` in network filters](https://github.com/gorhill/uBlock/commit/347f9f7fda)
