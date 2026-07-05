@@ -132,6 +132,31 @@ pruneInvalidRegexRules.validated = new Map();
 
 /******************************************************************************/
 
+// A rule with a condition property unknown to the browser -- typically a
+// newer DNR feature such as `topDomains` -- causes updateDynamicRules() to
+// reject ALL rules in the same call, unlike in static rulesets where such
+// rules are individually ignored. Discard the offending rules and retry.
+
+const reUnexpectedProperty = /Unexpected property[: ]+["']?(\w+)/;
+
+async function updateDynamicRulesWithRetry(ruleUpdate) {
+    try {
+        return await dnr.updateDynamicRules(ruleUpdate);
+    } catch(reason) {
+        const prop = reUnexpectedProperty.exec(`${reason}`)?.[1] ?? '';
+        const kept = ruleUpdate.addRules?.filter(rule =>
+            rule.condition?.[prop] === undefined
+        ) ?? [];
+        // A retry must shrink addRules, lest the same rejection repeats
+        if ( kept.length === (ruleUpdate.addRules?.length ?? 0) ) { throw reason; }
+        ubolLog(`Dropped ${ruleUpdate.addRules.length - kept.length} DNR rules with unsupported condition '${prop}'`);
+        ruleUpdate.addRules = kept;
+        return updateDynamicRulesWithRetry(ruleUpdate);
+    }
+}
+
+/******************************************************************************/
+
 async function getDynamicRegexRuleCount() {
     const rules = await dnr.getDynamicRules();
     const regexRules = rules.filter(a => Boolean(a.condition?.regexFilter));
@@ -212,7 +237,7 @@ export async function updateDynamicAndSessionRules() {
     const response = {};
 
     try {
-        await dnr.updateDynamicRules({ addRules, removeRuleIds });
+        await updateDynamicRulesWithRetry({ addRules, removeRuleIds });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`Remove ${removeRuleIds.length} dynamic DNR rules`);
         }
@@ -755,7 +780,7 @@ async function updateUserRules() {
     // adding rules.
     try {
         await dnr.updateDynamicRules({ removeRuleIds });
-        await dnr.updateDynamicRules({ addRules });
+        await updateDynamicRulesWithRetry({ addRules });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`updateUserRules() / Removed ${removeRuleIds.length} dynamic DNR rules`);
         }
