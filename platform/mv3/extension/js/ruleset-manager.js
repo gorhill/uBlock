@@ -178,6 +178,25 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
 
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBOL-home/issues/715
+
+function toSafeDynamicRules(addRules) {
+    if ( Array.isArray(addRules) === false ) { return; }
+    if ( dnr.RuleConditionKeys?.TOP_DOMAINS ) { return addRules; }
+    const safeRules = [];
+    for ( const rule of addRules ) {
+        const { condition } = rule;
+        if ( condition.topDomains ) { continue; }
+        if ( condition.excludedTopDomains ) {
+            delete condition.excludedTopDomains;
+        }
+        safeRules.push(rule);
+    }
+    return safeRules;
+}
+
+/******************************************************************************/
+
 export async function updateDynamicAndSessionRules() {
     const currentRules = await dnr.getDynamicRules();
 
@@ -212,7 +231,10 @@ export async function updateDynamicAndSessionRules() {
     const response = {};
 
     try {
-        await dnr.updateDynamicRules({ addRules, removeRuleIds });
+        await dnr.updateDynamicRules({
+            addRules: toSafeDynamicRules(addRules),
+            removeRuleIds,
+        });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`Remove ${removeRuleIds.length} dynamic DNR rules`);
         }
@@ -755,7 +777,7 @@ async function updateUserRules() {
     // adding rules.
     try {
         await dnr.updateDynamicRules({ removeRuleIds });
-        await dnr.updateDynamicRules({ addRules });
+        await dnr.updateDynamicRules({ addRules: toSafeDynamicRules(addRules) });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`updateUserRules() / Removed ${removeRuleIds.length} dynamic DNR rules`);
         }
