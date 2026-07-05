@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { browser } from './ext.js';
+import { browser, webextFlavor } from './ext.js';
 import { matchesFromHostnames } from './utils.js';
 
 /******************************************************************************/
@@ -30,7 +30,9 @@ let reverseMode = false;
 
 function disableToolbarIcon(tabId) {
     const details = {
-        path: {
+        path: webextFlavor === 'safari'
+            ? '/img/icon_safari_off.svg'
+            : {
              '16': '/img/icon_16_off.png',
              '32': '/img/icon_32_off.png',
              '64': '/img/icon_64_off.png',
@@ -45,7 +47,9 @@ function disableToolbarIcon(tabId) {
 
 function enableToolbarIcon(tabId) {
     const details = {
-        path: {
+        path: webextFlavor === 'safari'
+            ? '/img/icon_safari.svg'
+            : {
              '16': '/img/icon_16.png',
              '32': '/img/icon_32.png',
              '64': '/img/icon_64.png',
