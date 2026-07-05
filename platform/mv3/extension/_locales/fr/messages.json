@@ -96,7 +96,7 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Coller ici le lien de la liste de filtres à ajouter",
+    "message": "Lien de la liste de filtres à ajouter",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -104,7 +104,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Coller ici les filtres cosmétiques/scriptlets spécifiques à ajouter",
+    "message": "Filtres cosmétiques/scriptlets spécifiques à ajouter",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {

@@ -104,7 +104,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Vložte sem konkrétní kosmetické/scriplet filtry, které chcete přidat",
+    "message": "Sem vložte konkrétní kosmetické/scriplet filtry, které chcete přidat",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
