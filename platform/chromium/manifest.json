@@ -57,7 +57,11 @@
         "https://filterlists.com/*",
         "https://forums.lanik.us/*",
         "https://github.com/*",
-        "https://*.github.io/*"
+        "https://*.github.io/*",
+        "https://gitlab.com/*",
+        "https://*.gitlab.io/*",
+        "https://codeberg.org/*",
+        "https://*.codeberg.page/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"
