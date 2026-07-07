@@ -101,8 +101,8 @@ export async function fetchList(context, asset, progressFn) {
                 newParts.push(`!#trusted off ${context.secret}`);
             }
         }
-        if ( parts.some(v => typeof v === 'object' && v.error) ) { return; }
         parts = await Promise.all(newParts);
+        if ( parts.some(v => typeof v === 'object' && v.error) ) { return; }
         parts = sfp.utils.preparser.expandIncludes(parts, context.env);
     }
     const text = parts.join('\n');

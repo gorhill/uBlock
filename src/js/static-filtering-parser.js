@@ -4376,6 +4376,7 @@ export const utils = (( ) => {
                 }
                 if ( part instanceof Object === false ) { continue; }
                 const content = part.content;
+                if ( typeof content !== 'string' ) { continue; }
                 const slices = this.splitter(content, env);
                 for ( let i = 0, n = slices.length; i < n; i += 2 ) {
                     const slice = content.slice(slices[i+0], slices[i+1]);
