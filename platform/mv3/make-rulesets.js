@@ -910,7 +910,17 @@ async function processPopupRules(assetDetails, popupRules) {
             return data;
         }
         if ( Array.isArray(condition.requestDomains) ) {
-            realm.hostnames = realm.hostnames.concat(condition.requestDomains);
+            realm.hostnames = realm.hostnames.concat(
+                condition.requestDomains
+            );
+        }
+        // https://github.com/uBlockOrigin/uAssets/issues/33581
+        if ( type === 'block' ) {
+            if ( Array.isArray(condition.excludedRequestDomains) ) {
+                data.allow.hostnames = data.allow.hostnames.concat(
+                    condition.excludedRequestDomains
+                );
+            }
         }
         return data;
     };
