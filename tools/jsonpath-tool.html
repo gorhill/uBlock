@@ -57,7 +57,21 @@ section .cm-lineWrapping {
     resize: vertical;
 }
 #jsonpath-input {
+    display: flex;
+    gap: 1em;
+}
+#jsonpath-input > input {
     font-size: medium;
+    flex-grow: 1;
+}
+#jsonpath-input > button {
+    font-size: larger;
+}
+#jsonpath-input > button::after {
+    content: '\21C8';
+}
+section.collapsed + #jsonpath-input > button::after {
+    content: '\21CA';
 }
 #jsonpath-result {
     background-color: #eee;
@@ -69,9 +83,11 @@ section .cm-lineWrapping {
 <body>
 <h2>uBO-flavored JSONPath tool</h2>
 <main>
-    <section>
-    </section>
-    <input id="jsonpath-input" placeholder="JSON path expression" spellcheck="false" value="$..book[?@.price<10]" />
+    <section></section>
+    <div id="jsonpath-input">
+        <input placeholder="JSON path expression" spellcheck="false" value="$..book[?@.price<10]" />
+        <button type="button"></button>
+    </div>
     <div id="jsonpath-result">&nbsp;</div>
 </main>
 
@@ -147,7 +163,7 @@ section .cm-lineWrapping {
     }
 
     function process() {
-        const input = document.querySelector('#jsonpath-input');
+        const input = document.querySelector('#jsonpath-input > input');
         const jsonpath = input.value;
         jsonp.compile(jsonpath);
         const jsonDataIn = readJSON();
@@ -157,12 +173,26 @@ section .cm-lineWrapping {
         const jsonDataOut = readJSON();
         const objAfter = jsonp.apply(jsonDataOut);
         const bText = JSON.stringify(objAfter !== undefined ? objAfter : jsonDataOut, null, 2);
+        collapse(false);
         cmMergeView.b.dispatch({
             changes: {
                 from: 0, to: cmMergeView.b.state.doc.length,
                 insert: bText,
             },
         });
+    }
+
+    function collapse(afterState) {
+        const section = document.querySelector('main > section');
+        const beforeState = section.classList.contains('collapsed');
+        afterState ??= !beforeState;
+        if ( afterState === beforeState ) { return; }
+        section.classList.toggle('collapsed', afterState);
+        if ( afterState ) {
+            cmMergeView.reconfigure({ collapseUnchanged: { } });
+        } else {
+            cmMergeView.reconfigure({ collapseUnchanged: undefined });
+        }
     }
 
     const jsonp = new JSONPath();
@@ -181,6 +211,7 @@ section .cm-lineWrapping {
                 try { insert = JSON.stringify(JSON.parse(before), null, 2); }
                 catch { }
                 if ( Boolean(insert) === false ) { break; }
+                collapse(false);
                 info.view.dispatch({ changes: { from: 0, to: doc.length, insert } });
                 return;
             }
@@ -196,10 +227,13 @@ section .cm-lineWrapping {
     }, document.querySelector('section'));
 
     {
-        const input = document.querySelector('#jsonpath-input');
-        input.addEventListener('input', ( ) => {
-            process();
-        });
+        const input = document.querySelector('#jsonpath-input > input');
+        input.addEventListener('input', ( ) => { process(); });
+    }
+
+    {
+        const button = document.querySelector('#jsonpath-input > button');
+        button.addEventListener('click', ( ) => { collapse(); });
     }
 
     process();
