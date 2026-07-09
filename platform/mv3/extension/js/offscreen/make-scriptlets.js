@@ -174,7 +174,8 @@ export function commit(rulesetId, template) {
                     JSON.stringify(Array.from(a[1])).slice(1,-1),
                 ];
             }).flat();
-        let content = safeReplace(template, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
+        let content = safeReplace(template, 'self.$hasHostnames$', JSON.stringify(hostnames.length !== 0));
+        content = safeReplace(content, 'self.$hasEntities$', JSON.stringify(worldDetails.hasEntities));
         content = safeReplace(content, 'self.$hasAncestors$', JSON.stringify(worldDetails.hasAncestors));
         content = safeReplace(content, 'self.$hasRegexes$', JSON.stringify(scriptletFromRegexes.length !== 0));
         content = safeReplace(content,
