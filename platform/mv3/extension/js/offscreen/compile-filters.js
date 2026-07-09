@@ -452,7 +452,7 @@ async function compileImportedList() {
         promises.push(getCompiledListData(list));
     }
     const compiledData = await Promise.all(promises);
-    const toMerge = compiledData.filter(a => Boolean(a));
+    const toMerge = compiledData.filter(a => a);
     if ( toMerge.length === 0 ) { return; }
     const merged = toMerge[0];
     while ( toMerge.length > 1 ) {
