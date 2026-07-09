@@ -29,6 +29,7 @@ import './noeval.js';
 import './object-prune.js';
 import './prevent-addeventlistener.js';
 import './prevent-bab.js';
+import './prevent-clipboard-write.js';
 import './prevent-dialog.js';
 import './prevent-fetch.js';
 import './prevent-innerHTML.js';
