@@ -227,7 +227,9 @@ function addExtendedToDNR(context, parser) {
         if ( not && exception ) { continue; }
         if ( not || exception ) {
             excludeMatches.push(hn);
-        } else if ( hn !== '*' ) {
+        } else if ( hn === '*' ) {
+            addGenericCosmeticFilter(context, compiled, false);
+        } else {
             matches.push(hn);
         }
     }
