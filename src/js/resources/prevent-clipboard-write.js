@@ -37,8 +37,8 @@ import { safeSelf } from './safe-self.js';
  * @param domAlert
  * Optional. A vararg to be used to alert the user in case a clipboard write
  * operation was prevented. The parameter is composed of two parts separated by
- * `|`: the first part is a CSS selector used to target a DOM element which
- * content will be replaced with the text found in the second part.
+ * `|`: the first part is a CSS selector used to lookup the DOM element to be
+ * used as container of the text found in the second part.
  * 
  * @example 
  * ##+js(prevent-clipboard-write, /^bash <<</, domAlert, body|Clickfix attempt defused)
@@ -50,19 +50,40 @@ function preventClipboardWrite(needle = '') {
     const logPrefix = safe.makeLogPrefix('prevent-clipboard-write');
     const pattern = safe.initPattern(needle);
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
+    const domAlert = clipboardText => {
+        const match = /^([^|]+)\s*\|\s*(.+)/.exec(extraArgs.domAlert);
+        if ( Boolean(match) === false ) { return; }
+        const elem = document.querySelector(match[1]);
+        if ( elem === null ) { return; }
+        const div = document.createElement('div');
+        const placeholder = /\$\{text\}/.exec(match[2]);
+        if ( placeholder ) {
+            const code = document.createElement('code');
+            code.style = 'background-color:#ddc;padding:0.25em;user-select:none;word-break:break-all';
+            code.textContent = clipboardText;
+            div.append(
+                match[2].slice(0, placeholder.index),
+                code,
+                match[2].slice(placeholder.index + placeholder[0].length)
+            );
+        } else {
+            div.append(match[2]);
+        }
+        div.style = 'background-color:beige;color:black;border:1px solid black;font-size:medium;padding:0.5em;position:absolute;text-align:center;top:0;width:100%;z-index:2147483647';
+        elem.append(div);
+        if ( currentAlert ) {
+            currentAlert.remove();
+        }
+        currentAlert = div;
+    };
+    let currentAlert = null;
     proxyApplyFn('navigator.clipboard.writeText', function(context) {
         const text = `${context.callArgs[0]}`.trim();
         if ( safe.testPattern(pattern, text) !== true ) {
             return context.reflect();
         }
         if ( extraArgs.domAlert ) {
-            const match = /^([^|]+)\s*\|\s*(.+)/.exec(extraArgs.domAlert);
-            if ( match ) {
-                const elem = document.querySelector(match[1]);
-                if ( elem ) {
-                    elem.textContent = match[2];
-                }
-            }
+            domAlert(text);
         }
         safe.uboLog(logPrefix, 'Prevented:\n\t', text);
     });
