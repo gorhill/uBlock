@@ -543,6 +543,33 @@ const onSpecificityChanged = function() {
 
 /******************************************************************************/
 
+const onModifiersClicked = function(ev) {
+    const arrow = ev.target.closest('.arrow');
+    if ( arrow === null ) { return; }
+
+    const isIncrement = arrow.dataset.action === 'increment';
+    let input;
+    let callback;
+
+    if ( arrow.classList.contains('depth-left') || arrow.classList.contains('depth-right') ) {
+        input = $stor('#resultsetDepth input');
+        callback = onDepthChanged;
+    } else {
+        input = $stor('#resultsetSpecificity input');
+        callback = onSpecificityChanged;
+    }
+
+    if ( isIncrement ) {
+        input.stepUp();
+    } else {
+        input.stepDown();
+    }
+
+    callback();
+};
+
+/******************************************************************************/
+
 const onCandidateClicked = function(ev) {
     let li = ev.target.closest('li');
     if ( li === null ) { return; }
@@ -844,6 +871,7 @@ const startPicker = function() {
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
+    $stor('#resultsetModifiers').addEventListener('click', onModifiersClicked);
     staticFilteringParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
