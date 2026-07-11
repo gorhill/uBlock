@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale rigels: dizze kolom is foar rigels dy't allinnich op de aktuele website fan tapassing binne.\nLokale rigels hawwe foarrang op globale rigels.",
+    "message": "Lokale regels: dizze kolom is foar regels dy’t allinnich op de aktuele website fan tapassing binne.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {

@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Cảnh báo! Bạn có các thay đổi chưa được lưu",
+    "message": "Cảnh báo: Bạn có các thay đổi chưa được lưu!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Một URL mỗi dòng. URL không hợp lệ sẽ âm thầm bị bỏ qua.",
+    "message": "Một URL mỗi dòng. URL không hợp lệ sẽ âm thầm bỏ qua.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -1048,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Danh sách bộ lọc riêng của uBO được lưu trữ miễn phí trên các trang <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "danh sách bộ lọc riêng của uBO được lưu trữ miễn phí trên <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {

@@ -592,7 +592,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "استيراد من ملف…",
+    "message": "استيراد من ملف",
     "description": ""
   },
   "rulesExport": {
@@ -628,7 +628,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "تحدد توجيهات المواقع الموثوقة الصفحات التي يجب تعطيل uBlock Origin عليها. إدخال واحد في كل سطر.",
+    "message": "تحدد توجيهات الموقع الموثوق به صفحات الويب uBO Lite التي يجب تعطيلها. إدخال واحد في كل سطر.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -736,11 +736,11 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "أول طرف ",
+    "message": "أول طرف",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "ثالث-طرف ",
+    "message": "ثالث طرف",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -776,7 +776,7 @@
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URL",
+    "message": "رابط (URL)",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
@@ -892,7 +892,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "ماركداون",
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "فيما يلي معلومات فنية قد تكون مفيدة عندما يحاول المتطوعون مساعدتك في حل مشكلة ما.فيما يلي معلومات فنية قد تكون مفيدة عندما يحاول المتطوعون مساعدتك في حل مشكلة ما. ",
+    "message": "فيما يلي معلومات تقنية قد تكون مفيدة عندما يحاول المتطوعون مساعدتك في حل مشكلة ما.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {

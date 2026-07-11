@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "فلاتر مخصصة",
+    "message": "مرشحات مخصصة",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "القوائم المستوردة",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "إضافة قائمة تصفية…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "رابط قائمة التصفية المراد إضافتها",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "لتطبيق مرشحات التجميل أو السكريبت من القوائم المستوردة، يجب منح uBO Lite إذنا لتشغيل نصوص المستخدم. افتح صفحة الإضافات في متصفحك (<code>chrome://extensions</code> في Chrome أو <code>about:addons</code> في Firefox)، ثم افتح تفاصيل </b>uBO Lite<b>، </b> وفعل خيار السماح بنصوص المستخدم <b> (المعروف أيضا بـ \"نصوص الطرف الثالث غير الموثقة\").",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -272,15 +272,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "تفعيل حظر النوافذ المنبثقة",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "عند التفعيل، ستقوم المرشحات المطابقة تلقائيا بإغلاق علامات التبويب غير المرغوب فيها التي تنشئها المواقع.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "بيئة إنشاء المرشحات التجريبية",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {

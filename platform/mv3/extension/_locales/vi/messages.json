@@ -96,7 +96,7 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Dán URL của danh sách bộ lọc vào đây để thêm",
+    "message": "URL của danh sách bộ lọc cần thêm",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
