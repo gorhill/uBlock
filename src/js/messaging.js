@@ -964,6 +964,7 @@ const onMessage = function(request, sender, callback) {
         });
 
     case 'cloudUsed':
+        if ( typeof request.datakey !== 'string' || request.datakey === '' ) { break; }
         return vAPI.cloud.used(request.datakey).then(result => {
             callback(result);
         });
