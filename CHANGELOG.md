@@ -1,3 +1,4 @@
+- [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/bdd39fe606)
 - [Add `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/735f61b8a4)
 - [Improve `prevent-bab` scriptlet](https://github.com/gorhill/uBlock/commit/6772215c35)
 - [[jsonpath] Increase RFC9535 compliance](https://github.com/gorhill/uBlock/commit/b123c23a4f)
