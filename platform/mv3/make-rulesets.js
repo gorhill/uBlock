@@ -254,9 +254,9 @@ rePatternFromUrlFilter.restrHostnameAnchor2 = '^[^:]+://([^:/]+)?';
 
 async function fetchListFromCache(assetDetails) {
     const fname = assetDetails.id;
-    logProgress(`Reading locally cached ${fname}`);
+    logProgress(`Reading locally cached ${platform}/${fname}`);
 
-    const content = await fs.readFile(`${cacheDir}/${fname}`,
+    const content = await fs.readFile(`${cacheDir}/${platform}/${fname}`,
         { encoding: 'utf8' }
     ).catch(( ) => { });
     if ( content !== undefined ) {
@@ -271,7 +271,7 @@ async function fetchListFromCache(assetDetails) {
     };
 
     const text = await fetchList(context, assetDetails);
-    writeFile(`${cacheDir}/${fname}`, text);
+    writeFile(`${cacheDir}/${platform}/${fname}`, text);
 
     if ( Boolean(text) === false ) {
         throw 'Filter list should not be empty';
