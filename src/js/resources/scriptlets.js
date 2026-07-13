@@ -1880,10 +1880,16 @@ function trustedClickElement(
         }
     }
 
-    const steps = safe.String_split.call(selectors, /\s*,\s*/).map(a => {
-        if ( /^\d+$/.test(a) ) { return parseInt(a, 10); }
-        return a;
-    });
+    const steps = (( ) => {
+        const steps = /^[;|]/.test(selectors)
+            ? safe.String_split.call(selectors.slice(1), selectors.charAt(0))
+            : safe.String_split.call(selectors, ',');
+        return steps.map(a => {
+            a = a.trim();
+            if ( /^\d+$/.test(a) ) { return parseInt(a, 10); }
+            return a;
+        });
+    })();
     if ( steps.length === 0 ) { return; }
     const clickDelay = parseInt(delay, 10) || 1;
     for ( let i = steps.length-1; i > 0; i-- ) {
