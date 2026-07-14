@@ -77,15 +77,28 @@ function preventClipboardWrite(needle = '') {
         currentAlert = div;
     };
     let currentAlert = null;
-    proxyApplyFn('navigator.clipboard.writeText', function(context) {
-        const text = `${context.callArgs[0]}`.trim();
-        if ( safe.testPattern(pattern, text) !== true ) {
-            return context.reflect();
-        }
+    const prevent = text => {
+        if ( typeof text !== 'string' ) { return; }
+        text = text.trim();
+        if ( safe.testPattern(pattern, text) !== true ) { return; }
         if ( extraArgs.domAlert ) {
             domAlert(text);
         }
         safe.uboLog(logPrefix, 'Prevented:\n\t', text);
+        return true;
+    };
+    proxyApplyFn('navigator.clipboard.writeText', function(context) {
+        const text = `${context.callArgs[0]}`;
+        if ( prevent(text) ) { return; }
+        return context.reflect();
+    });
+    proxyApplyFn('document.execCommand', function(context) {
+        const { callArgs } = context;
+        if ( callArgs[0] === 'copy' || callArgs[0] === 'cut' ) {
+            const text = document.getSelection()?.toString();
+            if ( text && prevent(text) ) { return; }
+        }
+        return context.reflect();
     });
 }
 registerScriptlet(preventClipboardWrite, {
