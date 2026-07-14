@@ -21,9 +21,17 @@ uBlock Origin (uBO)
 | <img src="https://github.com/user-attachments/assets/b0136512-56a5-4856-8c50-4971c957a24f" alt="Get uBlock Origin for Firefox"> | <a href="https://addons.mozilla.org/addon/ublock-origin/">Firefox Add-ons</a> | [uBO works best on Firefox](https://github.com/gorhill/uBlock/wiki/uBlock-Origin-works-best-on-Firefox) |
 | <img src="https://github.com/user-attachments/assets/3a7569f8-688b-4eb1-a643-8d0fe173aefe" alt="Get uBlock Origin for Microsoft Edge"> | <a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak">Edge Add-ons</a> |
 | <img src="https://github.com/user-attachments/assets/938f080c-fe64-4e48-8b89-4bfceabb56e6" alt="Get uBlock Origin for Opera"> | <a href="https://addons.opera.com/extensions/details/ublock/">Opera Add-ons</a> |
-| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get uBlock Origin for Chromium"> | <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Chrome Web Store</a> | <a href="https://github.com/uBlockOrigin/uBlock-issues/wiki/About-Google-Chrome's-%22This-extension-may-soon-no-longer-be-supported%22">About Google Chrome's "This extension may soon no longer be supported"</a><br>End of support on Chrome 139 |
+| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get uBlock Origin for Chromium"> | <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Chrome Web Store</a> | <a href="https://github.com/uBlockOrigin/uBlock-issues/wiki/About-Google-Chrome's-%22This-extension-may-soon-no-longer-be-supported%22">About Google Chrome's "This extension may soon no longer be supported"</a><br><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline#aug_31st_2026_all_remaining_manifest_v2_extensions_removed_from_the_chrome_web_store">Removal from the Store</a> on August 31st, 2026. |
 | <img src="https://github.com/user-attachments/assets/2e9037c4-836d-44c1-a716-ba96e89daaff" alt="Get uBlock Origin for Thunderbird"> | <a href="https://addons.thunderbird.net/thunderbird/addon/ublock-origin/">Thunderbird Add-ons</a> | [No longer updated and stuck at 1.49.2.](https://github.com/uBlockOrigin/uBlock-issues/issues/2928) Later versions require "GitHub - Releases". |
 | <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" height="50" alt="Get uBlock Origin through GitHub"> | <a href="https://github.com/gorhill/uBlock/releases">GitHub - Releases</a> | Stable and development versions on Firefox, Chromium MV2, and Thunderbird. Must be placed manually into web browsers; the Chromium and Thunderbird versions usually won't auto-update.
+
+<h3> Related: 
+<sub>
+<img src="https://github.com/gorhill/uBlock/blob/master/platform/mv3/extension/img/ublock.svg" height="24" width="24">
+</sub>
+<a href="https://github.com/uBlockOrigin/uBOL-home">uBlock Origin Lite</a>
+</h3>
+
 
 ***
 
@@ -40,8 +48,8 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 * [Documentation](#documentation)
 * [Installation](#installation)
   * [Firefox](#firefox)
-  * [Thunderbird](#thunderbird)
   * [Chromium](#chromium)
+  * [Thunderbird](#thunderbird)
   * [All Programs](#all-programs)
   * [Enterprise Deployment](#enterprise-deployment)
 * [Release History](#release-history)
@@ -85,15 +93,9 @@ For support, questions, or help, visit [/r/uBlockOrigin][Reddit].
 
 uBO [works best][Works Best] on Firefox and is available for desktop and Android versions.
 
-#### Thunderbird
-
-[Thunderbird Add-ons][Thunderbird]
-
-In Thunderbird, uBlock Origin does not affect emails, just feeds.
-
 #### Chromium
 
-[Chrome Web Store][Chrome]
+[Chrome Web Store][Chrome] (Removal on 2026-08-31)
 
 [Microsoft Edge Add-ons][Edge] (Published by [Nicole Rolls][Nicole Rolls] until version 1.62. Ownership transfer at version 1.64.)
 
@@ -102,6 +104,12 @@ In Thunderbird, uBlock Origin does not affect emails, just feeds.
 [Development Builds][Chrome Dev]
 
 uBO should be compatible with any Chromium-based browser.
+
+#### Thunderbird
+
+[Thunderbird Add-ons][Thunderbird]
+
+In Thunderbird, uBlock Origin does not affect emails, just feeds.
 
 #### All Programs
 
