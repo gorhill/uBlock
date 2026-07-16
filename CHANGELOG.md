@@ -1,3 +1,5 @@
+- [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/89fe40d73f)
+- [Add shim for `piano-analytics.js`](https://github.com/gorhill/uBlock/commit/5dab3cbd24)
 - [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/bdd39fe606)
 - [Add `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/735f61b8a4)
 - [Improve `prevent-bab` scriptlet](https://github.com/gorhill/uBlock/commit/6772215c35)
