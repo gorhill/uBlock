@@ -179,6 +179,8 @@ export default new Map([
     [ 'outbrain-widget.js', {
         alias: 'widgets.outbrain.com/outbrain.js',
     } ],
+    [ 'piano-analytics.js', {
+    } ],
     [ 'popads.js', {
         alias: [ 'popads.net.js', 'prevent-popads-net.js' ],
         data: 'text',
