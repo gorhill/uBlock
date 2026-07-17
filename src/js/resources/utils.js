@@ -62,7 +62,7 @@ registerScriptlet(getExceptionTokenFn, {
 
 /******************************************************************************/
 
-export function trapPropertyFn(propChain, handler) {
+export function trapPropertyFn(propChain, handler, options = {}) {
     if ( propChain === '' ) { return; }
     let owner = self;
     let prop = propChain;
@@ -85,7 +85,9 @@ export function trapPropertyFn(propChain, handler) {
             if ( entry === undefined ) { return; }
             let r = entry.value;
             for ( const desc of entry.stack ) {
-                try { r = desc.get(); } catch { }
+                try { r = desc.get(); } catch (e) {
+                    if ( entry.canThrow ) { throw e; }
+                }
             }
             return r;
         };
@@ -94,7 +96,9 @@ export function trapPropertyFn(propChain, handler) {
             if ( entry === undefined ) { return; }
             entry.value = value;
             for ( const desc of entry.stack ) {
-                try { desc.set(value); } catch { }
+                try { desc.set(value); } catch (e) {
+                    if ( entry.canThrow ) { throw e; }
+                }
             }
         };
     }
@@ -109,6 +113,7 @@ export function trapPropertyFn(propChain, handler) {
     };
     entry.stack.push(handler);
     if ( entry.stack.length > 1 ) { return entry.value; }
+    Object.assign(entry, options);
     handlers.set(prop, entry);
     const desc = safe.Object_getOwnPropertyDescriptor(owner, prop);
     if ( desc instanceof safe.Object ) {
@@ -367,10 +372,8 @@ export function lookupElementsFn(directive, until = 0) {
             if ( elem.openOrClosedShadowRoot ) { // Firefox
                 return elem.openOrClosedShadowRoot;
             }
-            if ( typeof chrome === 'object' ) { // Chromium
-                if ( chrome.dom && chrome.dom.openOrClosedShadowRoot ) {
-                    return chrome.dom.openOrClosedShadowRoot(elem);
-                }
+            if ( self.chrome?.dom?.openOrClosedShadowRoot ) { // Chromium
+                return self.chrome.dom.openOrClosedShadowRoot(elem);
             }
             return elem.shadowRoot;
         };
