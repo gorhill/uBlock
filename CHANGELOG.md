@@ -1,3 +1,4 @@
+- [Improve `abort-current-script` scriptlet](https://github.com/gorhill/uBlock/commit/84e4bd7659)
 - [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/89fe40d73f)
 - [Add shim for `piano-analytics.js`](https://github.com/gorhill/uBlock/commit/5dab3cbd24)
 - [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/bdd39fe606)
