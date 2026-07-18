@@ -51,26 +51,23 @@ function preventClipboardWrite(needle = '') {
     const pattern = safe.initPattern(needle);
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
     const domAlert = clipboardText => {
-        const match = /^([^|]+)\s*\|\s*(.+)/.exec(extraArgs.domAlert);
-        if ( Boolean(match) === false ) { return; }
         const doc = document;
-        const elem = doc.querySelector(match[1]);
-        if ( elem === null ) { return; }
         const div = doc.createElement('div');
         const span = doc.createElement('span');
         span.style = 'flex-grow:1;padding:0.5em 0 0.5em 0.5em;';
-        const placeholder = /\$\{text\}/.exec(match[2]);
+        const { domAlert } = extraArgs;
+        const placeholder = /\$\{text\}/.exec(domAlert);
         if ( placeholder ) {
             const code = doc.createElement('code');
             code.style = 'background-color:#ddc;font-family:monospace;padding:0.25em;user-select:none;word-break:break-all';
             code.textContent = clipboardText;
             span.append(
-                match[2].slice(0, placeholder.index),
+                domAlert.slice(0, placeholder.index),
                 code,
-                match[2].slice(placeholder.index + placeholder[0].length)
+                domAlert.slice(placeholder.index + placeholder[0].length)
             );
         } else {
-            span.append(match[2]);
+            span.append(domAlert);
         }
         const button = doc.createElement('button');
         button.style = 'padding:1em';
@@ -82,7 +79,7 @@ function preventClipboardWrite(needle = '') {
         });
         div.append(span, button);
         div.style = 'background-color:beige;color:black;border:1px solid black;display:flex;font-size:medium;position:fixed;text-align:center;top:0;width:100%;z-index:2147483647';
-        elem.append(div);
+        doc.documentElement.append(div);
         if ( currentAlert ) {
             currentAlert.remove();
         }
