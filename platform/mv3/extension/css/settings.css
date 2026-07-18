@@ -145,7 +145,7 @@ section[data-pane="rulesets"] > div:first-of-type > p:last-of-type {
 .listEntry[data-role="rootnode"] > .detailbar > *:not(.listExpander) {
     pointer-events: none;
     }
-.listEntry[data-role="rootnode"]:has(> .listEntries:empty) {
+.listEntry[data-role="rootnode"]:not([data-nodeid="imported"]):has(> .listEntries:empty) {
     display: none;
     }
 .listEntry .detailbar .count {
