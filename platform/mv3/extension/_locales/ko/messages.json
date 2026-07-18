@@ -40,11 +40,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "이 웹사이트에서는",
+    "message": "이 웹사이트에서",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "이 사이트의 이슈를 신고하기",
+    "message": "이슈 신고하기",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -60,7 +60,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "기본값",
+    "message": "기본",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -168,7 +168,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- 주제 선택 --",
+    "message": "-- 항목 선택 --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -176,7 +176,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "오버레이나 기타 성가신 요소를 보여줍니다",
+    "message": "오버레이나 기타 방해 요소를 보여줍니다",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -188,7 +188,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "uBO Lite를 켜면 오작동합니다",
+    "message": "uBO Lite가 활성화되어 있을 때 오작동합니다",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -196,7 +196,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "악성코드, 피싱으로 유도합니다",
+    "message": "악성 소프트웨어, 피싱으로 유도합니다",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -256,7 +256,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "필터링 모드를 변경할 때 페이지 자동 새로고침",
+    "message": "필터링 모드 변경 시 페이지 자동 새로고침",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
@@ -304,7 +304,7 @@
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "목록 찾기",
+    "message": "목록 검색",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
@@ -312,7 +312,7 @@
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite가 다음 페이지를 불러오지 못하게 했습니다.",
+    "message": "uBO Lite가 다음 페이지를 불러오지 못하도록 차단했습니다:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -320,7 +320,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "차단된 페이지에서 다른 사이트로 이동하려 합니다. 계속하시면, {{url}} 주소로 바로 이동합니다.",
+    "message": "차단된 페이지가 다른 사이트로 리다이렉션하려 합니다. 계속 진행하기로 선택하면 다음 주소로 바로 이동합니다: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -328,7 +328,7 @@
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "뒤로",
+    "message": "뒤로 이동",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
@@ -364,7 +364,7 @@
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "필터링 모드 상세정보",
+    "message": "필터링 모드 상세 정보",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {

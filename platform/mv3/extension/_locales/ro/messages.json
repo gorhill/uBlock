@@ -152,7 +152,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Pentru a evita suprasolicitarea voluntarilor, vă rugăm să verificați dacă această problemă nu a fost deja raportată. <b>Megjegyzés:</b> a gombra kattintva az oldal forrása elküldésre kerül a GitHubnak.",
+    "message": "Pentru a evita suprasolicitarea voluntarilor, vă rugăm să verificați dacă această problemă nu a fost deja raportată. <b>Notă:</b> dacă faceți clic pe buton, originea paginii va fi trimisă către GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

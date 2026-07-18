@@ -960,7 +960,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Για να αποφύγετε την επιβάρυνση των εθελοντών με διπλές αναφορές, βεβαιωθείτε ότι το ζήτημα δεν έχει ήδη αναφερθεί.",
+    "message": "Για να μην επιβαρυνθούν οι εθελοντών με διπλές αναφορές, βεβαιωθείτε ότι το ζήτημα δεν έχει ήδη αναφερθεί.<b>Σημείωση:</b> Με το πάτημα του κουμπιού, θα σταλεί η σελίδα προέλευσης στο GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

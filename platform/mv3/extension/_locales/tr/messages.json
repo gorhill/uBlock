@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Zararlı alan adları",
+    "message": "Kötü amaçlı yazılım koruması, güvenlik",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -92,11 +92,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Süzgeç listesi ekle…",
+    "message": "Filtre listesi ekle…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Eklenecek süzgeç listesinin URL'sini buraya yapıştırın",
+    "message": "Eklenecek filtre listesinin URL'sini buraya yapıştırın",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "İçeri aktarılmış listelerdeki kozmetik veya kod filtrelerini uygulamak için uBO Lite'a kullanıcı komut dosyalarını çalıştırma izni vermeniz gerekir. İzni vermek için tarayıcınızın uzantılar sayfasını açın (Chrome için:<code>chrome://extensions</code> Firefox için:<code>about:addons</code>), <b>uBO Lite</b>'ın ayrıntılar sayfasına tıklayın ve <b>Kullanıcı komut dosyalarına izin ver</b> seçeneğine tıklayın (\"doğrulanmamış 3. parti komutlar\" olarak da adlandırılabilir).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {

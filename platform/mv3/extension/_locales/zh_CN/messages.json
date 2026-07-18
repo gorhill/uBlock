@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} 条规则，转换自 {{filterCount}} 条网络共享规则",
+    "message": "{{ruleCount}} 条规则，转换自 {{filterCount}} 条网络规则",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -40,11 +40,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "在本网站上",
+    "message": "针对此网站",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "报告此网站上的问题",
+    "message": "反馈问题",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "恶意软件防护、安全",
+    "message": "恶意软件防护，安全",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -84,7 +84,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "区域、语言",
+    "message": "区域/语言",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
@@ -140,7 +140,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "报告过滤问题",
+    "message": "反馈过滤规则问题",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -148,15 +148,15 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "故障排查相关信息",
+    "message": "故障排查信息",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "请确认该问题未曾上报，以避免加重志愿者负担。",
+    "message": "请确认该问题未曾上报，以避免加重志愿者负担。\n<b>备注：</b>点击此按钮会将此页面的 origin（协议+域名+端口）发送到 GitHub。（译注：以便编写问题报告）",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "在 GitHub 上寻找相似报告",
+    "message": "在 GitHub 上查找相似报告",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -196,15 +196,15 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "导致恶意软件、网络钓鱼",
+    "message": "引向恶意软件、网络钓鱼",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "将网页标记为 “NSFW”（<a href=“https://zh.wikipedia.org/zh-hans/NSFW>“工作场所不宜”</a>）",
+    "message": "将网页标记为 “NSFW”（<a href=“https://zh.wikipedia.org/wiki/NSFW>“工作场所不宜”</a>）",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "创建新报告",
+    "message": "前往 GitHub 创建新报告",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -368,11 +368,11 @@
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "自定义DNR规则",
+    "message": "自定义 DNR 规则",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR规则来源：",
+    "message": "DNR 规则来源：",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
@@ -396,7 +396,7 @@
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "导入并添加…",
+    "message": "导入并追加…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
