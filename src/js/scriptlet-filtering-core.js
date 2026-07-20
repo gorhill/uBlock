@@ -25,14 +25,6 @@ import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
 
-// For debugging convenience: all the top function calls will appear
-// at the bottom of a generated content script
-const codeSorter = (a, b) => {
-    if ( a.startsWith('try') ) { return 1; }
-    if ( b.startsWith('try') ) { return -1; }
-    return 0;
-};
-
 const normalizeRawFilter = (parser, sourceIsTrusted = false) => {
     const args = parser.getScriptletArgs();
     if ( args.length !== 0 ) {
@@ -61,7 +53,7 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
     const fname = match && match[1];
     const content = patchScriptlet(fname, details.js, args.slice(1));
     if ( fname ) {
-        targetWorldMap.set(token, details.js);
+        targetWorldMap.set(token, { code: details.js });
     }
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
@@ -70,17 +62,20 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
         const details = reng.contentFromName(token, 'fn/javascript') ||
             reng.contentFromName(token, 'text/javascript');
         if ( details === undefined ) { continue; }
-        targetWorldMap.set(token, details.js);
+        targetWorldMap.set(token, { code: details.js });
         if ( Array.isArray(details.dependencies) === false ) { continue; }
         dependencies.push(...details.dependencies);
     }
-    targetWorldMap.set(rawToken, [
-        'try {',
-            `\t${content}`,
-        '} catch (e) {',
-            debug ? '\tconsole.error(e);' : '',
-        '}',
-    ].join('\n'));
+    targetWorldMap.set(rawToken, {
+        code: [
+            'try {',
+                `\t${content}`,
+            '} catch (e) {',
+                debug ? '\tconsole.error(e);' : '',
+            '}',
+        ].join('\n'),
+        priority: details.priority ?? 0,
+    });
 };
 
 // Fill-in scriptlet argument placeholders.
@@ -251,17 +246,24 @@ export class ScriptletFilteringEngine {
             }
         }
 
+        const sortedCalls = map => Array.from(map).toSorted((a, b) => {
+            const ap = a[1].priority;
+            const bp = b[1].priority;
+            if ( ap === bp ) { return a[0].localeCompare(b[0]); }
+            if ( ap === undefined ) { return 1; }
+            if ( bp === undefined ) { return -1; }
+            return bp - ap;
+        }).map(a => a[1].code);
+
         const mainWorldCode = [];
-        for ( const js of mainWorldMap.values() ) {
+        for ( const js of sortedCalls(mainWorldMap) ) {
             mainWorldCode.push(js);
         }
-        mainWorldCode.sort(codeSorter);
 
         const isolatedWorldCode = [];
-        for ( const js of isolatedWorldMap.values() ) {
+        for ( const js of sortedCalls(isolatedWorldMap) ) {
             isolatedWorldCode.push(js);
         }
-        isolatedWorldCode.sort(codeSorter);
 
         const scriptletDetails = {
             mainWorld: mainWorldCode.join('\n\n'),

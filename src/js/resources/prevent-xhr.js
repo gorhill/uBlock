@@ -230,7 +230,7 @@ registerScriptlet(preventXhrFn, {
  * */
 
 function preventXhr(...args) {
-    return preventXhrFn(false, ...args);
+    preventXhrFn(false, ...args);
 }
 registerScriptlet(preventXhr, {
     name: 'prevent-xhr.js',
@@ -260,7 +260,7 @@ registerScriptlet(preventXhr, {
  * */
 
 function trustedPreventXhr(...args) {
-    return preventXhrFn(true, ...args);
+    preventXhrFn(true, ...args);
 }
 registerScriptlet(trustedPreventXhr, {
     name: 'trusted-prevent-xhr.js',
