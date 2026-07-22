@@ -718,7 +718,7 @@ body[dir="rtl"] .netFilteringDialog > .panes > .details > div > span:nth-of-type
     flex-grow: 1;
     max-height: 10vh;
     overflow: hidden auto;
-    white-space: pre-line
+    white-space: pre-wrap;
     }
 .netFilteringDialog > .panes > .details > div > span:nth-of-type(2):not(.prose) {
     word-break: break-all;
