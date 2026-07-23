@@ -41,7 +41,7 @@ import { safeSelf } from './safe-self.js';
  * used as container of the text found in the second part.
  * 
  * @example 
- * ##+js(prevent-clipboard-write, /^bash <<</, domAlert, body|Clickfix attempt defused)
+ * ##+js(prevent-clipboard-write, /^bash <<</, domAlert, Clickfix attempt defused)
  * 
  * */
 
@@ -96,18 +96,24 @@ function preventClipboardWrite(needle = '') {
         safe.uboLog(logPrefix, 'Prevented:\n\t', text);
         return true;
     };
-    proxyApplyFn('navigator.clipboard.writeText', function(context) {
-        const text = `${context.callArgs[0]}`;
-        if ( prevent(text) ) { return; }
-        return context.reflect();
-    });
-    proxyApplyFn('document.execCommand', function(context) {
-        const { callArgs } = context;
-        if ( callArgs[0] === 'copy' || callArgs[0] === 'cut' ) {
-            const text = document.getSelection()?.toString();
-            if ( text && prevent(text) ) { return; }
-        }
-        return context.reflect();
+    const installTraps = ( ) => {
+        proxyApplyFn('navigator.clipboard.writeText', function(context) {
+            const text = `${context.callArgs[0]}`;
+            if ( prevent(text) ) { return; }
+            return context.reflect();
+        }, { skipToString: true });
+        proxyApplyFn('document.execCommand', function(context) {
+            const { callArgs } = context;
+            if ( callArgs[0] === 'copy' || callArgs[0] === 'cut' ) {
+                const text = document.getSelection()?.toString();
+                if ( text && prevent(text) ) { return Promise.resolve(); }
+            }
+            return context.reflect();
+        }, { skipToString: true });
+    };
+    self.addEventListener('mousedown', installTraps, {
+        once: true,
+        capture: true,
     });
 }
 registerScriptlet(preventClipboardWrite, {
