@@ -128,15 +128,15 @@ registerScriptlet(proxyApplyFn, {
 /******************************************************************************/
 
 export function proxyApplyConfig(config = '') {
-    try { config = JSON.parse(config); }
-    catch { }
-    if ( typeof config !== 'object' ) { return; }
-    Object.assign(proxyApplyFn, config);
+    try {
+        if ( typeof proxyApplyFn !== 'function' ) { return; }
+        config = JSON.parse(config);
+        if ( typeof config !== 'object' ) { return; }
+        Object.assign(proxyApplyFn, config);
+    } catch {
+    }
 }
 registerScriptlet(proxyApplyConfig , {
     name: 'proxy-apply-config.js',
-    dependencies: [
-        proxyApplyFn,
-    ],
     priority: 100,
 });
