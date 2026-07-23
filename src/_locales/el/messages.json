@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Απενεργοποίηση προ-φόρτωσης (για να αποτραπεί κάθε σύνδεση σε αποκλεισμένες αιτήσεις δικτύου)",
+    "message": "Απενεργοποίηση πρόωρης φόρτωσης (για να αποτραπεί κάθε σύνδεση σε μπλοκαρισμένες αιτήσεις δικτύου)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Χαρακτηριστικά κατάλληλα μόνο για τεχνικούς χρήστες.",
+    "message": "Χαρακτηριστικά κατάλληλα μόνο για τεχνικούς χρήστες",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -512,11 +512,11 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Ένα URL ανά γραμμή. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται. Άκυρα URL θα παρακάμπτονται σιωπηλά.",
+    "message": "Ένα URL ανά γραμμή. Άκυρα URL θα παρακάμπτονται σιωπηλά.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "απαρχαιωμένη.",
+    "message": "Μη ενημερωμένη.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {

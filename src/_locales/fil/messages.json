@@ -960,7 +960,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Siguraduhing wala pang ibang nakakapag-ulat ng problema mo upang hindi bahain ng trabaho ang mga volunteer.",
+    "message": "Upang hindi makagambala ng mga volunteer sa mga umuulit na ulat, pakisigurado na hindi pa narereklamo ang iyong isyu. <b>Paalala:</b> Mapapadala sa Github ang origin ng page na ito pagpindot dito.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
