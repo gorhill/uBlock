@@ -182,17 +182,21 @@ export async function updateImportedListData(listid, details) {
 
 // URL will be ruleset id
 
-export async function addImportedLists(urls) {
+export async function addImportedLists(toImport) {
     const lists = await getImportedLists();
     const beforeCount = lists.length;
-    for ( const url of urls ) {
+    for ( let details of toImport ) {
+        if ( typeof details === 'string' ) {
+            details = { url: details };
+        }
+        const { url } = details;
         if ( lists.some(a => a.id === url) ) { continue; }
         lists.push({
             id: url,
-            name: url,
+            name: details.name ?? url,
             group: 'imported',
             enabled: false,
-            homeURL: '',
+            homeURL: details.homeURL ?? '',
             expires: 7,
             time: {
                 added: Date.now(),

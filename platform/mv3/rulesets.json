@@ -91,16 +91,6 @@
     "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
-    "id": "dpollock-0",
-    "name": "Dan Pollock’s hosts file",
-    "enabled": false,
-    "excludedPlatforms": [ "safari" ],
-    "urls": [
-      "https://someonewhocares.org/hosts/hosts"
-    ],
-    "homeURL": "https://someonewhocares.org/hosts/"
-  },
-  {
     "id": "adguard-spyware-url",
     "name": "AdGuard/uBO – URL Tracking Protection",
     "group": "privacy",

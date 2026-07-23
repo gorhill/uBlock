@@ -20,6 +20,7 @@
 */
 
 import {
+    addImportedLists,
     getEnabledImportedLists,
     getImportedLists,
     updateEnabledImportedLists,
@@ -498,19 +499,39 @@ export async function patchDefaultRulesets() {
     ]);
     const toAdd = [];
     const toRemove = [];
+    // New default rulesets to add
     for ( const id of newDefaultIds ) {
         if ( oldDefaultIds.includes(id) ) { continue; }
         toAdd.push(id);
     }
+    // Old default rulesets to remove
     for ( const id of oldDefaultIds ) {
         if ( newDefaultIds.includes(id) ) { continue; }
         toRemove.push(id);
     }
+    // Non-default rulesets removed from stock lists
+    const removedStockLists = new Map([
+        [ 'dpollock-0', {
+            name: 'Dan Pollock’s hosts file',
+            url: 'https://someonewhocares.org/hosts/hosts',
+            homeURL: 'https://someonewhocares.org/hosts/',
+        }],
+    ]);
     const reImported = /^[a-z]+:\/\//;
+    const importedToAdd = [];
     for ( const id of rulesetConfig.enabledRulesets ) {
         if ( reImported.test(id) ) { continue; }
         if ( staticRulesetIds.includes(id) ) { continue; }
+        if ( toRemove.includes(id) ) { continue; }
+        if ( toAdd.includes(id) ) { continue; }
         toRemove.push(id);
+        if ( removedStockLists.has(id) ) {
+            importedToAdd.push(removedStockLists.get(id));
+        }
+    }
+    if ( importedToAdd.length ) {
+        await addImportedLists(importedToAdd);
+        toAdd.push(...importedToAdd.map(a => a.url));
     }
     localWrite('defaultRulesetIds', newDefaultIds);
     if ( toAdd.length === 0 && toRemove.length === 0 ) { return; }
