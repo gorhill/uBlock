@@ -1652,10 +1652,27 @@ function trustedReplaceXhrResponse(
 
 /*******************************************************************************
  * 
- * trusted-click-element.js
+ * @scriptlet trusted-click-element
  * 
- * Reference API:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-click-element.ts
+ * @description
+ * Programmatically click on one or more elements.
+ * 
+ * @param steps
+ * A comma-separated list of steps to fulfilled:
+ * - A valid CSS selector matchuing an element to programmatically click
+ * - A integer: A delay in milliseconds to wait before the next step is
+ *   processed. If the last step is an integer, it is used as a timeout value
+ *   before the scriptlet bails out (default to 11s)
+ * If the list of steps starts with `;` or `|`, it will be used as the
+ * separator chatacter instead of comma. This is convenient when a selector
+ * contains a comma character.
+ * A selector must be one of:
+ * - A valid plain CSS selector
+ * - An xpath expression: xpath:[expression]
+ * Addtionally:
+ * - Use `>>>` between selectors to target an element inside a shadow root
+ * - Prepend with `when-visible:[selector]` to progrmatically click the element
+ *   only when it is visible
  * 
  **/
 
