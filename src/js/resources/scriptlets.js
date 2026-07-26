@@ -1659,12 +1659,12 @@ function trustedReplaceXhrResponse(
  * 
  * @param steps
  * A comma-separated list of steps to fulfilled:
- * - A valid CSS selector matchuing an element to programmatically click
+ * - A valid CSS selector matching an element to programmatically click
  * - A integer: A delay in milliseconds to wait before the next step is
  *   processed. If the last step is an integer, it is used as a timeout value
  *   before the scriptlet bails out (default to 11s)
  * If the list of steps starts with `;` or `|`, it will be used as the
- * separator chatacter instead of comma. This is convenient when a selector
+ * separator character instead of comma. This is convenient when a selector
  * contains a comma character.
  * A selector must be one of:
  * - A valid plain CSS selector
