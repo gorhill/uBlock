@@ -247,7 +247,7 @@ export class ScriptletFilteringEngine {
         }
 
         // Remember: class statements are not hoisted
-        const sortedCalls = map => Array.from(map).toSorted((a, b) => {
+        const sortedCalls = map => Array.from(map).sort((a, b) => {
             const an = a[1].code, bn = b[1].code;
             const ap = a[1].priority, bp = b[1].priority;
             if ( ap === bp ) { return an.localeCompare(bn); }
