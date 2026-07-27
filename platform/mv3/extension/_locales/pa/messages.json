@@ -35,6 +35,10 @@
     "message": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "ਫਿਲਟਰ ਕਰਨ ਦਾ ਮੋਡ",
     "description": "Label in the popup panel for the current filtering mode"

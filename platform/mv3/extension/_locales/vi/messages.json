@@ -35,6 +35,10 @@
     "message": "Chính sách bảo mật",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "chế độ lọc",
     "description": "Label in the popup panel for the current filtering mode"

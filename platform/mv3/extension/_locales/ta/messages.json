@@ -35,6 +35,10 @@
     "message": "தனியுரிமை கொள்கை",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "filtering mode",
     "description": "Label in the popup panel for the current filtering mode"

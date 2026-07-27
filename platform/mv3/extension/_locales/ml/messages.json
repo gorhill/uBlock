@@ -35,6 +35,10 @@
     "message": "സ്വകാര്യതാ നയം",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "ഫിൽട്ടറിംഗ് മോഡ്",
     "description": "Label in the popup panel for the current filtering mode"

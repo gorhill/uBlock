@@ -35,6 +35,10 @@
     "message": "Политика за поверителност",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "режим на филтриране",
     "description": "Label in the popup panel for the current filtering mode"

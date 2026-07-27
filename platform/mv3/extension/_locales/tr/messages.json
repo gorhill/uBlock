@@ -35,6 +35,10 @@
     "message": "Gizlilik ilkesi",
     "description": "Link to privacy policy on GitHub (English)"
   },
+  "aboutDocumentation": {
+    "message": "Documentation",
+    "description": "Link to documentation in About pane"
+  },
   "popupFilteringModeLabel": {
     "message": "Filtreleme modu",
     "description": "Label in the popup panel for the current filtering mode"
