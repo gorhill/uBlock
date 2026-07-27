@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "निर्मित फ़िल्टर",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "आयातित सूचियाँ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "फ़िल्टर सूची जोड़ें…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "जोड़ने के लिए फ़िल्टर सूची का URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -284,7 +284,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "डेवलपर मोड",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
@@ -312,7 +312,7 @@
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO लाईट ने इस पेज को लोड होने से रोक दिया हैं:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -324,11 +324,11 @@
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "पैरामीटर के बिना",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "पीछे जाएं",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
@@ -340,7 +340,7 @@
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "आगे बढ़ें",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
@@ -352,7 +352,7 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "निर्मित फ़िल्टर बनाएं",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {

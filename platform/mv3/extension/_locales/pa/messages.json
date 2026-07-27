@@ -88,11 +88,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "ਇੰਪੋਰਟ ਕੀਤੀਆਂ ਸੂਚੀਆਂ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "…ਫਿਲਟਰ ਸੂਚੀ ਜੋੜੋ",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {

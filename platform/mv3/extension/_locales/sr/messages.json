@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
-    "message": "О апликацији",
+    "message": "О програму",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -88,15 +88,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Увезене листе",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Додај листу филтера…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "URL листе филтера коју желите додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "Да бисте применили козметичке или скриптлет филтере из увезених листа, морате дати дозволу програму uBO Lite за покретање корисничких скрипти. Отворите страницу са проширењима прегледача (<code>chrome://extensions</code> у Chrome или <code>about:addons</code> у Firefox прегледачу), отворите детаље о <b>uBO Lite</b> и укључите <b>Дозволи корисничке скрипте</b> (такође познате као „неверификоване скрипте трећих страна”).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -260,7 +260,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Прикажи број блокираних захтева на иконици на траци алата",
+    "message": "Прикажи број блокираних захтева на иконици на алатној траци",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
@@ -280,11 +280,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Изоловано окружење за креирање филтера",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Режим за програмере",
+    "message": "Режим програмерa",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
@@ -292,7 +292,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Направи резервну копију",
+    "message": "Резервна копија",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
