@@ -667,11 +667,11 @@ async function enableRulesets(ids) {
         ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
 
-    response.stockUpdated ||= await updateEnabledRulesets(
+    response.stockUpdated = await updateEnabledRulesets(
         enableRulesetIds,
         disableRulesetIds,
         response,
-    );
+    ) || response.stockUpdated;
     if ( response.stockUpdated ) {
         const result = await updateDynamicAndSessionRules();
         if ( result?.error ) {
