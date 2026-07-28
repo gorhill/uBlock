@@ -1,12 +1,12 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) એ MV3-આધારિત સામગ્રી અવરોધક છે.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+મૂળભૂત નિયમસમૂહ uBlock Origin ના મૂળભૂત ફિલ્ટરસમૂહને અનુરૂપ છે:
 
-- uBlock Origin's built-in filter lists
+- uBlock Origin ની બિલ્ટ-ઇન ફિલ્ટર યાદીઓ
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe's જાહેરાત અને ટ્રૅકિંગ સર્વર યાદી
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+તમે વિકલ્પો પેજની મુલાકાત લઈને વધુ નિયમસમૂહો સક્ષમ કરી શકો છો -- પોપઅપ પેનલમાં _Cogs_ આઇકન પર ક્લિક કરો.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL સંપૂર્ણપણે ઘોષણાત્મક છે, એટલે કે ફિલ્ટરિંગ થવા માટે કાયમી uBOL પ્રક્રિયાની જરૂર નથી, અને CSS/JS ઇન્જેક્શન-આધારિત સામગ્રી ફિલ્ટરિંગ એક્સ્ટેંશન દ્વારા નહીં પરંતુ બ્રાઉઝર દ્વારા જ વિશ્વસનીય રીતે કરવામાં આવે છે. આનો અર્થ એ છે કે સામગ્રી અવરોધ ચાલુ હોય ત્યારે uBOL પોતે CPU/મેમરી સંસાધનોનો ઉપયોગ કરતું નથી -- uBOL ની સર્વિસ વર્કર પ્રક્રિયા _માત્ર_ જ્યારે તમે પોપઅપ પેનલ અથવા વિકલ્પો પેજો સાથે સંપર્ક કરો છો ત્યારે જરૂરી છે.

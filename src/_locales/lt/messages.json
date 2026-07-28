@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "kadras",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Pasirinktinis akcentinė spalva",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Atskleisti kanoninius vardus",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "Funkcijos, tinkamos tik techniniams vartotojams",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Pristabdyti tinklo veiklą, kol bus įkelti visi filtrų sąrašai",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Socialiniai valdikliai",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Slapukų pranešimai",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -536,15 +536,15 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Nepridėkite filtrų iš nepatikimų šaltinių.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Įjungti mano pasirinktinius filtrus",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Leisti pasirinktinius filtrus, kuriems reikia pasitikėjimo",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -768,7 +768,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Šališkumas",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -848,35 +848,35 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Išsaugoti ne daugiau kaip {{input}} puslapio įkėlimų kiekvienai kortelei",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Išsaugoti ne daugiau kaip {{input}} įrašų kiekvienai kortelei",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "Naudoti {{input}} eilutes kiekvienam įrašui vertikaliai išplėstame režime",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Slėpti stulpelius:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} Laikas",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} Filtras/taisyklė",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}} Kontekstas",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} Šališkumas",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Skaitykite dokumentaciją adresu <code>uBlock/wiki</code>, kad sužinotumėte apie visas uBlock Origin funkcijas.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -920,23 +920,23 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Atsakymai į klausimus ir kitokia pagalba teikiama subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Filtrų problemos / svetainė neveikia",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Praneškite apie filtrų problemas su konkrečiomis svetainėmis <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> problemų sekimo sistemoje</span>. <u>Reikia GitHub paskyros.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Svarbu:</b> Venkite naudoti kitus panašios paskirties blokuoklius kartu su uBlock Origin, nes tai gali sukelti filtrų problemų konkrečiose svetainėse.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Patarimai:</b> Įsitikinkite, kad jūsų filtrų sąrašai yra atnaujinti. <span data-url=\"logger-ui.html#_\">Žurnalas</span> yra pagrindinis įrankis diagnozuojant su filtrais susijusias problemas.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -944,75 +944,75 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Praneškite apie problemas su pačiu uBlock Origin <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> problemų sekimo sistemoje</span>. <u>Reikia GitHub paskyros.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Triktčių šalinimo informacija",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Žemiau pateikiama techninė informacija, kuri gali būti naudinga, kai savanoriai bando padėti jums išspręsti problemą.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Pranešti apie filtro problemą",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "Kad neapkrautumėte savanorių dubliavimosi pranešimais, patikrinkite, ar ši problema jau nebuvo pranešta. <b>Pastaba:</b> paspaudus mygtuką, puslapio kilmė bus išsiųsta į GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Filtrų sąrašai atnaujinami kasdien. Įsitikinkite, kad jūsų problema jau nebuvo išspręsta naujausiuose filtrų sąrašuose.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic web page.",
+    "message": "Patikrinkite, ar problema vis dar egzistuoja po probleminio tinklalapio perkrovimo.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Tinklalapio adresas:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "Tinklalapis…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Pasirinkite įrašą --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Rodo skelbimus arba skelbimų likučius",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Turi perdangas ar kitus trukdžius",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Aptinka uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Turi su privatumu susijusių problemų",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "Veikia netinkamai, kai įjungtas uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Atidaro nepageidaujamas korteles ar langus",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Veda prie kenkėjiškų programų, sukčiavimo (phishing)",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Pažymėti tinklalapį kaip „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Netinkama darbui“</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
@@ -1048,11 +1048,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO nuosavi filtrų sąrašai yra nemokamai talpinami šiuose <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated.",
+    "message": "Kai reikia atnaujinti filtrų sąrašą, naudojamas atsitiktinai parinktas CDN.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1156,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Daugiau neįspėti manęs apie šią svetainę",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1176,23 +1176,23 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Užblokuotas puslapis nori nukreipti į kitą svetainę. Jei nuspręsite tęsti, būsite tiesiogiai nukreipti į: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Priežastis:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Kenkėjiška",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Sekimo priemonė",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Abejotina",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1236,11 +1236,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame…",
+    "message": "Blokuoti elementą kadre…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list…",
+    "message": "Prenumeruoti filtrų sąrašą…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "Peržiūrėti šaltinio kodą…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1256,7 +1256,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Perjungti užrakintą slinkimą",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1268,19 +1268,19 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "Perjungti kosmetinį filtravimą",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "Perjungti JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "Sumažinti blokavimo režimą",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Naudojama atmintis: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1296,7 +1296,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Spustelėkite, kad įkeltumėte",
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
@@ -1304,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Nepavyko tinkamai filtruoti paleidus naršyklę. Įkelkite puslapį iš naujo, kad užtikrintumėte tinkamą filtravimą.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

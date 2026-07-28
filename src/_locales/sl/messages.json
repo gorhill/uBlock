@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Pozor! Spremembe niso shranjene",
+    "message": "Pozor! Spremembe niso shranjene.",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "skripta",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "okvir",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -360,7 +360,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Onemogoči revizijo hiperlinkov (Hyperlink-auditing)",
+    "message": "Onemogoči sledenje hiperpovezavam",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokiraj medijske elemente večje kot {input:number} kB",
+    "message": "Blokiraj medijske elemente večje kot {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Razkrij kanonična imena",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Razčleni in uveljavi kozmetične filtre.",
+    "message": "Razčleni in uveljavi kozmetične filtre",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Družbeni gradniki",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Obvestila o piškotkih",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -508,11 +508,11 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Uvozi ...",
+    "message": "Uvozi …",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En URL na vrstico. Vrstice s predpono &lsquo;!&rsquo; in neveljavni URL-ji bodo prezrti.",
+    "message": "En URL na vrstico. Neveljavni URL-ji bodo tiho prezrti.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -524,11 +524,11 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Zadnja posodobitev: {{ago}}",
+    "message": "Zadnja posodobitev: {{ago}}. Kliknite za prisilno posodobitev.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Posodabljanje ...",
+    "message": "Posodabljanje …",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -536,23 +536,23 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Ne dodajajte filtrov iz nezaupanja vrednih virov.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Omogoči moje filtre po meri",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Dovoli filtre po meri, ki zahtevajo zaupanje",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Uvozi in dodaj",
+    "message": "Uvozi in dodaj …",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Izvozi",
+    "message": "Izvozi …",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -592,11 +592,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Uvozi iz datoteke...",
+    "message": "Uvozi iz datoteke …",
     "description": ""
   },
   "rulesExport": {
-    "message": "Izvozi v datoteko",
+    "message": "Izvozi v datoteko …",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -612,7 +612,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Razvrsti",
+    "message": "Razvrsti:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Prijavi težave s filtrom na posameznih straneh v <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sledilnik težav.",
+    "message": "Prijavi težave s filtrom na posameznih straneh v <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sledilnik težav. <u>Zahteva GitHub račun.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Spodaj so tehnične informacije, ki so lahko v pomoč prostovoljcem, ko vam skušajo rešiti težavo.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -964,11 +964,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Seznami filtrov se posodabljajo dnevno. Prepričajte se, da vaša težava še ni bila rešena v najnovejših seznamih filtrov.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic web page.",
+    "message": "Preverite, ali težava še vedno obstaja po ponovnem nalaganju problematične spletne strani.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -988,11 +988,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Ima prekrivne elemente ali druge nadloge",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Zazna uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -1000,19 +1000,19 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "Ne deluje pravilno, ko je uBlock Origin omogočen",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Odpre neželene zavihke ali okna",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Vodi do zlonamerne programske opreme, lažnega predstavljanja",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Označi spletno stran kot “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Ni primerno za delo”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
@@ -1048,11 +1048,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO-jevi lastni seznami filtrov so brezplačno gostovani na naslednjih <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-ih</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Ob posodobitvi seznama filtrov se uporabi naključno izbran CDN",
+    "message": "Ob posodobitvi seznama filtrov se uporabi naključno izbran CDN.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1128,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Stran blokirana",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1136,7 +1136,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Zaradi sledečega filtra",
+    "message": "To se je zgodilo zaradi sledečega filtra:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1156,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Ne opozarjaj me več za to spletno mesto",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1172,27 +1172,27 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Nadaljuj",
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Blokirana stran želi preusmeriti na drugo spletno mesto. Če izberete nadaljevanje, boste neposredno preusmerjeni na: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Razlog:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Zlonamerno",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Sledilnik",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Slab sloves",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1236,11 +1236,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Blokiraj element v okvirju",
+    "message": "Blokiraj element v okvirju …",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Naroči se na seznam filtrov..",
+    "message": "Naroči se na seznam filtrov …",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "Prikaži izvorno kodo…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1272,11 +1272,11 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "Preklopi JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
-    "message": "Sprostite način blokiranja.",
+    "message": "Sprostite način blokiranja",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
@@ -1300,11 +1300,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Napake: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Ob zagonu brskalnika filtriranje ni potekalo pravilno. Ponovno naložite stran, da zagotovite pravilno filtriranje.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

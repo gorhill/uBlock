@@ -52,11 +52,11 @@
     "description": "Title for the logger window"
   },
   "aboutPageName": {
-    "message": "Über",
+    "message": "Informationen",
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Unterstützung",
+    "message": "Support",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {

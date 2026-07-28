@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Документација",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -108,7 +108,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Овде налепите одређене козметичке/скриптлет филтере које желите додати",
+    "message": "Одређени козметички/скриптлет филтери које желите додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
@@ -216,7 +216,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Подразумевани режим филтрирања ће бити замењен режимима филтрирања по појединачним веб сајтовима. Можете прилагодити режим филтрирања на било ком веб сајту у складу са режимом који најбоље функционише на том веб сајту. Сваки режим има своје предности и мане.",
+    "message": "Подразумевани режим филтрирања ће бити замењен режимима филтрирања по појединачном веб сајту. Можете прилагодити режим филтрирања на било ком веб сајту у складу са режимом који најбоље функционише на том веб сајту. Сваки режим има своје предности и мане.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {

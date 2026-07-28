@@ -1,12 +1,12 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) yra MV3 pagrindu veikiantis turinio blokatorius.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Numatytasis taisyklių rinkinys atitinka uBlock Origin numatytąjį filtrų rinkinį:
 
-- uBlock Origin's built-in filter lists
+- įtaisytieji uBlock Origin filtrų sąrašai
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe reklamos ir sekimo serverių sąrašas
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Daugiau taisyklių rinkinių galite įjungti apsilankę parinkčių puslapyje – spustelėkite _krumpliaračių_ piktogramą iškylančiame skydelyje.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL yra visiškai deklaratyvus, o tai reiškia, kad filtravimui nereikia nuolatinio uBOL proceso, o CSS/JS injekcijomis pagrįstą turinio filtravimą patikimai atlieka pati naršyklė, o ne plėtinys. Tai reiškia, kad pats uBOL nenaudoja procesoriaus / atminties išteklių, kol vyksta turinio blokavimas – uBOL paslaugų darbuotojo procesas reikalingas _tik_ tada, kai sąveikaujate su iškylančiuoju skydeliu arba parinkčių puslapiais.

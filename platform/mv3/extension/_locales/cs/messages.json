@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentace",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -252,7 +252,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[jen názvy hostitelů]\nexample.com\ngames.example\n...",
+    "message": "[jen názvy hostitelů]\nexample.com\ngames.example\n…",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -376,7 +376,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "Pravidla DNR pro …",
+    "message": "Pravidla DNR pro…",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {

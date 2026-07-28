@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentation",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -92,15 +92,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Importerade listor",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Lägg till filterlista…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "Filterlistans webbadress som ska läggas till",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {

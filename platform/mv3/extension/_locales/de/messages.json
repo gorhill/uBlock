@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
-    "message": "Über",
+    "message": "Informationen",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentation",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {

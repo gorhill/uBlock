@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Yerel kurallar: bu sütun yalnızca geçerli siteye uygulanan kurallar içindir.\nYerel kurallar genel kuralları geçersiz kılar.",
+    "message": "Yerel kurallar: Bu sütun yalnızca geçerli siteye uygulanan kurallar içindir.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
