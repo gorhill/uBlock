@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "কাস্টম ফিল্টার",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "ডেভেলপ",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "ডকুমেন্টেশন",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -44,7 +44,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "এই ওয়েবসাইটে",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -92,27 +92,27 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "আমদানিকৃত তালিকা",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "ফিল্টার তালিকা যোগ করুন…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "যোগ করার জন্য ফিল্টার তালিকার URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "আমদানি / রপ্তানি",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "যোগ করার জন্য নির্দিষ্ট কসমেটিক/স্ক্রিপ্টলেট ফিল্টার",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "আমদানিকৃত তালিকা থেকে কসমেটিক বা স্ক্রিপ্টলেট ফিল্টার প্রয়োগ করতে, আপনাকে uBO Lite-কে ব্যবহারকারী স্ক্রিপ্ট চালানোর অনুমতি দিতে হবে। আপনার ব্রাউজারের এক্সটেনশন পৃষ্ঠা খুলুন (Chrome-এ <code>chrome://extensions</code> অথবা Firefox-এ <code>about:addons</code>), <b>uBO Lite</b>-এর বিস্তারিত খুলুন, এবং <b>Allow user scripts</b> (যা \"অযাচাইকৃত তৃতীয়-পক্ষ স্ক্রিপ্ট\" নামেও পরিচিত) চালু করুন।",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -276,15 +276,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "পপ-আপ ব্লকিং সক্রিয় করুন",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "সক্রিয় থাকলে, মিলে যাওয়া ফিল্টারগুলি ওয়েবসাইট দ্বারা তৈরি অবাঞ্ছিত ব্রাউজার ট্যাবগুলি স্বয়ংক্রিয়ভাবে বন্ধ করে দেবে।",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "ফিল্টার তৈরির স্যান্ডবক্স",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -296,15 +296,15 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "ব্যাকআপ",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "আপনার কাস্টম সেটিংস একটি ফাইলে ব্যাক আপ করুন, অথবা একটি ফাইল থেকে আপনার কাস্টম সেটিংস পুনরুদ্ধার করুন।",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "পুনরুদ্ধার করলে আপনার বর্তমান সকল কাস্টম সেটিংস ওভাররাইট হবে।",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -352,39 +352,39 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "এলিমেন্ট জ্যাপার মোড থেকে প্রস্থান করুন",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "একটি কাস্টম ফিল্টার তৈরি করুন",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "একটি কাস্টম ফিল্টার সরান",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "দেখুন:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "ফিল্টারিং মোডের বিবরণ",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "কাস্টম DNR নিয়ম",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "... এর DNR নিয়ম",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "ডায়নামিক রুলসেট",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "সেশন রুলসেট",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -392,63 +392,63 @@
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "পূর্বাবস্থায় ফেরান",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "যোগ করুন",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "আমদানি ও সংযোজন…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "রপ্তানি…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "ব্যাক আপ…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "পুনরুদ্ধার…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "ডিফল্ট সেটিংসে রিসেট…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "আপনার সকল কাস্টম সেটিংস মুছে ফেলা হবে। আপনি কি সত্যিই ডিফল্ট সেটিংসে রিসেট করতে চান?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "অবিশ্বস্ত উৎস থেকে কন্টেন্ট যোগ করবেন না",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "নিবন্ধিত নিয়মের সংখ্যা: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "সেরা মিলটি নির্বাচন করতে স্লাইডারটি সরান",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "বাছাই করুন",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "প্রিভিউ",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "তৈরি করুন",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "ওয়েব পৃষ্ঠায় মিলে যাওয়া উপাদানগুলি হাইলাইট করতে নিচের একটি ফিল্টার নির্বাচন করুন। একটি ফিল্টার সরাতে ট্র্যাশ ক্যানে ক্লিক করুন।",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

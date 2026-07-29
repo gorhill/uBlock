@@ -4,75 +4,75 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An efficient content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "एक कार्यक्षम सामग्री ब्लॉकर. स्थापनेनंतर लगेच जाहिराती, ट्रॅकर्स, मायनर्स आणि बरेच काही अवरोधित करते.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{filterCount}} नेटवर्क फिल्टरमधून रूपांतरित {{ruleCount}} नियम",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — डॅशबोर्ड",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "सेटिंग्ज",
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "सानुकूल फिल्टर",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "विकसित करा",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "विषयी",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "गोपनीयता धोरण",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "दस्तऐवजीकरण",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "फिल्टरिंग मोड",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "या वेबसाइटवर",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Report an issue",
+    "message": "समस्या कळवा",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "डॅशबोर्ड उघडा",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "अधिक",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "कमी",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "डीफॉल्ट",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "जाहिराती",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "गोपनीयता",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -80,375 +80,375 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "त्रासदायक घटक",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "विविध",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "प्रदेश, भाषा",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "आयात केलेल्या याद्या",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "फिल्टर यादी जोडा…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "जोडायच्या फिल्टर यादीचा URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "आयात / निर्यात",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "जोडायचे विशिष्ट कॉस्मेटिक/स्क्रिप्टलेट फिल्टर",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "आयात केलेल्या याद्यांमधील कॉस्मेटिक किंवा स्क्रिप्टलेट फिल्टर लागू करण्यासाठी, तुम्ही uBO Lite ला वापरकर्ता स्क्रिप्ट चालवण्याची परवानगी दिली पाहिजे. तुमच्या ब्राउझरचे विस्तारण पृष्ठ उघडा (Chrome मध्ये <code>chrome://extensions</code> किंवा Firefox मध्ये <code>about:addons</code>), <b>uBO Lite</b> तपशील उघडा, आणि <b>Allow user scripts</b> (ज्याला “unverified third-party scripts” असेही म्हणतात) टॉगल चालू करा.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "बदल नोंदवही",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "सोर्स कोड (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "योगदानकर्ते",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "सोर्स कोड",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "अनुवाद",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "फिल्टर याद्या",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "बाह्य अवलंबित्वे (GPLv3-सुसंगत):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "फिल्टर समस्या कळवा",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "विशिष्ट वेबसाइट्सवरील फिल्टर समस्या <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> समस्या ट्रॅकरला</span> कळवा. <u>GitHub खाते आवश्यक आहे.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "समस्या निवारण माहिती",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "स्वयंसेवकांवर डुप्लिकेट अहवालांचा भार टाळण्यासाठी, कृपया ही समस्या आधीपासून अहवाल केली गेली नाही याची पडताळणी करा. <b>सूचना:</b> बटण क्लिक केल्याने पृष्ठाचे मूळ (origin) GitHub वर पाठवले जाईल.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "GitHub वर समान अहवाल शोधा",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "वेब पृष्ठाचा पत्ता:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "वेब पृष्ठ…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- एक नोंद निवडा --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "जाहिराती किंवा जाहिरातीचे अवशेष दाखवते",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ओव्हरले किंवा इतर त्रासदायक घटक आहेत",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "uBO Lite शोधते",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "गोपनीयता-संबंधित समस्या आहेत",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "uBO Lite सक्षम असताना कार्यात अडथळा येतो",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "अवांछित टॅब किंवा विंडो उघडते",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "बॅडवेअर, फिशिंगकडे नेतो",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "वेब पृष्ठाला “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>) म्हणून लेबल करा",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "GitHub वर नवीन अहवाल तयार करा",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "डीफॉल्ट फिल्टरिंग मोड",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "डीफॉल्ट फिल्टरिंग मोड प्रति-वेबसाइट फिल्टरिंग मोडद्वारे बदलला जाईल. कोणत्याही वेबसाइटवर कोणता मोड सर्वोत्तम कार्य करतो त्यानुसार तुम्ही फिल्टरिंग मोड समायोजित करू शकता. प्रत्येक मोडचे स्वतःचे फायदे आणि तोटे आहेत.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "फिल्टरिंग नाही",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "मूलभूत",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "इष्टतम",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "पूर्ण",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "निवडलेल्या फिल्टर याद्यांमधून मूलभूत नेटवर्क फिल्टरिंग.\n\nवेबसाइट्सवरील डेटा वाचण्यासाठी आणि सुधारण्यासाठी परवानगी आवश्यक नाही.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "निवडलेल्या फिल्टर याद्यांमधून प्रगत नेटवर्क फिल्टरिंग आणि विशिष्ट विस्तारित फिल्टरिंग.\n\nसर्व वेबसाइट्सवरील डेटा वाचण्यासाठी आणि सुधारण्यासाठी व्यापक परवानगी आवश्यक आहे.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher web page resources usage.",
+    "message": "निवडलेल्या फिल्टर याद्यांमधून प्रगत नेटवर्क फिल्टरिंग आणि विशिष्ट आणि सामान्य विस्तारित फिल्टरिंग.\n\nसर्व वेबसाइट्सवरील डेटा वाचण्यासाठी आणि सुधारण्यासाठी व्यापक परवानगी आवश्यक आहे.\n\nसामान्य विस्तारित फिल्टरिंगमुळे वेब पृष्ठ संसाधनांचा वापर वाढू शकतो.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "ज्या वेबसाइट्ससाठी कोणतेही फिल्टरिंग होणार नाही अशी यादी.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[फक्त होस्टनेम]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "वर्तन",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "फिल्टरिंग मोड बदलताना पृष्ठ स्वयंचलितपणे पुन्हा लोड करा",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "टूलबार चिन्हावर अवरोधित केलेल्या विनंत्यांची संख्या दाखवा",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "कठोर अवरोधन सक्षम करा",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "संभाव्य अवांछित साइट्सवरील नेव्हिगेशन अवरोधित केले जाईल, आणि तुम्हाला पुढे जाण्याचा पर्याय दिला जाईल.",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "पॉप-अप अवरोधन सक्षम करा",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "सक्रिय असताना, जुळणारे फिल्टर वेबसाइट्सद्वारे तयार केलेले अवांछित ब्राउझर टॅब स्वयंचलितपणे बंद करतील.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "फिल्टर-निर्मिती सँडबॉक्स",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "विकासक मोड",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "तांत्रिक वापरकर्त्यांसाठी योग्य वैशिष्ट्यांमध्ये प्रवेश सक्षम करते.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "बॅकअप",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "तुमच्या सानुकूल सेटिंग्ज फाइलमध्ये बॅकअप करा, किंवा फाइलमधून तुमच्या सानुकूल सेटिंग्ज पुनर्संचयित करा.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "पुनर्संचयित केल्याने तुमच्या सर्व सध्याच्या सानुकूल सेटिंग्ज अधिलिखित होतील.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "याद्या शोधा",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "पृष्ठ अवरोधित",
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite ने खालील पृष्ठ लोड होण्यापासून रोखले आहे:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "{{listname}} मधील जुळणाऱ्या फिल्टरमुळे पृष्ठ अवरोधित केले गेले.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "अवरोधित पृष्ठ दुसऱ्या साइटवर पुनर्निर्देशित करू इच्छित आहे. तुम्ही पुढे जाण्याचे निवडल्यास, तुम्ही थेट येथे नेव्हिगेट कराल: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "पॅरामीटर्सशिवाय",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "मागे जा",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "ही विंडो बंद करा",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "या साइटबद्दल मला पुन्हा इशारा देऊ नका",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "पुढे जा",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "एलिमेंट काढा",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "एलिमेंट झापर मोडमधून बाहेर पडा",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "सानुकूल फिल्टर तयार करा",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "सानुकूल फिल्टर काढा",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "पहा:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "फिल्टरिंग मोड तपशील",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "सानुकूल DNR नियम",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "... चे DNR नियम",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "डायनॅमिक नियमसंच",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "सत्र नियमसंच",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "जतन करा",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "पूर्ववत करा",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "जोडा",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "आयात करा आणि जोडा…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "निर्यात करा…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "बॅकअप करा…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "पुनर्संचयित करा…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "डीफॉल्ट सेटिंग्जमध्ये रीसेट करा…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "तुमच्या सर्व सानुकूल सेटिंग्ज काढून टाकल्या जातील. तुम्हाला खरोखर डीफॉल्ट सेटिंग्जमध्ये रीसेट करायचे आहे का?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "अविश्वसनीय स्रोतांकडून सामग्री जोडू नका",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "नोंदणीकृत नियमांची संख्या: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "सर्वोत्तम जुळणी निवडण्यासाठी स्लायडर हलवा",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "निवडा",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "पूर्वावलोकन",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "तयार करा",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "वेब पृष्ठावर जुळणारे एलिमेंट हायलाइट करण्यासाठी खालील फिल्टर निवडा. फिल्टर काढण्यासाठी कचरापेटीवर क्लिक करा.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

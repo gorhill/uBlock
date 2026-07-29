@@ -1,12 +1,12 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+Mae uBO Lite (uBOL) yn rwystrydd cynnwys sy'n seiliedig ar MV3.
 
 Mae'r set reolau ddiofyn yn cyfateb i set hidlo diofyn uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- rhestrau hidl adeiledig uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Gallwch alluogi mwy o setiau rheolau trwy ymweld â'r dudalen opsiynau -- cliciwch yr eicon _Gears_ yn y panel naid.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+Mae uBOL yn gwbl ddatganiadol, sy'n golygu nad oes angen proses uBOL barhaol ar gyfer hidlo, ac mae hidlo cynnwys sy'n seiliedig ar chwistrelliad CSS/JS yn cael ei berfformio'n ddibynadwy gan y porwr ei hun yn hytrach na chan yr estyniad. Mae hyn yn golygu nad yw uBOL ei hun yn defnyddio adnoddau CPU/cof tra bod blocio cynnwys yn mynd rhagddo -- dim ond pan fyddwch yn rhyngweithio â'r panel naid neu'r tudalennau opsiynau y mae angen proses gweithiwr gwasanaeth uBOL.

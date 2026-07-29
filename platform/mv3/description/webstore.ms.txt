@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) ialah penyekat kandungan berasaskan MV3.
 
 Set peraturan lalai sepadan dengan set penapis lalai uBlock Origin:
 

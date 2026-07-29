@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "സ്ക്രിപ്റ്റ്",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "ഫ്രെയിം",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "രൂപഭാവം",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "തീം",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "ഇഷ്ടാനുസൃത ആക്സന്റ് നിറം",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "സാങ്കേതിക ഉപയോക്താക്കൾക്ക് മാത്രം അനുയോജ്യമായ സവിശേഷതകൾ",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "എല്ലാ ഫിൽറ്റർ ലിസ്റ്റുകളും ലോഡ് ആകുന്നത് വരെ നെറ്റ്വർക്ക് പ്രവർത്തനം താൽക്കാലികമായി നിർത്തുക",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "സോഷ്യൽ വിഡ്ജറ്റുകൾ",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "കുക്കി അറിയിപ്പുകൾ",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -536,15 +536,15 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "വിശ്വസനീയമല്ലാത്ത ഉറവിടങ്ങളിൽ നിന്ന് ഫിൽറ്ററുകൾ ചേർക്കരുത്.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "എന്റെ ഇഷ്ടാനുസൃത ഫിൽറ്ററുകൾ പ്രവർത്തനക്ഷമമാക്കുക",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "വിശ്വാസം ആവശ്യമുള്ള ഇഷ്ടാനുസൃത ഫിൽറ്ററുകൾ അനുവദിക്കുക",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -912,107 +912,107 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Origin-ന്റെ എല്ലാ സവിശേഷതകളെക്കുറിച്ചും അറിയാൻ <code>uBlock/wiki</code>-ൽ ഡോക്യുമെന്റേഷൻ വായിക്കുക.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "ചോദ്യങ്ങളും പിന്തുണയും",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "ചോദ്യങ്ങൾക്കുള്ള ഉത്തരങ്ങളും മറ്റ് തരത്തിലുള്ള സഹായ പിന്തുണയും <code>/r/uBlockOrigin</code> സബ്റെഡിറ്റിൽ ലഭ്യമാണ്.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "ഫിൽറ്റർ പ്രശ്നങ്ങൾ/വെബ്സൈറ്റ് പ്രവർത്തിക്കുന്നില്ല",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "പ്രത്യേക വെബ്സൈറ്റുകളിലെ ഫിൽറ്റർ പ്രശ്നങ്ങൾ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ഇഷ്യു ട്രാക്കറിൽ</span> റിപ്പോർട്ട് ചെയ്യുക. <u>ഒരു GitHub അക്കൗണ്ട് ആവശ്യമാണ്.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>പ്രധാനം:</b> uBlock Origin-നൊപ്പം സമാനമായ ഉദ്ദേശ്യമുള്ള മറ്റ് ബ്ലോക്കറുകൾ ഉപയോഗിക്കുന്നത് ഒഴിവാക്കുക, കാരണം ഇത് പ്രത്യേക വെബ്സൈറ്റുകളിൽ ഫിൽട്ടർ പ്രശ്നങ്ങൾ ഉണ്ടാക്കിയേക്കാം.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>നുറുങ്ങുകൾ:</b> നിങ്ങളുടെ ഫിൽറ്റർ ലിസ്റ്റുകൾ അപ്ഡേറ്റ് ചെയ്തിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക. ഫിൽറ്ററുമായി ബന്ധപ്പെട്ട പ്രശ്നങ്ങൾ നിർണ്ണയിക്കാനുള്ള പ്രാഥമിക ഉപകരണമാണ് <span data-url=\"logger-ui.html#_\">ലോഗർ</span>.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "ബഗ് റിപ്പോർട്ട്",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "uBlock Origin-മായി ബന്ധപ്പെട്ട പ്രശ്നങ്ങൾ <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> ഇഷ്യു ട്രാക്കറിൽ</span> റിപ്പോർട്ട് ചെയ്യുക. <u>ഒരു GitHub അക്കൗണ്ട് ആവശ്യമാണ്.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "പ്രശ്നപരിഹാര വിവരങ്ങൾ",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "ഒരു പ്രശ്നം പരിഹരിക്കാൻ സന്നദ്ധപ്രവർത്തകർ ശ്രമിക്കുമ്പോൾ ഉപയോഗപ്രദമായേക്കാവുന്ന സാങ്കേതിക വിവരങ്ങൾ ചുവടെ നൽകിയിരിക്കുന്നു.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "ഒരു ഫിൽട്ടർ പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "ആവർത്തിച്ചുള്ള റിപ്പോർട്ടുകൾ ഉപയോഗിച്ച് സന്നദ്ധപ്രവർത്തകരെ ബുദ്ധിമുട്ടിക്കുന്നത് ഒഴിവാക്കാൻ, പ്രശ്നം നേരത്തെ റിപ്പോർട്ട് ചെയ്തിട്ടില്ലെന്ന് ദയവായി ഉറപ്പാക്കുക. <b>ശ്രദ്ധിക്കുക:</b> ബട്ടൺ ക്ലിക്ക് ചെയ്യുന്നത് പേജിന്റെ ഉത്ഭവം GitHub-ലേക്ക് അയയ്ക്കുന്നതിന് കാരണമാകും.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "ഫിൽറ്റർ ലിസ്റ്റുകൾ ദിവസവും അപ്ഡേറ്റ് ചെയ്യപ്പെടുന്നു. ഏറ്റവും പുതിയ ഫിൽറ്റർ ലിസ്റ്റുകളിൽ നിങ്ങളുടെ പ്രശ്നം ഇതിനകം പരിഹരിച്ചിട്ടില്ലെന്ന് ഉറപ്പാക്കുക.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic web page.",
+    "message": "പ്രശ്നമുള്ള വെബ് പേജ് വീണ്ടും ലോഡ് ചെയ്ത ശേഷം പ്രശ്നം നിലനിൽക്കുന്നുണ്ടോയെന്ന് പരിശോധിക്കുക.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "വെബ് പേജിന്റെ വിലാസം:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "വെബ് പേജ്…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- ഒരു എൻട്രി തിരഞ്ഞെടുക്കുക --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "പരസ്യങ്ങളോ പരസ്യ അവശിഷ്ടങ്ങളോ കാണിക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ഓവർലേകളോ മറ്റ് ശല്യങ്ങളോ ഉണ്ട്",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "uBlock Origin-നെ കണ്ടെത്തുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "സ്വകാര്യത-സംബന്ധമായ പ്രശ്നങ്ങൾ ഉണ്ട്",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "uBlock Origin പ്രവർത്തനക്ഷമമാകുമ്പോൾ തകരാറിലാകുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "അനാവശ്യ ടാബുകളോ വിൻഡോകളോ തുറക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "ബാഡ്വെയർ, ഫിഷിംഗ് എന്നിവയിലേക്ക് നയിക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "വെബ് പേജിനെ “NSFW” എന്ന് ലേബൽ ചെയ്യുക (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ജോലിക്ക് സുരക്ഷിതമല്ല”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
@@ -1128,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "പേജ് തടഞ്ഞു",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1156,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "ഈ സൈറ്റിനെക്കുറിച്ച് വീണ്ടും എന്നെ മുന്നറിയിപ്പ് നൽകരുത്",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1172,27 +1172,27 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "മുന്നോട്ട് പോകുക",
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "തടഞ്ഞ പേജ് മറ്റൊരു സൈറ്റിലേക്ക് റീഡയറക്ട് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു. നിങ്ങൾ മുന്നോട്ട് പോകാൻ തിരഞ്ഞെടുക്കുകയാണെങ്കിൽ, നിങ്ങൾ നേരിട്ട് ഇങ്ങോട്ട് നാവിഗേറ്റ് ചെയ്യും: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "കാരണം:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "ക്ഷുദ്രകരം",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ട്രാക്കർ",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "അപ്രശസ്തമായ",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "സോഴ്സ് കോഡ് കാണുക…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1264,15 +1264,15 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "എല്ലാം തിരഞ്ഞെടുക്കുക",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "കോസ്മെറ്റിക് ഫിൽട്ടറിംഗ് ടോഗിൾ ചെയ്യുക",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "JavaScript ടോഗിൾ ചെയ്യുക",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
@@ -1300,11 +1300,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "പിശകുകൾ: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "ബ്രൗസർ ആരംഭിക്കുമ്പോൾ ശരിയായി ഫിൽട്ടർ ചെയ്യാനായില്ല. ശരിയായ ഫിൽട്ടറിംഗ് ഉറപ്പാക്കാൻ പേജ് വീണ്ടും ലോഡ് ചെയ്യുക.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{ruleCount}} ನಿಯಮಗಳು, {{filterCount}} ಜಾಲ ಶೋಧಕಗಳಿಂದ ಪರಿವರ್ತಿಸಲಾಗಿದೆ",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "ಕಸ್ಟಮ್ ಶೋಧಕಗಳು",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "ಅಭಿವೃದ್ಧಿಪಡಿಸು",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "ದಸ್ತಾವೇಜು",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -44,11 +44,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "ಈ ವೆಬ್ಸೈಟ್ನಲ್ಲಿ",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Report an issue",
+    "message": "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -80,7 +80,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "ಕಿರಿಕಿರಿಗಳು",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
@@ -92,27 +92,27 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "ಆಮದು ಮಾಡಿದ ಪಟ್ಟಿಗಳು",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "ಶೋಧಕ ಪಟ್ಟಿಯನ್ನು ಸೇರಿಸು…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "ಸೇರಿಸಬೇಕಾದ ಶೋಧಕ ಪಟ್ಟಿಯ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "ಆಮದು / ರಫ್ತು",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "ಸೇರಿಸಬೇಕಾದ ನಿರ್ದಿಷ್ಟ ಸೌಂದರ್ಯ/ಸ್ಕ್ರಿಪ್ಟ್ಲೆಟ್ ಶೋಧಕಗಳು",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "ಆಮದು ಮಾಡಿದ ಪಟ್ಟಿಗಳಿಂದ ಸೌಂದರ್ಯ ಅಥವಾ ಸ್ಕ್ರಿಪ್ಟ್ಲೆಟ್ ಶೋಧಕಗಳನ್ನು ಜಾರಿಗೊಳಿಸಲು, ನೀವು uBO Lite ಗೆ ಬಳಕೆದಾರ ಸ್ಕ್ರಿಪ್ಟ್ಗಳನ್ನು ಚಲಾಯಿಸಲು ಅನುಮತಿ ನೀಡಬೇಕು. ನಿಮ್ಮ ಬ್ರೌಸರ್ನ ವಿಸ್ತರಣೆಗಳ ಪುಟವನ್ನು ತೆರೆಯಿರಿ (Chrome ನಲ್ಲಿ <code>chrome://extensions</code> ಅಥವಾ Firefox ನಲ್ಲಿ <code>about:addons</code>), <b>uBO Lite</b> ವಿವರಗಳನ್ನು ತೆರೆಯಿರಿ, ಮತ್ತು <b>ಬಳಕೆದಾರ ಸ್ಕ್ರಿಪ್ಟ್ಗಳನ್ನು ಅನುಮತಿಸು</b> ಅನ್ನು ಟಾಗಲ್ ಆನ್ ಮಾಡಿ (ಇದನ್ನು “ಪರಿಶೀಲಿಸದ ಮೂರನೇ-ಪಕ್ಷ ಸ್ಕ್ರಿಪ್ಟ್ಗಳು” ಎಂದೂ ಕರೆಯಲಾಗುತ್ತದೆ).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -120,11 +120,11 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "ಮೂಲ ಕೋಡ್ (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "ಕೊಡುಗೆದಾರರು",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -140,87 +140,87 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "ಬಾಹ್ಯ ಅವಲಂಬನೆಗಳು (GPLv3-ಹೊಂದಾಣಿಕೆ):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "ಶೋಧಕ ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "ನಿರ್ದಿಷ್ಟ ವೆಬ್ಸೈಟ್ಗಳೊಂದಿಗಿನ ಶೋಧಕ ಸಮಸ್ಯೆಗಳನ್ನು <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ಸಮಸ್ಯೆ ಟ್ರ್ಯಾಕರ್ಗೆ</span> ವರದಿ ಮಾಡಿ. <u>GitHub ಖಾತೆಯ ಅಗತ್ಯವಿದೆ.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "ಸಮಸ್ಯೆ ನಿವಾರಣೆ ಮಾಹಿತಿ",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "ಸ್ವಯಂಸೇವಕರಿಗೆ ನಕಲು ವರದಿಗಳ ಹೊರೆಯನ್ನು ತಪ್ಪಿಸಲು, ಸಮಸ್ಯೆಯನ್ನು ಈಗಾಗಲೇ ವರದಿ ಮಾಡಿಲ್ಲವೆಂದು ದಯವಿಟ್ಟು ಪರಿಶೀಲಿಸಿ. <b>ಸೂಚನೆ:</b> ಬಟನ್ ಕ್ಲಿಕ್ ಮಾಡುವುದರಿಂದ ಪುಟದ ಮೂಲವನ್ನು GitHub ಗೆ ಕಳುಹಿಸಲಾಗುತ್ತದೆ.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "GitHub ನಲ್ಲಿ ಹೋಲುವ ವರದಿಗಳನ್ನು ಹುಡುಕು",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "ವೆಬ್ ಪುಟದ ವಿಳಾಸ:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "ವೆಬ್ ಪುಟ…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- ಒಂದು ನಮೂದನ್ನು ಆಯ್ಕೆಮಾಡಿ --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "ಜಾಹೀರಾತುಗಳು ಅಥವಾ ಜಾಹೀರಾತು ಉಳಿಕೆಗಳನ್ನು ತೋರಿಸುತ್ತದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ಓವರ್ಲೇಗಳು ಅಥವಾ ಇತರ ತೊಂದರೆಗಳನ್ನು ಹೊಂದಿದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "uBO Lite ಅನ್ನು ಪತ್ತೆ ಮಾಡುತ್ತದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "ಗೌಪ್ಯತೆ-ಸಂಬಂಧಿತ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "uBO Lite ಸಕ್ರಿಯವಾಗಿರುವಾಗ ಅಸಮರ್ಪಕವಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "ಅನಪೇಕ್ಷಿತ ಟ್ಯಾಬ್ಗಳು ಅಥವಾ ವಿಂಡೋಗಳನ್ನು ತೆರೆಯುತ್ತದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "ದುರುಪಯೋಗಿ ಸಾಫ್ಟ್ವೇರ್, ಫಿಶಿಂಗ್ಗೆ ಕಾರಣವಾಗುತ್ತದೆ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "ವೆಬ್ ಪುಟವನ್ನು “NSFW” ಎಂದು ಗುರುತಿಸು (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ಕೆಲಸಕ್ಕೆ ಸುರಕ್ಷಿತವಲ್ಲ”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "GitHub ನಲ್ಲಿ ಹೊಸ ವರದಿಯನ್ನು ರಚಿಸು",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "ಡೀಫಾಲ್ಟ್ ಶೋಧನಾ ವಿಧಾನ",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "ಡೀಫಾಲ್ಟ್ ಶೋಧನಾ ವಿಧಾನವು ಪ್ರತಿ-ವೆಬ್ಸೈಟ್ ಶೋಧನಾ ವಿಧಾನಗಳಿಂದ ಅತಿಕ್ರಮಿಸಲ್ಪಡುತ್ತದೆ. ಯಾವುದೇ ವೆಬ್ಸೈಟ್ನಲ್ಲಿ ಆ ವೆಬ್ಸೈಟ್ಗೆ ಯಾವ ವಿಧಾನವು ಉತ್ತಮವಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ ಎಂಬುದರ ಆಧಾರದ ಮೇಲೆ ನೀವು ಶೋಧನಾ ವಿಧಾನವನ್ನು ಹೊಂದಿಸಬಹುದು. ಪ್ರತಿಯೊಂದು ವಿಧಾನವು ತನ್ನದೇ ಆದ ಅನುಕೂಲಗಳು ಮತ್ತು ಅನಾನುಕೂಲಗಳನ್ನು ಹೊಂದಿದೆ.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "ಶೋಧನೆ ಇಲ್ಲ",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
@@ -236,23 +236,23 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "ಆಯ್ಕೆಮಾಡಿದ ಶೋಧಕ ಪಟ್ಟಿಗಳಿಂದ ಮೂಲ ಜಾಲ ಶೋಧನೆ.\n\nವೆಬ್ಸೈಟ್ಗಳಲ್ಲಿ ದತ್ತಾಂಶವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ಅನುಮತಿಯ ಅಗತ್ಯವಿಲ್ಲ.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "ಆಯ್ಕೆಮಾಡಿದ ಶೋಧಕ ಪಟ್ಟಿಗಳಿಂದ ಸುಧಾರಿತ ಜಾಲ ಶೋಧನೆ ಜೊತೆಗೆ ನಿರ್ದಿಷ್ಟ ವಿಸ್ತೃತ ಶೋಧನೆ.\n\nಎಲ್ಲಾ ವೆಬ್ಸೈಟ್ಗಳಲ್ಲಿ ದತ್ತಾಂಶವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ವ್ಯಾಪಕ ಅನುಮತಿಯ ಅಗತ್ಯವಿದೆ.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher web page resources usage.",
+    "message": "ಆಯ್ಕೆಮಾಡಿದ ಶೋಧಕ ಪಟ್ಟಿಗಳಿಂದ ಸುಧಾರಿತ ಜಾಲ ಶೋಧನೆ ಜೊತೆಗೆ ನಿರ್ದಿಷ್ಟ ಮತ್ತು ಸಾಮಾನ್ಯ ವಿಸ್ತೃತ ಶೋಧನೆ.\n\nಎಲ್ಲಾ ವೆಬ್ಸೈಟ್ಗಳಲ್ಲಿ ದತ್ತಾಂಶವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ವ್ಯಾಪಕ ಅನುಮತಿಯ ಅಗತ್ಯವಿದೆ.\n\nಸಾಮಾನ್ಯ ವಿಸ್ತೃತ ಶೋಧನೆಯು ಹೆಚ್ಚಿನ ವೆಬ್ ಪುಟ ಸಂಪನ್ಮೂಲಗಳ ಬಳಕೆಗೆ ಕಾರಣವಾಗಬಹುದು.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "ಯಾವುದೇ ಶೋಧನೆ ನಡೆಯದ ವೆಬ್ಸೈಟ್ಗಳ ಪಟ್ಟಿ.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[ಹೋಸ್ಟ್ಹೆಸರುಗಳು ಮಾತ್ರ]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -260,195 +260,195 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "ಶೋಧನಾ ವಿಧಾನವನ್ನು ಬದಲಾಯಿಸುವಾಗ ಪುಟವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಮರುಲೋಡ್ ಮಾಡು",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "ಪರಿಕರಪಟ್ಟಿ ಐಕಾನ್ನಲ್ಲಿ ನಿರ್ಬಂಧಿಸಿದ ವಿನಂತಿಗಳ ಸಂಖ್ಯೆಯನ್ನು ತೋರಿಸು",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "ಕಟ್ಟುನಿಟ್ಟಿನ ನಿರ್ಬಂಧವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸು",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "ಸಂಭಾವ್ಯ ಅನಪೇಕ್ಷಿತ ಸೈಟ್ಗಳಿಗೆ ನ್ಯಾವಿಗೇಶನ್ ಅನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗುತ್ತದೆ, ಮತ್ತು ನಿಮಗೆ ಮುಂದುವರಿಯುವ ಆಯ್ಕೆಯನ್ನು ನೀಡಲಾಗುತ್ತದೆ.",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "ಪಾಪ್-ಅಪ್ ನಿರ್ಬಂಧವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸು",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "ಸಕ್ರಿಯವಾಗಿದ್ದಾಗ, ಹೊಂದಾಣಿಕೆಯ ಶೋಧಕಗಳು ವೆಬ್ಸೈಟ್ಗಳಿಂದ ರಚಿಸಲಾದ ಅನಪೇಕ್ಷಿತ ಬ್ರೌಸರ್ ಟ್ಯಾಬ್ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಮುಚ್ಚುತ್ತವೆ.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "ಶೋಧಕ-ರಚನೆ ಸ್ಯಾಂಡ್ಬಾಕ್ಸ್",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "ಡೆವಲಪರ್ ಮೋಡ್",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "ತಾಂತ್ರಿಕ ಬಳಕೆದಾರರಿಗೆ ಸೂಕ್ತವಾದ ವೈಶಿಷ್ಟ್ಯಗಳಿಗೆ ಪ್ರವೇಶವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "ಬ್ಯಾಕಪ್",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "ನಿಮ್ಮ ಕಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಫೈಲ್ಗೆ ಬ್ಯಾಕಪ್ ಮಾಡಿ, ಅಥವಾ ನಿಮ್ಮ ಕಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಫೈಲ್ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "ಮರುಸ್ಥಾಪಿಸುವುದು ನಿಮ್ಮ ಎಲ್ಲಾ ಪ್ರಸ್ತುತ ಕಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಅತಿಕ್ರಮಿಸುತ್ತದೆ.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "ಪಟ್ಟಿಗಳನ್ನು ಹುಡುಕು",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "ಪುಟ ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ",
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite ಈ ಕೆಳಗಿನ ಪುಟವನ್ನು ಲೋಡ್ ಆಗದಂತೆ ತಡೆದಿದೆ:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "{{listname}} ನಲ್ಲಿ ಹೊಂದಾಣಿಕೆಯ ಶೋಧಕದ ಕಾರಣದಿಂದ ಪುಟವನ್ನು ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "ನಿರ್ಬಂಧಿಸಿದ ಪುಟವು ಇನ್ನೊಂದು ಸೈಟ್ಗೆ ಮರುನಿರ್ದೇಶಿಸಲು ಬಯಸುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಆರಿಸಿದರೆ, ನೀವು ನೇರವಾಗಿ ಇಲ್ಲಿಗೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡುತ್ತೀರಿ: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "ನಿಯತಾಂಕಗಳಿಲ್ಲದೆ",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "ಹಿಂದೆ ಹೋಗು",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "ಈ ವಿಂಡೋವನ್ನು ಮುಚ್ಚು",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "ಈ ಸೈಟ್ ಬಗ್ಗೆ ಮತ್ತೆ ಎಚ್ಚರಿಸಬೇಡಿ",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "ಮುಂದುವರಿಯಿರಿ",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "ಅಂಶವನ್ನು ತೆಗೆದುಹಾಕು",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "ಎಲಿಮೆಂಟ್ ಜಾಪರ್ ಮೋಡ್ನಿಂದ ನಿರ್ಗಮಿಸು",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "ಕಸ್ಟಮ್ ಶೋಧಕವನ್ನು ರಚಿಸು",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "ಕಸ್ಟಮ್ ಶೋಧಕವನ್ನು ತೆಗೆದುಹಾಕು",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "ವೀಕ್ಷಿಸು:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "ಶೋಧನಾ ವಿಧಾನದ ವಿವರಗಳು",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "ಕಸ್ಟಮ್ DNR ನಿಯಮಗಳು",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "… ನ DNR ನಿಯಮಗಳು",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "ಕ್ರಿಯಾತ್ಮಕ ನಿಯಮಗಳ ಗುಂಪು",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "ಅಧಿವೇಶನ ನಿಯಮಗಳ ಗುಂಪು",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "ಉಳಿಸು",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "ಹಿಂದಿರುಗಿಸು",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "ಸೇರಿಸು",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "ಆಮದು ಮಾಡಿ ಮತ್ತು ಸೇರಿಸು…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "ರಫ್ತು ಮಾಡು…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "ಬ್ಯಾಕಪ್ ಮಾಡು…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "ಮರುಸ್ಥಾಪಿಸು…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್ಗಳಿಗೆ ಮರುಹೊಂದಿಸು…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "ನಿಮ್ಮ ಎಲ್ಲಾ ಕಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುವುದು. ನೀವು ನಿಜವಾಗಿಯೂ ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್ಗಳಿಗೆ ಮರುಹೊಂದಿಸಲು ಬಯಸುವಿರಾ?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "ಅವಿಶ್ವಾಸಾರ್ಹ ಮೂಲಗಳಿಂದ ವಿಷಯವನ್ನು ಸೇರಿಸಬೇಡಿ",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "ನೋಂದಾಯಿತ ನಿಯಮಗಳ ಸಂಖ್ಯೆ: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "ಉತ್ತಮ ಹೊಂದಾಣಿಕೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಲು ಸ್ಲೈಡರ್ ಅನ್ನು ಸರಿಸು",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "ಆಯ್ಕೆಮಾಡು",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "ಮುನ್ನೋಟ",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "ರಚಿಸು",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "ವೆಬ್ ಪುಟದಲ್ಲಿ ಹೊಂದಾಣಿಕೆಯ ಅಂಶಗಳನ್ನು ಹೈಲೈಟ್ ಮಾಡಲು ಕೆಳಗಿನ ಶೋಧಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ. ಶೋಧಕವನ್ನು ತೆಗೆದುಹಾಕಲು ಕಸದ ಬುಟ್ಟಿಯ ಮೇಲೆ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

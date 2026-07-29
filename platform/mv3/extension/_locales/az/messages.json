@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{filterCount}} şəbəkə filtrindən {{ruleCount}} qayda çevrildi",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Sənədləşmə",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -92,15 +92,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "İdxal edilmiş siyahılar",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Filtr siyahısı əlavə et…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "Əlavə ediləcək filtr siyahısının URL-i",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,11 +108,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "Əlavə ediləcək xüsusi kosmetik/skriptlet filtrləri",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "İdxal edilmiş siyahılardan kosmetik və ya skriptlet filtrlərini tətbiq etmək üçün uBO Lite-a istifadəçi skriptlərini işlətmək icazəsi verməlisiniz. Brauzerinizin genişləndirmələr səhifəsini açın (Chrome-da <code>chrome://extensions</code> və ya Firefox-da <code>about:addons</code>), <b>uBO Lite</b> bölməsinin təfərrüatlarını açın və <b>İstifadəçi skriptlərinə icazə ver</b> seçimini aktivləşdirin (bu seçim “təsdiqlənməmiş üçüncü tərəf skriptləri” kimi də adlandırılır).",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -140,91 +140,91 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Xarici asılılıqlar (GPLv3 ilə uyğundur):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Filtrlə bağlı problemi bildirin",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Müəyyən veb-saytlarla bağlı filtr problemlərini <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> problem izləyicisinə</span> bildirin. <u>GitHub hesabı tələb olunur.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "Problemlərin aradan qaldırılması haqqında məlumat",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "Könüllüləri təkrarlanan bildirişlərlə yükləməmək üçün problemin artıq bildirilmədiyini yoxlayın. <b>Qeyd:</b> düyməyə kliklədikdə səhifənin mənşəyi GitHub-a göndəriləcək.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "GitHub-da oxşar bildirişləri tapın",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Veb-səhifənin ünvanı:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "Veb-səhifə…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Bir seçim edin --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Reklamları və ya reklam qalıqlarını göstərir",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Üst qatlara və ya digər narahatedici elementlərə malikdir",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "uBO Lite-ı aşkarlayır",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Məxfiliklə bağlı problemlərə malikdir",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "uBO Lite aktiv olduqda düzgün işləmir",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Arzuolunmaz vərəqələri və ya pəncərələri açır",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Zərərli proqramlara və fişinqə yönləndirir",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Veb-səhifəni “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“İş üçün təhlükəsiz deyil”</a>) kimi işarələ",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "GitHub-da yeni bildiriş yaradın",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Standart filtr rejimi",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Standart filtr rejimi veb-sayt üzrə filtr rejimləri ilə əvəz olunacaq. İstənilən veb-saytda filtr rejimini həmin sayt üçün ən yaxşı işləyən rejimə uyğunlaşdıra bilərsiniz. Hər rejimin öz üstünlükləri və çatışmazlıqları var.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "filtrləmə yoxdur",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "əsas",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -232,67 +232,67 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "tam",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Seçilmiş filtr siyahılarından əsas şəbəkə filtrlənməsi.\n\nVeb-saytlardakı məlumatları oxumaq və dəyişdirmək üçün icazə tələb etmir.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "Seçilmiş filtr siyahılarından genişləndirilmiş xüsusi filtrləmə ilə yanaşı, təkmil şəbəkə filtrlənməsi.\n\nBütün veb-saytlardakı məlumatları oxumaq və dəyişdirmək üçün geniş icazə tələb edir.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher web page resources usage.",
+    "message": "Seçilmiş filtr siyahılarından xüsusi və ümumi genişləndirilmiş filtrləmə ilə yanaşı, təkmil şəbəkə filtrlənməsi.\n\nBütün veb-saytlardakı məlumatları oxumaq və dəyişdirmək üçün geniş icazə tələb edir.\n\nÜmumi genişləndirilmiş filtrləmə veb-səhifə resurslarının daha çox istifadəsinə səbəb ola bilər.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "Filtrləmənin aparılmayacağı veb-saytların siyahısı.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[yalnız host adları]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Davranış",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Filtr rejimi dəyişdirildikdə səhifəni avtomatik yenidən yüklə",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Bloklanmış sorğuların sayını alətlər paneli ikonunda göstər",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Sərt bloklamanı aktivləşdir",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "Potensial olaraq arzuolunmaz saytlara keçid bloklanacaq və davam etmək seçimi sizə təqdim olunacaq.",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "Pop-up bloklamasını aktivləşdir",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "Aktiv olduqda uyğun filtrlər veb-saytlar tərəfindən yaradılmış arzuolunmaz brauzer vərəqələrini avtomatik bağlayacaq.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "Filtr yaratma sınaq mühiti",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Tərtibatçı rejimi",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "Texniki istifadəçilər üçün uyğun funksiyalara girişi aktivləşdirir.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
@@ -304,11 +304,11 @@
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "Bərpa etmə bütün cari fərdi parametrlərinizin üzərinə yazacaq.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "Siyahıları tap",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
@@ -316,19 +316,19 @@
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite aşağıdakı səhifənin yüklənməsinin qarşısını aldı:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "Səhifə {{listname}} siyahısındakı uyğun filtrə görə bloklandı.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Bloklanmış səhifə başqa sayta yönləndirmək istəyir. Davam etməyi seçsəniz, birbaşa bu ünvana keçəcəksiniz:",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "parametrlərsiz",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
@@ -368,15 +368,15 @@
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Filtr rejiminin təfərrüatları",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Fərdi DNR qaydaları",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "… üçün DNR qaydaları",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {

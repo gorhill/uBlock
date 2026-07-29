@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "ഇഷ്ടാനുസൃത ഫിൽറ്ററുകൾ",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "വികസനം",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "ഡോക്യുമെന്റേഷൻ",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -44,11 +44,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "ഈ വെബ്സൈറ്റിൽ",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Report an issue",
+    "message": "ഒരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -92,27 +92,27 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "ഇറക്കുമതി ചെയ്ത ലിസ്റ്റുകൾ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "ഫിൽറ്റർ ലിസ്റ്റ് ചേർക്കുക…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "ചേർക്കേണ്ട ഫിൽറ്റർ ലിസ്റ്റിന്റെ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "ഇറക്കുമതി / കയറ്റുമതി",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "ചേർക്കേണ്ട പ്രത്യേക കോസ്മെറ്റിക്/സ്ക്രിപ്റ്റ്ലെറ്റ് ഫിൽറ്ററുകൾ",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "ഇറക്കുമതി ചെയ്ത ലിസ്റ്റുകളിൽ നിന്നുള്ള കോസ്മെറ്റിക് അല്ലെങ്കിൽ സ്ക്രിപ്റ്റ്ലെറ്റ് ഫിൽറ്ററുകൾ നടപ്പിലാക്കാൻ, യൂസർ സ്ക്രിപ്റ്റുകൾ പ്രവർത്തിപ്പിക്കാനുള്ള അനുമതി uBO Lite-ന് നിങ്ങൾ നൽകണം. നിങ്ങളുടെ ബ്രൗസറിന്റെ എക്സ്റ്റൻഷനുകൾ പേജ് തുറക്കുക (Chrome-ൽ <code>chrome://extensions</code> അല്ലെങ്കിൽ Firefox-ൽ <code>about:addons</code>), <b>uBO Lite</b> വിശദാംശങ്ങൾ തുറക്കുക, <b>യൂസർ സ്ക്രിപ്റ്റുകൾ അനുവദിക്കുക</b> (മറ്റൊരു വിധത്തിൽ “പരിശോധിക്കാത്ത മൂന്നാം കക്ഷി സ്ക്രിപ്റ്റുകൾ” എന്നും അറിയപ്പെടുന്നു) ടോഗിൾ ഓണാക്കുക.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -144,71 +144,71 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "ഒരു ഫിൽട്ടർ പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "പ്രത്യേക വെബ്സൈറ്റുകളിലെ ഫിൽറ്റർ പ്രശ്നങ്ങൾ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ഇഷ്യു ട്രാക്കറിൽ</span> റിപ്പോർട്ട് ചെയ്യുക. <u>ഒരു GitHub അക്കൗണ്ട് ആവശ്യമാണ്.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "പ്രശ്നപരിഹാര വിവരങ്ങൾ",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "ആവർത്തിച്ചുള്ള റിപ്പോർട്ടുകൾ ഉപയോഗിച്ച് സന്നദ്ധപ്രവർത്തകരെ ബുദ്ധിമുട്ടിക്കുന്നത് ഒഴിവാക്കാൻ, പ്രശ്നം നേരത്തെ റിപ്പോർട്ട് ചെയ്തിട്ടില്ലെന്ന് ദയവായി ഉറപ്പാക്കുക. <b>ശ്രദ്ധിക്കുക:</b> ബട്ടൺ ക്ലിക്ക് ചെയ്യുന്നത് പേജിന്റെ ഉത്ഭവം GitHub-ലേക്ക് അയയ്ക്കുന്നതിന് കാരണമാകും.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "GitHub-ൽ സമാനമായ റിപ്പോർട്ടുകൾ കണ്ടെത്തുക",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "വെബ് പേജിന്റെ വിലാസം:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "വെബ് പേജ്…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- ഒരു എൻട്രി തിരഞ്ഞെടുക്കുക --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "പരസ്യങ്ങളോ പരസ്യ അവശിഷ്ടങ്ങളോ കാണിക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ഓവർലേകളോ മറ്റ് ശല്യങ്ങളോ ഉണ്ട്",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "uBO Lite-നെ കണ്ടെത്തുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "സ്വകാര്യത-സംബന്ധമായ പ്രശ്നങ്ങൾ ഉണ്ട്",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "uBO Lite പ്രവർത്തനക്ഷമമാകുമ്പോൾ തകരാറിലാകുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "അനാവശ്യ ടാബുകളോ വിൻഡോകളോ തുറക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "ബാഡ്വെയർ, ഫിഷിംഗ് എന്നിവയിലേക്ക് നയിക്കുന്നു",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "വെബ് പേജിനെ “NSFW” എന്ന് ലേബൽ ചെയ്യുക (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ജോലിക്ക് സുരക്ഷിതമല്ല”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "GitHub-ൽ പുതിയ റിപ്പോർട്ട് സൃഷ്ടിക്കുക",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -252,7 +252,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[ഹോസ്റ്റ്നെയിമുകൾ മാത്രം]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -264,191 +264,191 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "ടൂൾബാർ ഐക്കണിൽ തടഞ്ഞ അഭ്യർത്ഥനകളുടെ എണ്ണം കാണിക്കുക",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "കർശനമായ തടയൽ പ്രവർത്തനക്ഷമമാക്കുക",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "സാധ്യതയുള്ള അനഭിലഷണീയ സൈറ്റുകളിലേക്കുള്ള നാവിഗേഷൻ തടയപ്പെടും, കൂടാതെ മുന്നോട്ട് പോകാനുള്ള ഓപ്ഷൻ നിങ്ങൾക്ക് വാഗ്ദാനം ചെയ്യും.",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "പോപ്പ്-അപ്പ് തടയൽ പ്രവർത്തനക്ഷമമാക്കുക",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "സജീവമാകുമ്പോൾ, പൊരുത്തപ്പെടുന്ന ഫിൽറ്ററുകൾ വെബ്സൈറ്റുകൾ സൃഷ്ടിക്കുന്ന അനാവശ്യ ബ്രൗസർ ടാബുകൾ യാന്ത്രികമായി അടയ്ക്കും.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "ഫിൽറ്റർ-നിർമ്മാണ സാൻഡ്ബോക്സ്",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "ഡെവലപ്പർ മോഡ്",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "സാങ്കേതിക ഉപയോക്താക്കൾക്ക് അനുയോജ്യമായ സവിശേഷതകളിലേക്കുള്ള ആക്സസ് പ്രാപ്തമാക്കുന്നു.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "ബാക്കപ്പ്",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "നിങ്ങളുടെ ഇഷ്ടാനുസൃത ക്രമീകരണങ്ങൾ ഒരു ഫയലിലേക്ക് ബാക്കപ്പ് ചെയ്യുക, അല്ലെങ്കിൽ ഒരു ഫയലിൽ നിന്ന് നിങ്ങളുടെ ഇഷ്ടാനുസൃത ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിക്കുക.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "പുനഃസ്ഥാപിക്കുന്നത് നിങ്ങളുടെ എല്ലാ നിലവിലെ ഇഷ്ടാനുസൃത ക്രമീകരണങ്ങളും മറികടക്കും.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "ലിസ്റ്റുകൾ കണ്ടെത്തുക",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "പേജ് തടഞ്ഞു",
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "ഇനിപ്പറയുന്ന പേജ് ലോഡാകുന്നതിൽ നിന്ന് uBO Lite തടഞ്ഞു:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "{{listname}} എന്നതിലെ പൊരുത്തപ്പെടുന്ന ഒരു ഫിൽറ്റർ കാരണം പേജ് തടഞ്ഞു.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "തടഞ്ഞ പേജ് മറ്റൊരു സൈറ്റിലേക്ക് റീഡയറക്ട് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു. നിങ്ങൾ മുന്നോട്ട് പോകാൻ തിരഞ്ഞെടുക്കുകയാണെങ്കിൽ, നിങ്ങൾ നേരിട്ട് ഇങ്ങോട്ട് നാവിഗേറ്റ് ചെയ്യും: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "പാരാമീറ്ററുകൾ ഇല്ലാതെ",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "തിരികെ പോകുക",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "ഈ വിൻഡോ അടയ്ക്കുക",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "ഈ സൈറ്റിനെക്കുറിച്ച് വീണ്ടും എന്നെ മുന്നറിയിപ്പ് നൽകരുത്",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "മുന്നോട്ട് പോകുക",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "ഒരു മൂലകം നീക്കം ചെയ്യുക",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "എലമെന്റ് സാപ്പർ മോഡിൽ നിന്ന് പുറത്തുകടക്കുക",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "ഒരു ഇഷ്ടാനുസൃത ഫിൽട്ടർ സൃഷ്ടിക്കുക",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "ഒരു ഇഷ്ടാനുസൃത ഫിൽട്ടർ നീക്കം ചെയ്യുക",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "കാണുക:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "ഫിൽട്ടറിംഗ് മോഡ് വിശദാംശങ്ങൾ",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "ഇഷ്ടാനുസൃത DNR നിയമങ്ങൾ",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "… ന്റെ DNR നിയമങ്ങൾ",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "ഡൈനാമിക് റൂൾസെറ്റ്",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "സെഷൻ റൂൾസെറ്റ്",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "സംരക്ഷിക്കുക",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "പഴയപടിയാക്കുക",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "ചേർക്കുക",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "ഇറക്കുമതി ചെയ്ത് കൂട്ടിച്ചേർക്കുക…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "കയറ്റുമതി…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "ബാക്കപ്പ്…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "പുനഃസ്ഥാപിക്കുക…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങളിലേക്ക് പുനഃസജ്ജമാക്കുക…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "നിങ്ങളുടെ എല്ലാ ഇഷ്ടാനുസൃത ക്രമീകരണങ്ങളും നീക്കം ചെയ്യപ്പെടും. സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങളിലേക്ക് പുനഃസജ്ജമാക്കാൻ നിങ്ങൾക്ക് ശരിക്കും ആഗ്രഹമുണ്ടോ?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "വിശ്വസനീയമല്ലാത്ത ഉറവിടങ്ങളിൽ നിന്ന് ഉള്ളടക്കം ചേർക്കരുത്",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "രജിസ്റ്റർ ചെയ്ത നിയമങ്ങളുടെ എണ്ണം: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "ഏറ്റവും മികച്ച പൊരുത്തം തിരഞ്ഞെടുക്കാൻ സ്ലൈഡർ നീക്കുക",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "തിരഞ്ഞെടുക്കുക",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "പ്രിവ്യൂ",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "സൃഷ്ടിക്കുക",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "വെബ് പേജിലെ പൊരുത്തപ്പെടുന്ന മൂലകങ്ങൾ ഹൈലൈറ്റ് ചെയ്യാൻ ചുവടെയുള്ള ഒരു ഫിൽട്ടർ തിരഞ്ഞെടുക്കുക. ഒരു ഫിൽട്ടർ നീക്കം ചെയ്യാൻ ട്രാഷ് ഐക്കൺ ക്ലിക്ക് ചെയ്യുക.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

@@ -108,11 +108,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Klistra in de kosmetiska/scriptlet‑filter du vill lägga till",
+    "message": "Specifika kosmetiska/scriptlet-filter att lägga till",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "För att tillämpa kosmetiska filter eller scriptlet-filter från importerade listor måste du ge uBO Lite behörighet att köra användarskript. Öppna webbläsarens tilläggssida (<code>chrome://extensions</code> i Chrome eller <code>about:addons</code> i Firefox), öppna <b>uBO Lite</b> detaljer och aktivera <b>Tillåt användarskript</b> (även kallat \"obekräftade tredjepartsskript\").",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
