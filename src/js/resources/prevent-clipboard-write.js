@@ -97,11 +97,27 @@ function preventClipboardWrite(needle = '') {
         return true;
     };
     const installTraps = ( ) => {
+        // navigator.clipboard.writeText()
         proxyApplyFn('navigator.clipboard.writeText', function(context) {
             const text = `${context.callArgs[0]}`;
             if ( prevent(text) ) { return; }
             return context.reflect();
         }, { skipToString: true });
+
+        // navigator.clipboard.write() — ClipboardItem based, only checks types[0]
+        proxyApplyFn('navigator.clipboard.write', function(context) {
+            const items = context.callArgs[0];
+            if ( !Array.isArray(items) ) { return context.reflect(); }
+            Promise.all(items.map(item =>
+                item.getType(item.types[0]).then(b => b.text())
+            )).then(texts => {
+                const text = texts.join('\n');
+                if ( prevent(text) ) { return; }
+                context.reflect();
+            }).catch(() => { context.reflect(); });
+        }, { skipToString: true });
+
+        // document.execCommand('copy' | 'cut')
         proxyApplyFn('document.execCommand', function(context) {
             const { callArgs } = context;
             if ( callArgs[0] === 'copy' || callArgs[0] === 'cut' ) {
