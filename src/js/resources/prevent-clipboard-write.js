@@ -114,7 +114,9 @@ function preventClipboardWrite(matches = '', ...varargs) {
             const items = context.callArgs[0];
             if ( !Array.isArray(items) ) { return context.reflect(); }
             Promise.all(items.map(item =>
-                item.getType(item.types[0]).then(b => b.text())
+                item.types.length
+                    ? item.getType(item.types[0]).then(b => b.text())
+                    : Promise.resolve('')
             )).then(texts => {
                 const text = texts.join('\n');
                 if ( prevent(text) ) { return; }
