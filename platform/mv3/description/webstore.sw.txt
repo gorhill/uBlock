@@ -1,12 +1,12 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) ni kizuizi cha maudhui chenye msingi wa MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Seti chaguo-msingi ya sheria inalingana na seti chaguo-msingi ya vichujio ya uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Orodha za vichujio zilizojengwa ndani ya uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Orodha ya seva za matangazo na ufuatiliaji ya Peter Lowe
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Unaweza kuwezesha seti za sheria zaidi kwa kutembelea ukurasa wa chaguo -- bonyeza aikoni ya _Gia_ kwenye paneli inayoibuka.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL ni ya kutangaza kabisa, ikimaanisha hakuna haja ya mchakato wa kudumu wa uBOL kwa uchujaji kutokea, na uchujaji wa maudhui unaotegemea kuingiza CSS/JS unafanywa kwa uaminifu na kivinjari chenyewe badala ya kiendelezi. Hii inamaanisha kuwa uBOL yenyewe haitumii rasilimali za CPU/kumbukumbu wakati uzuiaji wa maudhui unaendelea -- mchakato wa mfanyakazi wa huduma wa uBOL unahitajika _tu_ wakati unapoingiliana na paneli inayoibuka au kurasa za chaguo.

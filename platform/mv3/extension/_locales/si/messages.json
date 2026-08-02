@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "අභිරුචි පෙරහන්",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "සංවර්ධනය",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "ප්‍රලේඛනය",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -44,7 +44,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "මෙම වෙබ් අඩවිය මත",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -92,27 +92,27 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "ආයාත කළ ලැයිස්තු",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "පෙරහන් ලැයිස්තුව එක් කරන්න…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "එක් කළ යුතු පෙරහන් ලැයිස්තුවේ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
-    "message": "Import / Export",
+    "message": "ආයාත කරන්න / නිර්යාත කරන්න",
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "එක් කළ යුතු විශේෂිත ආලේපන/ස්ක්‍රිප්ට්ලට් පෙරහන්",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "ආයාත කළ ලැයිස්තු වලින් ආලේපන හෝ ස්ක්‍රිප්ට්ලට් පෙරහන් බලාත්මක කිරීම සඳහා, ඔබ uBO Lite වෙත පරිශීලක ස්ක්‍රිප්ට් ක්‍රියාත්මක කිරීමට අවසර දිය යුතුය. ඔබගේ බ්‍රවුසරයේ දිගු පිටුව විවෘත කරන්න (Chrome හි <code>chrome://extensions</code> හෝ Firefox හි <code>about:addons</code>), <b>uBO Lite</b> විස්තර විවෘත කරන්න, සහ <b>පරිශීලක ස්ක්‍රිප්ට් වලට ඉඩ දෙන්න</b> (එය “සත්‍යාපනය නොකළ තෙවන පාර්ශවීය ස්ක්‍රිප්ට්” ලෙසද හැඳින්වේ) සක්‍රිය කරන්න.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -276,35 +276,35 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "පොප්-අප් අවහිර කිරීම සක්‍රිය කරන්න",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "සක්‍රිය විට, ගැලපෙන පෙරහන් වෙබ් අඩවි මගින් සාදන ලද අනවශ්‍ය බ්‍රවුසර පටිත්ත ස්වයංක්‍රීයව වසා දමනු ඇත.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "පෙරහන්-නිර්මාණ වැලිපිල්ල",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "සංවර්ධක ප්‍රකාරය",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "තාක්ෂණික පරිශීලකයින් සඳහා සුදුසු විශේෂාංග වෙත ප්‍රවේශය සක්‍රිය කරයි.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "උපස්ථය",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "ඔබගේ අභිරුචි සැකසුම් ගොනුවකට උපස්ථ කරන්න, හෝ ගොනුවකින් ඔබගේ අභිරුචි සැකසුම් ප්‍රතිසාධනය කරන්න.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "ප්‍රතිසාධනය කිරීම ඔබගේ සියලු වත්මන් අභිරුචි සැකසුම් උඩින් ලියනු ඇත.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -356,99 +356,99 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "අභිරුචි පෙරහනක් සාදන්න",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "අභිරුචි පෙරහනක් ඉවත් කරන්න",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "දර්ශනය:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "පෙරීමේ ප්‍රකාරය විස්තර",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "අභිරුචි DNR නීති",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "... හි DNR නීති",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "ගතික නීති කට්ටලය",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "සැසි නීති කට්ටලය",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "සුරකින්න",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "නැවත පෙර තත්වයට",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "එක් කරන්න",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "ආයාත කර අමුණන්න…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "නිර්යාත කරන්න…",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "උපස්ථ කරන්න…",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "ප්‍රතිසාධනය කරන්න…",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "පෙරනිමි සැකසුම් වලට නැවත සකසන්න…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "ඔබගේ සියලු අභිරුචි සැකසුම් ඉවත් කරනු ඇත. ඔබට සැබවින්ම පෙරනිමි සැකසුම් වලට නැවත සැකසීමට අවශ්‍යද?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "විශ්වාස කළ නොහැකි මූලාශ්‍ර වලින් අන්තර්ගතය එක් නොකරන්න",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "ලියාපදිංචි කළ නීති ගණන: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "හොඳම ගැලපීම තෝරා ගැනීමට ස්ලයිඩරය ගෙන යන්න",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "තෝරන්න",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "පෙරදසුන",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "සාදන්න",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "වෙබ් පිටුවේ ගැලපෙන මූලද්‍රව්‍ය උද්දීපනය කිරීමට පහත පෙරහනක් තෝරන්න. පෙරහනක් ඉවත් කිරීමට කුණු කූඩය ක්ලික් කරන්න.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

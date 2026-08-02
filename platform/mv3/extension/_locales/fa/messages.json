@@ -8,11 +8,11 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{ruleCount}} قانون، تبدیل‌شده از {{filterCount}} فیلتر شبکه",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite - داشبورد",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
@@ -20,11 +20,11 @@
     "description": "appears as tab name in dashboard"
   },
   "customFiltersPageName": {
-    "message": "Custom filters",
+    "message": "فیلترهای سفارشی",
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "توسعه",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,11 +36,11 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "مستندات",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "حالت فیلتر کردن",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
@@ -80,7 +80,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "مزاحمت‌ها",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
@@ -100,7 +100,7 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "آدرس اینترنتی لیست فیلتر برای افزودن",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,11 +108,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "فیلترهای ظاهری/اسکریپتلت خاص برای افزودن",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "برای اعمال فیلترهای ظاهری یا اسکریپتلت از لیست‌های وارد شده، باید به uBO Lite اجازه اجرای اسکریپت‌های کاربر را بدهید. صفحه افزونه‌های مرورگر خود را باز کنید (<code>chrome://extensions</code> در کروم یا <code>about:addons</code> در فایرفاکس)، جزئیات <b>uBO Lite</b> را باز کنید و گزینه <b>اجازه به اسکریپت‌های کاربر</b> (که به عنوان \"اسکریپت‌های شخص ثالث تایید نشده\" نیز شناخته می‌شود) را فعال کنید.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -156,11 +156,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "برای جلوگیری از تحمیل گزارش‌های تکراری به داوطلبان، لطفاً بررسی کنید که این مشکل قبلاً گزارش نشده باشد. <b>توجه:</b> کلیک بر روی این دکمه باعث می‌شود که مبدأ صفحه به گیت‌هاب ارسال شود.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "یافتن گزارش‌های مشابه در گیت‌هاب",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -168,7 +168,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "صفحه وب...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -184,7 +184,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "شناسایی uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -192,7 +192,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "هنگام فعال بودن uBO Lite دچار نقص می‌شود",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -204,251 +204,251 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "برچسب‌گذاری صفحه وب به عنوان \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"نامناسب برای محیط کار\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "ایجاد گزارش جدید در گیت‌هاب",
     "description": "Text for button which opens an external web page in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "حالت پیش‌فرض فیلتر کردن",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "حالت پیش‌فرض فیلتر کردن توسط حالت‌های فیلتر مخصوص هر سایت لغو خواهد شد. شما می‌توانید حالت فیلتر را در هر وب‌سایت مشخص، بر اساس حالتی که بهترین عملکرد را در آن سایت دارد، تنظیم کنید. هر حالت مزایا و معایب خاص خود را دارد.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "بدون فیلتر",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "پایه",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "بهینه",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "کامل",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "فیلتر کردن پایه شبکه از لیست‌های فیلتر انتخاب شده.\n\nنیازی به مجوز برای خواندن و تغییر داده‌ها در وب‌سایت‌ها ندارد.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "فیلتر پیشرفته شبکه به علاوه فیلتر گسترده خاص از لیست‌های فیلتر انتخاب شده.\n\nبه مجوز گسترده برای خواندن و تغییر داده‌ها در تمام وب‌سایت‌ها نیاز دارد.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher web page resources usage.",
+    "message": "فیلتر پیشرفته شبکه به علاوه فیلتر گسترده خاص و عمومی از لیست‌های فیلتر انتخاب شده.\n\nبه مجوز گسترده برای خواندن و تغییر داده‌ها در تمام وب‌سایت‌ها نیاز دارد.\n\nفیلتر گسترده عمومی ممکن است باعث استفاده بیشتر از منابع صفحه وب شود.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "لیست وب‌سایت‌هایی که هیچ فیلتری برای آن‌ها اعمال نخواهد شد.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[فقط نام میزبان]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "رفتار",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "بارگذاری مجدد خودکار صفحه هنگام تغییر حالت فیلتر",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "نمایش تعداد درخواست‌های مسدود شده روی آیکون نوار ابزار",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "فعال کردن مسدودسازی سخت‌گیرانه",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "پیمایش به سایت‌های بالقوه نامطلوب مسدود خواهد شد و به شما گزینه‌ای برای ادامه دادن پیشنهاد می‌شود.",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "فعال کردن مسدودسازی پنجره‌های بازشو",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "هنگام فعال بودن، فیلترهای منطبق به طور خودکار تب‌های مرورگر ناخواسته ایجاد شده توسط وب‌سایت‌ها را می‌بندند.",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "محیط آزمایشی ایجاد فیلتر",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "حالت توسعه‌دهنده",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "دسترسی به ویژگی‌های مناسب برای کاربران فنی را فعال می‌کند.",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Backup",
+    "message": "پشتیبان‌گیری",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "از تنظیمات سفارشی خود در یک فایل پشتیبان بگیرید یا تنظیمات سفارشی خود را از یک فایل بازیابی کنید.",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "بازیابی باعث رونویسی روی تمام تنظیمات سفارشی فعلی شما خواهد شد.",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "یافتن لیست‌ها",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "صفحه مسدود شد",
     "description": "Web page title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite از بارگذاری صفحه زیر جلوگیری کرده است:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "این صفحه به دلیل وجود یک فیلتر منطبق در {{listname}} مسدود شد.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "صفحه مسدود شده می‌خواهد به سایت دیگری تغییر مسیر دهد. اگر ادامه دادن را انتخاب کنید، مستقیماً به اینجا هدایت می‌شوید: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "بدون پارامترها",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "بازگشت",
     "description": "A button to go back to the previous web page"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "بستن این پنجره",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "دیگر درباره این سایت به من هشدار نده",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "ادامه دادن",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "حذف یک عنصر",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "خروج از حالت حذف عنصر",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "ایجاد یک فیلتر سفارشی",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "حذف یک فیلتر سفارشی",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "مشاهده:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "جزئیات حالت فیلتر کردن",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "قوانین DNR سفارشی",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "قوانین DNR مربوط به ...",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "مجموعه قوانین پویا",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "مجموعه قوانین نشست",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "ذخیره",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "بازگرداندن",
     "description": "Text for buttons used to revert changes"
   },
   "addButton": {
-    "message": "Add",
+    "message": "افزودن",
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "وارد کردن و افزودن...",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "صدور...",
     "description": "Text for buttons used to export content"
   },
   "backupButton": {
-    "message": "Back up…",
+    "message": "پشتیبان‌گیری...",
     "description": "Text for buttons used to back up content"
   },
   "restoreButton": {
-    "message": "Restore…",
+    "message": "بازیابی...",
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "بازنشانی به تنظیمات پیش‌فرض...",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "تمام تنظیمات سفارشی شما حذف خواهد شد. آیا واقعاً می‌خواهید به تنظیمات پیش‌فرض بازنشانی کنید؟",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "از منابع نامعتبر محتوا اضافه نکنید",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "تعداد قوانین ثبت شده: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "نوار لغزنده را حرکت دهید تا بهترین تطابق را انتخاب کنید",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "انتخاب",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "پیش‌نمایش",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "ایجاد",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "یک فیلتر را در زیر انتخاب کنید تا عناصر منطبق در صفحه وب برجسته شوند. روی سطل زباله کلیک کنید تا یک فیلتر حذف شود.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

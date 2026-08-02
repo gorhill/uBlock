@@ -9,4 +9,4 @@ uBO Lite (uBOL) ਇੱਕ MV3-ਅਧਾਰਿਤ ਸਮੱਗਰੀ ਬਲਾਕ
 
 ਤੁਸੀਂ ਚੋਣਾਂ ਸਫ਼ੇ ਨੂੰ ਖੋਲ੍ਹ ਕੇ ਹੋਰ ਰੂਲ-ਸੈੱਟ ਸਮਰੱਥ ਕਰ ਕਦੇ ਹੋ -- ਪੌਪ-ਅੱਪ ਪੈਨਲ ਵਿੱਚ _Cogs_ icon ਨੂੰ ਕਲਿੱਕ ਕਰੋ।
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL ਪੂਰੀ ਤਰ੍ਹਾਂ ਘੋਸ਼ਣਾਤਮਕ ਹੈ, ਭਾਵ ਫਿਲਟਰਿੰਗ ਹੋਣ ਲਈ ਇੱਕ ਸਥਾਈ uBOL ਪ੍ਰਕਿਰਿਆ ਦੀ ਕੋਈ ਲੋੜ ਨਹੀਂ ਹੈ, ਅਤੇ CSS/JS ਇੰਜੈਕਸ਼ਨ-ਅਧਾਰਿਤ ਸਮੱਗਰੀ ਫਿਲਟਰਿੰਗ ਐਕਸਟੈਂਸ਼ਨ ਦੁਆਰਾ ਨਹੀਂ ਸਗੋਂ ਖੁਦ ਬ੍ਰਾਊਜ਼ਰ ਦੁਆਰਾ ਭਰੋਸੇਯੋਗ ਢੰਗ ਨਾਲ ਕੀਤੀ ਜਾਂਦੀ ਹੈ। ਇਸਦਾ ਮਤਲਬ ਹੈ ਕਿ uBOL ਖੁਦ ਸਮੱਗਰੀ ਬਲਾਕਿੰਗ ਜਾਰੀ ਰਹਿਣ ਦੌਰਾਨ CPU/ਮੈਮਰੀ ਸਰੋਤਾਂ ਦੀ ਖਪਤ ਨਹੀਂ ਕਰਦਾ -- uBOL ਦੀ ਸਰਵਿਸ ਵਰਕਰ ਪ੍ਰਕਿਰਿਆ ਦੀ ਲੋੜ _ਸਿਰਫ_ ਉਦੋਂ ਹੁੰਦੀ ਹੈ ਜਦੋਂ ਤੁਸੀਂ ਪੌਪਅੱਪ ਪੈਨਲ ਜਾਂ ਵਿਕਲਪ ਪੰਨਿਆਂ ਨਾਲ ਗੱਲਬਾਤ ਕਰਦੇ ਹੋ।

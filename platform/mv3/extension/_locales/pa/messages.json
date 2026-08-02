@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "ਦਸਤਾਵੇਜ਼",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -100,7 +100,7 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "ਜੋੜਨ ਲਈ ਫਿਲਟਰ ਸੂਚੀ ਦਾ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customFiltersImportExportLabel": {
@@ -108,11 +108,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Specific cosmetic/scriptlet filters to add",
+    "message": "ਜੋੜਨ ਲਈ ਖਾਸ ਕਾਸਮੈਟਿਕ/ਸਕ੍ਰਿਪਟਲੈੱਟ ਫਿਲਟਰ",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts. Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "ਆਯਾਤ ਕੀਤੀਆਂ ਸੂਚੀਆਂ ਤੋਂ ਕਾਸਮੈਟਿਕ ਜਾਂ ਸਕ੍ਰਿਪਟਲੈੱਟ ਫਿਲਟਰਾਂ ਨੂੰ ਲਾਗੂ ਕਰਨ ਲਈ, ਤੁਹਾਨੂੰ uBO Lite ਨੂੰ ਉਪਭੋਗਤਾ ਸਕ੍ਰਿਪਟਾਂ ਚਲਾਉਣ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣੀ ਚਾਹੀਦੀ ਹੈ। ਆਪਣੇ ਬ੍ਰਾਊਜ਼ਰ ਦਾ ਐਕਸਟੈਂਸ਼ਨ ਪੰਨਾ ਖੋਲ੍ਹੋ (<code>chrome://extensions</code> Chrome ਵਿੱਚ ਜਾਂ <code>about:addons</code> Firefox ਵਿੱਚ), <b>uBO Lite</b> ਵੇਰਵੇ ਖੋਲ੍ਹੋ, ਅਤੇ <b>Allow user scripts</b> (ਜਿਸਨੂੰ “ਅਣਪ੍ਰਮਾਣਿਤ ਤੀਜੀ-ਧਿਰ ਸਕ੍ਰਿਪਟਾਂ” ਵੀ ਕਿਹਾ ਜਾਂਦਾ ਹੈ) ਨੂੰ ਚਾਲੂ ਕਰੋ।",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "aboutChangelog": {
@@ -148,7 +148,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "ਖਾਸ ਵੈੱਬਸਾਈਟਾਂ ਨਾਲ ਫਿਲਟਰ ਸਮੱਸਿਆਵਾਂ ਦੀ ਰਿਪੋਰਟ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ਇਸ਼ੂ ਟਰੈਕਰ</span> ਨੂੰ ਕਰੋ। <u>ਇੱਕ GitHub ਖਾਤੇ ਦੀ ਲੋੜ ਹੈ।</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -156,7 +156,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "ਵਾਲੰਟੀਅਰਾਂ ਨੂੰ ਡੁਪਲੀਕੇਟ ਰਿਪੋਰਟਾਂ ਨਾਲ ਬੋਝ ਪਾਉਣ ਤੋਂ ਬਚਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਇਸ ਸਮੱਸਿਆ ਦੀ ਰਿਪੋਰਟ ਪਹਿਲਾਂ ਤੋਂ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ। <b>ਨੋਟ:</b> ਬਟਨ 'ਤੇ ਕਲਿੱਕ ਕਰਨ ਨਾਲ ਪੰਨੇ ਦਾ ਮੂਲ GitHub ਨੂੰ ਭੇਜਿਆ ਜਾਵੇਗਾ।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -180,7 +180,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ਓਵਰਲੇ ਜਾਂ ਹੋਰ ਪਰੇਸ਼ਾਨੀਆਂ ਹਨ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -192,7 +192,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "ਜਦੋਂ uBO Lite ਸਮਰੱਥ ਹੁੰਦਾ ਹੈ ਤਾਂ ਖਰਾਬੀ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -200,11 +200,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "ਬੈਡਵੇਅਰ, ਫਿਸ਼ਿੰਗ ਵੱਲ ਲੈ ਜਾਂਦਾ ਹੈ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "ਵੈੱਬ ਪੰਨੇ ਨੂੰ “NSFW” ਵਜੋਂ ਲੇਬਲ ਕਰੋ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ਕੰਮ ਲਈ ਸੁਰੱਖਿਅਤ ਨਹੀਂ”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
@@ -272,19 +272,19 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "ਸੰਭਾਵੀ ਤੌਰ 'ਤੇ ਅਣਚਾਹੇ ਸਾਈਟਾਂ 'ਤੇ ਨੈਵੀਗੇਸ਼ਨ ਨੂੰ ਬਲੌਕ ਕੀਤਾ ਜਾਵੇਗਾ, ਅਤੇ ਤੁਹਾਨੂੰ ਅੱਗੇ ਵਧਣ ਦਾ ਵਿਕਲਪ ਦਿੱਤਾ ਜਾਵੇਗਾ।",
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Enable pop-up blocking",
+    "message": "ਪੌਪ-ਅੱਪ ਬਲਾਕਿੰਗ ਸਮਰੱਥ ਕਰੋ",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
-    "message": "When active, matching filters will automatically close unwanted browser tabs created by websites.",
+    "message": "ਜਦੋਂ ਸਰਗਰਮ ਹੁੰਦਾ ਹੈ, ਤਾਂ ਮੇਲ ਖਾਂਦੇ ਫਿਲਟਰ ਆਪਣੇ ਆਪ ਵੈੱਬਸਾਈਟਾਂ ਦੁਆਰਾ ਬਣਾਏ ਗਏ ਅਣਚਾਹੇ ਬ੍ਰਾਊਜ਼ਰ ਟੈਬਾਂ ਨੂੰ ਬੰਦ ਕਰ ਦੇਣਗੇ।",
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Filter-creation sandbox",
+    "message": "ਫਿਲਟਰ-ਨਿਰਮਾਣ ਸੈਂਡਬਾਕਸ",
     "description": "Header for filter-creation section in the dashboard"
   },
   "developerModeLabel": {
@@ -292,7 +292,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "ਤਕਨੀਕੀ ਉਪਭੋਗਤਾਵਾਂ ਲਈ ਢੁਕਵੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਤੱਕ ਪਹੁੰਚ ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਂਦਾ ਹੈ।",
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
@@ -300,11 +300,11 @@
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
-    "message": "Back up your custom settings to a file, or restore your custom settings from a file.",
+    "message": "ਆਪਣੀਆਂ ਕਸਟਮ ਸੈਟਿੰਗਾਂ ਨੂੰ ਇੱਕ ਫਾਈਲ ਵਿੱਚ ਬੈਕਅੱਪ ਕਰੋ, ਜਾਂ ਆਪਣੀਆਂ ਕਸਟਮ ਸੈਟਿੰਗਾਂ ਨੂੰ ਇੱਕ ਫਾਈਲ ਤੋਂ ਰੀਸਟੋਰ ਕਰੋ।",
     "description": "A summary description of the back up/restore section."
   },
   "settingsBackupRestoreLegend": {
-    "message": "Restoring will overwrite all your current custom settings.",
+    "message": "ਰੀਸਟੋਰ ਕਰਨ ਨਾਲ ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਮੌਜੂਦਾ ਕਸਟਮ ਸੈਟਿੰਗਾਂ ਓਵਰਰਾਈਟ ਹੋ ਜਾਣਗੀਆਂ।",
     "description": "Important information about the back up/restore section."
   },
   "findListsPlaceholder": {
@@ -320,11 +320,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "ਪੰਨਾ {{listname}} ਵਿੱਚ ਇੱਕ ਮੇਲ ਖਾਂਦੇ ਫਿਲਟਰ ਕਾਰਨ ਬਲੌਕ ਕੀਤਾ ਗਿਆ ਸੀ।",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "ਬਲੌਕ ਕੀਤਾ ਪੰਨਾ ਕਿਸੇ ਹੋਰ ਸਾਈਟ 'ਤੇ ਰੀਡਾਇਰੈਕਟ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਅੱਗੇ ਵਧਣਾ ਚੁਣਦੇ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਸਿੱਧੇ ਇਸ 'ਤੇ ਨੈਵੀਗੇਟ ਕਰੋਗੇ: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -352,7 +352,7 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "ਐਲੀਮੈਂਟ ਜੈਪਰ ਮੋਡ ਤੋਂ ਬਾਹਰ ਨਿਕਲੋ",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
@@ -368,11 +368,11 @@
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "ਫਿਲਟਰਿੰਗ ਮੋਡ ਵੇਰਵੇ",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "ਕਸਟਮ DNR ਨਿਯਮ",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
@@ -380,11 +380,11 @@
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "ਡਾਇਨਾਮਿਕ ਨਿਯਮ-ਸੈੱਟ",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "ਸੈਸ਼ਨ ਨਿਯਮ-ਸੈੱਟ",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -416,11 +416,11 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "ਡਿਫੌਲਟ ਸੈਟਿੰਗਾਂ 'ਤੇ ਰੀਸੈਟ ਕਰੋ…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "All your custom settings will be removed. Do you really want to reset to default settings?",
+    "message": "ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਕਸਟਮ ਸੈਟਿੰਗਾਂ ਹਟਾ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ। ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਡਿਫੌਲਟ ਸੈਟਿੰਗਾਂ 'ਤੇ ਰੀਸੈਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
@@ -432,7 +432,7 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "ਸਭ ਤੋਂ ਵਧੀਆ ਮੈਚ ਚੁਣਨ ਲਈ ਸਲਾਈਡਰ ਨੂੰ ਘੁਮਾਓ",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
@@ -448,7 +448,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the web page. Click the trash can to remove a filter.",
+    "message": "ਵੈੱਬ ਪੰਨੇ ਵਿੱਚ ਮੇਲ ਖਾਂਦੇ ਤੱਤਾਂ ਨੂੰ ਉਜਾਗਰ ਕਰਨ ਲਈ ਹੇਠਾਂ ਇੱਕ ਫਿਲਟਰ ਚੁਣੋ। ਇੱਕ ਫਿਲਟਰ ਨੂੰ ਹਟਾਉਣ ਲਈ ਰੱਦੀ ਵਾਲੇ ਡੱਬੇ 'ਤੇ ਕਲਿੱਕ ਕਰੋ।",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

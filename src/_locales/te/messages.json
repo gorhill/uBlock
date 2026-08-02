@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "సామాజిక విడ్జెట్లు",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "కుకీ నోటీసులు",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "నా అనుకూల ఫిల్టర్లను ప్రారంభించండి",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "విశ్వాసం అవసరమయ్యే అనుకూల ఫిల్టర్లను అనుమతించండి",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -920,87 +920,87 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "ప్రశ్నలకు సమాధానాలు మరియు ఇతర రకాల సహాయ మద్దతు <code>/r/uBlockOrigin</code> సబ్రెడిట్‌లో అందించబడుతుంది.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "ఫిల్టర్ సమస్యలు/వెబ్‌సైట్ పనిచేయడం లేదు",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "నిర్దిష్ట వెబ్‌సైట్లతో ఫిల్టర్ సమస్యలను <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ఇష్యూ ట్రాకర్‌కు</span> నివేదించండి. <u>GitHub ఖాతా అవసరం.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>ముఖ్యం:</b> uBlock Originతో పాటు ఇతర సారూప్య ప్రయోజనాల బ్లాకర్లను ఉపయోగించడం మానుకోండి, ఎందుకంటే ఇది నిర్దిష్ట వెబ్‌సైట్లలో ఫిల్టర్ సమస్యలకు కారణం కావచ్చు.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>చిట్కాలు:</b> మీ ఫిల్టర్ జాబితాలు తాజాగా ఉన్నాయని నిర్ధారించుకోండి. <span data-url=\"logger-ui.html#_\">లాగర్</span> ఫిల్టర్-సంబంధిత సమస్యలను నిర్ధారించడానికి ప్రాథమిక సాధనం.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "బగ్ నివేదిక",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "uBlock Originతో సంబంధించిన సమస్యలను <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> ఇష్యూ ట్రాకర్‌కు</span> నివేదించండి. <u>GitHub ఖాతా అవసరం.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "సమస్య పరిష్కార సమాచారం",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "క్రింద సాంకేతిక సమాచారం ఉంది, ఇది స్వచ్ఛంద సేవకులు మీ సమస్యను పరిష్కరించడానికి ప్రయత్నిస్తున్నప్పుడు ఉపయోగపడవచ్చు.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "ఫిల్టర్ సమస్యను నివేదించండి",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "నకిలీ నివేదికలతో స్వచ్ఛంద సేవకులకు భారం కలగకుండా ఉండటానికి, సమస్య ఇప్పటికే నివేదించబడలేదని ధృవీకరించండి. <b>గమనిక:</b> బటన్‌ను క్లిక్ చేయడం వలన పేజీ యొక్క మూలం GitHubకు పంపబడుతుంది.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "ఫిల్టర్ జాబితాలు ప్రతిరోజూ నవీకరించబడతాయి. మీ సమస్య ఇటీవలి ఫిల్టర్ జాబితాలలో ఇప్పటికే పరిష్కరించబడలేదని నిర్ధారించుకోండి.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic web page.",
+    "message": "సమస్యాత్మక వెబ్ పేజీని తిరిగి లోడ్ చేసిన తర్వాత సమస్య ఇప్పటికీ ఉందని ధృవీకరించండి.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "వెబ్ పేజీ చిరునామా:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "వెబ్ పేజీ…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- ఒక ఎంపికను ఎంచుకోండి --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "ప్రకటనలు లేదా ప్రకటన అవశేషాలను చూపిస్తుంది",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ఓవర్లేలు లేదా ఇతర అసౌకర్యాలు ఉన్నాయి",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "uBlock Originను గుర్తిస్తుంది",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "గోప్యత-సంబంధిత సమస్యలు ఉన్నాయి",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "uBlock Origin ప్రారంభించబడినప్పుడు పనిచేయకపోవడం",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -1008,7 +1008,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "చెడు సాఫ్ట్‌వేర్, ఫిషింగ్‌కు దారితీస్తుంది",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1156,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "ఈ సైట్ గురించి మళ్ళీ నాకు హెచ్చరించవద్దు",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1172,27 +1172,27 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "కొనసాగించండి",
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "నిరోధించబడిన పేజీ మరొక సైట్‌కు దారి మళ్ళించాలనుకుంటుంది. మీరు కొనసాగించాలని ఎంచుకుంటే, మీరు నేరుగా ఇక్కడికి నావిగేట్ చేస్తారు: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "కారణం:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "హానికరమైనది",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ట్రాకర్",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "ప్రతిష్ట లేని",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "సోర్స్ కోడ్ చూడండి…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1264,15 +1264,15 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "అన్నీ ఎంచుకోండి",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "కాస్మెటిక్ ఫిల్టరింగ్‌ను టోగుల్ చేయండి",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "జావాస్క్రిప్ట్‌ను టోగుల్ చేయండి",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
@@ -1300,11 +1300,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "లోపాలు: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "బ్రౌజర్ ప్రారంభంలో సరిగ్గా ఫిల్టర్ చేయలేకపోయింది. సరైన ఫిల్టరింగ్ కోసం పేజీని తిరిగి లోడ్ చేయండి.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

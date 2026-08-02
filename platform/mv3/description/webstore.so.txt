@@ -1,12 +1,12 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) waa xannibaade waxyaabo ku saleysan MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Xeerarka goobjoogga ah waxay u dhigmaan shaandhaha goobjoogga ah ee uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Liisaska shaandhada ee ku dhisan uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Liiska Server-yada Xayeysiiska iyo Raad-raaca ee Peter Lowe
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Waxaad ku dari kartaa xeerar badan adigoo booqanaya bogga ikhtiyaarrada -- guji astaanta _Cogs_ ee ku taal popup-ka.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL gabi ahaanba waa mid ku saleysan ku dhawaaqid, taasoo la macno ah inaan loo baahnayn hawleed joogto ah oo uBOL ah si shaandhayntu u dhacdo, shaandhaynta waxyaabaha ku saleysan CSS/JS injection waxaa si isku halayn ah u fuliya biraawsarka laftiisa halkii uu ka fulin lahaa kordhinta. Tani waxay ka dhigan tahay in uBOL lafteedu aysan isticmaalin kheyraadka CPU/xusuusta inta xannibaadda waxyaabaha socoto -- hawsha service worker ee uBOL waxaa loo baahan yahay _kaliya_ markaad la falgasho popup-ka ama bogagga ikhtiyaarrada.

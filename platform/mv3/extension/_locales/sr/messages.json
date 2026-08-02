@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Развој",
+    "message": "Програмирање",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -400,7 +400,7 @@
     "description": "Text for buttons used to add content"
   },
   "importAndAppendButton": {
-    "message": "Увези и допиши…",
+    "message": "Увези и додај…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {

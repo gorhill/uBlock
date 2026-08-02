@@ -116,11 +116,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "ਤੱਤ ਜੈਪਰ ਮੋਡ ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "ਤੱਤ ਚੁਣਨ ਵਾਲਾ ਮੋਡ ਵਿੱਚ ਦਾਖਲ ਹੋਵੋ",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "ਕਸਟਮ ਐਕਸੈਂਟ ਰੰਗ",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "ਕੈਨੋਨੀਕਲ ਨਾਮ ਅਣਛੁਪਾਓ",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "ਆਮ ਕਾਸਮੈਟਿਕ ਫਿਲਟਰ ਉਹ ਕਾਸਮੈਟਿਕ ਫਿਲਟਰ ਹਨ ਜੋ ਸਾਰੀਆਂ ਵੈੱਬ ਸਾਈਟਾਂ 'ਤੇ ਲਾਗੂ ਹੋਣ ਦੇ ਇਰਾਦੇ ਨਾਲ ਹੁੰਦੇ ਹਨ। ਇਸ ਵਿਕਲਪ ਨੂੰ ਸਮਰੱਥ ਬਣਾਉਣ ਨਾਲ ਆਮ ਕਾਸਮੈਟਿਕ ਫਿਲਟਰਾਂ ਦੀ ਪ੍ਰਕਿਰਿਆ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਵੈੱਬ ਪੰਨਿਆਂ ਵਿੱਚ ਜੋੜੇ ਗਏ ਮੈਮਰੀ ਅਤੇ CPU ਓਵਰਹੈੱਡ ਨੂੰ ਖਤਮ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।\n\nਘੱਟ ਸਮਰੱਥਾ ਵਾਲੇ ਡਿਵਾਈਸਾਂ 'ਤੇ ਇਸ ਵਿਕਲਪ ਨੂੰ ਸਮਰੱਥ ਕਰਨ ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -544,7 +544,7 @@
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "ਭਰੋਸੇ ਦੀ ਲੋੜ ਵਾਲੇ ਕਸਟਮ ਫਿਲਟਰਾਂ ਨੂੰ ਆਗਿਆ ਦਿਓ",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -608,7 +608,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
+    "message": "ਨਿਯਮ ਸੰਟੈਕਸ: <code>ਸਰੋਤ ਮੰਜ਼ਿਲ ਕਿਸਮ ਕਿਰਿਆ</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>ਪੂਰੀ ਦਸਤਾਵੇਜ਼ੀ</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -628,7 +628,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "message": "ਭਰੋਸੇਯੋਗ ਸਾਈਟ ਨਿਰਦੇਸ਼ ਇਹ ਦੱਸਦੇ ਹਨ ਕਿ ਕਿਹੜੀਆਂ ਵੈੱਬ ਪੰਨਿਆਂ 'ਤੇ uBlock Origin ਨੂੰ ਅਸਮਰੱਥ ਕੀਤਾ ਜਾਣਾ ਚਾਹੀਦਾ ਹੈ। ਇੱਕ ਲਾਈਨ ਵਿੱਚ ਇੱਕ ਐਂਟਰੀ।",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message": "{{action}} {{type}} ਦੇ ਨੈੱਟਵਰਕ ਬੇਨਤੀਆਂ {{br}}ਜਿਨ੍ਹਾਂ ਦਾ URL ਪਤਾ {{url}} ਨਾਲ ਮੇਲ ਖਾਂਦਾ ਹੈ {{br}}ਅਤੇ ਜੋ {{origin}} ਤੋਂ ਉਤਪੰਨ ਹੁੰਦੀਆਂ ਹਨ,{{br}}{{importance}} ਇੱਕ ਮੇਲ ਖਾਂਦਾ ਅਪਵਾਦ ਫਿਲਟਰ ਮੌਜੂਦ ਹੈ।",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -836,11 +836,11 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "ਸਥਿਰ ਫਿਲਟਰ ਮੌਜੂਦਾ ਸਮਰੱਥ ਫਿਲਟਰ ਸੂਚੀਆਂ ਵਿੱਚੋਂ ਕਿਸੇ ਵਿੱਚ ਨਹੀਂ ਮਿਲ ਸਕਿਆ",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "ਲੌਗਰ ਐਂਟਰੀਆਂ ਜੋ ਹੇਠਾਂ ਦਿੱਤੀਆਂ ਸਾਰੀਆਂ ਤਿੰਨ ਸ਼ਰਤਾਂ ਪੂਰੀਆਂ ਨਹੀਂ ਕਰਦੀਆਂ, ਆਪਣੇ ਆਪ ਰੱਦ ਕਰ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -848,15 +848,15 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "ਪ੍ਰਤੀ ਟੈਬ ਵੱਧ ਤੋਂ ਵੱਧ {{input}} ਪੰਨਾ ਲੋਡ ਸੁਰੱਖਿਅਤ ਰੱਖੋ",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "ਪ੍ਰਤੀ ਟੈਬ ਵੱਧ ਤੋਂ ਵੱਧ {{input}} ਐਂਟਰੀਆਂ ਸੁਰੱਖਿਅਤ ਰੱਖੋ",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "ਲੰਬਕਾਰੀ ਵਿਸਤ੍ਰਿਤ ਮੋਡ ਵਿੱਚ ਪ੍ਰਤੀ ਐਂਟਰੀ {{input}} ਲਾਈਨਾਂ ਵਰਤੋ",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -928,15 +928,15 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "ਖਾਸ ਵੈੱਬਸਾਈਟਾਂ ਨਾਲ ਫਿਲਟਰ ਸਮੱਸਿਆਵਾਂ ਦੀ ਰਿਪੋਰਟ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ਇਸ਼ੂ ਟਰੈਕਰ</span> ਨੂੰ ਕਰੋ। <u>ਇੱਕ GitHub ਖਾਤੇ ਦੀ ਲੋੜ ਹੈ।</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>ਮਹੱਤਵਪੂਰਨ:</b> uBlock Origin ਦੇ ਨਾਲ ਹੋਰ ਸਮਾਨ-ਉਦੇਸ਼ ਵਾਲੇ ਬਲੌਕਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਤੋਂ ਬਚੋ, ਕਿਉਂਕਿ ਇਸ ਨਾਲ ਖਾਸ ਵੈੱਬਸਾਈਟਾਂ 'ਤੇ ਫਿਲਟਰ ਸਮੱਸਿਆਵਾਂ ਹੋ ਸਕਦੀਆਂ ਹਨ।",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>ਸੁਝਾਅ:</b> ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਤੁਹਾਡੀਆਂ ਫਿਲਟਰ ਸੂਚੀਆਂ ਅੱਪ-ਟੂ-ਡੇਟ ਹਨ। <span data-url=\"logger-ui.html#_\">ਲੌਗਰ</span> ਫਿਲਟਰ-ਸਬੰਧਤ ਸਮੱਸਿਆਵਾਂ ਦਾ ਪਤਾ ਲਗਾਉਣ ਲਈ ਮੁੱਖ ਸਾਧਨ ਹੈ।",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "uBlock Origin ਨਾਲ ਸਬੰਧਤ ਸਮੱਸਿਆਵਾਂ ਦੀ ਰਿਪੋਰਟ <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> ਇਸ਼ੂ ਟਰੈਕਰ</span> ਨੂੰ ਕਰੋ। <u>ਇੱਕ GitHub ਖਾਤੇ ਦੀ ਲੋੜ ਹੈ।</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ਓਵਰਲੇ ਜਾਂ ਹੋਰ ਪਰੇਸ਼ਾਨੀਆਂ ਹਨ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1008,11 +1008,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "ਬੈਡਵੇਅਰ, ਫਿਸ਼ਿੰਗ ਵੱਲ ਲੈ ਜਾਂਦਾ ਹੈ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "ਵੈੱਬ ਪੰਨੇ ਨੂੰ “NSFW” ਵਜੋਂ ਲੇਬਲ ਕਰੋ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“ਕੰਮ ਲਈ ਸੁਰੱਖਿਅਤ ਨਹੀਂ”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "aboutPrivacyPolicy": {
@@ -1052,7 +1052,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated.",
+    "message": "ਜਦੋਂ ਕਿਸੇ ਫਿਲਟਰ ਸੂਚੀ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ ਤਾਂ ਬੇਤਰਤੀਬੇ ਚੁਣਿਆ ਗਿਆ CDN ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1072,7 +1072,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਸੈਟਿੰਗਾਂ {{time}} 'ਤੇ ਬੈਕਅੱਪ ਕੀਤੇ ਗਏ ਡੇਟਾ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਓਵਰਰਾਈਟ ਕਰ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ, ਅਤੇ uBlock₀ ਮੁੜ ਚਾਲੂ ਹੋ ਜਾਵੇਗਾ।\n\nਕੀ ਬੈਕਅੱਪ ਕੀਤੇ ਡੇਟਾ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਸਾਰੀਆਂ ਮੌਜੂਦਾ ਸੈਟਿੰਗਾਂ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰਨਾ ਹੈ?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -1176,7 +1176,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "ਬਲੌਕ ਕੀਤਾ ਪੰਨਾ ਕਿਸੇ ਹੋਰ ਸਾਈਟ 'ਤੇ ਰੀਡਾਇਰੈਕਟ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਅੱਗੇ ਵਧਣਾ ਚੁਣਦੇ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਸਿੱਧੇ ਇਸ 'ਤੇ ਨੈਵੀਗੇਟ ਕਰੋਗੇ: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
@@ -1184,7 +1184,7 @@
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "ਖਤਰਨਾਕ",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
@@ -1192,7 +1192,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "ਬਦਨਾਮ",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
@@ -1256,7 +1256,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "ਲੌਕ ਕੀਤੇ ਸਕ੍ਰੌਲਿੰਗ ਨੂੰ ਟੌਗਲ ਕਰੋ",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1268,7 +1268,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "ਕਾਸਮੈਟਿਕ ਫਿਲਟਰਿੰਗ ਨੂੰ ਟੌਗਲ ਕਰੋ",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
@@ -1276,7 +1276,7 @@
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "ਬਲਾਕਿੰਗ ਮੋਡ ਨੂੰ ਢਿੱਲਾ ਕਰੋ",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
@@ -1304,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "ਬ੍ਰਾਊਜ਼ਰ ਸ਼ੁਰੂ ਹੋਣ 'ਤੇ ਸਹੀ ਢੰਗ ਨਾਲ ਫਿਲਟਰ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਸਹੀ ਫਿਲਟਰਿੰਗ ਨੂੰ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਪੰਨਾ ਮੁੜ ਲੋਡ ਕਰੋ।",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
