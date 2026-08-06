@@ -60,13 +60,14 @@ import { validateConstantFn } from './set-constant.js';
 export function trustedReplaceArgument(
     propChain = '',
     argposRaw = '',
-    argraw = ''
+    argraw = '',
+    ...varargs
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
     const argoffset = parseInt(argposRaw, 10) || 0;
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.parseVarargs(varargs);
     let replacer;
     if ( argraw.startsWith('repl:/') ) {
         const parsed = parseReplaceFn(argraw.slice(5));

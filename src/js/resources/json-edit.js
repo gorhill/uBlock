@@ -732,7 +732,7 @@ registerScriptlet(trustedEditElementObject, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonEditXhrResponseFn(trusted, jsonq = '') {
+function jsonEditXhrResponseFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}json-edit-xhr-response`,
@@ -743,7 +743,7 @@ function jsonEditXhrResponseFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
@@ -867,7 +867,7 @@ registerScriptlet(trustedJsonEditXhrResponse, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonEditXhrRequestFn(trusted, jsonq = '') {
+function jsonEditXhrRequestFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}json-edit-xhr-request`,
@@ -878,7 +878,7 @@ function jsonEditXhrRequestFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
@@ -985,7 +985,7 @@ registerScriptlet(trustedJsonEditXhrRequest, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonEditFetchResponseFn(trusted, jsonq = '') {
+function jsonEditFetchResponseFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}json-edit-fetch-response`,
@@ -995,7 +995,7 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     proxyApplyFn('fetch', function(context) {
         const args = context.callArgs;
@@ -1107,7 +1107,7 @@ registerScriptlet(trustedJsonEditFetchResponse, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonEditFetchRequestFn(trusted, jsonq = '') {
+function jsonEditFetchRequestFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}json-edit-fetch-request`,
@@ -1117,7 +1117,7 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     const filterBody = body => {
         if ( typeof body !== 'string' ) { return; }
@@ -1256,7 +1256,7 @@ registerScriptlet(jsonlEditFn, {
 
 /******************************************************************************/
 
-function jsonlEditXhrResponseFn(trusted, jsonq = '') {
+function jsonlEditXhrResponseFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}jsonl-edit-xhr-response`,
@@ -1267,7 +1267,7 @@ function jsonlEditXhrResponseFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
@@ -1384,7 +1384,7 @@ registerScriptlet(trustedJsonlEditXhrResponse, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonlEditFetchResponseFn(trusted, jsonq = '') {
+function jsonlEditFetchResponseFn(trusted, jsonq = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix(
         `${trusted ? 'trusted-' : ''}jsonl-edit-fetch-response`,
@@ -1394,7 +1394,7 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '') {
     if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
         return safe.uboLog(logPrefix, 'Bad JSONPath query');
     }
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     const logall = jsonq === '';
     proxyApplyFn('fetch', function(context) {

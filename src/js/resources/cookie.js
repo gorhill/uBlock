@@ -193,7 +193,8 @@ registerScriptlet(setCookieFn, {
 export function setCookie(
     name = '',
     value = '',
-    path = ''
+    path = '',
+    ...varargs
 ) {
     if ( name === '' ) { return; }
     const safe = safeSelf();
@@ -214,7 +215,7 @@ export function setCookie(
         value,
         '',
         path,
-        safe.getExtraArgs(Array.from(arguments), 3)
+        safe.parseVarargs(varargs)
     );
 
     if ( done ) {
@@ -271,7 +272,8 @@ export function trustedSetCookie(
     name = '',
     value = '',
     offsetExpiresSec = '',
-    path = ''
+    path = '',
+    ...varargs
 ) {
     if ( name === '' ) { return; }
 
@@ -308,7 +310,7 @@ export function trustedSetCookie(
         value,
         expires,
         path,
-        safeSelf().getExtraArgs(Array.from(arguments), 4)
+        safe.parseVarargs(varargs)
     );
 
     if ( done ) {
@@ -357,12 +359,13 @@ registerScriptlet(trustedSetCookieReload, {
  * */
 
 export function removeCookie(
-    needle = ''
+    needle = '',
+    ...varargs
 ) {
     if ( typeof needle !== 'string' ) { return; }
     const safe = safeSelf();
     const reName = safe.patternToRegex(needle);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
+    const extraArgs = safe.parseVarargs(varargs);
     const throttle = (fn, ms = 500) => {
         if ( throttle.timer !== undefined ) { return; }
         throttle.timer = setTimeout(( ) => {

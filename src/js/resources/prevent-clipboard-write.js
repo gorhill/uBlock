@@ -47,11 +47,11 @@ import { safeSelf } from './safe-self.js';
  * 
  * */
 
-function preventClipboardWrite(matches = '') {
+function preventClipboardWrite(matches = '', ...varargs) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('prevent-clipboard-write');
     const pattern = safe.initPattern(matches);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
+    const extraArgs = safe.parseVarargs(varargs);
     const excludePattern = extraArgs.excludeMatches &&
         safe.initPattern(extraArgs.excludeMatches);
     const domAlert = clipboardText => {

@@ -83,13 +83,14 @@ builtinScriptlets.push({
 function replaceNodeTextFn(
     nodeName = '',
     pattern = '',
-    replacement = ''
+    replacement = '',
+    ...varargs
 ) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('replace-node-text.fn', ...Array.from(arguments));
     const reNodeName = safe.patternToRegex(nodeName, 'i', true);
     const rePattern = safe.patternToRegex(pattern, 'gms');
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.parseVarargs(varargs);
     const reIncludes = extraArgs.includes || extraArgs.condition
         ? safe.patternToRegex(extraArgs.includes || extraArgs.condition, 'ms')
         : null;
@@ -198,7 +199,8 @@ function replaceFetchResponseFn(
     trusted = false,
     pattern = '',
     replacement = '',
-    propsToMatch = ''
+    propsToMatch = '',
+    ...varargs
 ) {
     if ( trusted !== true ) { return; }
     const safe = safeSelf();
@@ -206,7 +208,7 @@ function replaceFetchResponseFn(
     if ( pattern === '*' ) { pattern = '.*'; }
     const rePattern = safe.patternToRegex(pattern);
     const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
+    const extraArgs = safe.parseVarargs(varargs);
     const reIncludes = extraArgs.includes ? safe.patternToRegex(extraArgs.includes) : null;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
@@ -988,14 +990,15 @@ builtinScriptlets.push({
 function xmlPrune(
     selector = '',
     selectorCheck = '',
-    urlPattern = ''
+    urlPattern = '',
+    ...varargs
 ) {
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('xml-prune', selector, selectorCheck, urlPattern);
     const reUrl = safe.patternToRegex(urlPattern);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.parseVarargs(varargs);
     const queryAll = (xmlDoc, selector) => {
         const isXpath = /^xpath\(.+\)$/.test(selector);
         if ( isXpath === false ) {
@@ -1583,7 +1586,8 @@ builtinScriptlets.push({
 function trustedReplaceXhrResponse(
     pattern = '',
     replacement = '',
-    propsToMatch = ''
+    propsToMatch = '',
+    ...varargs
 ) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-replace-xhr-response', pattern, replacement, propsToMatch);
@@ -1591,7 +1595,7 @@ function trustedReplaceXhrResponse(
     if ( pattern === '*' ) { pattern = '.*'; }
     const rePattern = safe.patternToRegex(pattern);
     const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.parseVarargs(varargs);
     const reIncludes = extraArgs.includes ? safe.patternToRegex(extraArgs.includes) : null;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
@@ -1822,7 +1826,7 @@ function trustedReplaceOutboundText(
     propChain = '',
     rawPattern = '',
     rawReplacement = '',
-    ...args
+    ...varargs
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
@@ -1831,7 +1835,7 @@ function trustedReplaceOutboundText(
     const replacement = rawReplacement.startsWith('json:')
         ? safe.JSON_parse(rawReplacement.slice(5))
         : rawReplacement;
-    const extraArgs = safe.getExtraArgs(args);
+    const extraArgs = safe.parseVarargs(varargs);
     const reCondition = safe.patternToRegex(extraArgs.condition || '');
     proxyApplyFn(propChain, function(context) {
         const encodedTextBefore = context.reflect();
@@ -2073,12 +2077,13 @@ builtinScriptlets.push({
 function trustedOverrideElementMethod(
     methodPath = '',
     selector = '',
-    disposition = ''
+    disposition = '',
+    ...varargs
 ) {
     if ( methodPath === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-override-element-method', methodPath, selector, disposition);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.parseVarargs(varargs);
     proxyApplyFn(methodPath, function(context) {
         let override = selector === '';
         if ( override === false ) {
