@@ -137,7 +137,9 @@ publish-dev-chromium:
 		ghrepo=uBlock \
 		ghtag=$(version) \
 		ghasset=chromium \
-		storeid=cgbcahbpdhpcegmbfconppldiemgcoii
+		storeid=cgbcahbpdhpcegmbfconppldiemgcoii \
+		crxupdatepath=dist/chromium/update-dev.xml \
+		crxkeytoken=ubo_dev_key_path
 
 # Usage: make publish-dev-firefox version=?
 publish-dev-firefox:
