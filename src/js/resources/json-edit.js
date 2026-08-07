@@ -40,7 +40,7 @@ import { safeSelf } from './safe-self.js';
 function editOutboundObjectFn(
     trusted = false,
     propChain = '',
-    jsonq = '',
+    jsonq = ''
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
@@ -127,6 +127,42 @@ registerScriptlet(trustedEditOutboundObject, {
 });
 
 /******************************************************************************/
+
+function jsonEditFn(trusted = false, jsonq = '', ...varargs) {
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}json-edit`,
+        jsonq,
+        ...varargs
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const extraArgs = safe.parseVarargs(varargs);
+    const pattern = extraArgs.matches && safe.initPattern(extraArgs.matches);
+    proxyApplyFn('JSON.parse', function(context) {
+        const json = context.callArgs[0];
+        const obj = context.reflect();
+        if ( pattern && safe.testPattern(pattern, json) === false ) { return obj; }
+        const objAfter = jsonp.apply(obj);
+        if ( objAfter === undefined ) { return obj; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel > 1 ) {
+            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
+        }
+        return objAfter;
+    });
+}
+registerScriptlet(jsonEditFn, {
+    name: 'json-edit.fn',
+    dependencies: [
+        JSONPath,
+        proxyApplyFn,
+        safeSelf,
+    ],
+});
+
 /******************************************************************************/
 /**
  * @scriptlet json-edit.js
@@ -138,15 +174,20 @@ registerScriptlet(trustedEditOutboundObject, {
  * @param jsonq
  * A uBO-flavored JSONPath query.
  * 
+ * @param 'matches', pattern
+ * Vararg, optional: The JSONPath will be applied if and only if the pattern
+ * matches the inbound JSON string. The pattern can be a plain string or a
+ * regex.
+ * 
  * */
 
-function jsonEdit(jsonq = '') {
-    editOutboundObjectFn(false, 'JSON.parse', jsonq);
+function jsonEdit(jsonq = '', ...varargs) {
+    jsonEditFn(false, jsonq, ...varargs);
 }
 registerScriptlet(jsonEdit, {
     name: 'json-edit.js',
     dependencies: [
-        editOutboundObjectFn,
+        jsonEditFn,
     ],
 });
 
@@ -161,16 +202,21 @@ registerScriptlet(jsonEdit, {
  * @param jsonq
  * A uBO-flavored JSONPath query.
  * 
+ * @param 'matches', pattern
+ * Vararg, optional: The JSONPath will be applied if and only if the pattern
+ * matches the inbound JSON string. The pattern can be a plain string or a
+ * regex.
+ * 
  * */
 
-function trustedJsonEdit(jsonq = '') {
-    editOutboundObjectFn(true, 'JSON.parse', jsonq);
+function trustedJsonEdit(jsonq = '', ...varargs) {
+    jsonEditFn(true, jsonq, ...varargs);
 }
 registerScriptlet(trustedJsonEdit, {
     name: 'trusted-json-edit.js',
     requiresTrust: true,
     dependencies: [
-        editOutboundObjectFn,
+        jsonEditFn,
     ],
 });
 
