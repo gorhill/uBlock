@@ -22,14 +22,18 @@
         <div class="codeMirrorContainer codeMirrorBreakAll cm-theme-override"></div>
         <div class="resultsetWidgets">
             <span id="resultsetModifiers">
+                <span class="arrow depth-left" data-action="decrement">‹</span>
                 <span id="resultsetDepth" class="resultsetModifier">
                     <span><span></span><span></span><span></span></span>
                     <input type="range" min="0" max="7" value="7">
                 </span>
+                <span class="arrow depth-right" data-action="increment">›</span>
+                <span class="arrow spec-left" data-action="decrement">‹</span>
                 <span id="resultsetSpecificity" class="resultsetModifier">
                     <span><span></span><span></span><span></span></span>
                     <input type="range" min="0" max="7" value="6">
                 </span>
+                <span class="arrow spec-right" data-action="increment">›</span>
             </span>
             <span id="resultsetCount"></span>
         </div>

@@ -111,6 +111,20 @@ html#ublock0-epicker,
     flex-grow: 1;
     justify-content: space-evenly;
     }
+#resultsetModifiers .arrow {
+    align-items: center;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1.5em;
+    font-weight: bold;
+    justify-content: center;
+    padding: 0 6px;
+    user-select: none;
+    }
+#resultsetModifiers .arrow:hover {
+    color: var(--ink-1);
+    }
 #resultsetModifiers.hide > * {
     visibility: hidden;
     }

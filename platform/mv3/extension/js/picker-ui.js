@@ -176,6 +176,26 @@ function onSliderChanged(ev) {
     updateSlider(Math.round(ev.target.valueAsNumber));
 }
 
+function onArrowClicked(ev) {
+    const arrow = ev.target.closest('.arrow');
+    if ( arrow === null ) { return; }
+    const slider = qs$('#slider');
+    if ( slider.disabled ) { return; }
+
+    const isIncrement = arrow.dataset.action === 'increment';
+    let val = Math.round(slider.valueAsNumber);
+    if ( isIncrement ) {
+        val += 1;
+    } else {
+        val -= 1;
+    }
+    const max = parseInt(slider.max, 10);
+    if ( val < 0 ) { val = 0; }
+    if ( val > max ) { val = max; }
+    slider.value = val;
+    updateSlider(val);
+}
+
 function updateSlider(i) {
     if ( i === sliderPartsPos ) { return; }
     sliderPartsPos = i;
@@ -379,6 +399,7 @@ function startPicker() {
     dom.on('textarea', 'input', onFilterTextChanged);
     dom.on('#quit', 'click', quitPicker);
     dom.on('#slider', 'input', onSliderChanged);
+    dom.on('.slider-container .arrow', 'click', onArrowClicked);
     dom.on('#pick', 'click', resetPicker);
     dom.on('#preview', 'click', onPreviewClicked);
     dom.on('#moreOrLess > span:first-of-type', 'click', ( ) => { onViewToggled(1); });

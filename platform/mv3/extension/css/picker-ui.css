@@ -65,6 +65,27 @@
     text-align: right;
     width: 8ch;
 }
+#ubol-picker .slider-container {
+    align-items: center;
+    display: flex;
+    gap: 0.5em;
+    width: 100%;
+}
+#ubol-picker .slider-container input {
+    flex-grow: 1;
+}
+#ubol-picker .slider-container .arrow {
+    color: var(--ink-2);
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: bold;
+    user-select: none;
+        -webkit-user-select: none;
+    padding: 0 4px;
+}
+#ubol-picker .slider-container .arrow:hover {
+    color: var(--ink-1);
+}
 
 #ubol-picker #toolbar {
     display: flex;

@@ -27,7 +27,11 @@
         <label for="slider" data-i18n="pickerSliderLabel">_</label>
         <span id="resultsetCount"></span>
     </span>
-    <input id="slider" type="range" min="0" max="10" step="any">
+    <div class="slider-container">
+        <span class="arrow left" data-action="decrement">‹</span>
+        <input id="slider" type="range" min="0" max="10" step="any">
+        <span class="arrow right" data-action="increment">›</span>
+    </div>
 </section>
 <section id="toolbar" data-view="0">
     <div>
