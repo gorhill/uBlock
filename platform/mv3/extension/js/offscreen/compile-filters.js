@@ -197,11 +197,8 @@ export function compileFilters(listid, text, context = {}) {
         }
         if ( parser.isNetworkFilter() ) {
             filterStats.total += 1;
-            const rule = parseNetworkFilter(parser, {
-                resourceTypes,
-            });
-            if ( rule ) {
-                unminimizedRules.push(rule);
+            const result = parseNetworkFilter(parser, { resourceTypes }, unminimizedRules);
+            if ( result ) {
                 filterStats.accepted += 1;
             } else {
                 filterStats.rejected += 1;

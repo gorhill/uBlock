@@ -306,6 +306,45 @@ function dropEntities(rule, prop) {
 
 /******************************************************************************/
 
+function convertInitiatorDomainsToRequestDomains(rule) {
+    if ( rule.condition.initiatorDomains ) {
+        rule.condition.requestDomains ??= [];
+        rule.condition.requestDomains = [
+            ...rule.condition.requestDomains,
+            ...rule.condition.initiatorDomains,
+        ];
+        delete rule.condition.initiatorDomains;
+    }
+    if ( rule.condition.excludedInitiatorDomains ) {
+        rule.condition.excludedRequestDomains ??= [];
+        rule.condition.excludedRequestDomains = [
+            ...rule.condition.excludedRequestDomains,
+            ...rule.condition.excludedInitiatorDomains,
+        ];
+        delete rule.condition.excludedInitiatorDomains;
+    }
+}
+
+/******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBOL-home/discussions/736
+
+function expandRemoveparamsRule(rule0, out) {
+    if ( Boolean(rule0.condition.resourceTypes?.includes('main_frame')) === false ) { return; }
+    if ( rule0.condition.initiatorDomains === undefined ) { return; }
+    if ( rule0.condition.resourceTypes.length === 1 ) {
+        convertInitiatorDomainsToRequestDomains(rule0);
+        return;
+    }
+    const rule1 = structuredClone(rule0);
+    rule0.condition.resourceTypes = rule0.condition.resourceTypes.filter(a => a !== 'main_frame');
+    rule1.condition.resourceTypes = [ 'main_frame' ];
+    convertInitiatorDomainsToRequestDomains(rule1);
+    out.push(rule1);
+}
+
+/******************************************************************************/
+
 export function validateRules(rules) {
     const out = [];
     for ( const rule of rules ) {
@@ -343,7 +382,7 @@ export function validateRules(rules) {
 //   Block important: 40
 //   Redirect important: 41-49
 
-export function parseNetworkFilter(parser, details = {}) {
+export function parseNetworkFilter(parser, details = {}, out = []) {
     if ( parser.isNetworkFilter() === false ) { return; }
     if ( parser.hasError() ) { return; }
 
@@ -714,7 +753,11 @@ export function parseNetworkFilter(parser, details = {}) {
     if ( priority !== 1 ) {
         rule.priority = priority;
     }
-    return rule;
+    out.push(rule);
+    if ( rule.action.redirect?.transform?.queryTransform?.removeParams ) {
+        expandRemoveparamsRule(rule, out);
+    }
+    return out;
 }
 
 /******************************************************************************/
@@ -729,9 +772,7 @@ export function parseFilters(text, details) {
     for ( const line of lines ) {
         parser.parse(line);
         if ( parser.isNetworkFilter() === false ) { continue; }
-        const rule = parseNetworkFilter(parser, details);
-        if ( rule === undefined ) { continue; }
-        rules.push(rule);
+        parseNetworkFilter(parser, details, rules);
     }
     rules = minimizeRuleset(rules);
     rules = minimizeRules(rules);
