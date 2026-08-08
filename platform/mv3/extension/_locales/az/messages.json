@@ -103,6 +103,10 @@
     "message": "Əlavə ediləcək filtr siyahısının URL-i",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "İdxal / İxrac et",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "İdxal edilmiş siyahılardan kosmetik və ya skriptlet filtrlərini tətbiq etmək üçün uBO Lite-a istifadəçi skriptlərini işlətmək icazəsi verməlisiniz. Brauzerinizin genişləndirmələr səhifəsini açın (Chrome-da <code>chrome://extensions</code> və ya Firefox-da <code>about:addons</code>), <b>uBO Lite</b> bölməsinin təfərrüatlarını açın və <b>İstifadəçi skriptlərinə icazə ver</b> seçimini aktivləşdirin (bu seçim “təsdiqlənməmiş üçüncü tərəf skriptləri” kimi də adlandırılır).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Dəyişikliklər siyahısı",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Filtr yaratma sınaq mühiti",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Tərtibatçı rejimi",

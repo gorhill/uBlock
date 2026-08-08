@@ -103,6 +103,10 @@
     "message": "Устаўце сюды URL-адрас спіса фільтраў, які трэба дадаць",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Імпартаваць/экспартаваць",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Каб прымяніць касметычныя фільтры або фільтры скрыптлетаў да імпартаваных спісаў, вы павінны даць uBO Lite дазвол на запуск карыстальніцкіх скрыптоў. Адкрыйце старонку пашырэнняў вашага браўзера (<code>chrome://extensions</code> у Chrome або <code>about:addons</code> у Firefox), адкрыйце падрабязнасці <b>uBO Lite</b> і ўключыце <b>Дазволіць карыстальніцкія скрыпты</b> (таксама вядомыя як «неправераныя староннія скрыпты»).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Журнал змяненняў",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Пясочніца стварэння фільтраў",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Рэжым распрацоўшчыка",

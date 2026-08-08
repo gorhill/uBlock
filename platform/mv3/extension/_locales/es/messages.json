@@ -103,6 +103,10 @@
     "message": "Pega aquí la URL del filtro de lista a agregar",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importar / Exportar",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Para aplicar filtros cosméticos o de scripts desde listas importadas, debes otorgar a uBO Lite permiso para correr scripts de usuario. Abre la página de extensiones de tu navegador. (<code>chrome://extensions</code> en Chrome o <code>about:addons</code> en Firefox), abre los <b>uBO Lite</b> detalles, y enciende <b>Permitir scripts de usuario</b> (tambien referido como \"scripts de terceros no verificados\").",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Registro de cambios",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Caja de arena de creación de filtro",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Modo desarrollador",

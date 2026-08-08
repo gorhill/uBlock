@@ -103,6 +103,10 @@
     "message": "जोडायच्या फिल्टर यादीचा URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "आयात / निर्यात",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "आयात केलेल्या याद्यांमधील कॉस्मेटिक किंवा स्क्रिप्टलेट फिल्टर लागू करण्यासाठी, तुम्ही uBO Lite ला वापरकर्ता स्क्रिप्ट चालवण्याची परवानगी दिली पाहिजे. तुमच्या ब्राउझरचे विस्तारण पृष्ठ उघडा (Chrome मध्ये <code>chrome://extensions</code> किंवा Firefox मध्ये <code>about:addons</code>), <b>uBO Lite</b> तपशील उघडा, आणि <b>Allow user scripts</b> (ज्याला “unverified third-party scripts” असेही म्हणतात) टॉगल चालू करा.",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "बदल नोंदवही",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "फिल्टर-निर्मिती सँडबॉक्स",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "विकासक मोड",

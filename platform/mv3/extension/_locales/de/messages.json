@@ -103,6 +103,10 @@
     "message": "URL der Filterliste hier einfügen",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Importieren und exportieren",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "uBO Lite benötigt die Berechtigung zum Ausführen von Nutzerscripts, um kosmetische Filter oder Scriptlet-Filter aus importierten Listen anzuwenden. Die Option befindet sich in den Browser-Einstellungen für Erweiterungen (<code>chrome://extensions</code> in Chrome oder <code>about:addons</code> in Firefox). Anschließend die Details von <b>uBO Lite</b> öffnen und <b>Nutzerscripts zulassen</b> aktivieren (in Firefox „Nicht verifizierten Skripten von Drittanbietern den Zugriff auf Ihre Daten erlauben“).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Testumgebung zum Erstellen von Filtern",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Entwicklermodus",

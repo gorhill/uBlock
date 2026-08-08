@@ -103,6 +103,10 @@
     "message": "URL seznama filtrov za dodajanje",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Uvozi / Izvozi",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Če želite uveljaviti kozmetične ali skriptletne filtre iz uvoženih seznamov, morate podeliti dovoljenje za izvajanje uporabniških skriptov. Odprite stran z razširitvami v brskalniku (<code>chrome://extensions</code> v Chromu ali <code>about:addons</code> v Firefoxu), odprite podrobnosti za <b>uBO Lite</b> in omogočite <b>Dovoli uporabniške skripte</b> (imenovane tudi “nepreverjene skripte tretjih oseb”).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Dnevnik sprememb",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Peskovnik za ustvarjanje filtrov",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Razvojni način",

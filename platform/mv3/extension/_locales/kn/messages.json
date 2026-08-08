@@ -103,6 +103,10 @@
     "message": "ಸೇರಿಸಬೇಕಾದ ಶೋಧಕ ಪಟ್ಟಿಯ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "ಆಮದು / ರಫ್ತು",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "ಆಮದು ಮಾಡಿದ ಪಟ್ಟಿಗಳಿಂದ ಸೌಂದರ್ಯ ಅಥವಾ ಸ್ಕ್ರಿಪ್ಟ್ಲೆಟ್ ಶೋಧಕಗಳನ್ನು ಜಾರಿಗೊಳಿಸಲು, ನೀವು uBO Lite ಗೆ ಬಳಕೆದಾರ ಸ್ಕ್ರಿಪ್ಟ್ಗಳನ್ನು ಚಲಾಯಿಸಲು ಅನುಮತಿ ನೀಡಬೇಕು. ನಿಮ್ಮ ಬ್ರೌಸರ್ನ ವಿಸ್ತರಣೆಗಳ ಪುಟವನ್ನು ತೆರೆಯಿರಿ (Chrome ನಲ್ಲಿ <code>chrome://extensions</code> ಅಥವಾ Firefox ನಲ್ಲಿ <code>about:addons</code>), <b>uBO Lite</b> ವಿವರಗಳನ್ನು ತೆರೆಯಿರಿ, ಮತ್ತು <b>ಬಳಕೆದಾರ ಸ್ಕ್ರಿಪ್ಟ್ಗಳನ್ನು ಅನುಮತಿಸು</b> ಅನ್ನು ಟಾಗಲ್ ಆನ್ ಮಾಡಿ (ಇದನ್ನು “ಪರಿಶೀಲಿಸದ ಮೂರನೇ-ಪಕ್ಷ ಸ್ಕ್ರಿಪ್ಟ್ಗಳು” ಎಂದೂ ಕರೆಯಲಾಗುತ್ತದೆ).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "ಬದಲಾವಣೆಗಳು",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "ಶೋಧಕ-ರಚನೆ ಸ್ಯಾಂಡ್ಬಾಕ್ಸ್",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "ಡೆವಲಪರ್ ಮೋಡ್",

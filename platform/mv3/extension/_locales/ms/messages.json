@@ -103,6 +103,10 @@
     "message": "URL senarai penapis untuk ditambah",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Import / Eksport",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Untuk menguatkuasakan penapis kosmetik atau scriptlet daripada senarai yang diimport, anda mesti memberikan kebenaran kepada uBO Lite untuk menjalankan skrip pengguna. Buka halaman sambungan pelayar anda (<code>chrome://extensions</code> dalam Chrome atau <code>about:addons</code> dalam Firefox), buka butiran <b>uBO Lite</b>, dan aktifkan <b>Benarkan skrip pengguna</b> (juga dirujuk sebagai \"skrip pihak ketiga yang tidak disahkan\").",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Log perubahan",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Kotak pasir penciptaan penapis",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Mod pembangun",

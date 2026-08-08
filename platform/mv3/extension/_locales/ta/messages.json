@@ -103,6 +103,10 @@
     "message": "சேர்க்க வேண்டிய வடிப்பான் பட்டியலின் URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "இறக்குமதி / ஏற்றுமதி",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "இறக்குமதி செய்யப்பட்ட பட்டியல்களில் இருந்து அழகியல் அல்லது ஸ்கிரிப்ட்லெட் வடிப்பான்களை செயல்படுத்த, நீங்கள் uBO Lite க்கு பயனர் ஸ்கிரிப்ட்களை இயக்க அனுமதி வழங்க வேண்டும். உங்கள் உலாவியின் நீட்டிப்புகள் பக்கத்தைத் திறக்கவும் (Chrome இல் <code>chrome://extensions</code> அல்லது Firefox இல் <code>about:addons</code>), <b>uBO Lite</b> விவரங்களைத் திறக்கவும், மேலும் <b>பயனர் ஸ்கிரிப்ட்களை அனுமதி</b> (இது “சரிபார்க்கப்படாத மூன்றாம் தரப்பு ஸ்கிரிப்ட்கள்” என்றும் குறிப்பிடப்படுகிறது) என்பதை இயக்கவும்.",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "மாற்றப்பதிவேடு",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "வடிப்பான் உருவாக்கும் மணல் பெட்டி (sandbox)",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "டெவலப்பர் முறை",

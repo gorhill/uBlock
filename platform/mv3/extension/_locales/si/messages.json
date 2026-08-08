@@ -103,6 +103,10 @@
     "message": "එක් කළ යුතු පෙරහන් ලැයිස්තුවේ URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "ආයාත කරන්න / නිර්යාත කරන්න",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "ආයාත කළ ලැයිස්තු වලින් ආලේපන හෝ ස්ක්‍රිප්ට්ලට් පෙරහන් බලාත්මක කිරීම සඳහා, ඔබ uBO Lite වෙත පරිශීලක ස්ක්‍රිප්ට් ක්‍රියාත්මක කිරීමට අවසර දිය යුතුය. ඔබගේ බ්‍රවුසරයේ දිගු පිටුව විවෘත කරන්න (Chrome හි <code>chrome://extensions</code> හෝ Firefox හි <code>about:addons</code>), <b>uBO Lite</b> විස්තර විවෘත කරන්න, සහ <b>පරිශීලක ස්ක්‍රිප්ට් වලට ඉඩ දෙන්න</b> (එය “සත්‍යාපනය නොකළ තෙවන පාර්ශවීය ස්ක්‍රිප්ට්” ලෙසද හැඳින්වේ) සක්‍රිය කරන්න.",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "වෙනස්කම් සටහන",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "පෙරහන්-නිර්මාණ වැලිපිල්ල",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "සංවර්ධක ප්‍රකාරය",

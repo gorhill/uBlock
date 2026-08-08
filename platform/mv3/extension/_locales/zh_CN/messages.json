@@ -103,6 +103,10 @@
     "message": "在此处粘贴要添加的过滤列表的 URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "导入/导出",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "要强制执行来自导入列表的元素或脚本过滤规则，您必须授予 uBO Lite 运行用户脚本的权限。打开浏览器的扩展页面（Chrome 中为 <code>chrome://extensions</code>，Firefox 中为 <code>about:addons</code>），打开 <b>uBO Lite</b> 详情</b>，然后开启 <b>允许用户脚本</b>（也称为“未经验证的第三方脚本”）。",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "更新日志",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "过滤器创建沙盒",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "开发者模式",

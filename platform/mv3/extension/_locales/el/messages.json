@@ -103,6 +103,10 @@
     "message": "Επικολλήστε το URL της λίστας φίλτρων εδώ",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Εισαγωγή / Εξαγωγή",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Για να επιβάλετε φίλτρα εμφάνισης ή scriptlet από εισαγόμενες λίστες, πρέπει να παραχωρήσετε στο uBO Lite το δικαίωμα εκτέλεσης user scripts. Ανοίξτε τη σελίδα επεκτάσεων του προγράμματος περιήγησής σας (<code>chrome://extensions</code> στο Chrome ή <code>about:addons</code> στον Firefox), ανοίξτε τις λεπτομέρειες του <b>uBO Lite</b> και ενεργοποιήστε την επιλογή <b>Να επιτρέπονται τα user scripts</b> (γνωστά και ως «μη επαληθευμένα σενάρια τρίτων»).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Αρχείο αλλαγών",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Αμμοδοχείο δημιουργίας φίλτρων",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Λειτουργία προγραμματιστή",

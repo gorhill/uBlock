@@ -103,6 +103,10 @@
     "message": "Ավելացման ենթակա զտիչների ցանկի URL-ը",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Ներմուծում / Արտահանում",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Ներմուծված ցանկերից կոսմետիկ կամ սկրիպտլետ զտիչները կիրառելու համար դուք պետք է uBO Lite-ին թույլատրեք գործարկել օգտատիրոջ սկրիպտները։ Բացեք ձեր դիտարկչի ընդլայնումների էջը (<code>chrome://extensions</code> Chrome-ում կամ <code>about:addons</code> Firefox-ում), բացեք <b>uBO Lite</b>-ի մանրամասները և միացրեք <b>Թույլատրել օգտատիրոջ սկրիպտները</b> (նաև կոչվում է “չստուգված երրորդ կողմի սկրիպտներ”)։",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Փոփոխությունների մատյան",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Զտիչների ստեղծման ավազարկղ",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Մշակողի ռեժիմ",

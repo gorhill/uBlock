@@ -103,6 +103,10 @@
     "message": "Gehitzeko iragazki-zerrendaren URLa",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Inportatu / Esportatu",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Inportatutako zerrendetako iragazki kosmetiko edo scriptlet-ak betearazteko, baimena eman behar diozu uBO Lite-ri erabiltzaile-scriptak exekutatzeko. Ireki zure nabigatzailearen luzapenen orria (<code>chrome://extensions</code> Chrome-n edo <code>about:addons</code> Firefox-en), ireki <b>uBO Lite</b>-ren xehetasunak, eta aktibatu <b>Onartu erabiltzaile-scriptak</b> (“egiaztatu gabeko hirugarrenen scriptak” ere deitua).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Aldaketen erregistroa",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Iragazkiak sortzeko proba-gunea",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Garatzaile modua",

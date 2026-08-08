@@ -103,6 +103,10 @@
     "message": "URL-ka liiska shaandhada ee la rabo in la daro",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Soo dejinta / Dhoofinta",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "Si loo dhaqan geliyo shaandhooyinka qurxinta ama qoraal-yar ee liisaska la soo dejiyay, waa inaad siisaa uBO Lite ogolaansho si ay u waddo qoraallada isticmaalaha. Fur bogga kordhinta biraawsarkaaga (<code>chrome://extensions</code> Chrome ama <code>about:addons</code> Firefox), fur faahfaahinta <b>uBO Lite</b>, oo daawo <b>Oggolow qoraallada isticmaalaha</b> (oo sidoo kale loo yaqaan “qoraallada dhinac-saddexaad ee aan la xaqiijin”).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Diiwaanka isbeddelka",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Sanduuqa ciyaarta ee abuurista shaandhada",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Habka horumariyaha",

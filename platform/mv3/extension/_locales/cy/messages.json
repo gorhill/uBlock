@@ -103,6 +103,10 @@
     "message": "URL y rhestr hidl i'w hychwanegu",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
+  "customListImportUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+  },
   "customFiltersImportExportLabel": {
     "message": "Mewnforio / Allforio",
     "description": "Text label heading the import/export area of custom filters"
@@ -113,7 +117,7 @@
   },
   "userScriptsInfo": {
     "message": "I orfodi hidlau cosmetig neu sgriptlet o restrau wedi'u mewnforio, rhaid i chi roi caniatâd i uBO Lite redeg sgriptiau defnyddiwr. Agorwch dudalen estyniadau eich porwr (<code>chrome://extensions</code> yn Chrome neu <code>about:addons</code> yn Firefox), agorwch fanylion <b>uBO Lite</b>, a throwch <b>Caniatáu sgriptiau defnyddiwr</b> ymlaen (a elwir hefyd yn “sgriptiau trydydd parti heb eu gwirio”).",
-    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
+    "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
     "message": "Cofnod newidiadau",
@@ -286,6 +290,10 @@
   "sandboxEditorLabel": {
     "message": "Blwch tywod creu hidl",
     "description": "Header for filter-creation section in the dashboard"
+  },
+  "sandboxEditorUserScriptsInfo": {
+    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
     "message": "Modd datblygwr",
