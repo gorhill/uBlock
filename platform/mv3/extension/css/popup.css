@@ -18,6 +18,9 @@
         var(--filtering-mode-button-size) / 2
     );
 }
+:root.mobile {
+    --filtering-mode-button-size: 52px;
+}
 
 :root body,
 :root.mobile body {
@@ -25,6 +28,9 @@
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
     min-width: var(--popup-min-width);
+}
+:root.mobile body {
+    --popup-gap: calc(0.75 * var(--font-size));
 }
 :root body.loading {
     visibility: hidden;
@@ -86,6 +92,9 @@ hr {
     text-align: center;
     word-break: break-all;
 }
+:root.mobile #hostname {
+    min-height: calc(var(--font-size) * 2.2);
+}
 #hostname > span {
     word-break: break-all;
 }
@@ -145,6 +154,10 @@ body.needReload #refresh {
     margin: 0.5em 0;
     padding-top: 0.5em;
 }
+:root.mobile .toolMenu {
+    margin: 0.25em 0;
+    padding-top: 0.25em;
+}
 :root:not(.isHTTP) .needHTTP {
     display: none;
 }
@@ -159,6 +172,9 @@ body.needReload #refresh {
     display: flex;
     padding: 0.5em 0.5em 0.5em 0;
     unicode-bidi: embed;
+}
+:root.mobile .toolMenu > .tool {
+    padding: 0.35em 0.5em 0.35em 0;
 }
 .toolMenu > .tool:hover {
     color: var(--ink-1);
@@ -192,6 +208,9 @@ body.needReload #refresh {
     unicode-bidi: embed;
     visibility: hidden;
 }
+:root.mobile .toolRibbon .tool {
+    padding: 8px 12px;
+}
 .toolRibbon .tool:hover {
     color: var(--ink-1);
         fill: var(--ink-1);
@@ -209,6 +228,9 @@ body.needReload #refresh {
     font: 10px/12px sans-serif;
     margin-top: 6px;
     text-align: center;
+}
+:root.mobile .toolRibbon .tool .caption {
+    margin-top: 4px;
 }
 :root:not(.mobile) .toolRibbon .caption {
     display: none;
