@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "এলিমেন্ট জ্যাপার মোডে প্রবেশ করুন",
+    "message": "একটি উপাদান সরান",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

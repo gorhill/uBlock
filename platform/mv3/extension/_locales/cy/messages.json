@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Galluogi'r modd saethu elfen",
+    "message": "Tynnu elfen",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

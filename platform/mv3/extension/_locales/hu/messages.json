@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Belépés az elemeltávolító módba",
+    "message": "Elem eltávolítása",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

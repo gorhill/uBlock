@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentācija",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Pārslēgties uz elementu iznīcināšanu",
+    "message": "Noņemt elementu",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

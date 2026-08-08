@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "මූලද්‍රව්‍ය zapper ප්‍රකාරයට ඇතුළු වන්න",
+    "message": "මූලද්‍රව්‍යයක් ඉවත් කරන්න",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

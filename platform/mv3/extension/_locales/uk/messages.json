@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Перейти в режим тимчасового приховування елементів",
+    "message": "Видалити елемент",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

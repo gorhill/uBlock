@@ -348,7 +348,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Mont er mod \"dilemel elfennoù\"",
+    "message": "Dilemel un elfenn",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
