@@ -329,7 +329,7 @@ function convertInitiatorDomainsToRequestDomains(rule) {
 
 // https://github.com/uBlockOrigin/uBOL-home/discussions/736
 
-function expandRemoveparamsRule(rule0, out) {
+export function expandRemoveparamsRule(rule0, out) {
     if ( Boolean(rule0.condition.resourceTypes?.includes('main_frame')) === false ) { return; }
     if ( rule0.condition.initiatorDomains === undefined ) { return; }
     if ( rule0.condition.resourceTypes.length === 1 ) {

@@ -31,6 +31,10 @@ import {
     dnrRulesetFromRawLists,
     mergeRules,
 } from './js/static-dnr-filtering.js';
+import {
+    expandRemoveparamsRule,
+    minimizeRuleset,
+} from './js/ubo-parser.js';
 
 import { execSync } from 'node:child_process';
 import { fetchList } from './js/offscreen/fetch-list.js';
@@ -38,7 +42,6 @@ import fs from 'fs/promises';
 import { hostnameCompare } from './js/offscreen/make-utils.js';
 import { literalStrFromRegex } from './js/offscreen/regex-analyzer.js';
 import { makeCosmeticScripts } from './js/offscreen/make-cosmetic-filters.js';
-import { minimizeRuleset } from './js/ubo-parser.js';
 import path from 'path';
 import process from 'process';
 import redirectResourcesMap from './js/redirect-resources.js';
@@ -589,6 +592,13 @@ async function processDnrRules(assetDetails, network, dnrRules) {
             rule.action.redirect.extensionPath.replace(/^\/+/, '')
         );
     });
+
+    // Patch removeParams rules as needed
+    for ( const rule of staticRules ) {
+        if ( rule.action.redirect?.transform?.queryTransform?.removeParams ) {
+            expandRemoveparamsRule(rule, staticRules);
+        }
+    }
 
     // Minimize rulesets
     const minimizedStaticRuleset = minimizeRuleset(staticRules);
