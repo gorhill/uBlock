@@ -271,11 +271,11 @@ body:not([data-supports~="compiled-filters"]) section[data-pane="rulesets"] #lis
 section[data-pane="rulesets"] #lists:has([data-nodeid="imported"].hideUnused) + aside {
     display: none;
 }
-body section[data-pane="rulesets"] p[data-i18n="userScriptsInfo"] {
+body .userScriptsInfo {
     color: var(--ink-2);
     font-size: small;
     }
-body[data-supports~="user-scripts"] section[data-pane="rulesets"] p[data-i18n="userScriptsInfo"] {
+body[data-supports~="user-scripts"] .userScriptsInfo {
     display: none;
     }
 body section[data-pane="rulesets"] .importRulesetURL > p {
@@ -394,7 +394,7 @@ section[data-pane="filters"] aside .importFromText:not(:has(textarea:placeholder
 section[data-pane="filters"] aside .importFromText:not(:has(textarea:placeholder-shown)) button:has([data-i18n="exportButton"]) {
     display: none;
     }
-section[data-pane="filters"] aside p {
+section[data-pane="filters"] aside .importFromText p {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
