@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "클릭하여 이 사이트에서 uBlock₀ 을 켭니다.",
+    "message": "클릭하여 이 사이트에서 uBlock₀을 켭니다.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -116,11 +116,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "구성 요소 선택기 모드로 진입",
+    "message": "요소 제거기 모드 진입",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "구성 요소 선택기 모드로 진입",
+    "message": "요소 선택기 모드 진입",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -144,15 +144,15 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "이 사이트에서만 적용되는 대용량 미디어 요소 차단 기능을 켜고 끕니다",
+    "message": "이 사이트에서 적용되는 대용량 미디어 요소 차단 기능 토글",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "클릭하여 이 사이트에서 대용량 미디어를 차단합니다",
+    "message": "클릭하여 이 사이트에서 대용량 미디어 요소를 차단합니다",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "클릭하여 이 사이트에서 대용량 미디어 차단을 해제합니다",
+    "message": "클릭하여 이 사이트에서 대용량 미디어 요소 차단을 해제합니다",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -312,11 +312,11 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "구성 요소 차단",
+    "message": "요소 차단…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "차단된 요소의 자리 감추기",
+    "message": "차단된 요소의 공간 숨기기",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "{{input:number}} KB 보다 큰 미디어 구성요소 차단",
+    "message": "{{input}} KB보다 큰 미디어 요소 차단",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "불러오기..",
+    "message": "가져오기…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "신뢰할 수 없는 출처의 필터를 추가하지 마십시오.",
+    "message": "신뢰할 수 없는 출처의 필터는 추가하지 마세요.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
@@ -592,7 +592,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "파일로부터 불러오기...",
+    "message": "파일에서 가져오기…",
     "description": ""
   },
   "rulesExport": {
@@ -668,7 +668,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "숨겨진 구성 요소",
+    "message": "숨겨진 요소",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -1204,7 +1204,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "클라우드 저장소의 설정 불러오기 및 현재 설정과 통합",
+    "message": "클라우드 저장소에서 가져와 현재 설정에 병합",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1236,7 +1236,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "프레임 내 구성 요소 차단",
+    "message": "프레임 내 요소 차단…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

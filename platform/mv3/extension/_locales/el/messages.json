@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "Για να επιβάλετε φίλτρα μορφοποίησης ή σεναρίων από εισαγόμενες λίστες, πρέπει να δώσετε άδεια εκτέλεσης σεναρίων χρήστη στο uBO Lite.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -288,11 +288,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "sandboxEditorLabel": {
-    "message": "Αμμοδοχείο δημιουργίας φίλτρων",
+    "message": "Περιβάλλον προστατευμένης εκτέλεσης για δημιουργία φίλτρων",
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "Για να επιβάλετε φίλτρα μορφοποίησης ή σεναρίων από το περιβάλλον προστατευμένης εκτέλεσης, πρέπει να δώσετε άδεια εκτέλεσης σεναρίων χρήστη στο uBO Lite.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {

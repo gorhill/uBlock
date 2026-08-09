@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "가져온 목록의 요소 숨김 및 스크립트 주입 필터를 적용하려면 uBO Lite에 사용자 스크립트 실행 권한을 허용해야 합니다.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -292,7 +292,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "샌드박스 요소 숨김 및 스크립트 주입 필터를 적용하려면 uBO Lite에 사용자 스크립트 실행 권한을 허용해야 합니다.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
@@ -356,11 +356,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "숨길 요소 선택하기",
+    "message": "요소 제거하기",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "숨길 요소 선택 종료하기",
+    "message": "요소 제거 모드 종료",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
@@ -432,7 +432,7 @@
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {
-    "message": "신뢰할 수 없는 출처의 콘텐츠를 추가하지 마십시오",
+    "message": "신뢰할 수 없는 출처의 콘텐츠는 추가하지 마세요",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

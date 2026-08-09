@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "For at håndhæve kosmetiske eller scriptlets-filtre fra importerede lister skal uBlock gives tilladelse til at afvikle bruger-scripts.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "For at håndhæve kosmetiske eller scriptlet-filtre fra importerede lister, giv uBO Lite tilladelse til at eksekvere brugerscripts. Åbn webbrowserens udvidelsesside (<code>chrome://extensions</code> i Chrome eller <code>about:addons</code> i Firefox), åbn <b>uBO Lite</b>-detaljerne og slå <b>Tillad brugerscripts</b> til (også kaldet \"ubekræftede tredjepartsscripts\").",
+    "message": "Åbn webbrowserens udvidelsesside (<code>chrome://extensions</code> i Chrome eller <code>Om:tilføjelser</code> i Firefox), åbn <b>uBO Lite</b>-detaljerne, og slå <b>Tillad bruger-scripts</b> til (også kaldet “ubekræftede tredjeparts-scripts”).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -292,7 +292,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "For at håndhæve kosmetiske eller scriptlets-filtre fra sandkasse skal uBlock gives tilladelse til at afvikle bruger-scripts.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
