@@ -159,10 +159,9 @@ if ( $hasRegexes$ ) {
         }
     }
 }
-if ( todo.size === 0 ) { return; }
 
-// Execute scriplets
-{
+// Execute scriptlets
+if ( todo.size ) {
     const $scriptletFunctions$ = self.$scriptletFunctions$;
     const $scriptletArgs$ = self.$scriptletArgs$;
     const $scriptletArglists$ = self.$scriptletArglists$;
