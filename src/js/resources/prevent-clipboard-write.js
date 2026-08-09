@@ -131,6 +131,14 @@ function preventClipboardWrite(matches = '', ...varargs) {
             }
             return context.reflect();
         }, { skipToString: true });
+        // DataTransfer.setData() — catches copy-event handlers which set the
+        // clipboard payload directly, i.e. e.clipboardData.setData(...) along
+        // with e.preventDefault(), a route not covered by the traps above
+        proxyApplyFn('DataTransfer.prototype.setData', function(context) {
+            const [ type, text ] = context.callArgs;
+            if ( /^text(\/plain)?$/i.test(type) && prevent(text) ) { return; }
+            return context.reflect();
+        }, { skipToString: true });
     };
     self.addEventListener('mousedown', installTraps, {
         once: true,
