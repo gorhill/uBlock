@@ -84,7 +84,8 @@ const entries = (( ) => {
 })();
 if ( entries.length === 0 ) { return; }
 
-const todoIndices = new Set();
+const todo = new Set();
+
 if ( $hasHostnames$ ) {
     const $scriptletHostnames$ = self.$scriptletHostnames$;
     const collectArglistRefIndices = (out, hn, r) => {
@@ -121,6 +122,7 @@ if ( $hasHostnames$ ) {
             }
         }
     };
+    const todoIndices = new Set();
     indicesFromHostname(todoIndices, entries[0]);
     if ( $hasAncestors$ ) {
         for ( const entry of entries ) {
@@ -128,19 +130,18 @@ if ( $hasHostnames$ ) {
             indicesFromHostname(todoIndices, entry, '>>');
         }
     }
-}
-
-// Collect arglist references
-const todo = new Set();
-if ( todoIndices.size !== 0 ) {
-    const $scriptletArglistRefs$ = self.$scriptletArglistRefs$;
-    const arglistRefs = $scriptletArglistRefs$.split(';');
-    for ( const i of todoIndices ) {
-        for ( const ref of JSON.parse(`[${arglistRefs[i]}]`) ) {
-            todo.add(ref);
+    // Collect arglist references
+    if ( todoIndices.size ) {
+        const $scriptletArglistRefs$ = self.$scriptletArglistRefs$;
+        const arglistRefs = $scriptletArglistRefs$.split(';');
+        for ( const i of todoIndices ) {
+            for ( const ref of JSON.parse(`[${arglistRefs[i]}]`) ) {
+                todo.add(ref);
+            }
         }
     }
 }
+
 if ( $hasRegexes$ ) {
     const $scriptletFromRegexes$ = self.$scriptletFromRegexes$;
     const { hns } = entries[0];
