@@ -188,7 +188,8 @@ export async function renderFilterLists() {
 
     const createListEntries = (parentkey, listTree, depth = 0) => {
         const treeEntries = Object.entries(listTree);
-        const listEntries = qs$(`#lists > .listEntries`) ||
+        const listEntries = qs$(`#lists .listEntry[data-nodeid="${parentkey}"] > .listEntries`) ||
+            qs$('#lists > .listEntries') ||
             nodeFromTemplate('listEntries', '.listEntries');
         if ( depth !== 0 ) {
             const reEmojis = /\p{Emoji}+/gu;
