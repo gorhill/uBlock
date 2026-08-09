@@ -21,6 +21,9 @@ h3 {
 a {
     text-decoration: none;
     }
+details {
+    cursor: pointer;
+    }
 
 .fa-icon.info {
     color: var(--info0-ink);
