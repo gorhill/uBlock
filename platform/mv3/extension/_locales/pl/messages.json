@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Aby wymusić filtry kosmetyczne lub skryptletów z importowanych list, musisz przyznać uBO Lite uprawnienia do uruchamiania skryptów użytkownika. Otwórz stronę rozszerzeń przeglądarki (<code>chrome://extensions</code> w Chrome lub <code>about:addons</code> w Firefoksie), otwórz szczegóły <b>uBO Lite</b> i włącz opcję <b>Zezwalaj na skrypty użytkownika</b> (nazywane również „niezweryfikowanymi skryptami zewnętrzymi”).",
+    "message": "Otwórz stronę rozszerzeń przeglądarki (<code>chrome://extensions</code> w Chrome lub <code>about:addons</code> w Firefoksie), otwórz szczegóły <b>uBO Lite</b> i włącz opcję <b>Zezwalaj na skrypty użytkownika</b> (nazywane również „niezweryfikowanymi skryptami zewnętrzymi”).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

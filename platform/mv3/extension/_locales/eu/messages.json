@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Inportatutako zerrendetako iragazki kosmetiko edo scriptlet-ak betearazteko, baimena eman behar diozu uBO Lite-ri erabiltzaile-scriptak exekutatzeko. Ireki zure nabigatzailearen luzapenen orria (<code>chrome://extensions</code> Chrome-n edo <code>about:addons</code> Firefox-en), ireki <b>uBO Lite</b>-ren xehetasunak, eta aktibatu <b>Onartu erabiltzaile-scriptak</b> (“egiaztatu gabeko hirugarrenen scriptak” ere deitua).",
+    "message": "Ireki zure nabigatzailearen luzapenen orria (<code>chrome://extensions</code> Chrome-n edo <code>about:addons</code> Firefox-en), ireki <b>uBO Lite</b>-ren xehetasunak, eta aktibatu <b>Onartu erabiltzaile-scriptak</b> (“egiaztatu gabeko hirugarrenen scriptak” ere deitua).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "За да приложите козметични филтри или филтри за скриптове от импортирани списъци, трябва да предоставите на uBO Lite разрешение да изпълнява потребителски скриптове. Отворете страницата с разширенията на браузъра си (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> във Firefox), отворете подробностите за <b>uBO Lite</b> и активирайте опцията <b>Разрешаване на потребителски скриптове</b> (наричани още „непроверени скриптове от трети страни“).",
+    "message": "Отворете страницата с разширенията на браузъра си (<code>chrome://extensions</code> в Chrome или <code>about:addons</code> във Firefox), отворете подробностите за <b>uBO Lite</b> и активирайте опцията <b>Разрешаване на потребителски скриптове</b> (наричани още „непроверени скриптове от трети страни“).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

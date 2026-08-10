@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Da biste primijenili kozmetičke ili skriptlet filtere iz uvezenih popisa, morate dati uBO Liteu dopuštenje za pokretanje korisničkih skripti. Otvorite stranicu s proširenjima preglednika (<code>chrome://extensions</code> u Chromeu ili <code>about:addons</code> u Firefoxu), otvorite detalje o <b>uBO Liteu</b> i uključite <b>Dopusti korisničke skripte</b> (također se nazivaju \"nepotvrđene skripte trećih strana\").",
+    "message": "Otvorite stranicu s proširenjima preglednika (<code>chrome://extensions</code> u Chromeu ili <code>about:addons</code> u Firefoxu), otvorite detalje o <b>uBO Liteu</b> i uključite <b>Dopusti korisničke skripte</b> (također se nazivaju \"nepotvrđene skripte trećih strana\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

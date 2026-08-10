@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Per a aplicar filtres cosmètics o de scripts mitjançant llistes importades, doneu permís a l'uBO Lite d'execució de scripts d'usuari. Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> al Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenats «scripts de tercers no verificats»).",
+    "message": "Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> al Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenats «scripts de tercers no verificats»).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

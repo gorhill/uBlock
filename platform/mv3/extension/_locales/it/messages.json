@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Per applicare i filtri cosmetici o gli scriptlet provenienti da elenchi importati, è necessario concedere a uBO Lite l'autorizzazione a eseguire gli script utente. Apri la pagina delle estensioni del tuo browser (<code>chrome://extensions</code> su Chrome o <code>about:addons</code> su Firefox), apri i dettagli di <b>uBO Lite</b> e attiva l'opzione <b>Consenti script utente</b> (nota anche come \"script di terze parti non verificati\").",
+    "message": "Apri la pagina delle estensioni del tuo browser (<code>chrome://extensions</code> su Chrome o <code>about:addons</code> su Firefox), apri i dettagli di <b>uBO Lite</b> e attiva l'opzione <b>Consenti script utente</b> (nota anche come \"script di terze parti non verificati\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

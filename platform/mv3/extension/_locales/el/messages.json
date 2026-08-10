@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Για να επιβάλετε φίλτρα εμφάνισης ή scriptlet από εισαγόμενες λίστες, πρέπει να παραχωρήσετε στο uBO Lite το δικαίωμα εκτέλεσης user scripts. Ανοίξτε τη σελίδα επεκτάσεων του προγράμματος περιήγησής σας (<code>chrome://extensions</code> στο Chrome ή <code>about:addons</code> στον Firefox), ανοίξτε τις λεπτομέρειες του <b>uBO Lite</b> και ενεργοποιήστε την επιλογή <b>Να επιτρέπονται τα user scripts</b> (γνωστά και ως «μη επαληθευμένα σενάρια τρίτων»).",
+    "message": "Ανοίξτε τη σελίδα επεκτάσεων του προγράμματος περιήγησής σας (<code>chrome://extensions</code> στο Chrome ή <code>about:addons</code> στον Firefox), ανοίξτε τις λεπτομέρειες του <b>uBO Lite</b> και ενεργοποιήστε την επιλογή <b>Να επιτρέπονται τα user scripts</b> (γνωστά και ως «μη επαληθευμένα σενάρια τρίτων»).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {

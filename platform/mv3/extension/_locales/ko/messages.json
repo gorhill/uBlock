@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "가져온 목록에서 요소 숨김 또는 스크립트 주입 필터를 적용하려면, uBO Lite에 사용자 스크립트 실행 권한을 허용해야 합니다. 브라우저의 확장 프로그램 페이지(Chrome <code>chrome://extensions</code>, Firefox는 <code>about:addons</code>)를 열고, <b>uBO Lite</b> 세부 정보를 연 뒤, <b>사용자 스크립트 허용</b>(혹은 \"검증되지 않은 타사 스크립트 허용\")을 활성화하세요.",
+    "message": "브라우저의 확장 프로그램 페이지(Chrome <code>chrome://extensions</code>, Firefox는 <code>about:addons</code>)를 열고, <b>uBO Lite</b> 세부 정보를 연 뒤, <b>사용자 스크립트 허용</b>(혹은 \"검증되지 않은 타사 스크립트 허용\")을 활성화하세요.",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
