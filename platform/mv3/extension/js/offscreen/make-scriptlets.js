@@ -32,7 +32,7 @@ const worldTemplate = {
     scriptletFunctions: new Map(),
     allFunctions: new Map(),
     args: new Map(),
-    arglists: new Map(),
+    arglists: new Map([['',0]]),
     hostnames: new Map(),
     regexesOrPaths: new Map(),
     matches: new Set(),
@@ -64,6 +64,29 @@ function createScriptletCoreCode(worldDetails, resourceEntry) {
 
 /******************************************************************************/
 
+function compileBroadExclusion(details) {
+    if ( Boolean(details.excludeMatches?.length) === false ) { return; }
+    for ( const worldDetails of Object.values(worlds) ) {
+        for ( const hn of details.excludeMatches ) {
+            if ( isHnRegexOrPath(hn) ) {
+                const refs = worldDetails.regexesOrPaths.get(hn) ?? new Set();
+                if ( refs.size === 0 ) {
+                    worldDetails.regexesOrPaths.set(hn, refs);
+                }
+                refs.add(0);
+                continue;
+            }
+            const refs = worldDetails.hostnames.get(hn) ?? new Set();
+            if ( refs.size === 0 ) {
+                worldDetails.hostnames.set(hn, refs);
+            }
+            refs.add(0);
+        }
+    }
+}
+
+/******************************************************************************/
+
 export function reset() {
     worlds.ISOLATED = structuredClone(worldTemplate);
     worlds.MAIN = structuredClone(worldTemplate);
@@ -72,6 +95,9 @@ export function reset() {
 /******************************************************************************/
 
 export function compile(rulesetId, details) {
+    if ( details.args.length === 0 ) {
+        return compileBroadExclusion(details);
+    }
     if ( details.args[0].endsWith('.js') === false ) {
         details.args[0] += '.js';
     }

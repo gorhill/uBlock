@@ -162,7 +162,7 @@ if ( $hasRegexes$ ) {
 }
 
 // Execute scriptlets
-if ( todo.size ) {
+if ( todo.size && todo.has(0) === false ) {
     const $scriptletFunctions$ = self.$scriptletFunctions$;
     const $scriptletArgs$ = self.$scriptletArgs$;
     const $scriptletArglists$ = self.$scriptletArglists$;
