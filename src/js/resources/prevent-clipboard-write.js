@@ -113,7 +113,7 @@ function preventClipboardWrite(matches = '', ...varargs) {
             const { callArgs } = context;
             if ( callArgs[0] === 'copy' || callArgs[0] === 'cut' ) {
                 const text = document.getSelection()?.toString();
-                if ( text && prevent(text) ) { return false; }
+                if ( prevent(text) ) { return true; }
             }
             return context.reflect();
         }, { skipToString: true });
