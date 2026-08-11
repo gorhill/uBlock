@@ -1830,7 +1830,7 @@ function trustedReplaceOutboundText(
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, rawPattern, rawReplacement, ...args);
+    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, rawPattern, rawReplacement, ...varargs);
     const rePattern = safe.patternToRegex(rawPattern);
     const replacement = rawReplacement.startsWith('json:')
         ? safe.JSON_parse(rawReplacement.slice(5))
