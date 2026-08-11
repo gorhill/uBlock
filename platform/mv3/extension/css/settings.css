@@ -370,7 +370,6 @@ section[data-pane="filters"] aside details {
     padding: 1em 0;
     }
 section[data-pane="filters"] aside summary {
-    cursor: default;
     line-height: 2;
     }
 section[data-pane="filters"] aside .importFromText {
