@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Документация",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -356,7 +356,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Влизане в режима на временно скриване на елемента",
+    "message": "Премахване на елемент",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
