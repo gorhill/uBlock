@@ -35,7 +35,7 @@
         a.slice(i).join('.')
     );
 
-    const hostnameSearch = (hostnames, targets) => {
+    const hostnameSearch = hostnames => {
         let l = 0, i = 0, d = 0;
         let r = hostnames.length;
         let candidate;
@@ -59,28 +59,33 @@
         return -1;
     };
 
-    const regexSearch = (regexes, target) => {
+    const regexSearch = regexes => {
         for ( let i = 0; i < regexes.length; i += 2 ) {
-            const key = regexes[i+0];
-            if ( target.includes(key.slice(1)) === false ) { continue; }
-            const re = new RegExp(regexes[i+1], key.charAt(0).trimEnd());
-            if ( re.test(target) ) { return i; }
+            if ( href.includes(regexes[i+0]) === false ) { continue; }
+            const entries = JSON.parse(regexes[i+1]);
+            for ( const entry of entries ) {
+                if ( entry.xto && hostnameSearch(entry.xto) ) { continue; }
+                if ( entry.to && hostnameSearch(entry.to) === -1 ) { continue; }
+                const re = new RegExp(entry.re, entry.f);
+                if ( re.test(href) === false ) { continue; }
+                return i;
+            }
         }
         return -1;
     }
 
     let shouldClose = false;
     for ( const { block } of preventPopupDetails ) {
-        if ( hostnameSearch(block.hostnames, targets) === -1 ) {
-            if ( regexSearch(block.regexes, href) === -1 ) { continue; }
+        if ( hostnameSearch(block.hostnames) === -1 ) {
+            if ( regexSearch(block.regexes) === -1 ) { continue; }
         }
         shouldClose = true;
         break;
     }
     if ( shouldClose === false ) { return; }
     for ( const { allow } of preventPopupDetails ) {
-        if ( hostnameSearch(allow.hostnames, targets) === -1 ) {
-            if ( regexSearch(allow.regexes, href) === -1 ) { continue; }
+        if ( hostnameSearch(allow.hostnames) === -1 ) {
+            if ( regexSearch(allow.regexes) === -1 ) { continue; }
         }
         shouldClose = false;
         break;

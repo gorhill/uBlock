@@ -911,11 +911,17 @@ async function processPopupRules(assetDetails, popupRules) {
             }
             if ( re === undefined ) { return data; }
             const token = literalStrFromRegex(re).slice(0, 7);
-            const key = `${isUrlFilterCaseSensitive ? ' ' : 'i'}${token}`;
-            if ( realm.regexes.has(key) ) {
-                realm.regexes.set(key, `${realm.regexes.get(key)}|${re}`);
-            } else {
-                realm.regexes.set(key, re);
+            const details = realm.regexes.get(token) ?? { token, rules: [] };
+            if ( details.rules.length === 0 ) {
+                realm.regexes.set(token, details)
+            }
+            const entry = { re, f: isUrlFilterCaseSensitive ? '' : 'i' };
+            details.rules.push(entry);
+            if ( condition.requestDomains ) {
+                entry.to = condition.requestDomains.sort(hostnameCompare);
+            }
+            if ( condition.excludedRequestDomains ) {
+                entry.xto = condition.excludedRequestDomains.sort(hostnameCompare);
             }
             return data;
         }
@@ -949,9 +955,13 @@ async function processPopupRules(assetDetails, popupRules) {
     const count = data.block.hostnames.length + data.block.regexes.size;
     if ( count === 0 ) { return; }
     data.block.hostnames = data.block.hostnames.toSorted(hostnameCompare);
-    data.block.regexes = Array.from(data.block.regexes).flat();
+    data.block.regexes = Array.from(data.block.regexes.values()).map(a =>
+        [ a.token, JSON.stringify(a.rules) ]
+    ).flat();
     data.allow.hostnames = data.allow.hostnames.toSorted(hostnameCompare);
-    data.allow.regexes = Array.from(data.allow.regexes).flat();
+    data.allow.regexes = Array.from(data.allow.regexes.values()).map(a =>
+        [ a.token, JSON.stringify(a.rules) ]
+    ).flat();
     const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get(`prevent-popup`);
     patchedScriptlet = safeReplace(patchedScriptlet,
