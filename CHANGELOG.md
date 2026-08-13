@@ -1,3 +1,4 @@
+- [Add procedural operator `content(...)`, to lookup elements inside `template` tags](https://github.com/gorhill/uBlock/commit/25d413803d)
 - [Improve `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/8a85e04907)
 - [Improve `json-edit` scriptlet](https://github.com/gorhill/uBlock/commit/0fdbfdb2b5)
 - [Revisit scriptlets' `getExtraArgs` implementation](https://github.com/gorhill/uBlock/commit/505fbc7a75)
