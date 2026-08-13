@@ -70,7 +70,7 @@ class PSelectorContentTask extends PSelectorTask {
     }
     transpose(node, output) {
         const root = node.content;
-        if ( root?.querySelectorAll !== 'function' ) { return; }
+        if ( typeof root?.querySelectorAll !== 'function' ) { return; }
         const nodes = root.querySelectorAll(this.selector);
         output.push(...nodes);
     }
