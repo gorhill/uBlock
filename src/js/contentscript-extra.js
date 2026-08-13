@@ -63,6 +63,19 @@ class PSelectorVoidTask extends PSelectorTask {
     }
 }
 
+class PSelectorContentTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.selector = task[1];
+    }
+    transpose(node, output) {
+        const root = node.content;
+        if ( root?.querySelectorAll !== 'function' ) { return; }
+        const nodes = root.querySelectorAll(this.selector);
+        output.push(...nodes);
+    }
+}
+
 class PSelectorHasTextTask extends PSelectorTask {
     constructor(task) {
         super();
@@ -280,6 +293,7 @@ class PSelectorShadowTask extends PSelectorTask {
         if ( PSelectorShadowTask.openOrClosedShadowRoot !== undefined ) {
             return PSelectorShadowTask.openOrClosedShadowRoot;
         }
+        const { chrome }  = self;
         if ( typeof chrome === 'object' && chrome !== null ) {
             if ( chrome.dom instanceof Object ) {
                 if ( typeof chrome.dom.openOrClosedShadowRoot === 'function' ) {
@@ -476,6 +490,7 @@ class PSelector {
     }
 }
 PSelector.prototype.operatorToTaskMap = new Map([
+    [ 'content', PSelectorContentTask ],
     [ 'has', PSelectorIfTask ],
     [ 'has-text', PSelectorHasTextTask ],
     [ 'if', PSelectorIfTask ],
