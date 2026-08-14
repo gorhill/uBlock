@@ -36,15 +36,14 @@ jobs:
           sed -e 's/%version%/${{ env.VERSION }}/g' .github/workflows/RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
-        uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          tag_name: ${{ env.VERSION }}
-          name: ${{ env.VERSION }}
-          draft: true
-          prerelease: true
-          body_path: release.body.txt
-          files: |
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ env.VERSION }} \
+            --title "${{ env.VERSION }}" \
+            --prerelease \
+            --draft \
+            --notes-file release_body.txt
+          gh release upload ${{ env.VERSION }} \
             dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
