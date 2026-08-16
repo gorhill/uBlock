@@ -894,6 +894,7 @@ async function processPopupRules(assetDetails, popupRules) {
         const { condition }  = rule;
         if ( condition.domainType ) { return data; }
         if ( condition.initiatorDomains ) { return data; }
+        if ( condition.excludedInitiatorDomains ) { return data; }
         const { type } = rule.action;
         if ( type !== 'block' && type !== 'allow' ) { return data; }
         const realm = type === 'block' ? data.block : data.allow;
