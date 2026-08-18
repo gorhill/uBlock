@@ -142,9 +142,9 @@ function mergeDomains(rules, includeProp, excludeProp) {
             out.push(rule);
             continue;
         }
-        const includes = new Set(rule.condition[includeProp]);
+        const includes = rule.condition[includeProp] ?? [];
         rule.condition[includeProp] = undefined;
-        const excludes = new Set(rule.condition[excludeProp]);
+        const excludes = rule.condition[excludeProp] ?? [];
         rule.condition[excludeProp] = undefined;
         rule.id = undefined;
         const hash = JSON.stringify(rule, propertySorter);
@@ -153,31 +153,34 @@ function mergeDomains(rules, includeProp, excludeProp) {
             details.initialized = true;
             distinctRules.set(hash, details);
         }
-        if ( includes.size === 0 ) {
-            details.includes = includes;
+        if ( includes.length === 0 ) {
+            details.includes = [];
         } else if ( details.includes === undefined ) {
             details.includes = includes;
-        } else if ( details.includes.size ) {
-            details.includes = details.includes.union(includes);
+        } else if ( details.includes.length ) {
+            for ( const hn of includes ) {
+                details.includes.push(hn);
+            }
         }
-        if ( excludes.size ) {
-            details.excludes ??= new Set();
-            details.excludes = details.excludes.union(excludes);
+        if ( excludes.length ) {
+            if ( details.excludes === undefined ) {
+                details.excludes = excludes;
+            } else {
+                for ( const hn of excludes ) {
+                    details.excludes.push(hn);
+                }
+            }
         }
     }
     for ( const [ hash, details ] of distinctRules ) {
         const rule = JSON.parse(hash);
         rule.id = details.id;
-        if ( details.includes?.size ) {
-            rule.condition[includeProp] = Array.from(details.includes);
-        }
-        if ( details.excludes?.size ) {
-            rule.condition[excludeProp] = Array.from(details.excludes);
-        }
-        if ( rule.condition[includeProp] ) {
+        if ( details.includes?.length ) {
+            rule.condition[includeProp] = Array.from(new Set(details.includes));
             rule.condition[includeProp].sort();
         }
-        if ( rule.condition[excludeProp] ) {
+        if ( details.excludes?.length ) {
+            rule.condition[excludeProp] = Array.from(new Set(details.excludes));
             rule.condition[excludeProp].sort();
         }
         out.push(rule);
