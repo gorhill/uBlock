@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Atenção! Tem alterações não guardadas",
+    "message": "Atenção: tem alterações não guardadas!",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -332,7 +332,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Cores amigáveis para daltónicos",
+    "message": "Cores adequadas para daltónicos",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -364,7 +364,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Impedir o WebRTC de vazar endereços IP locais",
+    "message": "Impedir fugas de endereços IP locais através do WebRTC",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Funcionalidades adequadas apenas para utilizadores avançados",
+    "message": "Funcionalidades adequadas apenas para utilizadores técnicos",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Proteção contra malware, segurança",
+    "message": "Proteção contra malware e segurança",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -836,7 +836,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "O filtro estático não pôde ser encontrado em quaisquer das listas de filtros ativadas atualmente",
+    "message": "Não foi possível encontrar o filtro estático em nenhuma das listas de filtros atualmente ativadas",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -848,7 +848,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preservar no máximo {{input}} carregamentos de página por separador",
+    "message": "Preservar no máximo {{input}} recargas de página por separador",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudar-lhe a resolver um problema.",
+    "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudá-lo a resolver um problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -968,7 +968,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verifique se o problema ainda existe após o recarregamento da página web problemática.",
+    "message": "Verifique se o problema persiste após recarregar a página web problemática.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1008,7 +1008,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leva a badware e phishing",
+    "message": "Leva a badware e/ou phishing",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1024,7 +1024,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "Código fonte (GPLv3)",
+    "message": "Código-fonte (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -1032,7 +1032,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Código fonte",
+    "message": "Código-fonte",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -1076,7 +1076,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Os dados não puderam ser lidos ou são inválidos",
+    "message": "Não foi possível ler os dados ou estes são inválidos",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
@@ -1144,7 +1144,7 @@
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Encontrado em:",
+    "message": "O filtro foi encontrado em:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Ver código fonte…",
+    "message": "Ver código-fonte…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1256,7 +1256,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Alternar deslocamento bloqueado",
+    "message": "Alternar bloqueio da deslocação",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1304,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Não foi possível filtrar adequadamente no arranque do navegador. Recarregue a página para assegurar uma filtragem adequada.",
+    "message": "Não foi possível filtrar corretamente no arranque do navegador. Recarregue a página para assegurar uma filtragem adequada.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

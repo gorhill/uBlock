@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "Chcete-li použít filtry vzhledu nebo skriptové filtry z importovaných seznamů, musíte uBO Lite udělit oprávnění ke spouštění uživatelských skriptů.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -116,7 +116,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Chcete-li použít filtry vzhledu nebo skriptů z importovaných seznamů, musíte aplikaci uBO Lite udělit oprávnění ke spouštění uživatelských skriptů. Otevřete stránku rozšíření ve svém prohlížeči (<code>chrome://extensions</code> v prohlížeči Chrome nebo <code>about:addons</code> v prohlížeči Firefox), otevřete podrobnosti <b>uBO Lite</b> a zapněte volbu <b>Povolit uživatelské skripty</b> (také označované jako \"neověřené skripty třetích stran\").",
+    "message": "Otevřete stránku s rozšířeními ve svém prohlížeči (<code>chrome://extensions</code> v prohlížeči Chrome nebo <code>about:addons</code> v prohlížeči Firefox), otevřete podrobnosti o rozšíření <b>uBO Lite</b> a zapněte volbu <b>Povolit uživatelské skripty</b> (také označované jako \"neověřené skripty třetích stran\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -292,7 +292,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "Chcete-li v sandboxu aktivovat filtry vzhledu nebo skriptové filtry, musíte uBO Lite udělit oprávnění ke spouštění uživatelských skriptů.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {

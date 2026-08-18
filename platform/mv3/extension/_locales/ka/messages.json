@@ -104,7 +104,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "გარეგნული ან სკრიპტული ფილტრების იძულებით ამოქმედებისთვის შემოტანილი სიებიდან, uBO Lite საჭიროებს მომხმარებლის სკრიპტების გაშვების ნებართვებს.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -292,7 +292,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "გარეგნული ან სკრიპტული ფილტრების იძულებით ამოქმედებისთვის განცაკლევებული გარემოდან, uBO Lite საჭიროებს მომხმარებლის სკრიპტების გაშვების ნებართვებს.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {
