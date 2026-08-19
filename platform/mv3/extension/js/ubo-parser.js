@@ -142,9 +142,9 @@ function mergeDomains(rules, includeProp, excludeProp) {
             out.push(rule);
             continue;
         }
-        const includes = rule.condition[includeProp] ?? [];
+        const includes = rule.condition[includeProp];
         rule.condition[includeProp] = undefined;
-        const excludes = rule.condition[excludeProp] ?? [];
+        const excludes = rule.condition[excludeProp];
         rule.condition[excludeProp] = undefined;
         rule.id = undefined;
         const hash = JSON.stringify(rule, propertySorter);
@@ -153,7 +153,7 @@ function mergeDomains(rules, includeProp, excludeProp) {
             details.initialized = true;
             distinctRules.set(hash, details);
         }
-        if ( includes.length === 0 ) {
+        if ( Boolean(includes?.length) === false ) {
             details.includes = [];
         } else if ( details.includes === undefined ) {
             details.includes = includes;
@@ -162,7 +162,7 @@ function mergeDomains(rules, includeProp, excludeProp) {
                 details.includes.push(hn);
             }
         }
-        if ( excludes.length ) {
+        if ( excludes?.length ) {
             if ( details.excludes === undefined ) {
                 details.excludes = excludes;
             } else {
@@ -176,12 +176,10 @@ function mergeDomains(rules, includeProp, excludeProp) {
         const rule = JSON.parse(hash);
         rule.id = details.id;
         if ( details.includes?.length ) {
-            rule.condition[includeProp] = Array.from(new Set(details.includes));
-            rule.condition[includeProp].sort();
+            rule.condition[includeProp] = Array.from(new Set(details.includes)).sort();
         }
         if ( details.excludes?.length ) {
-            rule.condition[excludeProp] = Array.from(new Set(details.excludes));
-            rule.condition[excludeProp].sort();
+            rule.condition[excludeProp] = Array.from(new Set(details.excludes)).sort();
         }
         out.push(rule);
     }
@@ -200,13 +198,13 @@ function mergeArrays(rules, propertyPath, emptyIsAll = false) {
             out.push(rule);
             continue;
         }
-        if ( Array.isArray(owner[prop]) === false || owner[prop].length === 0 ) {
+        const collection = owner[prop];
+        if ( Array.isArray(collection) === false || collection.length === 0 ) {
             if ( emptyIsAll === false ) {
                 out.push(rule);
                 continue;
             }
         }
-        const collection = new Set(owner[prop]);
         owner[prop] = undefined;
         rule.id = undefined;
         const hash = JSON.stringify(rule, propertySorter);
@@ -215,12 +213,14 @@ function mergeArrays(rules, propertyPath, emptyIsAll = false) {
             details.initialized = true;
             distinctRules.set(hash, details);
         }
-        if ( collection.size === 0 ) {
-            details.collection = collection;
+        if ( Boolean(collection?.length) === false ) {
+            details.collection = [];
         } else if ( details.collection === undefined ) {
             details.collection = collection;
-        } else if ( details.collection.size ) {
-            details.collection = details.collection.union(collection);
+        } else if ( details.collection.length ) {
+            for ( const v of collection ) {
+                details.collection.push(v);
+            }
         }
     }
     for ( const [ hash, { id, collection } ] of distinctRules ) {
@@ -228,9 +228,9 @@ function mergeArrays(rules, propertyPath, emptyIsAll = false) {
         if ( id ) {
             rule.id = id;
         }
-        if ( collection.size !== 0 ) {
+        if ( collection?.length ) {
             const { owner, prop } = ownerFromPropertyPath(rule, propertyPath);
-            owner[prop] = Array.from(collection).sort();
+            owner[prop] = Array.from(new Set(collection)).sort();
         }
         out.push(rule);
     }
