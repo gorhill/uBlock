@@ -631,6 +631,8 @@ async function start() {
         if ( area !== undefined && area !== 'local' ) { return; }
         if ( Object.keys(changes).some(a => a.startsWith('site.')) ) {
             debounceRenderCustomFilters();
+        } else if ( changes.sandboxFilters ) {
+            startsSandboxEditor.editor.loadContent();
         }
     });
 

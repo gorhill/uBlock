@@ -37,12 +37,21 @@ export async function backupToObject(currentConfig) {
     const out = {};
     const manifest = runtime.getManifest();
     out.version = manifest.versionName ?? manifest.version;
-    const defaultConfig = await sendMessage({ what: 'getDefaultConfig' });
+    const [
+        defaultConfig,
+        sandboxFilters,
+    ] = await Promise.all([
+        sendMessage({ what: 'getDefaultConfig' }),
+        sendMessage({ what: 'getSandboxFilters' }).then(a => a?.trim() ?? ''),
+    ]);
     if ( currentConfig.autoReload !== defaultConfig.autoReload ) {
         out.autoReload = currentConfig.autoReload;
     }
     if ( currentConfig.developerMode !== defaultConfig.developerMode ) {
         out.developerMode = currentConfig.developerMode;
+    }
+    if ( currentConfig.popupBlockMode !== defaultConfig.popupBlockMode ) {
+        out.popupBlockMode = currentConfig.popupBlockMode;
     }
     if ( currentConfig.showBlockedCount !== defaultConfig.showBlockedCount ) {
         out.showBlockedCount = currentConfig.showBlockedCount;
@@ -67,6 +76,9 @@ export async function backupToObject(currentConfig) {
     const customFilters = await sendMessage({ what: 'getAllCustomFilters' });
     if ( customFilters.length !== 0 ) {
         out.customFilters = customFilters;
+    }
+    if ( sandboxFilters !== '' ) {
+        out.sandboxFilters = sandboxFilters.split('\n');
     }
     const dnrRules = await localRead('userDnrRules');
     if ( typeof dnrRules === 'string' && dnrRules.length !== 0 ) {
@@ -98,6 +110,11 @@ export async function restoreFromObject(targetConfig) {
     await sendMessage({
         what: 'setStrictBlockMode',
         state: targetConfig.strictBlockMode ?? defaultConfig.strictBlockMode
+    });
+
+    await sendMessage({
+        what: 'setPopupBlockMode',
+        state: targetConfig.popupBlockMode ?? defaultConfig.popupBlockMode
     });
 
     const enabledRulesets = defaultConfig.rulesets;
@@ -166,6 +183,11 @@ export async function restoreFromObject(targetConfig) {
             entries: customFilters,
         });
     }
+
+    await sendMessage({
+        what: 'setSandboxFilters',
+        text: targetConfig.sandboxFilters?.join('\n') ?? '',
+    });
 
     const dnrRules = targetConfig.dnrRules ?? [];
     if ( dnrRules.length !== 0 ) {
