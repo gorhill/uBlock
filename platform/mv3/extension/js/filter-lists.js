@@ -117,7 +117,10 @@ function isAdminRuleset(listkey) {
 
 /******************************************************************************/
 
-export async function renderFilterLists() {
+export async function renderFilterLists(incremental = false) {
+    if ( incremental && renderFilterLists.visible !== true ) { return; }
+    renderFilterLists.visible = true;
+
     const [
         enabledRulesets,
         rulesetDetails,
@@ -136,6 +139,7 @@ export async function renderFilterLists() {
     });
 
     const listStatsTemplate = i18n$('perRulesetStats');
+    const beforeListEntries = new Set(qsa$('#lists .listEntry:not([data-role="root"])'));
 
     const initializeListEntry = (ruleset, listEntry) => {
         const on = enabledRulesets.includes(ruleset.id);
@@ -204,6 +208,7 @@ export async function renderFilterLists() {
         }
         for ( const [ listid, listDetails ] of treeEntries ) {
             const listEntry = createListEntry(listid, listDetails, depth);
+            beforeListEntries.delete(listEntry);
             const newEntry = listEntry.parentElement === null;
             if ( listDetails.lists === undefined ) {
                 listEntry.dataset.rulesetid = listid;
@@ -323,6 +328,9 @@ export async function renderFilterLists() {
         promoteLonelySublist(listTree[key]);
     }
     const listEntries = createListEntries('root', listTree);
+    for ( const listEntry of beforeListEntries ) {
+        listEntry.remove();
+    }
 
     updateNodes(listEntries);
 

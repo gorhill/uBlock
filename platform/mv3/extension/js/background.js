@@ -238,21 +238,22 @@ async function applyRulesets(rulesets) {
     const result = await enableRulesets(rulesets);
     const stockUpdated = result.stockUpdated ?? false;
     const importedUpdated = result.importedUpdated ?? false;
-    if ( (stockUpdated || importedUpdated) === false ) { return; }
-    rulesetConfig.enabledRulesets = result.enabledRulesets;
-    await saveRulesetConfig();
-    const promises = [];
-    if ( importedUpdated ) {
-        promises.push(
-            updateCompiledFilters().then(( ) =>
-                Promise.all([ registerUserScripts(), updateUserRules() ])
-            )
-        );
+    if ( stockUpdated || importedUpdated ) {
+        rulesetConfig.enabledRulesets = result.enabledRulesets;
+        await saveRulesetConfig();
+        const promises = [];
+        if ( importedUpdated ) {
+            promises.push(
+                updateCompiledFilters().then(( ) =>
+                    Promise.all([ registerUserScripts(), updateUserRules() ])
+                )
+            );
+        }
+        if ( stockUpdated ) {
+            promises.push(registerContentScripts());
+        }
+        await Promise.all(promises);
     }
-    if ( stockUpdated ) {
-        promises.push(registerContentScripts());
-    }
-    await Promise.all(promises);
     broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
 }
 
