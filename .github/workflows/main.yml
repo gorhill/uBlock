@@ -45,5 +45,5 @@ jobs:
             --draft \
             --notes-file release.body.txt
           gh release upload ${{ env.VERSION }} \
-            dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
+            dist/build/uBlock0_${{ env.VERSION }}.chromium.zip \
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
