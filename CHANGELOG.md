@@ -1,3 +1,7 @@
+- [Remove support for `cap_user_stylesheet`](https://github.com/gorhill/uBlock/commit/fb09b0947d)
+- [Improve scriptlets framework](https://github.com/gorhill/uBlock/commit/57ade5f484)
+- [Add `env_brave` preparser token](https://github.com/gorhill/uBlock/commit/0c56103a40) (by @ryanbr)
+- [Add set/unset/given cookie values](https://github.com/gorhill/uBlock/commit/a796fd7daf) (by @ryanbr)
 - [Add procedural operator `content(...)`, to lookup elements inside `template` tags](https://github.com/gorhill/uBlock/commit/25d413803d)
 - [Improve `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/8a85e04907)
 - [Improve `json-edit` scriptlet](https://github.com/gorhill/uBlock/commit/0fdbfdb2b5)
