@@ -82,7 +82,6 @@ const env = [
     'mv3',
     'ublock',
     'ubol',
-    'user_stylesheet',
     ...envExtra,
 ];
 

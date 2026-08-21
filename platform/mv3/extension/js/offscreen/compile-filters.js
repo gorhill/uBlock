@@ -327,7 +327,6 @@ async function updateList(list) {
             'mv3',
             'ublock',
             'ubol',
-            'user_stylesheet',
         ],
     };
     const asset = { urls: [ list.id ] };

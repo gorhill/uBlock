@@ -186,15 +186,13 @@ vAPI.webextFlavor = {
     flavor.isGecko = extensionOrigin.startsWith('moz-extension://');
     if ( flavor.isGecko ) {
         soup.add('firefox')
-            .add('user_stylesheet')
             .add('html_filtering');
         const match = /Firefox\/(\d+)/.exec(ua);
         flavor.major = match && parseInt(match[1], 10) || 115;
     } else {
         const match = /\bChrom(?:e|ium)\/(\d+)/.exec(ua);
         if ( match !== null ) {
-            soup.add('chromium')
-                .add('user_stylesheet');
+            soup.add('chromium');
         }
         flavor.major = match && parseInt(match[1], 10) || 120;
         // Brave can't be told apart through the user agent string, which is
