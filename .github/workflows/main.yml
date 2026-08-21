@@ -43,7 +43,7 @@ jobs:
             --title "${{ env.VERSION }}" \
             --prerelease \
             --draft \
-            --notes-file release_body.txt
+            --notes-file release.body.txt
           gh release upload ${{ env.VERSION }} \
             dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
