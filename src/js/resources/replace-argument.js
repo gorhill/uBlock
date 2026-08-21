@@ -109,7 +109,7 @@ export function trustedReplaceArgument(
         }
         const argBefore = getArg(context);
         if ( extraArgs.condition !== undefined ) {
-            if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
+            if ( safe.RegExp_test(reCondition, argBefore) === false ) {
                 return context.reflect();
             }
         }
