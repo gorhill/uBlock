@@ -424,13 +424,13 @@
     "id": "kor-1",
     "group": "regions",
     "lang": "ko",
-    "name": "🇰🇷kr: List-KR Classic",
+    "name": "🇰🇷kr: 한국어 (Korean)",
     "tags": "ads korean 한국어",
     "enabled": false,
     "urls": [
-      "https://cdn.jsdelivr.net/npm/@list-kr/filterslists@latest/dist/filterslist-uBlockOrigin-classic.txt"
+      "https://cdn.jsdelivr.net/npm/@filteringdev/filterslists-ko@latest/dist/filterslist-uBlockOrigin-classic.txt"
     ],
-    "homeURL": "https://github.com/List-KR/List-KR#readme"
+    "homeURL": "https://github.com/FilteringDev/filterslists-KO#filteringdevfilterslists-ko"
   },
   {
     "id": "ltu-0",

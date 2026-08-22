@@ -754,11 +754,11 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇰🇷kr: List-KR Classic",
+		"title": "🇰🇷kr: 한국어 (Korean)",
 		"tags": "ads korean 한국어",
 		"lang": "ko",
-		"contentURL": "https://cdn.jsdelivr.net/npm/@list-kr/filterslists@latest/dist/filterslist-uBlockOrigin-classic.txt",
-		"supportURL": "https://github.com/List-KR/List-KR#readme"
+		"contentURL": "https://cdn.jsdelivr.net/npm/@filteringdev/filterslists-ko@latest/dist/filterslist-uBlockOrigin-classic.txt",
+		"supportURL": "https://github.com/FilteringDev/filterslists-KO#filteringdevfilterslists-ko"
 	},
 	"LTU-0": {
 		"content": "filters",
