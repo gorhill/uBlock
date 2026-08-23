@@ -160,7 +160,8 @@ export class ScriptletFilteringEngine {
 
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
-            const prefix = ((isException ? 1 : 0) ^ (not ? 1 : 0)) ? '-' : '+';
+            if ( isException && not ) { continue; }
+            const prefix = isException || not ? '-' : '+';
             writer.push([ 32, hn, `${prefix}${normalized}` ]);
         }
     }

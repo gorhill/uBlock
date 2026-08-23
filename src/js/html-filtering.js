@@ -352,10 +352,11 @@ htmlFilteringEngine.compile = function(parser, writer) {
     let hasOnlyNegated = true;
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
-        const prefix = ((isException ? 1 : 0) ^ (not ? 1 : 0)) ? '-' : '+';
         if ( not === false ) {
             hasOnlyNegated = false;
         }
+        if ( isException && not ) { continue; }
+        const prefix = isException || not ? '-' : '+';
         compiledFilters.push([ 64, hn, `${prefix}${compiled}` ]);
     }
 

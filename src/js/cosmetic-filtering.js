@@ -312,13 +312,15 @@ CosmeticFilteringEngine.prototype.compile = function(parser, writer) {
     // https://github.com/chrisaljoudi/uBlock/issues/151
     //   Negated hostname means the filter applies to all non-negated hostnames
     //   of same filter OR globally if there is no non-negated hostnames.
+    const isException = parser.isException();
     let applyGlobally = true;
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not === false ) {
             applyGlobally = false;
         }
-        this.compileSpecificSelector(parser, hn, not, writer);
+        if ( isException && not ) { continue; }
+        this.compileSpecificSelector(parser, hn, isException || not, writer);
     }
     if ( applyGlobally ) {
         this.compileGenericSelector(parser, writer);
@@ -427,10 +429,10 @@ CosmeticFilteringEngine.prototype.compileGenericUnhideSelector = function(
 CosmeticFilteringEngine.prototype.compileSpecificSelector = function(
     parser,
     hostname,
-    not,
+    isException,
     writer
 ) {
-    const { raw, compiled, exception } = parser.result;
+    const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
         logger.writeOne({
@@ -442,7 +444,7 @@ CosmeticFilteringEngine.prototype.compileSpecificSelector = function(
     }
 
     writer.select('COSMETIC_FILTERS:SPECIFIC');
-    const prefix = ((exception ? 1 : 0) ^ (not ? 1 : 0)) ? '-' : '+';
+    const prefix = isException ? '-' : '+';
     writer.push([ 8, hostname, `${prefix}${compiled}` ]);
 };
 
