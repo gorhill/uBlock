@@ -106,7 +106,9 @@ publish-chromium:
 		ghrepo=uBlock \
 		ghtag=$(version) \
 		ghasset=chromium \
-		storeid=cjpalhdlnbpafiamejdnhcphjbkeiagm
+		storeid=cjpalhdlnbpafiamejdnhcphjbkeiagm \
+		crxupdatepath=dist/chromium/update.xml \
+		crxkeytoken=ubo_dev_key_path
 
 # Usage: make publish-edge version=?
 publish-edge:
