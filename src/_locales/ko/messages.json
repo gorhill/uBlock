@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "쿠키 공지",
+    "message": "쿠키 알림",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "업데이트 중...",
+    "message": "업데이트 중…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
