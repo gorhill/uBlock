@@ -45,6 +45,13 @@ const regexFromString = (s, exact = false) => {
     return new RegExp(exact ? `^${reStr}$` : reStr);
 };
 
+const triggerDOMChange = ( ) => {
+    if ( typeof vAPI !== 'object' ) { return; }
+    if ( vAPI === null ) { return; }
+    const filterer = vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
+    filterer?.onDOMChanged([ null ]);
+};
+
 // 'P' stands for 'Procedural'
 
 class PSelectorTask {
@@ -159,13 +166,7 @@ class PSelectorMatchesMediaTask extends PSelectorTask {
         super();
         this.mql = window.matchMedia(task[1]);
         if ( this.mql.media === 'not all' ) { return; }
-        this.mql.addEventListener('change', ( ) => {
-            if ( typeof vAPI !== 'object' ) { return; }
-            if ( vAPI === null ) { return; }
-            const filterer = vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
-            if ( filterer instanceof Object === false ) { return; }
-            filterer.onDOMChanged([ null ]);
-        });
+        this.mql.addEventListener('change', triggerDOMChange);
     }
     transpose(node, output) {
         if ( this.mql.matches === false ) { return; }
@@ -179,12 +180,16 @@ class PSelectorMatchesPathTask extends PSelectorTask {
         this.needle = regexFromString(
             task[1].replace(/\P{ASCII}/gu, s => encodeURIComponent(s))
         );
+        if ( PSelectorMatchesPathTask.#listener ) { return; }
+        PSelectorMatchesPathTask.#listener = true;
+        self.navigation.addEventListener('navigate', triggerDOMChange);
     }
     transpose(node, output) {
         if ( this.needle.test(self.location.pathname + self.location.search) ) {
             output.push(node);
         }
     }
+    static #listener;
 }
 
 class PSelectorMatchesPropTask extends PSelectorTask {
@@ -379,7 +384,6 @@ PSelectorUpwardTask.prototype.s = '';
 class PSelectorWatchAttrs extends PSelectorTask {
     constructor(task) {
         super();
-        this.observer = null;
         this.observed = new WeakSet();
         this.observerOptions = {
             attributes: true,
@@ -390,23 +394,16 @@ class PSelectorWatchAttrs extends PSelectorTask {
             this.observerOptions.attributeFilter = task[1];
         }
     }
-    // TODO: Is it worth trying to re-apply only the current selector?
-    handler() {
-        const filterer =
-            vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
-        if ( filterer instanceof Object ) {
-            filterer.onDOMChanged([ null ]);
-        }
-    }
     transpose(node, output) {
         output.push(node);
         if ( this.observed.has(node) ) { return; }
-        if ( this.observer === null ) {
-            this.observer = new MutationObserver(this.handler);
+        if ( PSelectorWatchAttrs.#observer === undefined ) {
+            PSelectorWatchAttrs.#observer = new MutationObserver(triggerDOMChange);
         }
-        this.observer.observe(node, this.observerOptions);
+        PSelectorWatchAttrs.#observer.observe(node, this.observerOptions);
         this.observed.add(node);
     }
+    static #observer;
 }
 
 class PSelectorXpathTask extends PSelectorTask {
