@@ -203,6 +203,7 @@ class PSelectorMatchesPathTask extends PSelectorTask {
         );
         if ( PSelectorMatchesPathTask.#listener ) { return; }
         PSelectorMatchesPathTask.#listener = true;
+        if ( Boolean(self.navigation) === false ) { return; }
         self.navigation.addEventListener('navigate', ( ) => {
             this.filterer.uBOL_DOMChanged();
         });
