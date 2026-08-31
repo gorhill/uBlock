@@ -38,6 +38,7 @@ import './prevent-navigation.js';
 import './prevent-settimeout.js';
 import './replace-argument.js';
 import './spoof-css.js';
+import './vod.js';
 
 import {
     collateFetchArgumentsFn,
@@ -48,7 +49,10 @@ import {
     onIdleFn,
     parsePropertiesToMatchFn,
 } from './utils.js';
-import { runAt, runAtHtmlElementFn } from './run-at.js';
+import {
+    runAt,
+    runAtHtmlElementFn,
+} from './run-at.js';
 
 import { getAllCookiesFn } from './cookie.js';
 import { getAllLocalStorageFn } from './localstorage.js';
