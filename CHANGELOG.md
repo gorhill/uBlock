@@ -1,3 +1,4 @@
+- [Add `mpegdash-prune` scriptlet](https://github.com/gorhill/uBlock/commit/323b4ce279)
 - [Improve `xmlPrune` scriptlet](https://github.com/gorhill/uBlock/commit/1235e4dd27)
 - [Improve procedural operator `:matches-path()`](https://github.com/gorhill/uBlock/commit/43d3c74ce7)
 
