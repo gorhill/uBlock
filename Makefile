@@ -139,7 +139,6 @@ publish-dev-chromium:
 		ghrepo=uBlock \
 		ghtag=$(version) \
 		ghasset=chromium.zip \
-		storeid=cgbcahbpdhpcegmbfconppldiemgcoii \
 		crxupdatepath=dist/chromium/update-dev.xml \
 		crxkeytoken=ubo_dev_key_path
 
