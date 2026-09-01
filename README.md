@@ -4,7 +4,7 @@
 [![Badge License]][License]
 [![Badge NPM]][NPM]
 [![Badge Mozilla]][Mozilla]
-[![Badge Chrome]][Chrome]
+![Badge Chrome]
 [![Badge Edge]][Edge]
 
 ***
@@ -21,7 +21,7 @@ uBlock Origin (uBO)
 | <img src="https://github.com/user-attachments/assets/b0136512-56a5-4856-8c50-4971c957a24f" alt="Get uBlock Origin for Firefox"> | <a href="https://addons.mozilla.org/addon/ublock-origin/">Firefox Add-ons</a> | [uBO works best on Firefox](https://github.com/gorhill/uBlock/wiki/uBlock-Origin-works-best-on-Firefox) |
 | <img src="https://github.com/user-attachments/assets/3a7569f8-688b-4eb1-a643-8d0fe173aefe" alt="Get uBlock Origin for Microsoft Edge"> | <a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak">Edge Add-ons</a> | <a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">"Moving the Microsoft Edge extensions ecosystem forward with Manifest Version 3"</a>: "Beginning in August 2026, Microsoft Edge will start the consumer transition away from Manifest Version 2 (MV2) extensions and toward MV3. Our goal is to complete the consumer transition by the end of 2026, with enterprise deprecation following in early 2027." |
 | <img src="https://github.com/user-attachments/assets/938f080c-fe64-4e48-8b89-4bfceabb56e6" alt="Get uBlock Origin for Opera"> | <a href="https://addons.opera.com/extensions/details/ublock/">Opera Add-ons</a> |
-| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get uBlock Origin for Chromium"> | <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Chrome Web Store</a> | <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline#aug_31st_2026_all_remaining_manifest_v2_extensions_removed_from_the_chrome_web_store">"Manifest V2 support timeline"</a>: "Aug 31st 2026: All remaining Manifest V2 extensions removed from the Chrome Web Store"<br><a href="https://github.com/uBlockOrigin/uBlock-issues/wiki/About-Google-Chrome's-%22This-extension-may-soon-no-longer-be-supported%22">About Google Chrome's "This extension may soon no longer be supported"</a> |
+| <img src="https://github.com/user-attachments/assets/5463ef88-873b-4516-8514-5277664cfde7" alt="Get uBlock Origin for Chromium"> | Removed | <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline#aug_31st_2026_all_remaining_manifest_v2_extensions_removed_from_the_chrome_web_store">"Manifest V2 support timeline"</a>: "Aug 31st 2026: All remaining Manifest V2 extensions removed from the Chrome Web Store"<br><a href="https://github.com/uBlockOrigin/uBlock-issues/wiki/About-Google-Chrome's-%22This-extension-may-soon-no-longer-be-supported%22">About Google Chrome's "This extension may soon no longer be supported"</a> |
 | <img src="https://github.com/user-attachments/assets/2e9037c4-836d-44c1-a716-ba96e89daaff" alt="Get uBlock Origin for Thunderbird"> | <a href="https://addons.thunderbird.net/thunderbird/addon/ublock-origin/">Thunderbird Add-ons</a> | [No longer updated and stuck at 1.49.2.](https://github.com/uBlockOrigin/uBlock-issues/issues/2928) Later versions require "GitHub - Releases". |
 | <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" height="50" alt="Get uBlock Origin through GitHub"> | <a href="https://github.com/gorhill/uBlock/releases">GitHub - Releases</a> | Stable and development versions on Firefox, Chromium MV2, and Thunderbird. Must be placed manually into web browsers; the Chromium and Thunderbird versions usually won't auto-update.
 
@@ -95,13 +95,11 @@ uBO [works best][Works Best] on Firefox and is available for desktop and Android
 
 #### Chromium
 
-[Chrome Web Store][Chrome] (Removal on 2026-08-31)
+Chrome Web Store: Removed on 2026-08-31
 
 [Microsoft Edge Add-ons][Edge] (Published by [Nicole Rolls][Nicole Rolls] until version 1.62. Ownership transfer at version 1.64.)
 
 [Opera Add-ons][Opera]
-
-[Development Builds][Chrome Dev]
 
 uBO should be compatible with any Chromium-based browser.
 
@@ -149,11 +147,9 @@ If you ever want to contribute something, think about the people working hard to
 [Performance]: https://www.debugbear.com/blog/chrome-extensions-website-performance#the-impact-of-ad-blocking-on-website-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
 [Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
-[Chrome Dev]: https://chromewebstore.google.com/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
 [EasyList]: https://easylist.to/#easylist
 [Mozilla]: https://addons.mozilla.org/addon/ublock-origin/
 [Crowdin]: https://crowdin.com/project/ublock
-[Chrome]: https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
 [Reddit]: https://www.reddit.com/r/uBlockOrigin/
 [Theft]: https://x.com/LeaVerou/status/518154828166725632
 [Opera]: https://addons.opera.com/extensions/details/ublock/
