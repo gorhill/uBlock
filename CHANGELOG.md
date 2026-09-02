@@ -1,3 +1,5 @@
+- [Address multiple static filter parser issues](https://github.com/gorhill/uBlock/commit/3ab731942e)
+- [Treat resources with data as redirectable](https://github.com/gorhill/uBlock/commit/c9eb5b276d)
 - [Add `mpegdash-prune` scriptlet](https://github.com/gorhill/uBlock/commit/323b4ce279)
 - [Improve `xmlPrune` scriptlet](https://github.com/gorhill/uBlock/commit/1235e4dd27)
 - [Improve procedural operator `:matches-path()`](https://github.com/gorhill/uBlock/commit/43d3c74ce7)
