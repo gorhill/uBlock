@@ -46,10 +46,10 @@ CodeMirror.defineOption('trustedSource', false, (cm, trusted) => {
     }));
 });
 
-CodeMirror.defineOption('trustedScriptletTokens', undefined, (cm, tokens) => {
+CodeMirror.defineOption('trustedTokens', undefined, (cm, tokens) => {
     if ( tokens === undefined || tokens === null ) { return; }
     if ( typeof tokens[Symbol.iterator] !== 'function' ) { return; }
-    self.dispatchEvent(new CustomEvent('trustedScriptletTokens', {
+    self.dispatchEvent(new CustomEvent('trustedTokens', {
         detail: new Set(tokens),
     }));
 });
@@ -226,6 +226,7 @@ const uBOStaticFilteringMode = (( ) => {
             this.astParser = new sfp.AstFilterParser({
                 interactive: true,
                 nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+                canFilterResponseBody: vAPI.webextFlavor.env.includes('html_filtering'),
             });
             this.astWalker = this.astParser.getWalker();
             this.currentWalkerNode = 0;
@@ -234,8 +235,8 @@ const uBOStaticFilteringMode = (( ) => {
                 const { trusted } = ev.detail;
                 this.astParser.options.trustedSource = trusted;
             });
-            self.addEventListener('trustedScriptletTokens', ev => {
-                this.astParser.options.trustedScriptletTokens = ev.detail;
+            self.addEventListener('trustedTokens', ev => {
+                this.astParser.options.trustedTokens = ev.detail;
             });
         }
     }
@@ -346,6 +347,7 @@ function initHints() {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        canFilterResponseBody: vAPI.webextFlavor.env.includes('html_filtering'),
     });
     const proceduralOperatorNames = new Map(
         Array.from(sfp.proceduralOperatorTokens)
@@ -715,6 +717,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        canFilterResponseBody: vAPI.webextFlavor.env.includes('html_filtering'),
     });
 
     const changeset = [];
@@ -760,6 +763,9 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             case sfp.AST_ERROR_UNTRUSTED_SOURCE:
                 msg = `${msg}: Filter requires trusted source`;
                 break;
+            case sfp.AST_ERROR_CAPABILITY:
+                msg = `Filter unsupported on current platform`;
+                return { lint: 'warning', msg };
             default:
                 if ( astParser.isCosmeticFilter() && astParser.result.error ) {
                     msg = `${msg}: ${astParser.result.error}`;
@@ -815,6 +821,14 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             node: null,
             html: [
                 '<div class="CodeMirror-lintmarker" data-lint="error" data-error="y">&nbsp;',
+                  '<span class="msg"></span>',
+                '</div>',
+            ],
+        },
+        'warning': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="warning">&nbsp;',
                   '<span class="msg"></span>',
                 '</div>',
             ],
@@ -963,8 +977,8 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     };
 
     const processDeletion = (doc, change) => {
-        let { from, to } = change;
-        doc.eachLine(from.line, to.line, lineHandle => {
+        const { from, to } = change;
+        doc.eachLine(from.line, to.line + (to.ch ? 1 : 0), lineHandle => {
             const marker = extractMarker(lineHandle);
             if ( marker === null ) { return; }
             if ( marker.dataset.error === 'y' ) {
@@ -1116,8 +1130,8 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         astParser.options.trustedSource = trusted;
     });
 
-    self.addEventListener('trustedScriptletTokens', ev => {
-        astParser.options.trustedScriptletTokens = ev.detail;
+    self.addEventListener('trustedTokens', ev => {
+        astParser.options.trustedTokens = ev.detail;
     });
 
     CodeMirror.defineInitHook(cm => {

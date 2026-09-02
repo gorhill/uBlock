@@ -100,6 +100,7 @@ export const AST_ERROR_OPTION_BADVALUE                = 1 << iota++;
 export const AST_ERROR_OPTION_EXCLUDED                = 1 << iota++;
 export const AST_ERROR_IF_TOKEN_UNKNOWN               = 1 << iota++;
 export const AST_ERROR_UNTRUSTED_SOURCE               = 1 << iota++;
+export const AST_ERROR_CAPABILITY                     = 1 << iota++;
 
 iota = 0;
 const NODE_RIGHT_INDEX                                = iota++;
@@ -1456,12 +1457,29 @@ export class AstFilterParser {
         case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
         case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE: {
             realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
+            if ( realBad ) { break; }
+            if ( isException || isBadfilter ) { break; }
+            const { trustedSource, trustedTokens } = this.options;
+            if ( trustedSource ) { break; }
+            if ( trustedTokens instanceof Set === false ) { break; }
+            const value = this.getNetOptionValue(modifierType);
+            let { token } = parseRedirectValue(value);
+            if ( trustedTokens.has(token) ) {
+                this.astError = AST_ERROR_UNTRUSTED_SOURCE;
+                realBad = true;
+            }
             break;
         }
         case NODE_TYPE_NET_OPTION_NAME_REPLACE: {
             realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
             if ( realBad ) { break; }
             if ( isException || isBadfilter ) { break; }
+            if ( this.options.canFilterResponseBody !== true ) {
+                this.addFlags(AST_FLAG_HAS_ERROR);
+                this.astError = AST_ERROR_CAPABILITY;
+                realBad = true;
+                break;
+            }
             if ( this.options.trustedSource !== true ) {
                 this.astError = AST_ERROR_UNTRUSTED_SOURCE;
                 realBad = true;
@@ -2342,12 +2360,12 @@ export class AstFilterParser {
                 break;
             }
             case NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN: {
-                if ( this.interactive !== true ) { break; }
                 if ( isException ) { break; }
-                const { trustedSource, trustedScriptletTokens } = this.options;
-                if ( trustedScriptletTokens instanceof Set === false ) { break; }
+                const { trustedSource, trustedTokens } = this.options;
+                if ( trustedSource ) { break; }
+                if ( trustedTokens instanceof Set === false ) { break; }
                 const token = this.getNodeString(targetNode);
-                if ( trustedScriptletTokens.has(token) && trustedSource !== true ) {
+                if ( trustedTokens.has(token) ) {
                     this.astError = AST_ERROR_UNTRUSTED_SOURCE;
                     realBad = true;
                 }
@@ -2390,6 +2408,10 @@ export class AstFilterParser {
                 return this.parseExtPatternResponseheader(parent);
             }
             this.astTypeFlavor = AST_TYPE_EXTENDED_HTML;
+            if ( this.options.canFilterResponseBody !== true ) {
+                this.astError = AST_ERROR_CAPABILITY;
+                return 0;
+            }
             return this.parseExtPatternHtml(parent);
         }
         // ##...

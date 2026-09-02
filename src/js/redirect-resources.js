@@ -100,8 +100,9 @@ export default new Map([
         data: 'text',
     } ],
     [ 'google-ima-dai.js', {
-        aliases: [ 'google-ima3-dai' ],             /* adguard compatibility */
+        alias: 'google-ima3-dai',                   /* adguard compatibility */
         data: 'text',
+        requiresTrust: true,
     } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: [

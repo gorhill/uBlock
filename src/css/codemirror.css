@@ -320,8 +320,11 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
 .CodeMirror-lintmarker > * {
     position: absolute;
     }
-.CodeMirror-lintmarker[data-error="y"] {
+.CodeMirror-lintmarker[data-lint="error"] {
     background-color: var(--sf-error-ink);
+    }
+.CodeMirror-lintmarker[data-lint="warning"] {
+    background-color: var(--sf-warning-ink);
     }
 .CodeMirror-lintmarker .msg {
     background-color: var(--surface-0);
@@ -340,7 +343,8 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
     top: 15%;
     width: 70%;
     }
-.CodeMirror-lintmarker[data-error="y"] svg {
+.CodeMirror-lintmarker[data-lint="error"] svg,
+.CodeMirror-lintmarker[data-lint="warning"] svg {
     display: none;
     }
 .CodeMirror-lintmarker[data-fold="start"] {
@@ -352,8 +356,10 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
 .CodeMirror-lintmarker[data-fold="end"] {
     fill: var(--border-2);
     }
-.CodeMirror-lintmarker[data-error="y"]:hover > span,
-.CodeMirror-lintmarker[data-error="y"] > span:hover {
+.CodeMirror-lintmarker[data-lint="error"]:hover > span,
+.CodeMirror-lintmarker[data-lint="error"] > span:hover,
+.CodeMirror-lintmarker[data-lint="warning"]:hover > span,
+.CodeMirror-lintmarker[data-lint="warning"] > span:hover {
     display: initial;
     }
 

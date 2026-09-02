@@ -25,17 +25,12 @@ import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
 
-const normalizeRawFilter = (parser, sourceIsTrusted = false) => {
+const normalizeRawFilter = parser => {
     const args = parser.getScriptletArgs();
     if ( args.length !== 0 ) {
         let token = `${args[0]}.js`;
         if ( reng.aliases.has(token) ) {
             token = reng.aliases.get(token);
-        }
-        if ( parser.isException() !== true ) {
-            if ( sourceIsTrusted !== true ) {
-                if ( reng.tokenRequiresTrust(token) ) { return; }
-            }
         }
         args[0] = token.slice(0, -3);
     }
@@ -139,7 +134,7 @@ export class ScriptletFilteringEngine {
 
         // Only exception filters are allowed to be global.
         const isException = parser.isException();
-        const normalized = normalizeRawFilter(parser, writer.properties.get('trustedSource'));
+        const normalized = normalizeRawFilter(parser);
 
         // Can fail if there is a mismatch with trust requirement
         if ( normalized === undefined ) { return; }

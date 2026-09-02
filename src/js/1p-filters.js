@@ -80,9 +80,9 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 }
 
 vAPI.messaging.send('dashboard', {
-    what: 'getTrustedScriptletTokens',
+    what: 'getTrustedTokens',
 }).then(tokens => {
-    cmEditor.setOption('trustedScriptletTokens', tokens);
+    cmEditor.setOption('trustedTokens', tokens);
 });
 
 /******************************************************************************/

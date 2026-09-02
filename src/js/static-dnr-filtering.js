@@ -27,6 +27,7 @@ import {
 } from './static-filtering-io.js';
 
 import { LineIterator } from './text-utils.js';
+import { getTrustedTokens } from './trusted-tokens.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 
 /******************************************************************************/
@@ -275,6 +276,7 @@ function addToDNR(context, list) {
         nativeCssHas: env.includes('native_css_has'),
         badTypes: [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
         trustedSource: list.trustedSource || undefined,
+        trustedTokens: getTrustedTokens(),
     });
     const compiler = staticNetFilteringEngine.createCompiler();
 

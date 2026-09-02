@@ -24,6 +24,7 @@ import * as s14e from '../../lib/s14e-serializer.js';
 import * as sfp from '../static-filtering-parser.js';
 import { minimizeRules, minimizeRuleset, validateRules } from '../ubo-parser.js';
 import { fetchList } from './fetch-list.js';
+import { getTrustedTokens } from '../trusted-tokens.js';
 import { makeCosmeticScripts } from './make-cosmetic-filters.js';
 import { parseNetworkFilter } from '../ubo-parser.js';
 import { safeReplace } from './safe-replace.js';
@@ -346,6 +347,7 @@ async function updateList(list) {
 
     const compiled = compileFilters(list.id, text, {
         nativeCssHas: true,
+        trustedTokens: getTrustedTokens(),
     });
     if ( Boolean(compiled) === false ) { return; }
 
