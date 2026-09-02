@@ -406,7 +406,7 @@ class RedirectEngine {
         for ( const [ name, entry ] of this.resources ) {
             out.set(name, {
                 canInject: typeof entry.data === 'string',
-                canRedirect: entry.warURL !== undefined,
+                canRedirect: Boolean(entry.warURL ?? entry.data),
                 aliasOf: '',
                 extensionPath: entry.warURL,
             });
