@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
   <app appid="fkgkibajhfbepljeaefdnfnegdcjomkh">
-    <updatecheck codebase="https://github.com/gorhill/uBlock/releases/download/1.74.1b1/uBlock0_1.74.1b1.chromium.crx" version="1.74.1.1" />
+    <updatecheck codebase="https://github.com/gorhill/uBlock/releases/download/1.74.1b2/uBlock0_1.74.1b2.chromium.crx" version="1.74.1.2" />
   </app>
 </gupdate>
