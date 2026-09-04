@@ -1,3 +1,4 @@
+- [Improve `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/457c510093)
 - [Address multiple static filter parser issues](https://github.com/gorhill/uBlock/commit/3ab731942e)
 - [Treat resources with data as redirectable](https://github.com/gorhill/uBlock/commit/c9eb5b276d)
 - [Add `mpegdash-prune` scriptlet](https://github.com/gorhill/uBlock/commit/323b4ce279)
