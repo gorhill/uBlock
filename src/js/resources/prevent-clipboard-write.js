@@ -54,19 +54,23 @@ function preventClipboardWrite(matches = '', ...varargs) {
     const extraArgs = safe.parseVarargs(varargs);
     const excludePattern = extraArgs.excludeMatches &&
         safe.initPattern(extraArgs.excludeMatches);
+    const htmlTemplate = [
+        '<div style="background-color:beige;color:black;border:1px solid black;display:flex;font-family:sans-serif;font-size:medium;position:fixed;top:0;white-space:pre-wrap;width:100%;z-index:2147483647">',
+            '<span style="flex-grow:1;padding:0.5em 0 0.5em 0.5em;">${warning}</span>\n',
+            '<button style="font-size:32px;padding:0.5em">×</button>',
+        '</div>',
+    ].join('');
     const domAlert = clipboardText => {
         const doc = document;
-        const div = doc.createElement('div');
-        const span = doc.createElement('span');
-        span.style = 'flex-grow:1;padding:0.5em 0 0.5em 0.5em;';
         const domAlert = extraArgs.domAlert.replace(/\\n/g, '\n');
-        const placeholder = /\$\{text\}/.exec(domAlert);
-        if ( placeholder ) {
+        let html;
+        if ( domAlert.includes('${text}') ) {
             const code = doc.createElement('code');
             const styles = [
                 'background-color: #ddc',
                 'display: inline-block',
                 'font-family: monospace',
+                'font-size: 100%',
                 'max-height: 8em',
                 'overflow: auto',
                 'padding: 0.25em',
@@ -77,29 +81,23 @@ function preventClipboardWrite(matches = '', ...varargs) {
             }
             code.style = styles.join(';');
             code.textContent = clipboardText;
-            span.append(
-                domAlert.slice(0, placeholder.index),
-                code,
-                domAlert.slice(placeholder.index + placeholder[0].length)
+            html = htmlTemplate.replace('${warning}',
+                domAlert.replace('${text}', code.outerHTML)
             );
         } else {
-            span.append(domAlert);
+            html = htmlTemplate.replace('${warning}', domAlert);
         }
-        const button = doc.createElement('button');
-        button.style = 'font-size:32px;padding:0.5em';
-        button.textContent = '×';
+        if ( currentAlert ) { currentAlert.remove(); }
+        const domParser = new DOMParser();
+        const fragment = domParser.parseFromString(html, 'text/html');
+        currentAlert = fragment.querySelector('div');
+        const button = currentAlert.querySelector('button');
         button.addEventListener('click', ( ) => {
             if ( currentAlert === null ) { return; }
             currentAlert.remove();
             currentAlert = null;
         });
-        div.append(span, button);
-        div.style = 'background-color:beige;color:black;border:1px solid black;display:flex;font-family:sans-serif;font-size:medium;position:fixed;top:0;white-space:pre-wrap;width:100%;z-index:2147483647';
-        doc.documentElement.append(div);
-        if ( currentAlert ) {
-            currentAlert.remove();
-        }
-        currentAlert = div;
+        doc.documentElement.append(currentAlert);
     };
     let currentAlert = null;
     const prevent = text => {
