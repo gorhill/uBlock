@@ -74,6 +74,7 @@ function preventClipboardWrite(matches = '', ...varargs) {
                 'max-height: 8em',
                 'overflow: auto',
                 'padding: 0.25em',
+                'width: 100%;',
                 'word-break: break-all'
             ];
             if ( Boolean(extraArgs.selectable ?? true) === false ) {
