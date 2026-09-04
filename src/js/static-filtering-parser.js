@@ -2207,7 +2207,11 @@ export class AstFilterParser {
         if ( c0 === 0x2F /* / */ ) {
             this.domainRegexValueParser.nextArg(this.raw, beg+1);
             end = this.domainRegexValueParser.separatorEnd;
-            isRegex = true;
+            if ( end <= parentEnd ) {
+                isRegex = true;
+            } else {
+                end = -1;
+            }
         } else if ( c0 === 0x5B /* [ */ && this.startsWith('[$domain=/', beg) ) {
             end = this.indexOf('/]', beg + 10, parentEnd);
             if ( end !== -1 ) { end += 2; }
