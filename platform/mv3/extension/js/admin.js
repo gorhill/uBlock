@@ -21,7 +21,7 @@
 
 import {
     adminRead,
-    localRead, localRemove, localWrite,
+    localRead, localWrite,
     sessionRead, sessionWrite,
 } from './ext.js';
 
@@ -216,7 +216,6 @@ export async function adminReadEx(key) {
         if ( local ) {
             cacheValue = local.data;
         }
-        localRemove(`admin_${key}`); // TODO: remove eventually
     }
     adminRead(key).then(async value => {
         const adminKey = `admin.${key}`;

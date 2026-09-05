@@ -38,6 +38,7 @@ import {
 } from './config.js';
 
 import { adminReadEx } from './admin.js';
+import { deferredTasks } from './deferred-tasks.js';
 import { filteringModesToDNR } from './ruleset-manager.js';
 import { hasBroadHostPermissions } from './ext-utils.js';
 
@@ -100,6 +101,22 @@ const unserializeModeDetails = details => {
         complete: new Set(details.complete ?? details.extendedGeneric),
     };
 };
+
+/******************************************************************************/
+
+function fixFilteringModeDetails(details) {
+    const { none, basic, optimal, complete } = unserializeModeDetails(details);
+    // Descendant hostnames cannot override no-filtering mode
+    for ( const exclude of none ) {
+        basic.delete(exclude);
+        pruneDescendantHostnamesFromSet(exclude, basic);
+        optimal.delete(exclude);
+        pruneDescendantHostnamesFromSet(exclude, optimal);
+        complete.delete(exclude);
+        pruneDescendantHostnamesFromSet(exclude, complete);
+    }
+    return { none, basic, optimal, complete };
+}
 
 /******************************************************************************/
 
@@ -258,13 +275,23 @@ export async function readFilteringModeDetails(bypassCache = false) {
         if ( adminNoFiltering.includes('-*') ) {
             userModes.none.clear();
         }
-        for ( const hn of adminNoFiltering ) {
-            if ( hn.charAt(0) === '-' ) {
-                userModes.none.delete(hn.slice(1));
-            } else {
-                applyFilteringMode(userModes, hn, 0);
+        let modified = false;
+        for ( const token of adminNoFiltering ) {
+            if ( token.charAt(0) === '-' ) {
+                const hn = token.slice(1);
+                if ( userModes.none.has(hn) === false ) { continue; }
+                userModes.none.delete(hn);
+                modified = true;
+            } else if ( userModes.none.has(token) === false ) {
+                userModes.none.add(token);
+                modified = true;
             }
         }
+        if ( modified ) {
+            deferredTasks.add('registerContentScripts');
+            deferredTasks.add('registerUserScripts');
+        }
+        userModes = fixFilteringModeDetails(userModes);
     }
     filteringModesToDNR(userModes);
     sessionWrite('filteringModeDetails', serializeModeDetails(userModes));
@@ -308,7 +335,9 @@ export async function getFilteringModeDetails(serializable = false) {
 }
 
 export async function setFilteringModeDetails(details) {
-    await localWrite('filteringModeDetails', serializeModeDetails(details));
+    await localWrite('filteringModeDetails',
+        serializeModeDetails(fixFilteringModeDetails(details))
+    );
     await readFilteringModeDetails(true);
 }
 
