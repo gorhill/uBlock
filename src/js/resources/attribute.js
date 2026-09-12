@@ -288,29 +288,35 @@ export function removeAttr(
             }
         }
     };
+    const stop = ( ) => {
+        if ( start.observer ) {
+            start.observer.disconnect();
+            start.observer = undefined;
+        }
+        if ( rmAttrLazily.timer ) {
+            offIdleFn(rmAttrLazily.timer);
+            rmAttrLazily.timer = undefined;
+        }
+        if ( safe.logLevel > 1 ) {
+            safe.uboLog(logPrefix, 'Quitting');
+        }
+    };
     const start = ( ) => {
         rmattr();
         if ( /\bstay\b/.test(behavior) === false ) {
             if ( options.quitAfter === undefined ) { return; }
         }
-        const observer = new MutationObserver(mutationHandler);
-        observer.observe(document, {
+        start.observer = new MutationObserver(mutationHandler);
+        start.observer.observe(document, {
             attributes: true,
             attributeFilter: tokens,
             childList: true,
             subtree: true,
         });
         if ( options.quitAfter ) {
-            self.setTimeout(( ) => {
-                observer.disconnect();
-                if ( rmAttrLazily.timer ) {
-                    offIdleFn(rmAttrLazily.timer);
-                    rmAttrLazily.timer = undefined;
-                }
-                if ( safe.logLevel > 1 ) {
-                    safe.uboLog(logPrefix, 'Quitting');
-                }
-            }, options.quitAfter * 1000);
+            runAt(( ) => {
+                self.setTimeout(stop, options.quitAfter * 1000);
+            }, 'load');
         }
     };
     runAt(( ) => { start(); }, safe.String_split.call(behavior, /\s+/));
