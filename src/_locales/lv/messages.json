@@ -64,7 +64,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Papildu iestatījumi",
+    "message": "Izvērstie iestatījumi",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Noklikšķināt, lai atslēgtu uBlock₀ šajā vietnē.\n\nCtrl + klikšķis, lai atslēgtu uBlock₀ tikai šajā lapā.",
+    "message": "Noklikšķināt, lai atspējotu uBlock₀ šajā vietnē.\n\nCtrl + klikšķis, lai atspējotu uBlock₀ tikai šajā lapā.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Pavisam aizturētas",
+    "message": "Pavisam aizturētas kopš uzstādīšanas",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {

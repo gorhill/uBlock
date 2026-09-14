@@ -92,15 +92,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Ievietotie saraksti",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Pievienot atsijāšanas sarakstu…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "Pievienojamā atsijāšanas saraksta URL",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {

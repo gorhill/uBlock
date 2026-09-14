@@ -160,11 +160,11 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Để tránh tạo thêm gánh nặng cho các tình nguyện viên hai báo cáo tương tự, hãy chắc chắn rằng chưa từng có vấn đề tương tự được báo cáo. <b>Lưu ý:</b> bấm vào nút này sẽ khiến nguồn của trang web bị gửi tới Github.",
+    "message": "Để tránh tạo thêm gánh nặng trùng báo cáo cho tình nguyện viên, hãy chắc chắn rằng vấn đề tương tự chưa được báo cáo. <b>Lưu ý:</b> bấm vào nút này sẽ gửi nguồn của trang web đến GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Tìm các báo cáo tương tự trên Github",
+    "message": "Tìm báo cáo tương tự trên GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
