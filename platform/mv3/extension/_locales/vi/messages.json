@@ -356,7 +356,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Chuyển sang chế độ chặn phần tử tạm thời",
+    "message": "Xóa một phần tử",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {

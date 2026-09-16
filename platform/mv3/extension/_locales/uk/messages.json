@@ -100,7 +100,7 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "Вставте сюди URL-адресу списку фільтрів, який потрібно додати",
+    "message": "URL-адреса списку фільтрів, який потрібно додати",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
