@@ -63,6 +63,10 @@
     "message": "Gutxiago",
     "description": "Label to be used to hide popup panel sections"
   },
+  "popupNoWebsite": {
+    "message": "not a website",
+    "description": "Used when popup panel is opened for a local web page"
+  },
   "3pGroupDefault": {
     "message": "Defektuzkoa",
     "description": "Header for a ruleset section in 'Filter lists pane'"
