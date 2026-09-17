@@ -300,7 +300,7 @@ async function init() {
         active: true,
         currentWindow: true,
     });
-    if ( tab instanceof Object === false ) { return true; }
+    if ( tab instanceof Object === false ) { return false; }
     Object.assign(currentTab, tab);
 
     let url;
@@ -312,19 +312,16 @@ async function init() {
         }
         tabURL.href = url.href || '';
     } catch {
-        return false;
     }
+    if ( url === undefined ) { return false; }
 
-    if ( url !== undefined ) {
-        const response = await sendMessage({
-            what: 'popupPanelData',
-            origin: url.origin,
-            hostname: tabURL.hostname,
-        });
-        if ( response instanceof Object ) {
-            Object.assign(popupPanelData, response);
-        }
-    }
+    const response = await sendMessage({
+        what: 'popupPanelData',
+        origin: url.origin,
+        hostname: tabURL.hostname,
+    });
+    if ( response instanceof Object === false ) { return false; }
+    Object.assign(popupPanelData, response);
 
     renderAdminRules();
 
@@ -349,9 +346,12 @@ async function init() {
 
 async function tryInit() {
     try {
-        await init();
+        const status = await init();
+        if ( status === false ) {
+            dom.cl.add(dom.body, 'nodata');
+            dom.text('#hostname', i18n$('popupNoWebsite'));
+        }
     } catch {
-        setTimeout(tryInit, 100);
     } finally {
         dom.cl.remove(dom.body, 'loading', 'busy');
     }

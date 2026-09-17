@@ -72,8 +72,9 @@ body.busy aside {
     animation-fill-mode: forwards;
     display: block;
 }
-hr {
-    margin: 0.5em 0;
+
+body.nodata .needData {
+    visibility: hidden;
 }
 
 #hostname {
