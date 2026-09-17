@@ -34,43 +34,17 @@ import {
 } from './ext-offscreen.js';
 
 import {
-    getAllCustomFilters,
-    getSandboxFilters,
-} from './filter-manager.js';
-
-import {
     getEnabledImportedLists,
     getImportedListCompiledData,
     updateImportedListData,
 } from './imported-lists.js';
 
-import {
-    isScriptlet,
-    matchesFromHostnames,
-} from './utils.js';
-
 import { dnr } from './ext-compat.js';
 import { getFilteringModeDetails } from './mode-manager.js';
+import { getSandboxFilters } from './filter-manager.js';
+import { matchesFromHostnames } from './utils.js';
 import { supportsOffscreenDocument } from './ext-offscreen.js';
 import { ubolLog } from './debug.js';
-
-/******************************************************************************/
-
-async function getUserList() {
-    const customFilters = await getAllCustomFilters();
-    const lines = [];
-    for ( const [ hostname, selectors ] of customFilters ) {
-        for ( const selector of selectors ) {
-            if ( isScriptlet(selector) === false ) { continue; }
-            lines.push(`${hostname}##${selector}`);
-        }
-    }
-    const sandboxFilters = await getSandboxFilters();
-    if ( sandboxFilters ) {
-        lines.push(sandboxFilters);
-    }
-    return lines.join('\n').trim();
-}
 
 /******************************************************************************/
 
@@ -86,7 +60,7 @@ async function parseRawFilters() {
             callback(Object.values(dnr.ResourceType));
             break;
         case 'compileFilters:getUserList':
-            getUserList().then(text => {
+            getSandboxFilters().then(text => {
                 if ( text ) { ubolLog(`Compiling user filters`); }
                 callback(text);
             });
@@ -272,7 +246,7 @@ async function update() {
         hasUserFilters,
         hasImportedLists,
     ] = await Promise.all([
-        getUserList().then(a => Boolean(a)),
+        getSandboxFilters().then(a => Boolean(a)),
         getEnabledImportedLists().then(a => Boolean(a.length)),
     ]);
 

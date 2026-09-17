@@ -40,6 +40,7 @@ import {
     getSandboxFilters,
     hasCustomFilters,
     injectCustomFilters,
+    moveManagedCustomScriptlets,
     removeAllCustomFilters,
     removeCustomFilters,
     setSandboxFilters,
@@ -64,7 +65,7 @@ import {
     broadcastMessage,
     hostnameFromMatch,
     hostnamesFromMatches,
-    isScriptlet,
+    intFromVersion,
 } from './utils.js';
 
 import {
@@ -580,46 +581,22 @@ async function onMessage(request, sender) {
     case 'addCustomFilters': {
         const modified = await addCustomFilters(request.hostname, request.selectors);
         if ( modified !== true ) { return; }
-        const hasScriptletFilters = request.selectors.some(a => isScriptlet(a));
-        const hasPlainFilters = request.selectors.some(a => isScriptlet(a) === false);
-        const promises = [];
-        if ( hasPlainFilters ) {
-            promises.push(registerContentScripts());
-        }
-        if ( hasScriptletFilters ) {
-            promises.push(
-                updateCompiledFilters().then(( ) => registerUserScripts())
-            );
-        }
-        await Promise.all(promises);
+        await registerContentScripts();
         return;
     }
 
     case 'addManyCustomFilters': {
         const promises = [];
-        let hasScriptletFilters = false;
-        let hasPlainFilters = false;
         for ( const [ hostname, selectors ] of request.entries ) {
             if ( typeof hostname !== 'string' ) { continue; }
             if ( hostname === '' ) { continue; }
             if ( Array.isArray(selectors) === false ) { continue; }
             if ( selectors.length === 0 ) { continue; }
-            hasScriptletFilters ||= selectors.some(a => isScriptlet(a));
-            hasPlainFilters ||= selectors.some(a => isScriptlet(a) === false);
             promises.push(addCustomFilters(hostname, selectors));
         }
         const results = await Promise.all(promises);
         if ( results.some(a => a) === false ) { return; }
-        promises.length = 0;
-        if ( hasPlainFilters ) {
-            promises.push(registerContentScripts());
-        }
-        if ( hasScriptletFilters ) {
-            promises.push(
-                updateCompiledFilters().then(( ) => registerUserScripts())
-            );
-        }
-        await Promise.all(promises);
+        await registerContentScripts();
         return;
     }
 
@@ -627,18 +604,7 @@ async function onMessage(request, sender) {
         const { selectors } = request;
         const modified = await removeCustomFilters(request.hostname, selectors);
         if ( modified !== true ) { return; }
-        const hasScriptletFilters = selectors.some(a => isScriptlet(a));
-        const hasPlainFilters = selectors.some(a => isScriptlet(a) === false);
-        const promises = [];
-        if ( hasPlainFilters ) {
-            promises.push(registerContentScripts());
-        }
-        if ( hasScriptletFilters ) {
-            promises.push(
-                updateCompiledFilters().then(( ) => registerUserScripts())
-            );
-        }
-        await Promise.all(promises);
+        await registerContentScripts();
         return;
     }
 
@@ -748,6 +714,12 @@ async function startSession() {
     // obsolete ruleset to remove.
     if ( isNewVersion ) {
         ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
+        if ( intFromVersion(rulesetConfig.version) <= intFromVersion('2026.914.1325') ) {
+            const modified = await moveManagedCustomScriptlets();
+            if ( modified ) {
+                deferredTasks.add('registerContentScripts');
+            }
+        }
         rulesetConfig.version = currentVersion;
         await patchDefaultRulesets();
         saveRulesetConfig();

@@ -148,7 +148,3 @@ export function intFromVersion(version) {
     const min = parseInt(match[3], 10);
     return (year - 2022) * (1232 * 2400) + monthday * 2400 + min;
 }
-
-/******************************************************************************/
-
-export const isScriptlet = a => a.startsWith('+js');

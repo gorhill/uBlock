@@ -178,11 +178,7 @@ async function renderCustomFilters() {
                 ...Array.from(storedSelectors),
                 ...Array.from(domSelectors),
             ])
-        ).sort((a, b) => {
-            const as = a[0] === '+';
-            const bs = b[0] === '+';
-            return as && bs && a < b || !as && bs || !as && !bs && a < b ? -1 : 1;
-        });
+        ).sort((a, b) => a < b ? -1 : 1);
         const ulSelectors = qs$(hostnameNode, '.selectors');
         for ( const selector of selectors ) {
             const selectorNode = nodeFromSelector(selector);
@@ -253,10 +249,7 @@ async function validateSelector(target, selector) {
     parser.parse(`##${selector}`);
     let pretty, ugly;
     if ( parser.hasError() === false ) {
-        if ( parser.isScriptletFilter() ) {
-            pretty = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
-            ugly = pretty;
-        } else if ( parser.isCosmeticFilter() ) {
+        if ( parser.isCosmeticFilter() ) {
             pretty = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_COSMETIC);
             ugly = parser.result.compiled;
         }
@@ -489,9 +482,7 @@ async function importFromText(text) {
         if ( parser.hasOptions() === false ) { continue; }
         if ( parser.isException() ) { continue; }
         let selector;
-        if ( parser.isScriptletFilter() ) {
-            selector = `+js(${parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET)})`;
-        } else if ( parser.isCosmeticFilter() ) {
+        if ( parser.isCosmeticFilter() ) {
             selector = parser.result.compiled;
         }
         if ( Boolean(selector) === false ) { continue; }
