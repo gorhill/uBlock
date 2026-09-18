@@ -177,16 +177,31 @@ export async function restoreFromObject(targetConfig) {
             });
         }
     }
-    const customFilters = targetConfig.customFilters;
-    if ( Array.isArray(customFilters) ) {
+    const customFilters = [];
+    const sandboxFilters = [];
+    for ( const [ hn, beforeSelectors ] of targetConfig.customFilters ?? [] ) {
+        const afterSelectors = [];
+        for ( const selector of beforeSelectors ) {
+            if ( selector.startsWith('+js') ) {
+                sandboxFilters.push(`${hn}##${selector}`);
+            } else {
+                afterSelectors.push(selector);
+            }
+        }
+        if ( afterSelectors.length ) {
+            customFilters.push([ hn, afterSelectors ]);
+        }
+    }
+    if ( customFilters.length ) {
         await sendMessage({ what: 'addManyCustomFilters',
             entries: customFilters,
         });
     }
-
-    await sendMessage({
-        what: 'setSandboxFilters',
-        text: targetConfig.sandboxFilters?.join('\n') ?? '',
+    if ( targetConfig.sandboxFilters ) {
+        sandboxFilters.push('', targetConfig.sandboxFilters.join('\n'));
+    }
+    await sendMessage({ what: 'setSandboxFilters',
+        text: sandboxFilters.join('\n'),
     });
 
     const dnrRules = targetConfig.dnrRules ?? [];
