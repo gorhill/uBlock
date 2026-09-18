@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentaro",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "Ĉi tie ne estas retejo",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {
@@ -96,19 +96,19 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Imported lists",
+    "message": "Importitaj listoj",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Add filter list…",
+    "message": "Aldoni filtrilan liston…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "Enigi la URL de la filtrila listo por aldoni",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "Por apliki ornamajn aŭ skriptetajn filtrilojn de importitaj listoj, vi devas permesi al uBO Lite ruli uzantajn skriptojn.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -120,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Open your browser's extensions page (<code>chrome://extensions</code> in Chrome or <code>about:addons</code> in Firefox), open <b>uBO Lite</b> details, and toggle on <b>Allow user scripts</b> (also referred to as “unverified third-party scripts”).",
+    "message": "Malfermu la eldonaĵan paĝon de la retumilo (<code>chrome://extensions</code> en Chrome aŭ <code>about:addons</code> en Firefox), tiam malfermu detalojn de uBO Lite, kaj ŝaltu <b>Permesi uzantajn skriptojn</b> (ankaŭ konata kiel \"nekontrolitaj skriptoj\").",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -296,7 +296,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "Por apliki ornamajn aŭ skriptetajn filtrilojn de la provejo, vi devas permesi al uBO Lite ruli uzantajn skriptojn.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {

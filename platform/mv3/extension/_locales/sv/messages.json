@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "inte en webbplats",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {
@@ -256,7 +256,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Lista över värdnamn som inte kommer att filtreras",
+    "message": "Lista över webbplatser som inte kommer att filtreras.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {

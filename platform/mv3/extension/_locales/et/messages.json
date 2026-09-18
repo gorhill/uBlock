@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "pole veebileht",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {
@@ -108,7 +108,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "Imporditud loenditest kosmeetiliste või scriptlet filtrite kasutamiseks peate uBO Lite'il lubama käivitada kasutajaskripte.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -296,7 +296,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "Proovikeskkonna kosmeetiliste või scriptlet filtrite kasutamiseks peate uBO Lite'il lubama käivitada kasutajaskripte.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {

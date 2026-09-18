@@ -936,7 +936,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Konsiletoj:</b> konfirmu vian filtradajn listojn estas aktuala. <span data-url=\"logger-ui.html#_\">La protokolilo</span> estas la ĉefa ilo por analizi problemojn kiuj rilatas al filtrado.",
+    "message": "<b>Konsiletoj:</b> konfirmu vian filtradajn listojn aktualaj. <span data-url=\"logger-ui.html#_\">La protokolilo</span> estas la ĉefa ilo por analizi problemojn kiuj rilatas al filtrado.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
