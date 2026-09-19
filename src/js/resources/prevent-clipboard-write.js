@@ -56,7 +56,7 @@ function preventClipboardWrite(matches = '', ...varargs) {
     const excludePattern = extraArgs.excludeMatches &&
         safe.initPattern(extraArgs.excludeMatches);
     const htmlTemplate = [
-        '<div style="background-color:beige;color:black;border:1px solid black;display:flex;font-family:sans-serif;font-size:medium;position:fixed;top:0;white-space:pre-wrap;width:100%;z-index:2147483647">',
+        '<div style="background-color:beige;color:black;border:1px solid black;display:flex;font-family:sans-serif;font-size:medium;margin:0;position:fixed;top:0;white-space:pre-wrap;width:100%;z-index:2147483647">',
             '<span style="flex-grow:1;padding:0.5em 0 0.5em 0.5em;">${warning}</span>\n',
             '<button style="background-color:#8880;border:0;font-size:24px;padding:0.5em;">×</button>',
         '</div>',
@@ -100,7 +100,11 @@ function preventClipboardWrite(matches = '', ...varargs) {
             currentAlert.remove();
             currentAlert = null;
         });
+        currentAlert.setAttribute('popover', 'manual');
         doc.documentElement.append(currentAlert);
+        if ( typeof currentAlert.showPopover === 'function' ) {
+            currentAlert.showPopover();
+        }
     };
     let currentAlert = null;
     const prevent = text => {
