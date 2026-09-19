@@ -1,3 +1,9 @@
+- [Improve `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/e530864c46)
+
+----------
+
+# 1.75.0
+
 - [Improve `remove-attr` scriptlet](https://github.com/gorhill/uBlock/commit/bd98bcace0)
 - [Fix parsing of invalid regex-like domain in static extended filters](https://github.com/gorhill/uBlock/commit/bfbd7f609e)
 - [Improve `remove-node-text`/`replace-node-text` scriptlets](https://github.com/gorhill/uBlock/commit/71faa0b23f)
