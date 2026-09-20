@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global chrome */
+
 // Important!
 // Isolate from global scope
 (async function uBOL_cssSpecific() {
@@ -150,7 +152,7 @@ if ( since > 1 ) {
 const { s, p } = cacheEntry;
 
 if ( s.length !== 0 ) {
-    self.cssAPI.insert(`${s.join(',\n')}{display:none!important;}`);
+    self.cssAPI.insert(`${s.join(',\n')}{display:none!important;}`, true);
 }
 
 if ( p.length === 0 ) { return; }

@@ -87,7 +87,7 @@ for ( const selector of selectors ) {
 }
 
 if ( s.length !== 0 ) {
-    self.cssAPI.insert(`${s.join(',\n')}{display:none!important;}`);
+    self.cssAPI.insert(`${s.join(',\n')}{display:none!important;}`, true);
 }
 
 if ( p.length !== 0 ) {
