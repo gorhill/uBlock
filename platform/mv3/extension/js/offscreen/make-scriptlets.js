@@ -20,7 +20,6 @@
 */
 
 import { hostnameCompare, isHnRegexOrPath } from './make-utils.js';
-import { builtinScriptlets } from '../resources/scriptlets.js';
 import { literalStrFromRegex } from './regex-analyzer.js';
 import { safeReplace } from './safe-replace.js';
 
@@ -106,7 +105,10 @@ export function compile(rulesetId, details) {
     }
     const scriptletToken = details.args[0];
     const resourceEntry = resourceDetails.get(scriptletToken);
-    if ( resourceEntry === undefined ) { return; }
+    if ( resourceEntry === undefined ) {
+        console.log(`make-scriptlets.js / compile(): Can't find ${scriptletToken} scriptlet`);
+        return;
+    }
     if ( resourceEntry.requiresTrust && details.trustedSource !== true ) {
         console.log(`Rejecting +js(${details.args.join()}): ${rulesetId} is not trusted`);
         return;
@@ -246,8 +248,38 @@ export function commit(rulesetId, template) {
 
 /******************************************************************************/
 
-function init() {
-    for ( const scriptlet of builtinScriptlets ) {
+export async function importScriptlet(details) {
+    const funcBody = details.code.replace(/\/\*.+?\*\//gs, '').trim();
+    const textEncoder = new TextEncoder();
+    const funcBuf = textEncoder.encode(funcBody);
+    const hashBuf = await globalThis.crypto.subtle.digest('SHA-256', funcBuf);
+    const digestBuf = new Uint32Array(hashBuf);
+    const digestStr = [ digestBuf[0], digestBuf[1] ]
+        .map(a => a.toString(36).slice(-4).padStart(4,'0'))
+        .join('');
+    const funcName = `zeta_${digestStr}`;
+    const { name } = details;
+    const entry = {
+        name: funcName,
+        code: `function ${funcName}() { // ${name}\n${funcBody}\n}`,
+        world: 'MAIN',
+        requiresTrust: details.requiresTrust === true,
+    };
+    resourceDetails.set(funcName, entry);
+    resourceAliases.set(name, funcName);
+    if ( typeof details.alias === 'string' ) {
+        resourceAliases.set(details.alias, funcName);
+    } else if ( Array.isArray(details.alias) ) {
+        for ( const alias of details.alias ) {
+            resourceAliases.set(alias, funcName);
+        }
+    }
+}
+
+/******************************************************************************/
+
+export function init(scriptlets) {
+    for ( const scriptlet of scriptlets ) {
         const { name, aliases, fn } = scriptlet;
         const entry = {
             name: fn.name,
@@ -263,7 +295,5 @@ function init() {
         }
     }
 }
-
-init();
 
 /******************************************************************************/

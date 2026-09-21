@@ -104,15 +104,10 @@ export class StaticExtFilteringHostnameDB {
             const { isRegex, hn, pn } = extractSubTargets(target);
             this.#matcherSlots.push({ isRegex, hn, pn, iList: 0 });
             this.#matcherMap.set(target, iMatcher);
-            if ( isRegex === false ) {
-                const iMatcherList = this.#hostnameToMatcherListMap.get(hn) ?? 0;
-                this.#hostnameToMatcherListMap.set(hn, this.#linkedLists.length);
-                this.#linkedLists.push(iMatcher, iMatcherList);
-            } else {
-                const iMatcherList = this.#hostnameToMatcherListMap.get('') ?? 0;
-                this.#hostnameToMatcherListMap.set('', this.#linkedLists.length);
-                this.#linkedLists.push(iMatcher, iMatcherList);
-            }
+            const key = isRegex ? '' : hn;
+            const iMatcherList = this.#hostnameToMatcherListMap.get(key) ?? 0;
+            this.#hostnameToMatcherListMap.set(key, this.#linkedLists.length);
+            this.#linkedLists.push(iMatcher, iMatcherList);
         }
         const matcher = this.#matcherSlots[iMatcher];
         const iList = matcher.iList;
