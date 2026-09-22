@@ -314,6 +314,8 @@ async function init() {
     } catch {
     }
     if ( url === undefined ) { return false; }
+    if ( url.hostname === '' ) { return false; }
+    if ( /^https?:/.test(url.protocol) === false ) { return false; }
 
     const response = await sendMessage({
         what: 'popupPanelData',
