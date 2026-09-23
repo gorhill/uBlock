@@ -26,6 +26,10 @@ import { i18n } from './i18n.js';
 
 /******************************************************************************/
 
+const { cm6 } = self;
+
+/******************************************************************************/
+
 const streamParser = (( ) => {
     const nodeHasError = (mode, node) => {
         return mode.astParser.getNodeFlags(
@@ -268,7 +272,7 @@ const streamParser = (( ) => {
 
 export class FilterEditor {
     constructor(parent, text = '') {
-        this.toolPanel = self.cm6.createViewPanel();
+        this.toolPanel = cm6.createViewPanel();
         const viewConfig = {
             text,
             oneDark: dom.cl.has(':root', 'dark'),
@@ -280,9 +284,9 @@ export class FilterEditor {
             streamParser,
             panels: [ this.toolPanel ],
         };
-        this.view = self.cm6.createEditorView(viewConfig, parent);
+        this.view = cm6.createEditorView(viewConfig, parent);
         this.lastSavedText = text;
-        self.cm6.resetUndoRedo(this.view);
+        cm6.resetUndoRedo(this.view);
         this.renderToolPanel();
     }
 
@@ -318,7 +322,7 @@ export class FilterEditor {
 
     async loadContent(text) {
         this.setContent(text, true);
-        self.cm6.resetUndoRedo(this.view);
+        cm6.resetUndoRedo(this.view);
         this.updateViewAsync();
     }
 
@@ -348,8 +352,8 @@ export class FilterEditor {
 
     updateView() {
         const changed = this.contentChanged();
-        dom.attr('#sandboxUndo', 'disabled', self.cm6.undoDepth(this.view.state) ? null : '')
-        dom.attr('#sandboxRedo', 'disabled', self.cm6.redoDepth(this.view.state) ? null : '')
+        dom.attr('#sandboxUndo', 'disabled', cm6.undoDepth(this.view.state) ? null : '')
+        dom.attr('#sandboxRedo', 'disabled', cm6.redoDepth(this.view.state) ? null : '')
         dom.attr('#sandboxSave', 'disabled', changed ? null : '');
         dom.attr('#sandboxRevert', 'disabled', changed ? null : '');
     }
@@ -367,13 +371,13 @@ export class FilterEditor {
     renderToolPanel() {
         const mount = ( ) => {
             dom.on('#sandboxToggleComment', 'click', ( ) => {
-                self.cm6.toggleComment(this.view);
+                cm6.toggleComment(this.view);
             });
             dom.on('#sandboxUndo', 'click', ( ) => {
-                self.cm6.undo(this.view);
+                cm6.undo(this.view);
             });
             dom.on('#sandboxRedo', 'click', ( ) => {
-                self.cm6.redo(this.view);
+                cm6.redo(this.view);
             });
             dom.on('#sandboxSave', 'click', ( ) => {
                 this.saveContent();
