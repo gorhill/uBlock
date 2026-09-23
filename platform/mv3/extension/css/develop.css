@@ -98,31 +98,31 @@ section[data-pane="develop"] > div > * {
     color: var(--info3-ink);
     }
 
-.cm-container .cm-editor .cm-panel.io-panel {
+.cm-container .cm-editor .cm-panel {
     background-color: var(--surface-1);
     box-sizing: border-box;
     display: inline-flex;
     gap: 0.25em;
-    padding: 0.25em;
+    padding: 0.25em 0;
     padding-inline-start: 0;
     width: 100%;
     }
-.cm-container .cm-editor .cm-panel.io-panel button {
+.cm-container .cm-editor .cm-panel button {
     min-height: 30px;
     }
-.cm-container .cm-editor .cm-panel.io-panel button#revert {
+.cm-container .cm-editor .cm-panel.io-panel button#developRevert {
     margin-inline-end: 1em;
     }
-.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="apply"]) button#apply {
+.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="apply"]) button#developSave {
     display: none;
     }
-.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="revert"]) button#revert {
+.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="revert"]) button#developRevert {
     display: none;
     }
-.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="import"]) button#import {
+.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="import"]) button#developImport {
     display: none;
     }
-.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="export"]) button#export {
+.cm-container .cm-editor .cm-panel.io-panel:not([data-io~="export"]) button#developExport {
     display: none;
     }
 

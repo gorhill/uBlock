@@ -1,3 +1,11 @@
+.cm-container .sandbox-panel {
+    display: inline-flex;
+    justify-content: space-between;
+    }
+.cm-container .sandbox-panel .buttonGroup {
+    display: inline-flex;
+    column-gap: 0.5em;
+    }
 .cm-container .cm-line {
     word-break: break-all;
     }

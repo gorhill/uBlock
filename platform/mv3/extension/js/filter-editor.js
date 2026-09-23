@@ -268,7 +268,7 @@ const streamParser = (( ) => {
 
 export class FilterEditor {
     constructor(parent, text = '') {
-        this.ioPanel = self.cm6.createViewPanel();
+        this.toolPanel = self.cm6.createViewPanel();
         const viewConfig = {
             text,
             oneDark: dom.cl.has(':root', 'dark'),
@@ -278,12 +278,12 @@ export class FilterEditor {
             lineError: true,
             spanError: true,
             streamParser,
-            panels: [ this.ioPanel ],
+            panels: [ this.toolPanel ],
         };
         this.view = self.cm6.createEditorView(viewConfig, parent);
         this.lastSavedText = text;
         self.cm6.resetUndoRedo(this.view);
-        this.updateIOPanel();
+        this.renderToolPanel();
     }
 
     getContent() {
@@ -319,50 +319,69 @@ export class FilterEditor {
     async loadContent(text) {
         this.setContent(text, true);
         self.cm6.resetUndoRedo(this.view);
-        this.updateView();
+        this.updateViewAsync();
     }
 
     async saveContent() {
         this.lastSavedText = this.getContent();
-        this.updateView();
+        this.updateViewAsync();
     }
 
     revertContent() {
         if ( this.contentChanged() === false ) { return; }
         this.setContent(this.lastSavedText);
+        this.updateViewAsync();
     }
 
     updateListener(info) {
         if ( info.docChanged === false ) { return; }
-        this.updateView();
+        this.updateViewAsync();
     }
 
+    updateViewAsync() {
+        if ( this.updateViewAsync.timer ) { return; }
+        this.updateViewAsync.timer = self.requestAnimationFrame(( ) => {
+            this.updateViewAsync.timer = undefined;
+            this.updateView();
+        });
+    }
 
     updateView() {
         const changed = this.contentChanged();
-        dom.attr('#apply', 'disabled', changed ? null : '');
-        dom.attr('#revert', 'disabled', changed ? null : '');
+        dom.attr('#sandboxUndo', 'disabled', self.cm6.undoDepth(this.view.state) ? null : '')
+        dom.attr('#sandboxRedo', 'disabled', self.cm6.redoDepth(this.view.state) ? null : '')
+        dom.attr('#sandboxSave', 'disabled', changed ? null : '');
+        dom.attr('#sandboxRevert', 'disabled', changed ? null : '');
     }
 
-    updateIOPanel() {
-        const ioButtons = [ 'apply', 'revert' ];
-        const template = document.querySelector('template.io-panel');
+    renderPanel(panel, selector, init, mount) {
+        const template = document.querySelector(`template${selector}`);
         const fragment = template.content.cloneNode(true);
-        const root = fragment.querySelector('.io-panel');
+        const root = fragment.querySelector(selector);
         i18n.render(root);
         faIconsInit(root);
-        root.dataset.io = ioButtons.join(' ');
-        const config = {
-            dom: root,
-            mount: ( ) => {
-                dom.on('#apply', 'click', ( ) => {
-                    this.saveContent();
-                });
-                dom.on('#revert', 'click', ( ) => {
-                    this.revertContent();
-                });
-            },
+        if ( init ) { init(root); }
+        panel.render(this.view, { dom: root, mount });
+    }
+
+    renderToolPanel() {
+        const mount = ( ) => {
+            dom.on('#sandboxToggleComment', 'click', ( ) => {
+                self.cm6.toggleComment(this.view);
+            });
+            dom.on('#sandboxUndo', 'click', ( ) => {
+                self.cm6.undo(this.view);
+            });
+            dom.on('#sandboxRedo', 'click', ( ) => {
+                self.cm6.redo(this.view);
+            });
+            dom.on('#sandboxSave', 'click', ( ) => {
+                this.saveContent();
+            });
+            dom.on('#sandboxRevert', 'click', ( ) => {
+                this.revertContent();
+            });
         };
-        this.ioPanel.render(this.view, config);
+        this.renderPanel(this.toolPanel, '.sandbox-panel', null, mount);
     }
 }

@@ -247,12 +247,25 @@
 <template id="customFiltersSelector">
     <li class="selector" data-pretty="" data-ugly=""><div><span class="selector" spellcheck="false" contenteditable="plaintext-only"></span><span class="copy fa-icon">files-o</span><span class="remove fa-icon">trash-o</span><span class="undo fa-icon">undo</span></div></li>
 </template>
+<template class="sandbox-panel">
+    <span class="sandbox-panel">
+        <span class="buttonGroup">
+            <button id="sandboxUndo" class="iconified" type="button" disabled><span class="fa-icon">reply</span><span class="hover"></span></button>
+            <button id="sandboxRedo" class="iconified" type="button" disabled><span class="fa-icon fa-icon-hflipped">reply</span><span class="hover"></span></button>
+            <button id="sandboxToggleComment" type="button"><span>!&nbsp;&mldr;</span><span class="hover"></span></button>
+        </span>
+        <span class="buttonGroup">
+            <button id="sandboxSave" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
+            <button id="sandboxRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
+        </span>
+    </span>
+</template>
 <template class="io-panel">
     <span class="io-panel">
-        <button id="apply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
-        <button id="revert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
-        <button id="import" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
-        <button id="export" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="json/application">
+        <button id="developSave" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
+        <button id="developRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
+        <button id="developImport" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
+        <button id="developExport" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="json/application">
     </span>
 </template>
 <template class="summary-panel">
