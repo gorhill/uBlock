@@ -1270,14 +1270,20 @@ registerScriptlet(trustedJsonEditFetchRequest, {
 /******************************************************************************/
 /******************************************************************************/
 
-function jsonlEditFn(jsonp, text = '') {
+function jsonlEditFn(jsonp, text = '', jsonExtract) {
     const safe = safeSelf();
     const lineSeparator = /\r?\n/.exec(text)?.[0] || '\n';
     const linesBefore = text.split('\n');
     const linesAfter = [];
     for ( const lineBefore of linesBefore ) {
+        const match = jsonExtract.exec(lineBefore);
+        if ( match === null ) {
+            linesAfter.push(lineBefore);
+            continue;
+        }
+        const jsonBefore = match[1];
         let obj;
-        try { obj = safe.JSON_parse(lineBefore); } catch { }
+        try { obj = safe.JSON_parse(jsonBefore); } catch { }
         if ( typeof obj !== 'object' || obj === null ) {
             linesAfter.push(lineBefore);
             continue;
@@ -1287,7 +1293,12 @@ function jsonlEditFn(jsonp, text = '') {
             linesAfter.push(lineBefore);
             continue;
         }
-        const lineAfter = safe.JSON_stringify(objAfter);
+        const jsonAfter = safe.JSON_stringify(objAfter);
+        const lineAfter = [
+            lineBefore.slice(0, match.index),
+            jsonAfter,
+            lineBefore.slice(match.index + jsonBefore.length),
+        ].join('');
         linesAfter.push(lineAfter);
     }
     return linesAfter.join(lineSeparator);
@@ -1315,6 +1326,9 @@ function jsonlEditXhrResponseFn(trusted, jsonq = '', ...varargs) {
     }
     const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
+    const jsonExtract = extraArgs.jsonExtract
+        ? new RegExp(extraArgs.jsonExtract)
+        : /^(.*)$/;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
             const xhrDetails = { method, url };
@@ -1347,7 +1361,7 @@ function jsonlEditXhrResponseFn(trusted, jsonq = '', ...varargs) {
             if ( typeof innerResponse !== 'string' ) {
                 return (xhrDetails.response = innerResponse);
             }
-            const outerResponse = jsonlEditFn(jsonp, innerResponse);
+            const outerResponse = jsonlEditFn(jsonp, innerResponse, jsonExtract);
             if ( outerResponse !== innerResponse ) {
                 safe.uboLog(logPrefix, 'Pruned');
             }
@@ -1442,6 +1456,9 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '', ...varargs) {
     }
     const extraArgs = safe.parseVarargs(varargs);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
+    const jsonExtract = extraArgs.jsonExtract
+        ? new RegExp(extraArgs.jsonExtract)
+        : /^(.*)$/;
     const logall = jsonq === '';
     proxyApplyFn('fetch', function(context) {
         const args = context.callArgs;
@@ -1462,7 +1479,7 @@ function jsonlEditFetchResponseFn(trusted, jsonq = '', ...varargs) {
                     safe.uboLog(logPrefix, textBefore);
                     return responseBefore;
                 }
-                const textAfter = jsonlEditFn(jsonp, textBefore);
+                const textAfter = jsonlEditFn(jsonp, textBefore, jsonExtract);
                 if ( textAfter === textBefore ) { return responseBefore; }
                 safe.uboLog(logPrefix, 'Pruned');
                 const responseAfter = new Response(textAfter, {
