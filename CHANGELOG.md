@@ -1,3 +1,5 @@
+- [Improve jsonl-edit-fetch-response/jsonl-edit-xhr-response scriptlets](https://github.com/gorhill/uBlock/commit/42bcca027b)
+- [Export "My filters" content as an array in JSON backup file](https://github.com/gorhill/uBlock/commit/80f5a99fe4)
 - [Improve `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/e530864c46)
 
 ----------
