@@ -39,7 +39,7 @@ const relaxBlockingMode = (( ) => {
 
         const normalURL = µb.normalizeTabURL(tab.id, tab.url);
 
-        if ( µb.getNetFilteringSwitch(normalURL) === false ) { return; }
+        if ( µb.isTrustedSite(normalURL) ) { return; }
 
         const hn = hostnameFromURI(normalURL);
         const curProfileBits = µb.blockingModeFromHostname(hn);

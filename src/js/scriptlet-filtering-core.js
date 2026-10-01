@@ -282,9 +282,7 @@ export class ScriptletFilteringEngine {
         return {
             mainWorld: scriptletDetails.mainWorld === '' ? '' : [
                 '(function() {',
-                '// >>>> start of private namespace',
-                '',
-                options.debugScriptlets ? 'debugger;' : ';',
+                '// >>>> start of private namespace in MAIN world',
                 '',
                 // For use by scriptlets to share local data among themselves
                 `const scriptletGlobals = ${scriptletGlobalsJSON};`,
@@ -295,10 +293,8 @@ export class ScriptletFilteringEngine {
                 '})();',
             ].join('\n'),
             isolatedWorld: scriptletDetails.isolatedWorld === '' ? '' : [
-                'function() {',
-                '// >>>> start of private namespace',
-                '',
-                options.debugScriptlets ? 'debugger;' : ';',
+                '(function() {',
+                '// >>>> start of private namespace in ISOLATED world',
                 '',
                 // For use by scriptlets to share local data among themselves
                 `const scriptletGlobals = ${scriptletGlobalsJSON};`,
@@ -306,7 +302,7 @@ export class ScriptletFilteringEngine {
                 scriptletDetails.isolatedWorld,
                 '',
                 '// <<<< end of private namespace',
-                '}',
+                '})()',
             ].join('\n'),
             filters: scriptletDetails.filters,
         };

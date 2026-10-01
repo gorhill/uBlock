@@ -22,6 +22,7 @@
 /* global CodeMirror, uBlockDashboard */
 
 import { dom, qs$ } from './dom.js';
+import { TrustedSiteParser } from './trusted-sites.js';
 import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
@@ -44,40 +45,24 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
         token: function token(stream) {
             const line = stream.string.trim();
             stream.skipToEnd();
-            if ( reBadHostname === undefined ) {
-                return null;
-            }
-            if ( reComment.test(line) ) {
-                return 'comment';
-            }
+            if ( reComment.test(line) ) { return 'comment'; }
             if ( line.indexOf('/') === -1 ) {
-                if ( reBadHostname.test(line) ) { return 'error'; }
-                if ( whitelistDefaultSet.has(line.trim()) ) {
-                    return 'keyword';
-                }
+                if ( TrustedSiteParser.isBadHostname(line) ) { return 'error'; }
+                if ( whitelistDefaultSet.has(line.trim()) ) { return 'keyword'; }
                 return null;
             }
             if ( reRegex.test(line) ) {
-                try {
-                    new RegExp(line.slice(1, -1));
-                } catch {
-                    return 'error';
-                }
+                try { new RegExp(line.slice(1, -1)); }
+                catch { return 'error'; }
                 return null;
             }
-            if ( reHostnameExtractor.test(line) === false ) {
-                return 'error';
-            }
-            if ( whitelistDefaultSet.has(line.trim()) ) {
-                return 'keyword';
-            }
+            if ( TrustedSiteParser.parseDirective(line) === undefined ) { return 'error'; }
+            if ( whitelistDefaultSet.has(line.trim()) ) { return 'keyword'; }
             return null;
         }
     };
 });
 
-let reBadHostname;
-let reHostnameExtractor;
 let whitelistDefaultSet = new Set();
 
 /******************************************************************************/
@@ -123,15 +108,11 @@ cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
-async function renderWhitelist() {
+async function renderWhitelist(first = false) {
     const details = await messaging.send('dashboard', {
         what: 'getWhitelist',
     });
-
-    const first = reBadHostname === undefined;
     if ( first ) {
-        reBadHostname = new RegExp(details.reBadHostname);
-        reHostnameExtractor = new RegExp(details.reHostnameExtractor);
         whitelistDefaultSet = new Set(details.whitelistDefault);
     }
     const toAdd = new Set(whitelistDefaultSet);
@@ -253,6 +234,6 @@ dom.on('#exportWhitelistToFile', 'click', exportWhitelistToFile);
 dom.on('#whitelistApply', 'click', ( ) => { applyChanges(); });
 dom.on('#whitelistRevert', 'click', revertChanges);
 
-renderWhitelist();
+renderWhitelist(true);
 
 /******************************************************************************/

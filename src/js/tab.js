@@ -35,7 +35,6 @@ import { PageStore } from './pagestore.js';
 import contextMenu from './contextmenu.js';
 import { i18n$ } from './i18n.js';
 import logger from './logger.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import webext from './webext.js';
 import µb from './background.js';
@@ -137,12 +136,8 @@ const onPopupUpdated = (( ) => {
         // https://github.com/chrisaljoudi/uBlock/issues/1142
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1616
         //   Don't block if uBO is turned off in popup's context
-        if (
-            µb.getNetFilteringSwitch(targetURL) === false ||
-            µb.getNetFilteringSwitch(µb.normalizeTabURL(0, targetURL)) === false
-        ) {
-            return 0;
-        }
+        if ( µb.isTrustedSite(targetURL) ) { return 0; }
+        if ( µb.isTrustedSite(µb.normalizeTabURL(0, targetURL)) ) { return 0; }
 
         fctxt.setTabOriginFromURL(rootOpenerURL)
              .setDocOriginFromURL(localOpenerURL || rootOpenerURL)
@@ -339,16 +334,10 @@ const onPopupUpdated = (( ) => {
 
         // https://github.com/gorhill/uBlock/issues/341
         //   Allow popups if uBlock is turned off in opener's context.
-        if ( µb.getNetFilteringSwitch(rootOpenerURL) === false ) { return; }
+        if ( µb.isTrustedSite(rootOpenerURL) ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/1538
-        if (
-            µb.getNetFilteringSwitch(
-                µb.normalizeTabURL(openerTabId, rootOpenerURL)
-            ) === false
-        ) {
-            return;
-        }
+        if ( µb.isTrustedSite(µb.normalizeTabURL(openerTabId, rootOpenerURL)) ) { return; }
 
         // If the page URL is that of our document-blocked URL, extract the URL
         // of the page which was blocked.
@@ -612,8 +601,7 @@ housekeep itself.
             this.onGC();
         });
         this.onGCBarrier = false;
-        this.netFiltering = true;
-        this.netFilteringReadTime = 0;
+        this.trustedStatus = false;
 
         tabContexts.set(tabId, this);
     };
@@ -677,7 +665,6 @@ housekeep itself.
     //   In case of document-blocked page, use the blocked page URL as the
     //   context.
     TabContext.prototype.update = function() {
-        this.netFilteringReadTime = 0;
         if ( this.stack.length === 0 ) {
             this.rawURL =
             this.normalURL =
@@ -725,22 +712,16 @@ housekeep itself.
         return true;
     };
 
-    TabContext.prototype.getNetFilteringSwitch = function() {
-        if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
-            return this.netFiltering;
-        }
+    TabContext.prototype.isNotTrusted = function() {
         // https://github.com/chrisaljoudi/uBlock/issues/1078
         // Use both the raw and normalized URLs.
-        this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
-        if (
-            this.netFiltering &&
-            this.rawURL !== this.normalURL &&
-            this.rawURL !== ''
-        ) {
-            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
+        this.trustedStatus = µb.isTrustedSite(this.normalURL);
+        if ( this.trustedStatus === false ) {
+            if ( this.rawURL !== this.normalURL && this.rawURL !== '' ) {
+                this.trustedStatus = µb.isTrustedSite(this.rawURL);
+            }
         }
-        this.netFilteringReadTime = Date.now();
-        return this.netFiltering;
+        return this.trustedStatus === false;
     };
 
     // These are to be used for the API of the tab context manager.
@@ -925,10 +906,6 @@ vAPI.Tabs = class extends vAPI.Tabs {
         const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore === null ) { return; }
         pageStore.setFrameURL(details);
-        if ( pageStore.getNetFilteringSwitch() ) {
-            details.ancestors = pageStore.getFrameAncestorDetails(frameId);
-            scriptletFilteringEngine.injectNow(details);
-        }
     }
 
     async onNewTab(tabId) {
@@ -1033,14 +1010,14 @@ vAPI.tabs = new vAPI.Tabs();
 
 {
     const NoPageStore = class extends PageStore {
-        getNetFilteringSwitch(fctxt) {
+        isNotTrusted(fctxt) {
             if ( fctxt ) {
                 const docOrigin = fctxt.getDocOrigin();
                 if ( docOrigin ) {
-                    return µb.getNetFilteringSwitch(docOrigin);
+                    return µb.isNotTrustedSite(docOrigin);
                 }
             }
-            return super.getNetFilteringSwitch();
+            return super.isNotTrusted();
         }
     };
     const pageStore = new NoPageStore(vAPI.noTabId);
@@ -1082,7 +1059,7 @@ vAPI.tabs = new vAPI.Tabs();
 
         const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
-            state = pageStore.getNetFilteringSwitch() ? 1 : 0;
+            state = pageStore.isNotTrusted() ? 1 : 0;
             if ( state === 1 ) {
                 if ( (parts & 0b0010) !== 0 ) {
                     const blockCount = pageStore.counts.blocked.any;
