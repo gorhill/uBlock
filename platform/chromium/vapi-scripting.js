@@ -26,7 +26,8 @@ import { hostnameFromURI } from './uri-utils.js';
 /******************************************************************************/
 
 const MAX_REGISTERED_SCRIPTLETS_LOW = 256;
-const MAX_REGISTERED_SCRIPTLETS_HIGH = MAX_REGISTERED_SCRIPTLETS_LOW >>> 3;
+const MAX_REGISTERED_SCRIPTLETS_HIGH = MAX_REGISTERED_SCRIPTLETS_LOW +
+    (MAX_REGISTERED_SCRIPTLETS_LOW >>> 3);
 const registeredScriptlets = new Map();
 const injectedContextSet = new Set();
 let requestScriptletsListener;
