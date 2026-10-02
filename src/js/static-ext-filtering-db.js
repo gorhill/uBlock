@@ -182,6 +182,41 @@ export class StaticExtFilteringHostnameDB {
         }
     }
 
+    retrieveAll() {
+        const out = new Map();
+        const processList = (hn, iList, out) => {
+            for ( ; iList !== 0; iList = this.#linkedLists[iList+1] ) {
+                const s = this.#strSlots[this.#linkedLists[iList+0]];
+                const exception = s.charCodeAt(0) === 0x2D /* - */;
+                const selector = s.slice(1);
+                const details = out.get(selector) ?? {};
+                if ( details.initialized === undefined ) {
+                    details.initialized = true;
+                    out.set(selector, details);
+                }
+                if ( exception ) {
+                    details.excludeMatches ??= [];
+                    details.excludeMatches.push(hn);
+                    continue;
+                }
+                details.matches ??= [];
+                if ( details.matches.includes('*') ) { continue; }
+                if ( hn === '*' ) {
+                    details.matches = [ '*' ];
+                } else {
+                    details.matches.push(hn);
+                }
+            }
+        };
+        for ( const [ hn, iList ] of this.#hostnameToStringListMap ) {
+            processList(hn !== '' ? hn : '*', iList, out);
+        }
+        for ( const [ hn, iSlot ] of this.#matcherMap ) {
+            processList(hn, this.#matcherSlots[iSlot].iList, out);
+        }
+        return out;
+    }
+
     #matcherTest(matcher, hn, pn) {
         if ( matcher.isRegex === false ) {
             return pn.startsWith(matcher.pn);

@@ -674,7 +674,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
     request.frameId = frameId;
     request.hostname = hostnameFromURI(request.url);
     request.domain = domainFromHostname(request.hostname);
-    request.ancestors = pageStore.getFrameAncestorDetails(frameId);
+    //request.ancestors = pageStore.getFrameAncestorDetails(frameId);
 
     const scf = response.specificCosmeticFilters =
         cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
@@ -702,9 +702,9 @@ const retrieveContentScriptParameters = async function(sender, request) {
     //   For non-network URIs, scriptlet injection is deferred to here. The
     //   effective URL is available here in `request.url`.
     if ( logger.enabled ) {
-        const scriptletDetails = scriptletFilteringEngine.retrieve(request);
-        if ( scriptletDetails !== undefined ) {
-            scriptletFilteringEngine.toLogger(request, scriptletDetails);
+        const filters = scriptletFilteringEngine.retrieve(request);
+        if ( filters ) {
+            scriptletFilteringEngine.toLogger(request, filters);
         }
     }
     if ( request.needScriptlets ) {

@@ -34,16 +34,16 @@ self.$scriptletCode$
 
 /******************************************************************************/
 
+const scriptletGlobals = typeof SCRIPTLETGLOBALS !== 'undefined'// eslint-disable-line
+    ? SCRIPTLETGLOBALS                                          // eslint-disable-line
+    : {};
+
 const $hasHostnames$ = self.$hasHostnames$;
 const $hasEntities$ = self.$hasEntities$;
 const $hasAncestors$ = self.$hasAncestors$;
 const $hasRegexes$ = self.$hasRegexes$;
 
 /******************************************************************************/
-
-const scriptletGlobals = typeof scriptletGlobalsEx !== 'undefined'  // eslint-disable-line
-    ? scriptletGlobalsEx                                            // eslint-disable-line
-    : {};
 
 const entries = (( ) => {
     const docloc = document.location;

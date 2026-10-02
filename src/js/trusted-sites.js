@@ -23,45 +23,35 @@ import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
 
-export class TrustedSiteMatcher {
-    static match(url, hostname, data) {
-        let pos = 0;
-        do {
-            const key = hostname.slice(pos);
-            const bucket = data.get(key);
-            if ( bucket ) {
-                const i = this.#matchBucket(url, bucket);
-                if ( i !== -1 ) { return { key, i, bucket }; }
-            }
-            pos = hostname.indexOf('.', pos) + 1;
-        } while ( pos !== 0 );
-        const bucket = data.get('//');
-        if ( bucket === undefined ) { return; }
-        const i = this.#matchBucket(url, bucket);
-        if ( i !== -1 ) { return { key: '//', i , bucket }; }
-    }
-    static regexFromDirective(directive) {
+// Ensure this function is serializable, it will also be used in other contexts.
+
+function trustedSiteMatcher(data, url, hn) {
+    if ( data.size === 0 ) { return false; }
+    const matchDirective = trustedSiteMatcher.matchDirective ?? ((directive, url, hn) => {
         if ( directive.includes('/') === false ) {
-            return new RegExp(`^[a-z-]+://([^/.]+\\.)*${this.#toRegex(directive)}/`);
+            if ( hn.endsWith(directive) === false ) { return false; }
+            if ( hn.length === directive.length ) { return true; }
+            return hn.at(-directive.length-1) === '.';
         }
-        if ( /^\/.+\/$/.test(directive) ) {
-            return new RegExp(directive.slice(1, -1));
+        if ( directive.at(0) === '/' ) {
+            return (new RegExp(directive.slice(1, -1))).test(url);
         }
-        if ( directive.includes('*') ) {
-            return new RegExp(this.#toRegex(directive).replace(/\*/g, '.*?'));
-        }
-        return new RegExp(`^${this.#toRegex(directive)}$`);
-    }
-    static #matchBucket(url, bucket) {
-        for ( let i = 0, n = bucket.length; i < n; i++ ) {
-            if ( this.regexFromDirective(bucket[i]).test(url) ) {
-                return i;
+        if ( directive.includes('*') === false ) { return url === directive; }
+        const re = new RegExp(directive.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*?'));
+        return re.test(url);
+    });
+    for ( let pos = 0; ; pos += 1 ) {
+        const key = hn.slice(pos);
+        const bucket = data.get(key);
+        if ( bucket ) {
+            for ( let i = 0; i < bucket.length; i++ ) {
+                if ( matchDirective(bucket[i], url, hn) ) {
+                    return { key, i };
+                }
             }
         }
-        return -1;
-    }
-    static #toRegex(s) {
-        return s.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+        pos = hn.indexOf('.', pos);
+        if ( pos === -1 ) { break; }
     }
 }
 
@@ -133,18 +123,20 @@ export class TrustedSiteParser {
 
 export class TrustedSiteManager {
     isTrusted(url) {
-        return TrustedSiteMatcher.match(
-            url, hostnameFromURI(url), this.#map
-        ) !== undefined;
+        if ( this.#matcher === undefined ) {
+            this.#matcher = this.getMatcher();
+        }
+        return Boolean(
+            this.#matcher.match(this.#matcher.data, url, hostnameFromURI(url))
+        );
     }
     toggle(url, scope, newState) {
-        const targetHostname = hostnameFromURI(url);
-        const currentState =
-            TrustedSiteMatcher.match(url, targetHostname, this.#map) !== undefined;
+        const currentState = this.isTrusted(url);
         newState = newState ?? currentState === false;
         if ( newState === currentState ) { return 0; }
         const hashpos = url.indexOf('#');
         const targetURL = hashpos !== -1 ? url.slice(0, hashpos) : url;
+        const targetHostname = hostnameFromURI(targetURL);
         // Add to directive list
         if ( newState ) {
             const bucket = this.#map.get(targetHostname) ?? [];
@@ -152,6 +144,7 @@ export class TrustedSiteManager {
                 this.#map.set(targetHostname, bucket);
             }
             bucket.push(scope === 'page' ? targetURL : targetHostname);
+            this.#matcher = undefined;
             return 1;
         }
         // Remove all directives which cause current URL to be whitelisted
@@ -159,18 +152,20 @@ export class TrustedSiteManager {
         let hnpos = 0;
         for (;;) {
             for (;;) {
-                const r = TrustedSiteMatcher.match(
-                    targetURL, targetHostname.slice(hnpos), this.#map
+                const r = this.#matcher.match(this.#matcher.data,
+                    targetURL, targetHostname.slice(hnpos)
                 );
-                if ( r === undefined ) { break; }
-                const directive = r.bucket.splice(r.i, 1)[0];
-                if ( r.bucket.length === 0 ) {
+                if ( Boolean(r) === false ) { break; }
+                const bucket = this.#map.get(r.key);
+                const directive = bucket.splice(r.i, 1)[0];
+                if ( bucket.length === 0 ) {
                     this.#map.delete(r.key);
                 }
                 if ( this.#isHandcrafted(directive) ) {
                     this.#map.get('#').push(`# ${directive}`);
                 }
                 count -= 1;
+                this.#matcher = this.getMatcher();
             }
             hnpos = targetHostname.indexOf('.', hnpos) + 1;
             if ( hnpos === 0 ) { break; }
@@ -179,9 +174,11 @@ export class TrustedSiteManager {
     }
     assign(data) {
         this.#map = new Map(data);
+        this.#matcher = undefined;
     }
     fromLines(directives) {
         this.#map = TrustedSiteParser.fromLines(directives);
+        this.#matcher = undefined;
     }
     toLines() {
         const out = [];
@@ -196,18 +193,14 @@ export class TrustedSiteManager {
     toText() {
         return this.toLines().join('\n');
     }
-    directiveRegexesFromHostname(hostname) {
-        const out = [];
-        let pos = 0;
-        do {
-            const bucket = this.#map.get(hostname.slice(pos));
-            if ( bucket ) { out.push(...bucket); }
-            pos = hostname.indexOf('.', pos) + 1;
-        } while ( pos !== 0 );
-        out.push(...this.#map.get('//') ?? []);
-        return out.map(a => TrustedSiteMatcher.regexFromDirective(a).source);
+    getMatcher() {
+        return {
+            data: this.#map,
+            match: trustedSiteMatcher,
+        };
     }
     #map = new Map();
+    #matcher = undefined;
     #isHandcrafted(directive) {
         return directive.startsWith('/') && directive.endsWith('/') ||
                directive.indexOf('/') !== -1 && directive.indexOf('*') !== -1;

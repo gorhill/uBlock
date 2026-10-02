@@ -19,18 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global browser */
-
 /******************************************************************************/
 
+import * as makescriptlets from './make-scriptlets.js';
 import * as scripting from './vapi-scripting.js';
 
-import {
-    domainFromHostname,
-    hostnameFromURI,
-} from './uri-utils.js';
-
 import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
+import { builtinScriptlets } from './resources/scriptlets.js';
+import cacheStorage from './cachestorage.js';
+import { hostnameFromURI } from './uri-utils.js';
 import logger from './logger.js';
 import { onBroadcast } from './broadcast.js';
 import { sessionFirewall } from './filtering-engines.js';
@@ -38,82 +35,29 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-const contentScriptRegisterer = {
-    id: 1,
-    hostnameToDetails: new Map(),
-    register(hostname, code) {
-        if ( browser.contentScripts === undefined ) { return false; }
-        if ( hostname === '' ) { return false; }
-        const details = this.hostnameToDetails.get(hostname);
-        if ( details !== undefined ) {
-            if ( code === details.code ) {
-                return details.handle instanceof Promise === false;
-            }
-            this.unregisterHandle(details.handle);
-            this.hostnameToDetails.delete(hostname);
-        }
-        const id = this.id++;
-        const promise = browser.contentScripts.register({
-            js: [ { code } ],
-            allFrames: true,
-            matches: [ `*://*.${hostname}/*` ],
-            matchAboutBlank: true,
-            runAt: 'document_start',
-        }).then(handle => {
-            const details = this.hostnameToDetails.get(hostname);
-            if ( details === undefined ) { return; }
-            if ( details.id !== id ) { return; }
-            details.handle = handle;
-        }).catch(( ) => {
-            this.hostnameToDetails.delete(hostname);
-        });
-        this.hostnameToDetails.set(hostname, { id, handle: promise, code });
-        return false;
-    },
-    unregister(hostname) {
-        if ( hostname === '' ) { return; }
-        if ( this.hostnameToDetails.size === 0 ) { return; }
-        const details = this.hostnameToDetails.get(hostname);
-        if ( details === undefined ) { return; }
-        this.hostnameToDetails.delete(hostname);
-        this.unregisterHandle(details.handle);
-    },
-    flush(hostname) {
-        if ( hostname === '' ) { return; }
-        if ( hostname === '*' ) { return this.reset(); }
-        for ( const hn of this.hostnameToDetails.keys() ) {
-            if ( hn.endsWith(hostname) === false ) { continue; }
-            const pos = hn.length - hostname.length;
-            if ( pos !== 0 && hn.charCodeAt(pos-1) !== 0x2E /* . */ ) { continue; }
-            this.unregister(hn);
-        }
-    },
-    reset() {
-        if ( this.hostnameToDetails.size === 0 ) { return; }
-        for ( const details of this.hostnameToDetails.values() ) {
-            this.unregisterHandle(details.handle);
-        }
-        this.hostnameToDetails.clear();
-    },
-    unregisterHandle(handle) {
-        if ( handle instanceof Promise ) {
-            handle.then(handle => {
-                if ( handle ) { handle.unregister(); }
-            });
-        } else {
-            handle.unregister();
-        }
-    },
-};
+function isTrustedContext(fn, data) {
+    const docloc = document.location;
+    const origins = document.location.ancestorOrigins;
+    const url = origins?.length
+        ? new URL(origins.item(origins.length-1))
+        : docloc;
+    return Boolean(fn(data, url.href, url.hostname));
+}
 
-/******************************************************************************/
-
-function isTrustedContext(directives) {
-    const { href } = document.location;
-    for ( const directive of directives ) {
-        if ( (new RegExp(directive)).test(href) ) { return true; }
-    }
-    return false;
+function topFrameRulesMatcher(rules) {
+    const docloc = document.location;
+    const href = docloc.ancestorOrigins?.length
+        ? docloc.ancestorOrigins.item(docloc.ancestorOrigins.length-1)
+        : docloc.href;
+    const topurl = new URL(href);
+    const hostname = topurl.hostname;
+    let pos = 0;
+    do {
+        const value = rules.get(hostname.slice(pos));
+        if ( typeof value === 'boolean' ) { return value; }
+        pos = hostname.indexOf('.', pos) + 1;
+    } while ( pos !== 0 );
+    return rules.get('*') === true;
 }
 
 function initCommChannel(name) {
@@ -143,33 +87,24 @@ function initCommChannel(name) {
 }
 
 function assembleIsolatedWorldWrapper(isolatedCode, options) {
-    const code = [ '(function() {' ];
-    if ( options.debug ) {
-        code.push('debugger;');
-    }
-    if ( options.trustedSiteRegexes?.length ) {
-        code.push(isTrustedContext.toString());
-        code.push(`if ( isTrustedContext(${JSON.stringify(options.trustedSiteRegexes)}) ) { return; }`);
-    }
-    if ( options.bcSecret ) {
+    const code = [ '(function isolatedWorldScriptlets() {' ];
+    code.push(`self.uBO_scriptletsInjected = ${JSON.stringify(options.filters)};`);
+    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    if ( options.scriptletGlobals?.bcSecret ) {
         code.push(initCommChannel.toString());
-        code.push(`initComm(${JSON.stringify(options.bcSecret)});`);
+        code.push(`initCommChannel(${JSON.stringify(options.scriptletGlobals?.bcSecret)});`);
     }
-    code.push(isolatedCode);
+    if ( options.debug ) { code.push('debugger;'); }
+    code.push(isolatedCode ?? '');
     code.push('})();');
     return code.join('\n');
 }
 
 function assembleMainWorldWrapper(mainCode, options) {
-    const code = [ '(function() {' ];
-    if ( options.debug ) {
-        code.push('debugger;');
-    }
-    if ( options.trustedSiteRegexes?.length ) {
-        code.push(isTrustedContext.toString());
-        code.push(`if ( isTrustedContext(${JSON.stringify(options.trustedSiteRegexes)}) ) { return; }`);
-    }
-    code.push(mainCode);
+    const code = [ '(function mainWorldScriptlets() {' ];
+    if ( options.debug ) { code.push('debugger;'); }
+    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    code.push(mainCode ?? '');
     code.push('})();');
     return code.join('\n');
 }
@@ -179,6 +114,7 @@ function assembleMainWorldWrapper(mainCode, options) {
 export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     constructor() {
         super();
+        this.cacheKey = 'makescriptletsCommitResult';
         this.warOrigin = vAPI.getURL('/web_accessible_resources');
         this.warSecret = undefined;
         this.isDevBuild = undefined;
@@ -186,14 +122,14 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.bc = onBroadcast(msg => {
             switch ( msg.what ) {
             case 'filteringBehaviorChanged':
-                this.clearCache({ hostname: msg.hostname });
+                this.registerContentScripts();
                 break;
             case 'hiddenSettingsChanged':
                 this.isDevBuild = undefined;
                 /* fall through */
             case 'loggerEnabled':
             case 'loggerDisabled':
-                this.clearCache();
+                this.registerContentScripts();
                 break;
             case 'loggerLevelChanged':
                 this.logLevel = msg.level;
@@ -211,7 +147,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                         });
                     }
                 });
-                this.clearCache();
+                this.registerContentScripts();
                 break;
             }
         });
@@ -219,44 +155,59 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
 
     reset() {
         super.reset();
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.clearCache();
-        scripting.reset();
+        cacheStorage.remove(this.cacheKey);
+        scripting.unregisterContentScripts();
     }
 
-    freeze() {
+    async freeze() {
         super.freeze();
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.clearCache();
-        scripting.reset();
+        const result = await this.compileContentScripts();
+        return this.commitContentScripts(result);
     }
 
-    clearCache(details = {}) {
-        scripting.reset(details);
+    async fromSelfie(selfie) {
+        await this.registerContentScripts();
+        return super.fromSelfie(selfie);
     }
 
-    retrieve(request) {
-        const { hostname } = request;
-
-        // https://github.com/gorhill/uBlock/issues/2835
-        // Do not inject scriptlets if the site is under an `allow` rule.
-        if ( µb.userSettings.advancedUserEnabled ) {
-            if ( sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2 ) {
-                return;
-            }
+    async registerContentScripts() {
+        const bin = await cacheStorage.get(this.cacheKey);
+        if ( bin?.[this.cacheKey] ) {
+            await this.commitContentScripts(bin[this.cacheKey]);
         }
+    }
 
+    async compileContentScripts() {
+        const map = this.scriptletDB.retrieveAll();
+        makescriptlets.reset();
+        makescriptlets.init(builtinScriptlets);
+        for ( const [ rawargs, details ] of map ) {
+            details.args = JSON.parse(rawargs);
+            details.trustedSource = true;
+            makescriptlets.compile('', details);
+        }
+        const template = await fetch('/js/scriptlet.template.js').then(response => {
+            if ( response.ok !== true ) { return ''; }
+            return response.text();
+        });
+        const result = template ? makescriptlets.commit('', template) : undefined;
+        if ( result ) {
+            await cacheStorage.set({ [this.cacheKey]: result });
+        } else {
+            await cacheStorage.remove(this.cacheKey);
+        }
+        return result;
+    }
+
+    commitContentScripts(result) {
+        if ( Boolean(result) === false ) {
+            return scripting.unregisterContentScripts();
+        }
         if ( this.isDevBuild === undefined ) {
             this.isDevBuild = vAPI.webextFlavor.soup.has('devbuild') ||
                 µb.hiddenSettings.filterAuthorMode;
         }
-
-        if ( this.warSecret === undefined ) {
-            this.warSecret = vAPI.warSecret.long();
-        }
-
-        const bcSecret = vAPI.generateSecret(3);
-
+        this.warSecret = vAPI.warSecret.long(this.warSecret);
         const options = {
             scriptletGlobals: {
                 warOrigin: this.warOrigin,
@@ -266,48 +217,52 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             debugScriptlets: µb.hiddenSettings.debugScriptlets,
         };
         if ( logger.enabled ) {
-            options.scriptletGlobals.bcSecret = bcSecret;
+            options.scriptletGlobals.bcSecret = vAPI.generateSecret(3);
             options.scriptletGlobals.logLevel = this.logLevel;
         }
-
-        const scriptletDetails = super.retrieve(request, options);
-        if ( scriptletDetails === undefined ) { return; }
-        if ( Boolean(scriptletDetails.isolatedWorld) === false ) {
-            if ( Boolean(scriptletDetails.mainWorld) === false ) { return; }
+        if ( result['ISOLATED'] ) {
+            options.isolatedCode = assembleIsolatedWorldWrapper(result['ISOLATED'].code, options);
         }
-
-        const out = {
-            hostname,
-            bcSecret,
-            filters: scriptletDetails.filters,
-        };
-
-        const trustedSiteRegexes = µb.trustedSites.directiveRegexesFromHostname(hostname);
-
-        if ( scriptletDetails.isolatedWorld ) {
-            out.isolatedWorld =
-                assembleIsolatedWorldWrapper(scriptletDetails.isolatedWorld, {
-                    bcSecret: logger.enabled ? out.bcSecret : undefined,
-                    debug: µb.hiddenSettings.debugScriptletInjector,
-                    trustedSiteRegexes,
-                });
+        if ( result['MAIN'] ) {
+            options.mainCode = assembleMainWorldWrapper(result['MAIN'].code, options);
         }
-
-        if ( scriptletDetails.mainWorld ) {
-            out.mainWorld =
-                assembleMainWorldWrapper(scriptletDetails.mainWorld, {
-                    debug: µb.hiddenSettings.debugScriptlets,
-                    trustedSiteRegexes,
-                });
+        const trustedSiteMatcher = µb.trustedSites.getMatcher();
+        const earlyBailoutCode = [
+            isTrustedContext.toString(),
+            'if ( isTrustedContext(',
+            `${trustedSiteMatcher.match.toString()},`,
+            'new Map(',
+            JSON.stringify(Array.from(trustedSiteMatcher.data).filter(a => a[0] !== '#')),
+            ')) ) { return; }',
+        ];
+        const topFrameRules = sessionFirewall.export1stPartyRules().filter(a =>
+            a[1] !== 'behind-the-scene'
+        );
+        if ( topFrameRules?.length ) {
+            earlyBailoutCode.push(
+                topFrameRulesMatcher.toString(),
+                `if ( topFrameRulesMatcher(new Map(${JSON.stringify(topFrameRules)})) ) { return; }`,
+            );
         }
-
-        return out;
+        options.earlyBailoutCode = earlyBailoutCode.join('\n');
+        return scripting.registerContentScripts(options);
     }
 
-    toLogger(request, details) {
-        if ( details === undefined ) { return; }
+    retrieve(request) {
+        const hostname = hostnameFromURI(request.url);
+        // https://github.com/gorhill/uBlock/issues/2835
+        // Do not inject scriptlets if the site is under an `allow` rule.
+        if ( µb.userSettings.advancedUserEnabled ) {
+            if ( sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2 ) {
+                return false;
+            }
+        }
+        return super.retrieve(request);
+    }
+
+    toLogger(request, filters) {
+        if ( Array.isArray(filters) === false ) { return; }
         if ( logger.enabled !== true ) { return; }
-        if ( Array.isArray(details.filters) === false ) { return; }
         µb.filteringContext
             .duplicate()
             .fromTabId(request.tabId)
@@ -315,7 +270,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             .setType('scriptlet')
             .setURL(request.url)
             .setDocOriginFromURL(request.url)
-            .setFilter(details.filters.map(a => ({ source: 'extended', raw: a })))
+            .setFilter(filters.map(a => ({ source: 'extended', raw: a })))
             .toLogger();
     }
 }
@@ -325,20 +280,5 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
 const scriptletFilteringEngine = new ScriptletFilteringEngineEx();
 
 export default scriptletFilteringEngine;
-
-scripting.addRequestScriptletsListener(details => {
-    console.info('SCRIPTLETLISTENER', JSON.stringify(details));
-    if ( typeof details.frameId !== 'number' ) { return; }
-    const hostname = hostnameFromURI(details.url);
-    const domain = domainFromHostname(hostname);
-    return scriptletFilteringEngine.retrieve({
-        tabId: details.tabId,
-        frameId: details.frameId,
-        url: details.url,
-        hostname,
-        domain,
-        ancestors: details.ancestors,
-    });
-});
 
 /******************************************************************************/
