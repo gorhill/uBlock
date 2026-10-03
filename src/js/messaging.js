@@ -698,24 +698,15 @@ const retrieveContentScriptParameters = async function(sender, request) {
         });
     }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
-    //   For non-network URIs, scriptlet injection is deferred to here. The
-    //   effective URL is available here in `request.url`.
-    if ( logger.enabled ) {
-        const filters = scriptletFilteringEngine.retrieve(request);
-        if ( filters ) {
-            scriptletFilteringEngine.toLogger(request, filters);
-        }
-    }
-    if ( request.needScriptlets ) {
-        scripting.injectNow(request);
-    }
-
     // https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623
     //   Inject as early as possible to make the cosmetic logger code less
     //   sensitive to the removal of DOM nodes which may match injected
     //   cosmetic filters.
     if ( logger.enabled ) {
+        const filters = scriptletFilteringEngine.retrieve(request);
+        if ( filters ) {
+            scriptletFilteringEngine.toLogger(request, filters);
+        }
         if (
             noSpecificCosmeticFiltering === false ||
             noGenericCosmeticFiltering === false

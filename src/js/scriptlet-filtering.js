@@ -30,6 +30,7 @@ import cacheStorage from './cachestorage.js';
 import { hostnameFromURI } from './uri-utils.js';
 import logger from './logger.js';
 import { onBroadcast } from './broadcast.js';
+import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import µb from './background.js';
 
@@ -87,8 +88,7 @@ function initCommChannel(name) {
 }
 
 function assembleIsolatedWorldWrapper(isolatedCode, options) {
-    const code = [ '(function isolatedWorldScriptlets() {' ];
-    code.push(`self.uBO_scriptletsInjected = ${JSON.stringify(options.filters)};`);
+    const code = [ '(function uBO_isolatedWorldScriptlets() {' ];
     code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
     if ( options.scriptletGlobals?.bcSecret ) {
         code.push(initCommChannel.toString());
@@ -101,7 +101,7 @@ function assembleIsolatedWorldWrapper(isolatedCode, options) {
 }
 
 function assembleMainWorldWrapper(mainCode, options) {
-    const code = [ '(function mainWorldScriptlets() {' ];
+    const code = [ '(function uBO_mainWorldScriptlets() {' ];
     if ( options.debug ) { code.push('debugger;'); }
     code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
     code.push(mainCode ?? '');
@@ -119,38 +119,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.warSecret = undefined;
         this.isDevBuild = undefined;
         this.logLevel = 1;
-        this.bc = onBroadcast(msg => {
-            switch ( msg.what ) {
-            case 'filteringBehaviorChanged':
-                this.registerContentScripts();
-                break;
-            case 'hiddenSettingsChanged':
-                this.isDevBuild = undefined;
-                /* fall through */
-            case 'loggerEnabled':
-            case 'loggerDisabled':
-                this.registerContentScripts();
-                break;
-            case 'loggerLevelChanged':
-                this.logLevel = msg.level;
-                vAPI.tabs.query({
-                    discarded: false,
-                    url: [ 'http://*/*', 'https://*/*' ],
-                }).then(tabs => {
-                    for ( const tab of tabs ) {
-                        const { status } = tab;
-                        if ( status !== 'loading' && status !== 'complete' ) { continue; }
-                        vAPI.tabs.executeScript(tab.id, {
-                            allFrames: true,
-                            file: `/js/scriptlets/scriptlet-loglevel-${this.logLevel}.js`,
-                            matchAboutBlank: true,
-                        });
-                    }
-                });
-                this.registerContentScripts();
-                break;
-            }
-        });
     }
 
     reset() {
@@ -162,11 +130,13 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     async freeze() {
         super.freeze();
         const result = await this.compileContentScripts();
+        this.#startListening();
         return this.commitContentScripts(result);
     }
 
     async fromSelfie(selfie) {
         await this.registerContentScripts();
+        this.#startListening();
         return super.fromSelfie(selfie);
     }
 
@@ -181,6 +151,19 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         const map = this.scriptletDB.retrieveAll();
         makescriptlets.reset();
         makescriptlets.init(builtinScriptlets);
+        const promises = [];
+        for ( const [ name, entry ] of redirectEngine.resources ) {
+            if ( entry.origin !== 'war' && entry.origin !== 'user' ) { continue; }
+            if ( typeof entry.data !== 'string' ) { continue; }
+            const details = {
+                name,
+                code: entry.data,
+                alias: entry.aliases,
+                requiresTrust: entry.requiresTrust,
+            };
+            promises.push(makescriptlets.importScriptlet(details));
+        }
+        await Promise.all(promises);
         for ( const [ rawargs, details ] of map ) {
             details.args = JSON.parse(rawargs);
             details.trustedSource = true;
@@ -213,17 +196,17 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 warOrigin: this.warOrigin,
                 warSecret: this.warSecret,
             },
-            debug: this.isDevBuild,
-            debugScriptlets: µb.hiddenSettings.debugScriptlets,
         };
         if ( logger.enabled ) {
             options.scriptletGlobals.bcSecret = vAPI.generateSecret(3);
             options.scriptletGlobals.logLevel = this.logLevel;
         }
         if ( result['ISOLATED'] ) {
+            options.debug = µb.hiddenSettings.debugIsolatedScriptlets;
             options.isolatedCode = assembleIsolatedWorldWrapper(result['ISOLATED'].code, options);
         }
         if ( result['MAIN'] ) {
+            options.debug = µb.hiddenSettings.debugMainScriptlets;
             options.mainCode = assembleMainWorldWrapper(result['MAIN'].code, options);
         }
         const trustedSiteMatcher = µb.trustedSites.getMatcher();
@@ -272,6 +255,42 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             .setDocOriginFromURL(request.url)
             .setFilter(filters.map(a => ({ source: 'extended', raw: a })))
             .toLogger();
+    }
+
+    #startListening() {
+        if ( this.bc ) { return; }
+        this.bc = onBroadcast(msg => {
+            switch ( msg.what ) {
+            case 'filteringBehaviorChanged':
+                this.registerContentScripts();
+                break;
+            case 'hiddenSettingsChanged':
+                this.isDevBuild = undefined;
+                /* fall through */
+            case 'loggerEnabled':
+            case 'loggerDisabled':
+                this.registerContentScripts();
+                break;
+            case 'loggerLevelChanged':
+                this.logLevel = msg.level;
+                vAPI.tabs.query({
+                    discarded: false,
+                    url: [ 'http://*/*', 'https://*/*' ],
+                }).then(tabs => {
+                    for ( const tab of tabs ) {
+                        const { status } = tab;
+                        if ( status !== 'loading' && status !== 'complete' ) { continue; }
+                        vAPI.tabs.executeScript(tab.id, {
+                            allFrames: true,
+                            file: `/js/scriptlets/scriptlet-loglevel-${this.logLevel}.js`,
+                            matchAboutBlank: true,
+                        });
+                    }
+                });
+                this.registerContentScripts();
+                break;
+            }
+        });
     }
 }
 

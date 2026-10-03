@@ -88,6 +88,10 @@ cp "$UBO_DIR"/src/js/i18n.js "$UBOL_DIR"/js/
 cp "$UBO_DIR"/src/js/jsonpath.js "$UBOL_DIR"/js/
 cp "$UBO_DIR"/src/js/redirect-resources.js "$UBOL_DIR"/js/
 cp "$UBO_DIR"/src/js/regex-analyzer.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/make-scriptlets.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/make-utils.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/safe-replace.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet.template.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/trusted-tokens.js "$UBOL_DIR"/js/
 cp -R "$UBO_DIR"/src/js/resources "$UBOL_DIR"/js/
 cp "$UBO_DIR"/src/js/static-filtering-parser.js "$UBOL_DIR"/js/
@@ -145,6 +149,10 @@ cp "$UBO_DIR"/src/js/trusted-tokens.js "$UBOL_BUILD_DIR"/js/
 cp -R platform/mv3/scriptlets "$UBOL_BUILD_DIR"/
 cp -R platform/mv3/extension/js/offscreen "$UBOL_BUILD_DIR"/js/
 cp "$UBO_DIR"/src/js/regex-analyzer.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/make-scriptlets.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/make-utils.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/safe-replace.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet.template.js "$UBOL_BUILD_DIR"/js/offscreen/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources
 cp "$UBO_DIR"/src/web_accessible_resources/* "$UBOL_BUILD_DIR"/web_accessible_resources/
 cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/

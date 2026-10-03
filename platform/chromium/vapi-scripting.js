@@ -49,7 +49,10 @@ function uBO_isolatedCode(mainCode) {
 
 function uBO_assembleIsolatedCode(details) {
     const { isolatedCode = '', mainCode = '' } = details;
-    let code = [ '(function isolatedWorldWrapper() {' ];
+    if ( Boolean(isolatedCode) === false ) {
+        if ( Boolean(mainCode) === false ) { return; }
+    }
+    let code = [ '(function uBO_isolatedWorldWrapper() {' ];
     if ( details.earlyBailoutCode ) {
         code.push(details.earlyBailoutCode);
     }
@@ -64,38 +67,45 @@ function uBO_assembleIsolatedCode(details) {
 
 /******************************************************************************/
 
+let contentScriptCode;
+
+let onceFn = async ( ) => {
+    if ( Boolean(contentScriptCode) === false ) { return; }
+    const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
+    for ( const tab of tabs  ) {
+        if ( tab.discarded === true ) { continue; }
+        if ( tab.status === 'unloaded' ) { continue; }
+        browser.tabs.executeScript(tab.id, {
+            allFrames: true,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+            code: contentScriptCode,
+        }).catch(( ) => {
+        });
+    }
+};
+
 export function registerContentScripts(details) {
-    registerContentScripts.code = uBO_assembleIsolatedCode(details);
+    contentScriptCode = uBO_assembleIsolatedCode(details);
+    if ( onceFn === undefined ) { return; }
+    onceFn();
+    onceFn = undefined;
 }
 
 export function unregisterContentScripts() {
-    registerContentScripts.code = undefined;
-}
-
-export function injectNow(/*details*/) {
-    /*if ( Boolean(registerContentScripts.code) === false ) { return; }
-    browser.tabs.executeScript(details.tabId, {
-        frameId: details.frameId,
-        matchAboutBlank: true,
-        runAt: 'document_start',
-        code: registerContentScripts.code,
-    });*/
+    contentScriptCode = undefined;
 }
 
 /******************************************************************************/
 
 browser.webNavigation.onCommitted.addListener(details => {
-    if ( Boolean(registerContentScripts.code) === false ) { return; }
-    if ( /^https?:\/\//.test(details.url) === false ) { return; }
+    if ( /^https?:|^about:/.test(details.url) === false ) { return; }
+    if ( Boolean(contentScriptCode) === false ) { return; }
     browser.tabs.executeScript(details.tabId, {
         frameId: details.frameId,
-        allFrames: true,
         matchAboutBlank: true,
         runAt: 'document_start',
-        code: registerContentScripts.code,
+        code: contentScriptCode,
+    }).catch(( ) => {
     });
 });
-
-//browser.webNavigation.onCompleted.addListener(( ) => { });
-
-//browser.webNavigation.onErrorOccurred.addListener(( ) => { });

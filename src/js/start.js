@@ -46,7 +46,6 @@ import {
 
 import cacheStorage from './cachestorage.js';
 import contextMenu from './contextmenu.js';
-import { filteringBehaviorChanged } from './broadcast.js';
 import io from './assets.js';
 import { redirectEngine } from './redirect-engine.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
@@ -440,10 +439,6 @@ if ( selfieIsValid !== true ) {
     }
 }
 
-// Flush memory cache -- unsure whether the browser does this internally
-// when loading a new extension.
-filteringBehaviorChanged();
-
 // Final initialization steps after all needed assets are in memory.
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/974
@@ -479,7 +474,6 @@ if ( selfieIsValid ) {
 ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
 µb.isReadyResolve();
-
 
 // https://github.com/chrisaljoudi/uBlock/issues/184
 //   Check for updates not too far in the future.

@@ -25,7 +25,7 @@
 
 function uBO_assembleCode(world, contentScriptCode, details) {
     if ( Boolean(contentScriptCode) === false ) { return; }
-    const code = [ `(function ${world}WorldWrapper() {` ];
+    const code = [ `(function uBO_${world}WorldWrapper() {` ];
     if ( details.earlyBailoutCode ) {
         code.push(details.earlyBailoutCode);
     }
@@ -35,9 +35,6 @@ function uBO_assembleCode(world, contentScriptCode, details) {
 }
 
 /******************************************************************************/
-
-export function injectNow() {
-}
 
 export function registerContentScripts(details) {
     unregisterContentScripts();

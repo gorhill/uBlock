@@ -30,13 +30,15 @@
 
 /******************************************************************************/
 
-self.$scriptletCode$
-
-/******************************************************************************/
-
 const scriptletGlobals = typeof SCRIPTLETGLOBALS !== 'undefined'// eslint-disable-line
     ? SCRIPTLETGLOBALS                                          // eslint-disable-line
     : {};
+
+/******************************************************************************/
+
+self.$scriptletCode$
+
+/******************************************************************************/
 
 const $hasHostnames$ = self.$hasHostnames$;
 const $hasEntities$ = self.$hasEntities$;
