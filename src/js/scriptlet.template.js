@@ -137,7 +137,7 @@ if ( $hasHostnames$ ) {
     // Collect arglist references
     if ( todoIndices.size ) {
         const $scriptletArglistRefs$ = self.$scriptletArglistRefs$;
-        const arglistRefs = $scriptletArglistRefs$.split(';');
+        const arglistRefs = $scriptletArglistRefs$;
         for ( const i of todoIndices ) {
             for ( const ref of JSON.parse(`[${arglistRefs[i]}]`) ) {
                 todo.add(ref);
@@ -170,7 +170,7 @@ if ( todo.size && todo.has(0) === false ) {
     const $scriptletFunctions$ = self.$scriptletFunctions$;
     const $scriptletArgs$ = self.$scriptletArgs$;
     const $scriptletArglists$ = self.$scriptletArglists$;
-    const arglists = $scriptletArglists$.split(';');
+    const arglists = $scriptletArglists$;
     const args = $scriptletArgs$;
     for ( const ref of todo ) {
         if ( ref < 0 ) { continue; }
