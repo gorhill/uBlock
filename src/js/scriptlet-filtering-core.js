@@ -37,56 +37,6 @@ const normalizeRawFilter = parser => {
     return JSON.stringify(args);
 };
 
-/*const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
-    if ( mainMap.has(rawToken) || isolatedMap.has(rawToken) ) { return; }
-    const args = JSON.parse(rawToken);
-    const token = `${args[0]}.js`;
-    const details = reng.contentFromName(token, 'text/javascript');
-    if ( details === undefined ) { return; }
-    const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
-    const match = /^function\s+([^(\s]+)\s*\(/.exec(details.js);
-    const fname = match && match[1];
-    const content = patchScriptlet(fname, details.js, args.slice(1));
-    if ( fname ) {
-        targetWorldMap.set(token, { code: details.js });
-    }
-    const dependencies = details.dependencies || [];
-    while ( dependencies.length !== 0 ) {
-        const token = dependencies.shift();
-        if ( targetWorldMap.has(token) ) { continue; }
-        const details = reng.contentFromName(token, 'fn/javascript') ||
-            reng.contentFromName(token, 'text/javascript');
-        if ( details === undefined ) { continue; }
-        targetWorldMap.set(token, { code: details.js });
-        if ( Array.isArray(details.dependencies) === false ) { continue; }
-        dependencies.push(...details.dependencies);
-    }
-    targetWorldMap.set(rawToken, {
-        code: [
-            'try {',
-                `\t${content}`,
-            '} catch (e) {',
-                debug ? '\tconsole.error(e);' : '',
-            '}',
-        ].join('\n'),
-        priority: details.priority ?? 0,
-    });
-};*/
-
-// Fill-in scriptlet argument placeholders.
-/*const patchScriptlet = (fname, content, arglist) => {
-    if ( fname ) {
-        content = `${fname}({{args}});`;
-    } else {
-        for ( let i = 0; i < arglist.length; i++ ) {
-            content = content.replace(`{{${i+1}}}`, arglist[i]);
-        }
-    }
-    return content.replace('{{args}}',
-        JSON.stringify(arglist).slice(1,-1).replace(/\$/g, '$$$')
-    );
-};*/
-
 const requote = s => {
     if ( /^(["'`]).*\1$|,|^$/.test(s) === false ) { return s; }
     if ( s.includes("'") === false ) { return `'${s}'`; }

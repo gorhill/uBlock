@@ -674,7 +674,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
     request.frameId = frameId;
     request.hostname = hostnameFromURI(request.url);
     request.domain = domainFromHostname(request.hostname);
-    //request.ancestors = pageStore.getFrameAncestorDetails(frameId);
+    request.ancestors = pageStore.getFrameAncestorDetails(frameId);
 
     const scf = response.specificCosmeticFilters =
         cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
