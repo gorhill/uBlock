@@ -262,12 +262,19 @@ export async function importScriptlet(details) {
     const code = /^function\s+[^(]+\(.*?\)\s*\{.*\}$/s.test(funcBody)
         ? `function ${funcName}(...args) { // ${name}\n(${funcBody})(...args)\n}`
         : `function ${funcName}() { // ${name}\n${funcBody}\n}`;
-    const entry = { name: funcName, code, world: 'MAIN',
+    const entry = { name: funcName, code, world: details.world ?? 'MAIN',
         requiresTrust: details.requiresTrust === true,
     };
+    if ( Array.isArray(details.dependencies) ) {
+        entry.dependencies = [ ...details.dependencies ];
+    }
     resourceDetails.set(funcName, entry);
     resourceAliases.set(name, funcName);
-    if ( typeof details.alias === 'string' ) {
+    if ( Array.isArray(details.aliases) ) {
+        for ( const alias of details.aliases ) {
+            resourceAliases.set(alias, funcName);
+        }
+    } else if ( typeof details.alias === 'string' ) {
         resourceAliases.set(details.alias, funcName);
     } else if ( Array.isArray(details.alias) ) {
         for ( const alias of details.alias ) {

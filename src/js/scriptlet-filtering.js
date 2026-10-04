@@ -156,12 +156,10 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         for ( const [ name, entry ] of redirectEngine.resources ) {
             if ( entry.origin !== 'war' && entry.origin !== 'user' ) { continue; }
             if ( typeof entry.data !== 'string' ) { continue; }
-            const details = {
+            const details = Object.assign({}, entry, {
                 name,
                 code: entry.data,
-                alias: entry.aliases,
-                requiresTrust: entry.requiresTrust,
-            };
+            });
             promises.push(makescriptlets.importScriptlet(details));
         }
         await Promise.all(promises);
