@@ -135,16 +135,17 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     }
 
     async fromSelfie(selfie) {
-        await this.registerContentScripts();
+        const r = await this.registerContentScripts();
+        if ( r !== true ) { return false; }
         this.#startListening();
         return super.fromSelfie(selfie);
     }
 
     async registerContentScripts() {
         const bin = await cacheStorage.get(this.cacheKey);
-        if ( bin?.[this.cacheKey] ) {
-            await this.commitContentScripts(bin[this.cacheKey]);
-        }
+        if ( Boolean(bin?.[this.cacheKey]) === false ) { return false; }
+        await this.commitContentScripts(bin[this.cacheKey]);
+        return true;
     }
 
     async compileContentScripts() {
