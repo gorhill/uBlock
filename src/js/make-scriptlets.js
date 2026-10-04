@@ -259,10 +259,10 @@ export async function importScriptlet(details) {
         .join('');
     const funcName = `zeta_${digestStr}`;
     const { name } = details;
-    const entry = {
-        name: funcName,
-        code: `function ${funcName}() { // ${name}\n${funcBody}\n}`,
-        world: 'MAIN',
+    const code = /^function\s+[^(]+\(.*?\)\s*\{.*\}$/s.test(funcBody)
+        ? `function ${funcName}(...args) { // ${name}\n(${funcBody})(...args)\n}`
+        : `function ${funcName}() { // ${name}\n${funcBody}\n}`;
+    const entry = { name: funcName, code, world: 'MAIN',
         requiresTrust: details.requiresTrust === true,
     };
     resourceDetails.set(funcName, entry);
