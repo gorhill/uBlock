@@ -125,10 +125,6 @@ if ( Array.isArray(allSelectors.exceptions) ) {
     }
 }
 
-if ( self.uBO_scriptletsInjected !== undefined ) {
-    matchedSelectors.push(...self.uBO_scriptletsInjected);
-}
-
 if ( matchedSelectors.length === 0 ) { return; }
 
 return matchedSelectors;

@@ -156,10 +156,8 @@ staticExtFilteringEngine.fromSelfie = async function(selfie) {
     cosmeticFilteringEngine.fromSelfie(selfie.cosmetic);
     httpheaderFilteringEngine.fromSelfie(selfie.httpHeaders);
     htmlFilteringEngine.fromSelfie(selfie.html);
-    if ( scriptletFilteringEngine.fromSelfie(selfie.scriptlets) === false ) {
-        return false;
-    }
-    return true;
+    const r = await scriptletFilteringEngine.fromSelfie(selfie.scriptlets);
+    return Boolean(r);
 };
 
 /******************************************************************************/

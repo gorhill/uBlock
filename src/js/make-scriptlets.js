@@ -216,11 +216,11 @@ export function commit(rulesetId, template) {
         );
         content = safeReplace(content,
             'self.$scriptletArglistRefs$',
-            `/* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[1]).join(';'))}`
+            `/* ${hostnames.length} */ ${JSON.stringify(hostnames.map(a => a[1]))}`
         );
         content = safeReplace(content,
             'self.$scriptletArglists$',
-            `/* ${arglists.size} */ ${JSON.stringify(Array.from(arglists.keys()).join(';'))}`
+            `/* ${arglists.size} */ ${JSON.stringify(Array.from(arglists.keys()))}`
         );
         content = safeReplace(content,
             'self.$scriptletArgs$',

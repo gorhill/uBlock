@@ -592,10 +592,10 @@ const renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    const isFiltering = popupData.netFilteringSwitch;
+    const { isTrustedSite } = popupData;
 
     dom.cl.toggle(dom.body, 'advancedUser', popupData.advancedUserEnabled === true);
-    dom.cl.toggle(dom.body, 'off', popupData.pageURL === '' || isFiltering !== true);
+    dom.cl.toggle(dom.body, 'off', popupData.pageURL === '' || isTrustedSite);
     dom.cl.toggle(dom.body, 'needSave', popupData.matrixIsDirty === true);
 
     // The hostname information below the power switch
@@ -614,7 +614,7 @@ const renderPopup = function() {
         }
     }
 
-    const canPick = popupData.canElementPicker && isFiltering;
+    const canPick = popupData.canElementPicker && isTrustedSite !== true;
 
     dom.cl.toggle('#gotoZap', 'canPick', canPick);
     dom.cl.toggle('#gotoPick', 'canPick', canPick && popupData.userFiltersAreEnabled);
@@ -868,13 +868,13 @@ const renderPopupLazy = (( ) => {
 
 /******************************************************************************/
 
-const toggleNetFilteringSwitch = function(ev) {
+const toggleTrustSwitch = function(ev) {
     if ( !popupData || !popupData.pageURL ) { return; }
     messaging.send('popupPanel', {
-        what: 'toggleNetFiltering',
+        what: 'toggleTrustedStatus',
         url: popupData.pageURL,
         scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
-        state: dom.cl.toggle(dom.body, 'off') === false,
+        state: dom.cl.toggle(dom.body, 'off'),
         tabId: popupData.tabId,
     });
     renderTooltips('#switch');
@@ -911,7 +911,7 @@ const gotoReport = function() {
         blocked: popupData.pageCounts.blocked.any,
     };
     const reportedStates = [
-        { name: 'enabled', prop: 'netFilteringSwitch', expected: true },
+        { name: 'enabled', prop: 'isTrustedSite', expected: false },
         { name: 'no-cosmetic-filtering', prop: 'noCosmeticFiltering', expected: false },
         { name: 'no-large-media', prop: 'noLargeMedia', expected: false },
         { name: 'no-popups', prop: 'noPopups', expected: false },
@@ -1532,7 +1532,7 @@ const getPopupData = async function(tabId, first = false) {
 
 /******************************************************************************/
 
-dom.on('#switch', 'click', toggleNetFilteringSwitch);
+dom.on('#switch', 'click', toggleTrustSwitch);
 dom.on('#gotoZap', 'click', gotoZap);
 dom.on('#gotoPick', 'click', gotoPick);
 dom.on('#gotoReport', 'click', gotoReport);

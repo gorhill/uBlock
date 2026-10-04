@@ -1320,7 +1320,7 @@ vAPI.DOMFilterer = class {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
             url: vAPI.effectiveSelf.location.href,
-            needScriptlets: self.uBO_scriptletsInjected === undefined,
+            realURL: document.location.href,
         }).then(response => {
             onResponseReady(response);
         });

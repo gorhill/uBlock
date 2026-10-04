@@ -458,6 +458,20 @@ class DynamicHostRuleFiltering {
         return false;
     }
 
+    export1stPartyRules() {
+        const out = [];
+        const bitoffset = typeBitOffsets['*'];
+        for ( const [ srcdes, bits ] of this.rules ) {
+            const match = /^(\S+) (\S+)/.exec(srcdes);
+            if ( match === null ) { continue; }
+            if ( match[1] !== match[2] && match[2] !== '*' ) { continue; }
+            const value = (bits >>> bitoffset) & 0b11;
+            if  ( value === 0 ) { continue; }
+            out.push([ match[1], value === 2 ]);
+        }
+        return out;
+    }
+
     toSelfie() {
         return {
             magicId: this.magicId,

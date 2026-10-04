@@ -19,11 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global browser */
+
+/******************************************************************************/
+
 import './vapi-common.js';
 import './vapi-background.js';
 import './vapi-background-ext.js';
-
-/******************************************************************************/
 
 // The following modules are loaded here until their content is better organized
 import './commands.js';
@@ -44,7 +46,6 @@ import {
 
 import cacheStorage from './cachestorage.js';
 import contextMenu from './contextmenu.js';
-import { filteringBehaviorChanged } from './broadcast.js';
 import io from './assets.js';
 import { redirectEngine } from './redirect-engine.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
@@ -172,39 +173,17 @@ const onNetWhitelistReady = (netWhitelistRaw, adminExtra) => {
         netWhitelistRaw = netWhitelistRaw.split('\n');
     }
 
-    // Remove now obsolete built-in trusted directives
-    if ( lastVersionInt !== thisVersionInt ) {
-        if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b12') ) {
-            const obsolete = [
-                'about-scheme',
-                'chrome-scheme',
-                'edge-scheme',
-                'opera-scheme',
-                'vivaldi-scheme',
-                'wyciwyg-scheme',
-            ];
-            for ( const directive of obsolete ) {
-                const i = netWhitelistRaw.findIndex(s =>
-                    s === directive || s === `# ${directive}`
-                );
-                if ( i === -1 ) { continue; }
-                netWhitelistRaw.splice(i, 1);
-            }
-        }
-    }
-
     // Append admin-controlled trusted-site directives
     if ( adminExtra instanceof Object ) {
         if ( Array.isArray(adminExtra.trustedSiteDirectives) ) {
             for ( const directive of adminExtra.trustedSiteDirectives ) {
-                µb.netWhitelistDefault.push(directive);
+                µb.defaultTrustedSiteDirectives.push(directive);
                 netWhitelistRaw.push(directive);
             }
         }
     }
 
-    µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
-    µb.netWhitelistModifyTime = Date.now();
+    µb.trustedSites.fromLines(netWhitelistRaw);
 };
 
 /******************************************************************************/
@@ -368,7 +347,7 @@ const createDefaultProps = ( ) => {
         'dynamicFilteringString': µb.dynamicFilteringDefault.join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': µb.hostnameSwitchesDefault.join('\n'),
-        'netWhitelist': µb.netWhitelistDefault,
+        'netWhitelist': µb.defaultTrustedSiteDirectives,
         'version': '0.0.0.0'
     };
     toFetch(µb.restoreBackupSettings, fetchableProps);
@@ -460,10 +439,6 @@ if ( selfieIsValid !== true ) {
     }
 }
 
-// Flush memory cache -- unsure whether the browser does this internally
-// when loading a new extension.
-filteringBehaviorChanged();
-
 // Final initialization steps after all needed assets are in memory.
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/974
@@ -499,7 +474,6 @@ if ( selfieIsValid ) {
 ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
 µb.isReadyResolve();
-
 
 // https://github.com/chrisaljoudi/uBlock/issues/184
 //   Check for updates not too far in the future.

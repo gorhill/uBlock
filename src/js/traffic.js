@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global browser */
+
 /******************************************************************************/
 
 import * as fc from  './filtering-context.js';
@@ -32,7 +34,6 @@ import htmlFilteringEngine from './html-filtering.js';
 import httpheaderFilteringEngine from './httpheader-filtering.js';
 import { isNetworkURI } from './uri-utils.js';
 import logger from './logger.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import textEncode from './text-encode.js';
 import µb from './background.js';
@@ -129,7 +130,7 @@ function onBeforeRootFrameRequest(fctxt) {
     let logData;
 
     // If the site is whitelisted, disregard strict blocking
-    const trusted = µb.getNetFilteringSwitch(requestURL) === false;
+    const trusted = µb.isTrustedSite(requestURL);
     if ( trusted ) {
         result = 2;
         if ( logger.enabled ) {
@@ -396,10 +397,7 @@ function onBeforeBehindTheSceneRequest(fctxt) {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1478
         //   Also remove potential redirection when request is to be
         //   whitelisted.
-        if (
-            result === 1 &&
-            µb.getNetFilteringSwitch(fctxt.tabOrigin) === false
-        ) {
+        if ( result === 1 && µb.isTrustedSite(fctxt.tabOrigin) ) {
             result = 2;
             fctxt.redirectURL = undefined;
             fctxt.filter = { engine: 'u', result: 2, raw: 'whitelisted' };
@@ -489,7 +487,7 @@ function onHeadersReceived(details) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     }
-    if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
+    if ( pageStore.isTrusted(fctxt) ) { return; }
 
     // To enforce strict-blocking with ipaddress option
     if ( isRootDoc && fctxt.ipaddress ) {
@@ -1018,7 +1016,7 @@ function injectCSP(fctxt, pageStore, responseHeaders) {
 
     const builtinDirectives = [];
 
-    if ( pageStore.filterScripting(fctxt, true) === 1 ) {
+    if ( pageStore.filterScripting(fctxt, false) === 1 ) {
         builtinDirectives.push(µb.hiddenSettings.noScriptingCSP);
         if ( logger.enabled ) {
             fctxt.setRealm('network').setType('scripting').toLogger();
@@ -1281,15 +1279,12 @@ function onResponseStarted(details) {
     if ( details.tabId === -1 ) { return; }
     const pageStore = µb.pageStoreFromTabId(details.tabId);
     if ( pageStore === null ) { return; }
-    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+    if ( pageStore.isTrusted() ) { return; }
     // To enforce strict-blocking with ipaddress option
-    if ( isGecko === false && details.type === 'main_frame' ) {
-        const fctxt = µb.filteringContext.fromWebrequestDetails(details);
-        const r = onBeforeRootFrameRequest(fctxt);
-        if ( r?.cancel ) { return; }
-    }
-    details.ancestors = pageStore.getFrameAncestorDetails(details.frameId);
-    scriptletFilteringEngine.injectNow(details);
+    if ( isGecko ) { return; }
+    if ( details.type !== 'main_frame' ) { return; }
+    const fctxt = µb.filteringContext.fromWebrequestDetails(details);
+    onBeforeRootFrameRequest(fctxt);
 }
 
 onResponseStarted.start = function() {

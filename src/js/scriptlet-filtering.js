@@ -19,199 +19,257 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global browser */
-
 /******************************************************************************/
 
-import {
-    domainFromHostname,
-    hostnameFromURI,
-} from './uri-utils.js';
+import * as makescriptlets from './make-scriptlets.js';
+import * as scripting from './vapi-scripting.js';
 
-import { MRUCache } from './mrucache.js';
 import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
-
+import { builtinScriptlets } from './resources/scriptlets.js';
+import cacheStorage from './cachestorage.js';
+import { hostnameFromURI } from './uri-utils.js';
 import logger from './logger.js';
 import { onBroadcast } from './broadcast.js';
-import { redirectEngine as reng } from './redirect-engine.js';
+import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import µb from './background.js';
 
 /******************************************************************************/
 
-const contentScriptRegisterer = {
-    id: 1,
-    hostnameToDetails: new Map(),
-    register(hostname, code) {
-        if ( browser.contentScripts === undefined ) { return false; }
-        if ( hostname === '' ) { return false; }
-        const details = this.hostnameToDetails.get(hostname);
-        if ( details !== undefined ) {
-            if ( code === details.code ) {
-                return details.handle instanceof Promise === false;
-            }
-            this.unregisterHandle(details.handle);
-            this.hostnameToDetails.delete(hostname);
-        }
-        const id = this.id++;
-        const promise = browser.contentScripts.register({
-            js: [ { code } ],
-            allFrames: true,
-            matches: [ `*://*.${hostname}/*` ],
-            matchAboutBlank: true,
-            runAt: 'document_start',
-        }).then(handle => {
-            const details = this.hostnameToDetails.get(hostname);
-            if ( details === undefined ) { return; }
-            if ( details.id !== id ) { return; }
-            details.handle = handle;
-        }).catch(( ) => {
-            this.hostnameToDetails.delete(hostname);
-        });
-        this.hostnameToDetails.set(hostname, { id, handle: promise, code });
-        return false;
-    },
-    unregister(hostname) {
-        if ( hostname === '' ) { return; }
-        if ( this.hostnameToDetails.size === 0 ) { return; }
-        const details = this.hostnameToDetails.get(hostname);
-        if ( details === undefined ) { return; }
-        this.hostnameToDetails.delete(hostname);
-        this.unregisterHandle(details.handle);
-    },
-    flush(hostname) {
-        if ( hostname === '' ) { return; }
-        if ( hostname === '*' ) { return this.reset(); }
-        for ( const hn of this.hostnameToDetails.keys() ) {
-            if ( hn.endsWith(hostname) === false ) { continue; }
-            const pos = hn.length - hostname.length;
-            if ( pos !== 0 && hn.charCodeAt(pos-1) !== 0x2E /* . */ ) { continue; }
-            this.unregister(hn);
-        }
-    },
-    reset() {
-        if ( this.hostnameToDetails.size === 0 ) { return; }
-        for ( const details of this.hostnameToDetails.values() ) {
-            this.unregisterHandle(details.handle);
-        }
-        this.hostnameToDetails.clear();
-    },
-    unregisterHandle(handle) {
-        if ( handle instanceof Promise ) {
-            handle.then(handle => {
-                if ( handle ) { handle.unregister(); }
-            });
-        } else {
-            handle.unregister();
-        }
-    },
-};
+function isTrustedContext(fn, data) {
+    const docloc = document.location;
+    const origins = document.location.ancestorOrigins;
+    const url = origins?.length
+        ? new URL(origins.item(origins.length-1))
+        : docloc;
+    return Boolean(fn(data, url.href, url.hostname));
+}
 
-/******************************************************************************/
+function topFrameRulesMatcher(rules) {
+    const docloc = document.location;
+    const href = docloc.ancestorOrigins?.length
+        ? docloc.ancestorOrigins.item(docloc.ancestorOrigins.length-1)
+        : docloc.href;
+    const topurl = new URL(href);
+    const hostname = topurl.hostname;
+    let pos = 0;
+    do {
+        const value = rules.get(hostname.slice(pos));
+        if ( typeof value === 'boolean' ) { return value; }
+        pos = hostname.indexOf('.', pos) + 1;
+    } while ( pos !== 0 );
+    return rules.get('*') === true;
+}
 
-const isolatedWorldInjector = (( ) => {
-    const parts = [
-        '(',
-        function(details) {
-            if ( self.uBO_isolatedScriptlets === 'done' ) { return; }
-            const doc = document;
-            if ( doc.location === null ) { return; }
-            const hostname = doc.location.hostname;
-            if ( hostname !== '' && details.hostname !== hostname ) { return; }
-            const isolatedScriptlets = function(){};
-            isolatedScriptlets();
-            self.uBO_isolatedScriptlets = 'done';
-            return 0;
-        }.toString(),
-        ')(',
-            'json-slot',
-        ');',
-    ];
-    const jsonSlot = parts.indexOf('json-slot');
-    return {
-        assemble(hostname, details) {
-            parts[jsonSlot] = JSON.stringify({ hostname });
-            const code = parts.join('');
-            // Manually substitute noop function with scriptlet wrapper
-            // function, so as to not suffer instances of special
-            // replacement characters `$`,`\` when using String.replace()
-            // with scriptlet code.
-            const match = /function\(\)\{\}/.exec(code);
-            return code.slice(0, match.index) +
-                details.isolatedWorld +
-                code.slice(match.index + match[0].length);
-        },
-    };
-})();
-
-const onScriptletMessageInjector = (( ) => {
-    const parts = [
-        '(',
-        function(name) {
-            if ( self.uBO_bcSecret ) { return; }
-            try {
-                const bcSecret = new self.BroadcastChannel(name);
-                bcSecret.onmessage = ev => {
-                    const msg = ev.data;
-                    switch ( typeof msg ) {
-                    case 'string':
-                        if ( msg !== 'areyouready?' ) { break; }
-                        bcSecret.postMessage('iamready!');
-                        break;
-                    case 'object':
-                        if ( self.vAPI && self.vAPI.messaging ) {
-                            self.vAPI.messaging.send('contentscript', msg);
-                        } else {
-                            console.log(`[uBO][${msg.type}]${msg.text}`);
-                        }
-                        break;
-                    }
-                };
+function initCommChannel(name) {
+    if ( self.uBO_bcSecret ) { return; }
+    try {
+        const bcSecret = new self.BroadcastChannel(name);
+        bcSecret.onmessage = ev => {
+            const msg = ev.data;
+            switch ( typeof msg ) {
+            case 'string':
+                if ( msg !== 'areyouready?' ) { break; }
                 bcSecret.postMessage('iamready!');
-                self.uBO_bcSecret = bcSecret;
-            } catch {
+                break;
+            case 'object':
+                if ( self.vAPI && self.vAPI.messaging ) {
+                    self.vAPI.messaging.send('contentscript', msg);
+                } else {
+                    console.log(`[uBO][${msg.type}]${msg.text}`);
+                }
+                break;
             }
-        }.toString(),
-        ')(',
-            'bcSecret-slot',
-        ');',
-    ];
-    const bcSecretSlot = parts.indexOf('bcSecret-slot');
-    return {
-        assemble(details) {
-            parts[bcSecretSlot] = JSON.stringify(details.bcSecret);
-            return parts.join('\n');
-        },
-    };
-})();
+        };
+        bcSecret.postMessage('iamready!');
+        self.uBO_bcSecret = bcSecret;
+    } catch {
+    }
+}
+
+function assembleIsolatedWorldWrapper(isolatedCode, options) {
+    const code = [ '(function uBO_isolatedWorldScriptlets() {' ];
+    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    if ( options.scriptletGlobals?.bcSecret ) {
+        code.push(initCommChannel.toString());
+        code.push(`initCommChannel(${JSON.stringify(options.scriptletGlobals?.bcSecret)});`);
+    }
+    if ( options.debug ) { code.push('debugger;'); }
+    code.push(isolatedCode ?? '');
+    code.push('})();');
+    return code.join('\n');
+}
+
+function assembleMainWorldWrapper(mainCode, options) {
+    const code = [ '(function uBO_mainWorldScriptlets() {' ];
+    if ( options.debug ) { code.push('debugger;'); }
+    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    code.push(mainCode ?? '');
+    code.push('})();');
+    return code.join('\n');
+}
 
 /******************************************************************************/
 
 export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     constructor() {
         super();
+        this.cacheKey = 'makescriptletsCommitResult';
         this.warOrigin = vAPI.getURL('/web_accessible_resources');
         this.warSecret = undefined;
-        this.scriptletCache = new MRUCache(32);
         this.isDevBuild = undefined;
         this.logLevel = 1;
+    }
+
+    reset() {
+        super.reset();
+        cacheStorage.remove(this.cacheKey);
+        scripting.unregisterContentScripts();
+    }
+
+    async freeze() {
+        super.freeze();
+        const result = await this.compileContentScripts();
+        this.#startListening();
+        return this.commitContentScripts(result);
+    }
+
+    async fromSelfie(selfie) {
+        await this.registerContentScripts();
+        this.#startListening();
+        return super.fromSelfie(selfie);
+    }
+
+    async registerContentScripts() {
+        const bin = await cacheStorage.get(this.cacheKey);
+        if ( bin?.[this.cacheKey] ) {
+            await this.commitContentScripts(bin[this.cacheKey]);
+        }
+    }
+
+    async compileContentScripts() {
+        const map = this.scriptletDB.retrieveAll();
+        makescriptlets.reset();
+        makescriptlets.init(builtinScriptlets);
+        const promises = [];
+        for ( const [ name, entry ] of redirectEngine.resources ) {
+            if ( entry.origin !== 'war' && entry.origin !== 'user' ) { continue; }
+            if ( typeof entry.data !== 'string' ) { continue; }
+            const details = {
+                name,
+                code: entry.data,
+                alias: entry.aliases,
+                requiresTrust: entry.requiresTrust,
+            };
+            promises.push(makescriptlets.importScriptlet(details));
+        }
+        await Promise.all(promises);
+        for ( const [ rawargs, details ] of map ) {
+            details.args = JSON.parse(rawargs);
+            details.trustedSource = true;
+            makescriptlets.compile('', details);
+        }
+        const template = await fetch('/js/scriptlet.template.js').then(response => {
+            if ( response.ok !== true ) { return ''; }
+            return response.text();
+        });
+        const result = template ? makescriptlets.commit('', template) : undefined;
+        if ( result ) {
+            await cacheStorage.set({ [this.cacheKey]: result });
+        } else {
+            await cacheStorage.remove(this.cacheKey);
+        }
+        return result;
+    }
+
+    commitContentScripts(result) {
+        if ( Boolean(result) === false ) {
+            return scripting.unregisterContentScripts();
+        }
+        if ( this.isDevBuild === undefined ) {
+            this.isDevBuild = vAPI.webextFlavor.soup.has('devbuild') ||
+                µb.hiddenSettings.filterAuthorMode;
+        }
+        this.warSecret = vAPI.warSecret.long(this.warSecret);
+        const options = {
+            scriptletGlobals: {
+                warOrigin: this.warOrigin,
+                warSecret: this.warSecret,
+            },
+        };
+        if ( logger.enabled ) {
+            options.scriptletGlobals.bcSecret = vAPI.generateSecret(3);
+            options.scriptletGlobals.logLevel = this.logLevel;
+        }
+        if ( result['ISOLATED'] ) {
+            options.debug = µb.hiddenSettings.debugIsolatedScriptlets;
+            options.isolatedCode = assembleIsolatedWorldWrapper(result['ISOLATED'].code, options);
+        }
+        if ( result['MAIN'] ) {
+            options.debug = µb.hiddenSettings.debugMainScriptlets;
+            options.mainCode = assembleMainWorldWrapper(result['MAIN'].code, options);
+        }
+        const trustedSiteMatcher = µb.trustedSites.getMatcher();
+        const earlyBailoutCode = [
+            isTrustedContext.toString(),
+            'if ( isTrustedContext(',
+            `${trustedSiteMatcher.match.toString()},`,
+            'new Map(',
+            JSON.stringify(Array.from(trustedSiteMatcher.data).filter(a => a[0] !== '#')),
+            ')) ) { return; }',
+        ];
+        const topFrameRules = sessionFirewall.export1stPartyRules().filter(a =>
+            a[1] !== 'behind-the-scene'
+        );
+        if ( topFrameRules?.length ) {
+            earlyBailoutCode.push(
+                topFrameRulesMatcher.toString(),
+                `if ( topFrameRulesMatcher(new Map(${JSON.stringify(topFrameRules)})) ) { return; }`,
+            );
+        }
+        options.earlyBailoutCode = earlyBailoutCode.join('\n');
+        return scripting.registerContentScripts(options);
+    }
+
+    retrieve(request) {
+        const hostname = hostnameFromURI(request.url);
+        // https://github.com/gorhill/uBlock/issues/2835
+        // Do not inject scriptlets if the site is under an `allow` rule.
+        if ( µb.userSettings.advancedUserEnabled ) {
+            if ( sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2 ) {
+                return false;
+            }
+        }
+        return super.retrieve(request);
+    }
+
+    toLogger(request, filters) {
+        if ( Array.isArray(filters) === false ) { return; }
+        if ( logger.enabled !== true ) { return; }
+        µb.filteringContext
+            .duplicate()
+            .fromTabId(request.tabId)
+            .setRealm('extended')
+            .setType('scriptlet')
+            .setURL(request.url)
+            .setDocOriginFromURL(request.url)
+            .setFilter(filters.map(a => ({ source: 'extended', raw: a })))
+            .toLogger();
+    }
+
+    #startListening() {
+        if ( this.bc ) { return; }
         this.bc = onBroadcast(msg => {
             switch ( msg.what ) {
-            case 'filteringBehaviorChanged': {
-                const direction = msg.direction || 0;
-                if ( direction > 0 ) { return; }
-                if ( direction >= 0 && msg.hostname ) {
-                    return contentScriptRegisterer.flush(msg.hostname);
-                }
-                contentScriptRegisterer.reset();
+            case 'filteringBehaviorChanged':
+                this.registerContentScripts();
                 break;
-            }
             case 'hiddenSettingsChanged':
                 this.isDevBuild = undefined;
                 /* fall through */
             case 'loggerEnabled':
             case 'loggerDisabled':
-                this.clearCache();
+                this.registerContentScripts();
                 break;
             case 'loggerLevelChanged':
                 this.logLevel = msg.level;
@@ -229,161 +287,10 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                         });
                     }
                 });
-                this.clearCache();
+                this.registerContentScripts();
                 break;
             }
         });
-    }
-
-    reset() {
-        super.reset();
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.clearCache();
-    }
-
-    freeze() {
-        super.freeze();
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.clearCache();
-    }
-
-    clearCache() {
-        this.scriptletCache.reset();
-        contentScriptRegisterer.reset();
-    }
-
-    retrieve(request) {
-        const { hostname } = request;
-
-        // https://github.com/gorhill/uBlock/issues/2835
-        // Do not inject scriptlets if the site is under an `allow` rule.
-        if ( µb.userSettings.advancedUserEnabled ) {
-            if ( sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2 ) {
-                return;
-            }
-        }
-
-        if ( this.scriptletCache.resetTime < reng.modifyTime ) {
-            this.clearCache();
-        }
-
-        let scriptletDetails = this.scriptletCache.lookup(hostname);
-        if ( scriptletDetails !== undefined ) {
-            return scriptletDetails || undefined;
-        }
-
-        if ( this.isDevBuild === undefined ) {
-            this.isDevBuild = vAPI.webextFlavor.soup.has('devbuild') ||
-                µb.hiddenSettings.filterAuthorMode;
-        }
-
-        if ( this.warSecret === undefined ) {
-            this.warSecret = vAPI.warSecret.long();
-        }
-
-        const bcSecret = vAPI.generateSecret(3);
-
-        const options = {
-            scriptletGlobals: {
-                warOrigin: this.warOrigin,
-                warSecret: this.warSecret,
-            },
-            debug: this.isDevBuild,
-            debugScriptlets: µb.hiddenSettings.debugScriptlets,
-        };
-        if ( logger.enabled ) {
-            options.scriptletGlobals.bcSecret = bcSecret;
-            options.scriptletGlobals.logLevel = this.logLevel;
-        }
-
-        scriptletDetails = super.retrieve(request, options);
-
-        if ( scriptletDetails === undefined ) {
-            if ( request.nocache !== true ) {
-                this.scriptletCache.add(hostname, null);
-            }
-            return;
-        }
-
-        const contentScript = [];
-        if ( scriptletDetails.mainWorld ) {
-            contentScript.push(vAPI.scriptletsInjector(hostname, scriptletDetails));
-        }
-        if ( scriptletDetails.isolatedWorld ) {
-            contentScript.push(isolatedWorldInjector.assemble(hostname, scriptletDetails));
-        }
-
-        const cachedScriptletDetails = {
-            bcSecret,
-            code: contentScript.join('\n\n'),
-            filters: scriptletDetails.filters,
-        };
-
-        if ( hostname !== '' && request.nocache !== true ) {
-            this.scriptletCache.add(hostname, cachedScriptletDetails);
-        }
-
-        return cachedScriptletDetails;
-    }
-
-    injectNow(details) {
-        if ( typeof details.frameId !== 'number' ) { return; }
-
-        const hostname = hostnameFromURI(details.url);
-        const domain = domainFromHostname(hostname);
-
-        const scriptletDetails = this.retrieve({
-            tabId: details.tabId,
-            frameId: details.frameId,
-            url: details.url,
-            hostname,
-            domain,
-            ancestors: details.ancestors,
-        });
-        if ( scriptletDetails === undefined ) {
-            contentScriptRegisterer.unregister(hostname);
-            return;
-        }
-        if ( Boolean(scriptletDetails.code) === false ) {
-            return scriptletDetails;
-        }
-
-        const contentScript = [ scriptletDetails.code ];
-        if ( logger.enabled ) {
-            contentScript.unshift(
-                onScriptletMessageInjector.assemble(scriptletDetails)
-            );
-        }
-        if ( µb.hiddenSettings.debugScriptletInjector ) {
-            contentScript.unshift('debugger');
-        }
-        const code = contentScript.join('\n\n');
-
-        const isAlreadyInjected = contentScriptRegisterer.register(hostname, code);
-        if ( isAlreadyInjected !== true ) {
-            vAPI.tabs.executeScript(details.tabId, {
-                code,
-                frameId: details.frameId,
-                matchAboutBlank: true,
-                runAt: 'document_start',
-            });
-        }
-        return scriptletDetails;
-    }
-
-    toLogger(request, details) {
-        if ( details === undefined ) { return; }
-        if ( logger.enabled !== true ) { return; }
-        if ( Array.isArray(details.filters) === false ) { return; }
-        µb.filteringContext
-            .duplicate()
-            .fromTabId(request.tabId)
-            .setRealm('extended')
-            .setType('scriptlet')
-            .setURL(request.url)
-            .setDocOriginFromURL(request.url)
-            .setFilter(details.filters.map(a => ({ source: 'extended', raw: a })))
-            .toLogger();
     }
 }
 

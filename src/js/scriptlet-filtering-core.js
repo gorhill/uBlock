@@ -37,56 +37,6 @@ const normalizeRawFilter = parser => {
     return JSON.stringify(args);
 };
 
-const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
-    if ( mainMap.has(rawToken) || isolatedMap.has(rawToken) ) { return; }
-    const args = JSON.parse(rawToken);
-    const token = `${args[0]}.js`;
-    const details = reng.contentFromName(token, 'text/javascript');
-    if ( details === undefined ) { return; }
-    const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
-    const match = /^function\s+([^(\s]+)\s*\(/.exec(details.js);
-    const fname = match && match[1];
-    const content = patchScriptlet(fname, details.js, args.slice(1));
-    if ( fname ) {
-        targetWorldMap.set(token, { code: details.js });
-    }
-    const dependencies = details.dependencies || [];
-    while ( dependencies.length !== 0 ) {
-        const token = dependencies.shift();
-        if ( targetWorldMap.has(token) ) { continue; }
-        const details = reng.contentFromName(token, 'fn/javascript') ||
-            reng.contentFromName(token, 'text/javascript');
-        if ( details === undefined ) { continue; }
-        targetWorldMap.set(token, { code: details.js });
-        if ( Array.isArray(details.dependencies) === false ) { continue; }
-        dependencies.push(...details.dependencies);
-    }
-    targetWorldMap.set(rawToken, {
-        code: [
-            'try {',
-                `\t${content}`,
-            '} catch (e) {',
-                debug ? '\tconsole.error(e);' : '',
-            '}',
-        ].join('\n'),
-        priority: details.priority ?? 0,
-    });
-};
-
-// Fill-in scriptlet argument placeholders.
-const patchScriptlet = (fname, content, arglist) => {
-    if ( fname ) {
-        content = `${fname}({{args}});`;
-    } else {
-        for ( let i = 0; i < arglist.length; i++ ) {
-            content = content.replace(`{{${i+1}}}`, arglist[i]);
-        }
-    }
-    return content.replace('{{args}}',
-        JSON.stringify(arglist).slice(1,-1).replace(/\$/g, '$$$')
-    );
-};
-
 const requote = s => {
     if ( /^(["'`]).*\1$|,|^$/.test(s) === false ) { return s; }
     if ( s.includes("'") === false ) { return `'${s}'`; }
@@ -187,7 +137,7 @@ export class ScriptletFilteringEngine {
         return true;
     }
 
-    retrieve(request, options = {}) {
+    retrieve(request) {
         if ( this.scriptletDB.size === 0 ) { return; }
 
         const all = new Set();
@@ -229,87 +179,10 @@ export class ScriptletFilteringEngine {
             }
         }
 
-        const mainWorldMap = new Map();
-        const isolatedWorldMap = new Map();
-
-        for ( const token of scriptlets ) {
-            lookupScriptlet(token, mainWorldMap, isolatedWorldMap, options.debug);
-        }
-
-        if ( scriptlets.size !== 0 ) {
-            if ( mainWorldMap.size === 0 ) {
-                if ( isolatedWorldMap.size === 0 ) { return; }
-            }
-        }
-
-        // Remember: class statements are not hoisted
-        const sortedCalls = map => Array.from(map).sort((a, b) => {
-            const an = a[1].code, bn = b[1].code;
-            const ap = a[1].priority, bp = b[1].priority;
-            if ( ap === bp ) { return an.localeCompare(bn); }
-            if ( ap === undefined ) { return -1; }
-            if ( bp === undefined ) { return 1; }
-            return bp - ap;
-        }).map(a => a[1].code);
-
-        const mainWorldCode = [];
-        for ( const js of sortedCalls(mainWorldMap) ) {
-            mainWorldCode.push(js);
-        }
-
-        const isolatedWorldCode = [];
-        for ( const js of sortedCalls(isolatedWorldMap) ) {
-            isolatedWorldCode.push(js);
-        }
-
-        const scriptletDetails = {
-            mainWorld: mainWorldCode.join('\n\n'),
-            isolatedWorld: isolatedWorldCode.join('\n\n'),
-            filters: [
-                ...Array.from(scriptlets).map(a => decompile(a, false)),
-                ...Array.from(exceptions).map(a => decompile(a, true)),
-            ],
-        };
-
-        const scriptletGlobals = options.scriptletGlobals || {};
-
-        if ( options.debug ) {
-            scriptletGlobals.canDebug = true;
-        }
-
-        const scriptletGlobalsJSON = JSON.stringify(scriptletGlobals, null, 4);
-
-        return {
-            mainWorld: scriptletDetails.mainWorld === '' ? '' : [
-                '(function() {',
-                '// >>>> start of private namespace',
-                '',
-                options.debugScriptlets ? 'debugger;' : ';',
-                '',
-                // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${scriptletGlobalsJSON};`,
-                '',
-                scriptletDetails.mainWorld,
-                '',
-                '// <<<< end of private namespace',
-                '})();',
-            ].join('\n'),
-            isolatedWorld: scriptletDetails.isolatedWorld === '' ? '' : [
-                'function() {',
-                '// >>>> start of private namespace',
-                '',
-                options.debugScriptlets ? 'debugger;' : ';',
-                '',
-                // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${scriptletGlobalsJSON};`,
-                '',
-                scriptletDetails.isolatedWorld,
-                '',
-                '// <<<< end of private namespace',
-                '}',
-            ].join('\n'),
-            filters: scriptletDetails.filters,
-        };
+        return [
+            ...Array.from(scriptlets).map(a => decompile(a, false)),
+            ...Array.from(exceptions).map(a => decompile(a, true)),
+        ];
     }
 }
 

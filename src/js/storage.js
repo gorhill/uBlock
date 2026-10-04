@@ -406,10 +406,7 @@ onBroadcast(msg => {
 /******************************************************************************/
 
 µb.saveWhitelist = function() {
-    vAPI.storage.set({
-        netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
-    });
-    this.netWhitelistModifyTime = Date.now();
+    vAPI.storage.set({ netWhitelist: this.trustedSites.toLines() });
 };
 
 /******************************************************************************/
@@ -1459,7 +1456,7 @@ onBroadcast(msg => {
         Array.isArray(toOverwrite.trustedSiteDirectives) &&
         toOverwrite.trustedSiteDirectives.length !== 0
     ) {
-        µb.netWhitelistDefault = toOverwrite.trustedSiteDirectives.slice();
+        µb.defaultTrustedSiteDirectives = toOverwrite.trustedSiteDirectives.slice();
         bin.netWhitelist = toOverwrite.trustedSiteDirectives.slice();
         binNotEmpty = true;
     } else if ( Array.isArray(data.whitelist) ) {
