@@ -21,6 +21,8 @@
 
 /******************************************************************************/
 
+import '../lib/regexanalyzer/regex.js';
+
 import * as makescriptlets from './make-scriptlets.js';
 import * as scripting from './vapi-scripting.js';
 
@@ -166,13 +168,13 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         for ( const [ rawargs, details ] of map ) {
             details.args = JSON.parse(rawargs);
             details.trustedSource = true;
-            makescriptlets.compile('', details);
+            makescriptlets.compile('uBlock', details);
         }
         const template = await fetch('/js/scriptlet.template.js').then(response => {
             if ( response.ok !== true ) { return ''; }
             return response.text();
         });
-        const result = template ? makescriptlets.commit('', template) : undefined;
+        const result = template ? makescriptlets.commit('uBlock', template) : undefined;
         if ( result ) {
             await cacheStorage.set({ [this.cacheKey]: result });
         } else {
