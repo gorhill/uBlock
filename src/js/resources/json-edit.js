@@ -744,7 +744,7 @@ registerScriptlet(editElementObject, {
 
 /******************************************************************************/
 /**
- * @scriptlet trusted-element-this-object.js
+ * @scriptlet trusted-edit-element-object.js
  * 
  * @description
  * Edit properties of one or more elements matching a specific selector.
@@ -1211,6 +1211,97 @@ registerScriptlet(jsonEditFetchRequestFn, {
         parsePropertiesToMatchFn,
         proxyApplyFn,
         safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+async function editInboundElementFn(
+    trusted = false,
+    propChain = '',
+    argPosRaw = '',
+    selector = '',
+    jsonq = ''
+) {
+    if ( propChain === '' ) { return; }
+    if ( selector === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-inbound-element`,
+        propChain, argPosRaw, selector, jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const argPos = parseInt(argPosRaw, 10);
+    const getElem = context => {
+        if ( argPosRaw === 'this' ) { return context.thisArg; }
+        const { callArgs } = context;
+        if ( Array.isArray(callArgs) === false ) { return; }
+        if ( isNaN(argPos) ) { return; }
+        if ( argPos >= 0 ) {
+            if ( callArgs.length <= argPos ) { return; }
+            return callArgs[argPos];
+        }
+        if ( callArgs.length < -argPos ) { return; }
+        return callArgs[callArgs.length + argPos];
+    };
+    const editElem = elem => {
+        if ( elem instanceof Element === false ) { return; }
+        if ( elem.matches(selector) === false ) { return; }
+        elem = jsonp.apply(elem);
+        if ( elem === undefined ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+    };
+    proxyApplyFn(propChain, function(context) {
+        const elem = getElem(context);
+        if ( elem !== undefined ) {
+            editElem(elem);
+        }
+        return context.reflect();
+    });
+}
+registerScriptlet(editInboundElementFn, {
+    name: 'edit-inbound-element.fn',
+    dependencies: [
+        JSONPath,
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-inbound-element.js
+ * 
+ * @description
+ * Edit properties of an element passed as an argument to a method.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param argPos
+ * 0-based position of the argument. Use negative integer for position relative
+ * to the end.
+ * 
+ * @param selector
+ * The selector the element must match for the JSONPath query to be applied.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditInboundElement(...args) {
+    editInboundElementFn(true, ...args);
+}
+registerScriptlet(trustedEditInboundElement, {
+    name: 'trusted-edit-inbound-element.js',
+    requiresTrust: true,
+    dependencies: [
+        editInboundElementFn,
     ],
 });
 
