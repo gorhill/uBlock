@@ -20,7 +20,6 @@
 */
 
 import * as s14e from './s14e-serializer.js';
-import * as scripting from './vapi-scripting.js';
 import * as sfp from './static-filtering-parser.js';
 
 import {
@@ -49,7 +48,7 @@ import { i18n$ } from './i18n.js';
 import io from './assets.js';
 import logger from './logger.js';
 import lz4Codec from './lz4.js';
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from './publicsuffix.js';
 import punycode from '../lib/punycode.js';
 import { redirectEngine } from './redirect-engine.js';
 import scriptletFilteringEngine from './scriptlet-filtering.js';
@@ -1200,7 +1199,7 @@ const getRules = function() {
                 sessionSwitches.toArray(),
                 sessionURLFiltering.toArray()
             ),
-        pslSelfie: publicSuffixList.toSelfie(),
+        pslSelfie: publicSuffixList.toSelfie?.(),
     };
 };
 

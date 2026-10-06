@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from './publicsuffix.js';
 import punycode from '../lib/punycode.js';
 
 /******************************************************************************/

@@ -25,7 +25,7 @@ import './codemirror/ubo-dynamic-filtering.js';
 import { dom, qs$, qsa$ } from './dom.js';
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n$ } from './i18n.js';
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from './publicsuffix.js';
 
 /******************************************************************************/
 
@@ -683,7 +683,7 @@ vAPI.messaging.send('dashboard', {
 }).then(details => {
     thePanes.orig.original = details.permanentRules;
     thePanes.edit.original = details.sessionRules;
-    publicSuffixList.fromSelfie(details.pslSelfie);
+    publicSuffixList.fromSelfie?.(details.pslSelfie);
     onPresentationChanged(true);
 });
 

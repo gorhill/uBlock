@@ -39,7 +39,7 @@ import { getTrustedTokens } from './trusted-tokens.js';
 import { hostnameFromURI } from './uri-utils.js';
 import io from './assets.js';
 import logger from './logger.js';
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from './publicsuffix.js';
 import punycode from '../lib/punycode.js';
 import { redirectEngine } from './redirect-engine.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
@@ -1242,6 +1242,7 @@ onBroadcast(msg => {
 
 µb.loadPublicSuffixList = async function() {
     const psl = publicSuffixList;
+    if ( Boolean(psl.parse) === false ) { return; }
 
     // WASM is nice but not critical
     if ( vAPI.canWASM && this.hiddenSettings.disableWebAssembly !== true ) {
@@ -1276,7 +1277,6 @@ onBroadcast(msg => {
     } catch (reason) {
         ubolog(reason);
     }
-
     const result = await io.get(this.pslAssetKey);
     if ( result.content !== '' ) {
         this.compilePublicSuffixList(result.content);
@@ -1285,6 +1285,7 @@ onBroadcast(msg => {
 
 µb.compilePublicSuffixList = function(content) {
     const psl = publicSuffixList;
+    if ( Boolean(psl.parse) === false ) { return; }
     psl.parse(content, punycode.toASCII);
     ubolog(`Loaded PSL from ${this.pslAssetKey}`);
     return io.toCache(`selfie/${this.pslAssetKey}`, psl.toSelfie());
