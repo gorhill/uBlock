@@ -1,3 +1,4 @@
+- [Use new `publicSuffix` API when available](https://github.com/gorhill/uBlock/commit/a67ea6acdd)
 - [Add `trusted-edit-inbound-element` sriptlet](https://github.com/gorhill/uBlock/commit/1afbde2e7a)
 - [Refactor scriptlet injection code](https://github.com/gorhill/uBlock/commit/9af8ef4c6b)
 - [Improve jsonl-edit-fetch-response/jsonl-edit-xhr-response scriptlets](https://github.com/gorhill/uBlock/commit/42bcca027b)
