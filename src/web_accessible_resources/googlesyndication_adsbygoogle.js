@@ -43,7 +43,7 @@
         fr.contentWindow.location = 'data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCiAgICA8aGVhZD48dGl0bGU+PC90aXRsZT48L2hlYWQ+DQogICAgPGJvZHk+PC9ib2R5Pg0KPC9odG1sPg==';
     };
     const process = ( ) => {
-        const phs = document.querySelectorAll('.adsbygoogle:not([data-ad-status][data-adsbygoogle-status])');
+        const phs = document.querySelectorAll('ins.adsbygoogle:not([data-ad-status][data-adsbygoogle-status])');
         for ( const ph of phs ) {
             setupAd(ph);
         }
