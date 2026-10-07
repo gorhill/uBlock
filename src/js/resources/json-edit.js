@@ -1267,6 +1267,7 @@ registerScriptlet(editInboundElementFn, {
     name: 'edit-inbound-element.fn',
     dependencies: [
         JSONPath,
+        proxyApplyFn,
         safeSelf,
     ],
 });
