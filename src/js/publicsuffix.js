@@ -19,18 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global browser */
-
-import './vapi.js';
-
 /******************************************************************************/
 
-const publicSuffix = browser.publicSuffix;
+const publicSuffix = globalThis.browser?.publicSuffix;
 
 export default publicSuffix ? {
     getDomain(hostname) {
         try {
-            return publicSuffix.getDomain(hostname) ?? ''
+            return publicSuffix.getDomain(hostname, { allowUnknownSuffix: true }) ?? ''
         } catch {
         };
         return '';
