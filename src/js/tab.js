@@ -1010,6 +1010,9 @@ vAPI.tabs = new vAPI.Tabs();
 
 {
     const NoPageStore = class extends PageStore {
+        isTrusted(fctxt) {
+            return this.isNotTrusted(fctxt) === false;
+        }
         isNotTrusted(fctxt) {
             if ( fctxt ) {
                 const docOrigin = fctxt.getDocOrigin();
