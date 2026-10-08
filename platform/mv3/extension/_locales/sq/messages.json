@@ -36,7 +36,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutDocumentation": {
-    "message": "Documentation",
+    "message": "Dokumentacioni",
     "description": "Link to documentation in About pane"
   },
   "popupFilteringModeLabel": {
@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "nuk është uebsajt",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {
@@ -96,19 +96,19 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupImported": {
-    "message": "Listat e importuar",
+    "message": "Listat e importuara",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "customListImportLabel": {
-    "message": "Shto një list filtrash…",
+    "message": "Shtoni një listë filtrash…",
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL e listave të filtrave për të shtuar",
+    "message": "Këtu shtohet URL e listës së filtrave",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "Që të zbatojë filtrat kozmetikë ose skriptet nga listat e importuara, uBO Lite duhet lejuar të ekzekutojë skriptet e përdoruesit.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
@@ -116,11 +116,11 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Filtrat specifikë kozmetikë/skriptet shtohen këtu",
+    "message": "Këtu shtohen filtrat kozmetikë/skriptet e posaçme",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Hapni faqen e zgjerimeve të shfletuesit tuaj (<code>chrome://extensions</code> në Chrome ose <code>about:addons</code> në Firefox), hapni detajet e <b>uBO Lite</b> dhe aktivizoni <b>Lejo skriptet e përdoruesit</b> (të referuara edhe si \"skripte të palëve të treta të paverifikuara\").",
+    "message": "Hapni faqen e shtesave në shfletuesin tuaj (<code>chrome://extensions</code> në Chrome ose <code>about:addons</code> në Firefox), klikoni detajet e <b>uBO Lite</b> dhe pastaj <b>Lejoni skriptet e përdoruesit</b> (që njihen edhe si “skriptet e paverifikuara nga palët e treta”).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -296,7 +296,7 @@
     "description": "Header for filter-creation section in the dashboard"
   },
   "sandboxEditorUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from the sandbox, you must grant uBO Lite permission to run user scripts.",
+    "message": "Që të zbatojë filtrat kozmetikë ose skriptet nga ambienti i izoluar, uBO Lite duhet lejuar të ekzekutojë skriptet e përdoruesit.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "developerModeLabel": {

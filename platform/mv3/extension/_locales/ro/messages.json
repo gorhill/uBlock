@@ -44,11 +44,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "Pe acest website",
+    "message": "Pe acest site web",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Raportează o eroare pe acest site web",
+    "message": "Raportează o eroare",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "nu este un site web",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {

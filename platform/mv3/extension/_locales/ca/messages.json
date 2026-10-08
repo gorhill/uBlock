@@ -120,7 +120,7 @@
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {
-    "message": "Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> al Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenats «scripts de tercers no verificats»).",
+    "message": "Obriu la pàgina d'extensions del navegador (<code>chrome://extensions</code> al Chrome o <code>about:addons</code> al Firefox), obriu els detalls d'<b>uBO Lite</b> i activeu <b>Permet scripts d'usuari</b> (també anomenat «scripts de tercers no verificats»).",
     "description": "A notice to inform user on how to enable 'user scripts' permission"
   },
   "aboutChangelog": {
@@ -284,7 +284,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "enablePopupBlockLabel": {
-    "message": "Activa el bloqueig de finestres emergents",
+    "message": "Activa el blocatge de finestres emergents",
     "description": "Label for a checkbox in the options page"
   },
   "enablePopupBlockLegend": {
@@ -308,7 +308,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "settingsBackupRestoreLabel": {
-    "message": "Còpia de seguretat / Restaura",
+    "message": "Còpia de seguretat",
     "description": "The header text for the back up/restore section"
   },
   "settingsBackupRestoreSummary": {
@@ -360,7 +360,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Elimina un element",
+    "message": "Suprimeix un element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -432,7 +432,7 @@
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
-    "message": "S'eliminaran tots els paràmetres personalitzats. Voleu restablir els paràmetres per defecte?",
+    "message": "Tots els paràmetres personalitzats seran suprimits. Voleu restablir la configuració per defecte?",
     "description": "Message asking user to confirm reset to default settings"
   },
   "dnrRulesWarning": {

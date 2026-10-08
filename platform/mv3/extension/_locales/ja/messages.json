@@ -428,7 +428,7 @@
     "description": "Text for buttons used to restore content"
   },
   "resetToDefaultButton": {
-    "message": "Reset to default settings…",
+    "message": "初期設定に戻す…",
     "description": "Text for buttons used to reset configurations to default"
   },
   "resetToDefaultConfirm": {
