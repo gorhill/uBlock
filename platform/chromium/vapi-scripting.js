@@ -21,6 +21,8 @@
 
 /* global browser */
 
+import webext from './webext.js';
+
 /******************************************************************************/
 
 function uBO_isolatedCode(mainCode) {
@@ -75,12 +77,11 @@ let onceFn = async ( ) => {
     for ( const tab of tabs  ) {
         if ( tab.discarded === true ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
-        browser.tabs.executeScript(tab.id, {
+        webext.tabs.executeScript(tab.id, {
             allFrames: true,
             matchAboutBlank: true,
             runAt: 'document_start',
             code: contentScriptCode,
-        }).catch(( ) => {
         });
     }
 };
@@ -101,11 +102,10 @@ export function unregisterContentScripts() {
 browser.webNavigation.onCommitted.addListener(details => {
     if ( /^https?:|^about:/.test(details.url) === false ) { return; }
     if ( Boolean(contentScriptCode) === false ) { return; }
-    browser.tabs.executeScript(details.tabId, {
+    webext.tabs.executeScript(details.tabId, {
         frameId: details.frameId,
         matchAboutBlank: true,
         runAt: 'document_start',
         code: contentScriptCode,
-    }).catch(( ) => {
     });
 });
