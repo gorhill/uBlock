@@ -1143,7 +1143,7 @@ function injectPP(fctxt, pageStore, responseHeaders) {
     if ( directives !== undefined ) {
         for ( const directive of directives ) {
             if ( directive.result !== 1 ) { continue; }
-            permissions.push(directive.value.replace('|', ', '));
+            permissions.push(directive.value.replaceAll('|', ', '));
         }
     }
 
