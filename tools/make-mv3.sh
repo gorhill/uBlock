@@ -154,6 +154,8 @@ cp "$UBO_DIR"/src/js/make-scriptlets.js "$UBOL_BUILD_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/make-utils.js "$UBOL_BUILD_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/safe-replace.js "$UBOL_BUILD_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/scriptlet.template.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet-begin.template.js "$UBOL_BUILD_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet-end.template.js "$UBOL_BUILD_DIR"/js/offscreen/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources
 cp "$UBO_DIR"/src/web_accessible_resources/* "$UBOL_BUILD_DIR"/web_accessible_resources/
 cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/

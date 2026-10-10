@@ -91,10 +91,10 @@ function initCommChannel(name) {
 
 function assembleIsolatedWorldWrapper(isolatedCode, options) {
     const code = [ '(function uBO_isolatedWorldScriptlets() {' ];
-    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    code.push(`const $SCRIPTLET_GLOBALS$ = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
     if ( options.scriptletGlobals?.bcSecret ) {
         code.push(initCommChannel.toString());
-        code.push(`initCommChannel(${JSON.stringify(options.scriptletGlobals?.bcSecret)});`);
+        code.push(`initCommChannel(${JSON.stringify(options.scriptletGlobals.bcSecret)});`);
     }
     if ( options.debug ) { code.push('debugger;'); }
     code.push(isolatedCode ?? '');
@@ -105,7 +105,7 @@ function assembleIsolatedWorldWrapper(isolatedCode, options) {
 function assembleMainWorldWrapper(mainCode, options) {
     const code = [ '(function uBO_mainWorldScriptlets() {' ];
     if ( options.debug ) { code.push('debugger;'); }
-    code.push(`const SCRIPTLETGLOBALS = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
+    code.push(`const $SCRIPTLET_GLOBALS$ = ${JSON.stringify(options.scriptletGlobals ?? {})};`);
     code.push(mainCode ?? '');
     code.push('})();');
     return code.join('\n');
@@ -151,6 +151,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     }
 
     async compileContentScripts() {
+        const secret = self.crypto.randomUUID();
         const map = this.scriptletDB.retrieveAll();
         makescriptlets.reset();
         makescriptlets.init(builtinScriptlets);
@@ -170,17 +171,46 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             details.trustedSource = true;
             makescriptlets.compile('uBlock', details);
         }
-        const template = await fetch('/js/scriptlet.template.js').then(response => {
-            if ( response.ok !== true ) { return ''; }
-            return response.text();
-        });
-        const result = template ? makescriptlets.commit('uBlock', template) : undefined;
-        if ( result ) {
-            await cacheStorage.set({ [this.cacheKey]: result });
-        } else {
+        const templates = await Promise.all([
+            fetch('/js/scriptlet.template.js').then(response =>
+                response.ok && response.text()
+            ),
+            fetch('/js/scriptlet-begin.template.js').then(response =>
+                response.ok && response.text()
+            ),
+            fetch('/js/scriptlet-end.template.js').then(response =>
+                response.ok && response.text()
+            ),
+        ]);
+        if ( templates.some(a => Boolean(a) === false) ) {
             await cacheStorage.remove(this.cacheKey);
+            return;
         }
-        return result;
+        const results = [
+            makescriptlets.commit('uBlock', templates[0], secret),
+            makescriptlets.commitFramework(templates[1], templates[2], secret),
+        ];
+        const out = {};
+        if ( results[0].MAIN ) {
+            out.MAIN = {
+                code: [
+                    results[1].MAIN.beginCode,
+                    results[0].MAIN.code,
+                    results[1].MAIN.endCode,
+                ].join('\n\n')
+            };
+        }
+        if ( results[0].ISOLATED ) {
+            out.ISOLATED = {
+                code: [
+                    results[1].ISOLATED.beginCode,
+                    results[0].ISOLATED.code,
+                    results[1].ISOLATED.endCode,
+                ].join('\n\n'),
+            };
+        }
+        await cacheStorage.set({ [this.cacheKey]: out });
+        return out;
     }
 
     commitContentScripts(result) {
@@ -202,13 +232,13 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             options.scriptletGlobals.bcSecret = vAPI.generateSecret(3);
             options.scriptletGlobals.logLevel = this.logLevel;
         }
-        if ( result['ISOLATED'] ) {
+        if ( result.ISOLATED ) {
             options.debug = µb.hiddenSettings.debugIsolatedScriptlets;
-            options.isolatedCode = assembleIsolatedWorldWrapper(result['ISOLATED'].code, options);
+            options.isolatedCode = assembleIsolatedWorldWrapper(result.ISOLATED.code, options);
         }
-        if ( result['MAIN'] ) {
+        if ( result.MAIN ) {
             options.debug = µb.hiddenSettings.debugMainScriptlets;
-            options.mainCode = assembleMainWorldWrapper(result['MAIN'].code, options);
+            options.mainCode = assembleMainWorldWrapper(result.MAIN.code, options);
         }
         const trustedSiteMatcher = µb.trustedSites.getMatcher();
         const earlyBailoutCode = [

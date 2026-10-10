@@ -256,49 +256,43 @@ function registerScriptlet(context, scriptletDetails) {
         ...filteringModeDetails.complete,
     ];
 
-    for ( const rulesetId of rulesetsDetails.map(v => v.id) ) {
-        const worlds = scriptletDetails.get(rulesetId);
-        if ( worlds === undefined ) { continue; }
-        for ( const world of Object.keys(worlds) ) {
-            const id = `${rulesetId}.${world.toLowerCase()}`;
-
-            const matches = [];
-            const excludeMatches = [];
-            const hostnames = worlds[world];
-            let targetHostnames = [];
-            if ( hasBroadHostPermission ) {
-                excludeMatches.push(...permissionRevokedMatches);
-                targetHostnames = hostnames;
-            } else if ( permissionGrantedHostnames.length !== 0 ) {
-                if ( hostnames.includes('*') ) {
-                    targetHostnames = permissionGrantedHostnames;
-                } else {
-                    targetHostnames = ut.intersectHostnameIters(
-                        hostnames,
-                        permissionGrantedHostnames
-                    );
-                }
-            }
-            if ( targetHostnames.length === 0 ) { continue; }
-            matches.push(...ut.matchesFromHostnames(targetHostnames));
-            normalizeMatches(matches);
-
-            const directive = {
-                id,
-                js: [ `/rulesets/scripting/scriptlet/${world.toLowerCase()}/${rulesetId}.js` ],
-                matches,
-                allFrames: true,
-                matchOriginAsFallback: true,
-                runAt: 'document_start',
-                world,
-            };
-            if ( excludeMatches.length !== 0 ) {
-                directive.excludeMatches = excludeMatches;
-            }
-
-            // register
-            context.toAdd.push(directive);
+    for ( const world of [ 'ISOLATED', 'MAIN' ] ) {
+        const js = [];
+        const matches = [];
+        let excludeMatches = [];
+        if ( hasBroadHostPermission ) {
+            excludeMatches = [ ...permissionRevokedMatches ];
+        } else if ( permissionGrantedHostnames.length !== 0 ) {
+            matches.push(...permissionGrantedHostnames);
         }
+        for ( const { id } of rulesetsDetails ) {
+            if ( scriptletDetails.has(id) === false ) { continue; }
+            const details = scriptletDetails.get(id);
+            if ( details[world] === undefined ) { continue; }
+            js.push(`/rulesets/scripting/scriptlet/${world.toLowerCase()}/${id}.js`);
+        }
+        if ( js.length === 0 ) { continue; }
+        js.unshift(`/rulesets/scripting/scriptlet/${world.toLowerCase()}/scriptlet-begin.js`);
+        js.push(`/rulesets/scripting/scriptlet/${world.toLowerCase()}/scriptlet-end.js`);
+        const directive = {
+            id: `scriptlets-${world.toLowerCase()}`,
+            js,
+            allFrames: true,
+            matchOriginAsFallback: true,
+            runAt: 'document_start',
+            world,
+        };
+        if ( matches.length === 0 ) {
+            matches.push('*');
+        }
+        directive.matches = ut.matchesFromHostnames(matches);
+        normalizeMatches(directive.matches);
+        if ( excludeMatches.length !== 0 ) {
+            directive.excludeMatches = excludeMatches;
+        }
+
+        // register
+        context.toAdd.push(directive);
     }
 }
 
