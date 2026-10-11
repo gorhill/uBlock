@@ -77,6 +77,7 @@ let onceFn = async ( ) => {
     for ( const tab of tabs  ) {
         if ( tab.discarded === true ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
+        if ( /^https?:/.test(tab.url) === false ) { continue; }
         webext.tabs.executeScript(tab.id, {
             allFrames: true,
             matchAboutBlank: true,

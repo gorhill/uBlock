@@ -38,6 +38,8 @@ const resourceTypes = await browser.runtime.sendMessage({
     what: 'compileFilters:getResourceTypes'
 });
 
+const fetchText = url => fetch(url).then(response => response.text());
+
 /******************************************************************************/
 
 function parseExpires(s) {
@@ -238,38 +240,54 @@ export async function toMv3Data(rulesetid, compiledData) {
     if ( Boolean(compiledData) === false ) { return; }
 
     if ( compiledData.scriptletDetails.size !== 0 ) {
+        makeScriptlets.resetFramework();
+        const secret = self.crypto.randomUUID();
         for ( const details of compiledData.scriptletDetails.values() ) {
             makeScriptlets.compile(rulesetid, details);
         }
-        const template = await fetch('./scriptlet.template.js').then(response =>
-            response.text()
-        );
-        const result = makeScriptlets.commit(rulesetid, template);
-        if ( result.ISOLATED ) {
-            const { hasRegexes, hasAncestors, hasEntities } = result.ISOLATED;
+        const [
+            templateBegin,
+            templateCore,
+            templateEnd,
+        ] = await Promise.all([
+            fetchText('./scriptlet-begin.template.js'),
+            fetchText('./scriptlet.template.js'),
+            fetchText('./scriptlet-end.template.js'),
+        ]);
+        const resultCore = makeScriptlets.commit(rulesetid, templateCore, secret);
+        const resultFramework = makeScriptlets.commitFramework(templateBegin, templateEnd, secret);
+        if ( resultCore.ISOLATED ) {
+            const { hasRegexes, hasAncestors, hasEntities } = resultCore.ISOLATED;
             const hostnames = hasRegexes || hasAncestors || hasEntities ||
-                result.ISOLATED.hostnames.includes('*')
+                resultCore.ISOLATED.hostnames.includes('*')
                 ? '*'
-                : result.ISOLATED.hostnames;
+                : resultCore.ISOLATED.hostnames;
             isolated.push({
                 id: `${rulesetid}-isolated-scriptlets`,
-                code: result.ISOLATED.code,
+                code: [
+                    resultFramework.ISOLATED.beginCode,
+                    resultCore.ISOLATED.code,
+                    resultFramework.ISOLATED.endCode,
+                ].join('\n'),
                 hostnames,
             });
         }
-        if ( result.MAIN ) {
-            const { hasRegexes, hasAncestors, hasEntities } = result.MAIN;
+        if ( resultCore.MAIN ) {
+            const { hasRegexes, hasAncestors, hasEntities } = resultCore.MAIN;
             const hostnames = hasRegexes || hasAncestors || hasEntities ||
-                result.MAIN.hostnames.includes('*')
+                resultCore.MAIN.hostnames.includes('*')
                 ? '*'
-                : result.MAIN.hostnames;
+                : resultCore.MAIN.hostnames;
             main.push({
                 id: `${rulesetid}-main-scriptlets`,
-                code: result.MAIN.code,
+                code: [
+                    resultFramework.MAIN.beginCode,
+                    resultCore.MAIN.code,
+                    resultFramework.MAIN.endCode,
+                ].join('\n'),
                 hostnames,
             });
         }
-        makeScriptlets.reset();
     }
 
     if ( compiledData.specificCosmeticDetails.size ) {
@@ -281,10 +299,10 @@ export async function toMv3Data(rulesetid, compiledData) {
                 proceduralAPI,
                 template,
             ] = await Promise.all([
-                fetch('../scripting/css-api.js').then(response => response.text()),
-                fetch('../scripting/isolated-api.js').then(response => response.text()),
-                fetch('../scripting/css-procedural-api.js').then(response => response.text()),
-                fetch('./css-compiled.template.js').then(response => response.text()),
+                fetchText('../scripting/css-api.js'),
+                fetchText('../scripting/isolated-api.js'),
+                fetchText('../scripting/css-procedural-api.js'),
+                fetchText('./css-compiled.template.js'),
             ]);
             const code = [
                 cssAPI,
@@ -478,7 +496,6 @@ async function compileSandboxFilters() {
 
 (async ( ) => {
     makeScriptlets.init(builtinScriptlets);
-
     const [
         sandboxResult,
         importedResult,

@@ -96,6 +96,18 @@ export function reset() {
     worlds.MAIN = structuredClone(worldTemplate);
 }
 
+export function resetFramework() {
+    reset();
+    worldFrameworks.ISOLATED = structuredClone(frameworkTemplate);
+    worldFrameworks.MAIN = structuredClone(frameworkTemplate);
+}
+
+export function resetAll() {
+    resetFramework();
+    resourceDetails.clear();
+    resourceAliases.clear();
+}
+
 /******************************************************************************/
 
 export function compile(rulesetId, details) {
@@ -265,16 +277,9 @@ export function commitFramework(beginTemplate, endTemplate, secret) {
 
 /******************************************************************************/
 
-export async function importScriptlet(details) {
+export function importScriptlet(details) {
     const funcBody = details.code.replace(/\/\*.+?\*\//gs, '').trim();
-    const textEncoder = new TextEncoder();
-    const funcBuf = textEncoder.encode(funcBody);
-    const hashBuf = await globalThis.crypto.subtle.digest('SHA-256', funcBuf);
-    const digestBuf = new Uint32Array(hashBuf);
-    const digestStr = [ digestBuf[0], digestBuf[1] ]
-        .map(a => a.toString(36).slice(-4).padStart(4,'0'))
-        .join('');
-    const funcName = `zeta_${digestStr}`;
+    const funcName = `zeta_${globalThis.crypto.randomUUID().replaceAll('-', '')}`;
     const { name } = details;
     const code = /^function\s+[^(]+\(.*?\)\s*\{.*\}$/s.test(funcBody)
         ? `function ${funcName}(...args) { // ${name}\n(${funcBody})(...args)\n}`
@@ -285,8 +290,7 @@ export async function importScriptlet(details) {
     if ( Array.isArray(details.dependencies) ) {
         entry.dependencies = [ ...details.dependencies ];
     }
-    resourceDetails.set(funcName, entry);
-    resourceAliases.set(name, funcName);
+    resourceDetails.set(name, entry);
     if ( Array.isArray(details.aliases) ) {
         for ( const alias of details.aliases ) {
             resourceAliases.set(alias, funcName);

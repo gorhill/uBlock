@@ -91,7 +91,9 @@ cp "$UBO_DIR"/src/js/regex-analyzer.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/make-scriptlets.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/make-utils.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/safe-replace.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet-begin.template.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/scriptlet.template.js "$UBOL_DIR"/js/offscreen/
+cp "$UBO_DIR"/src/js/scriptlet-end.template.js "$UBOL_DIR"/js/offscreen/
 cp "$UBO_DIR"/src/js/trusted-tokens.js "$UBOL_DIR"/js/
 cp -R "$UBO_DIR"/src/js/resources "$UBOL_DIR"/js/
 cp "$UBO_DIR"/src/js/static-filtering-parser.js "$UBOL_DIR"/js/

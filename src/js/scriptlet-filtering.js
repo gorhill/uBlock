@@ -23,7 +23,7 @@
 
 import '../lib/regexanalyzer/regex.js';
 
-import * as makescriptlets from './make-scriptlets.js';
+import * as makeScriptlets from './make-scriptlets.js';
 import * as scripting from './vapi-scripting.js';
 
 import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
@@ -151,11 +151,9 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     }
 
     async compileContentScripts() {
-        const secret = self.crypto.randomUUID();
         const map = this.scriptletDB.retrieveAll();
-        makescriptlets.reset();
-        makescriptlets.init(builtinScriptlets);
-        const promises = [];
+        makeScriptlets.resetAll();
+        makeScriptlets.init(builtinScriptlets);
         for ( const [ name, entry ] of redirectEngine.resources ) {
             if ( entry.origin !== 'war' && entry.origin !== 'user' ) { continue; }
             if ( typeof entry.data !== 'string' ) { continue; }
@@ -163,50 +161,42 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 name,
                 code: entry.data,
             });
-            promises.push(makescriptlets.importScriptlet(details));
+            makeScriptlets.importScriptlet(details);
         }
-        await Promise.all(promises);
         for ( const [ rawargs, details ] of map ) {
             details.args = JSON.parse(rawargs);
             details.trustedSource = true;
-            makescriptlets.compile('uBlock', details);
+            makeScriptlets.compile('uBlock', details);
         }
-        const templates = await Promise.all([
-            fetch('/js/scriptlet.template.js').then(response =>
-                response.ok && response.text()
-            ),
-            fetch('/js/scriptlet-begin.template.js').then(response =>
-                response.ok && response.text()
-            ),
-            fetch('/js/scriptlet-end.template.js').then(response =>
-                response.ok && response.text()
-            ),
+        const [
+            templateBegin,
+            templateCore,
+            templateEnd,
+        ] = await Promise.all([
+            fetch('/js/scriptlet-begin.template.js').then(response => response.text()),
+            fetch('/js/scriptlet.template.js').then(response => response.text()),
+            fetch('/js/scriptlet-end.template.js').then(response => response.text()),
         ]);
-        if ( templates.some(a => Boolean(a) === false) ) {
-            await cacheStorage.remove(this.cacheKey);
-            return;
-        }
-        const results = [
-            makescriptlets.commit('uBlock', templates[0], secret),
-            makescriptlets.commitFramework(templates[1], templates[2], secret),
-        ];
+        const secret = self.crypto.randomUUID();
+        const resultCore = makeScriptlets.commit('uBlock', templateCore, secret);
+        const resultFramework = makeScriptlets.commitFramework(templateBegin, templateEnd, secret);
         const out = {};
-        if ( results[0].MAIN ) {
+        if ( resultCore.MAIN ) {
             out.MAIN = {
                 code: [
-                    results[1].MAIN.beginCode,
-                    results[0].MAIN.code,
-                    results[1].MAIN.endCode,
-                ].join('\n\n')
+                    resultFramework.MAIN.beginCode,
+                    resultCore.MAIN.code,
+                    resultFramework.MAIN.endCode,
+                ].join('\n'),
             };
         }
-        if ( results[0].ISOLATED ) {
+        if ( resultCore.ISOLATED ) {
             out.ISOLATED = {
                 code: [
-                    results[1].ISOLATED.beginCode,
-                    results[0].ISOLATED.code,
-                    results[1].ISOLATED.endCode,
-                ].join('\n\n'),
+                    resultFramework.ISOLATED.beginCode,
+                    resultCore.ISOLATED.code,
+                    resultFramework.ISOLATED.endCode,
+                ].join('\n'),
             };
         }
         await cacheStorage.set({ [this.cacheKey]: out });
