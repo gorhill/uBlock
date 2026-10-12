@@ -108,6 +108,10 @@ body[data-forbid~="dashboard"] .globalTools {
     display: none;
 }
 
+.filteringModeSlider[data-level="0"] ~ .localTools > *:is(#gotoPicker,#gotoUnpicker) {
+    display: none;
+}
+
 #filteringModeText {
     color: var(--ink-3);
     margin-bottom: var(--popup-gap-thin);
