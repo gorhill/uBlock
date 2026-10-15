@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals browser, chrome */
+
 (function uBOLOverlay() {
 
 /******************************************************************************/
@@ -78,10 +80,10 @@ self.ubolOverlay = {
             `:root > [${this.secretAttr}-loaded] { visibility: visible !important; }`,
             `:root > [${this.secretAttr}-click] { pointer-events: none !important; }`,
         ].join('\n');
-        this.sendMessage({ what: 'insertCSS', css: this.pickerCSS });
         self.addEventListener('scroll', this.onViewportChanged, { passive: true });
         self.addEventListener('resize', this.onViewportChanged, { passive: true });
         self.addEventListener('keydown', this.onKeyPressed, true);
+        return this.sendMessage({ what: 'insertCSS', css: this.pickerCSS });
     },
 
     stop() {
@@ -141,7 +143,10 @@ self.ubolOverlay = {
         let response;
         switch ( msg.what ) {
         case 'startTool':
-            this.start();
+            this.start().then(( ) => {
+                if ( Boolean(this.frame) === false ) { return; }
+                this.frame.style.visibility = '';
+            });
             break;
         case 'quitTool':
             this.stop();
@@ -313,18 +318,19 @@ self.ubolOverlay = {
             const frame = document.createElement('iframe');
             const secretAttr = this.secretAttr;
             frame.setAttribute(secretAttr, '');
+            frame.style.visibility = 'hidden';
             const onLoad = ( ) => {
                 frame.onload = null;
                 frame.setAttribute(`${secretAttr}-loaded`, '');
                 const channel = new MessageChannel();
                 const port = channel.port1;
                 port.onmessage = ev => {
-                    self.ubolOverlay &&
-                        self.ubolOverlay.onMessage(ev.data || {})
+                    if ( Boolean(self.ubolOverlay) === false ) { return; }
+                    self.ubolOverlay.onMessage(ev.data || {});
                 };
                 port.onmessageerror = ( ) => {
-                    self.ubolOverlay &&
-                        self.ubolOverlay.onMessage({ what: 'quitTool' })
+                    if ( Boolean(self.ubolOverlay) === false ) { return; }
+                    self.ubolOverlay.onMessage({ what: 'quitTool' });
                 };
                 const realURL = new URL(dynamicURL);
                 realURL.hostname =
