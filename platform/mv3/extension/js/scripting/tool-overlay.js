@@ -351,15 +351,10 @@ self.ubolOverlay = {
                 self.ubolOverlay.frame = frame;
                 resolve(true);
             };
-            if ( dynamicURL.protocol !== 'safari-web-extension:' ) {
-                frame.onload = ( ) => {
-                    frame.onload = onLoad;
-                    frame.contentWindow.location = dynamicURL.href;
-                };
-            } else {
+            frame.onload = ( ) => {
                 frame.onload = onLoad;
-                frame.setAttribute('src', dynamicURL.href);
-            }
+                frame.contentWindow.location = dynamicURL.href;
+            };
             document.documentElement.append(frame);
         });
     },
