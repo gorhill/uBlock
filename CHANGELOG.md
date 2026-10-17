@@ -1,3 +1,4 @@
+- [Add `freestar_pubfig.js` shim](https://github.com/gorhill/uBlock/commit/341f23df9c)
 - [Fix parsing of `permissions` filter option](https://github.com/gorhill/uBlock/commit/bb2e13b3c6)
 - [Improve `googlesyndication_adsbygoogle.js` shim](https://github.com/gorhill/uBlock/commit/4dddc2adb0)
 - [Use new `publicSuffix` API when available](https://github.com/gorhill/uBlock/commit/a67ea6acdd)
