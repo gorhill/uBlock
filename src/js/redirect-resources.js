@@ -77,6 +77,9 @@ export default new Map([
     [ 'fingerprint3.js', {
         data: 'text',
     } ],
+    [ 'freestar_pubfig.js', {
+        data: 'text',
+    } ],
     [ 'google-analytics_analytics.js', {
         alias: [
             'google-analytics.com/analytics.js',
