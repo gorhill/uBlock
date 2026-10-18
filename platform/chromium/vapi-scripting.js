@@ -106,11 +106,12 @@ function onBeforeNavigate(details) {
     }
     let frameData = { frameId, parentId: details.parentFrameId, url };
     frameDict.set(frameId, frameData);
-    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+    if ( frameId !== 0 && url.startsWith('about:') ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
     const hostname = hostnameFromURI(url);
+    if ( hostname === '' ) { return; }
     if ( contentScriptDict.has(hostname) ) { return; }
     const result = onGetContentScripts.fn(url);
     const code = uBO_assembleIsolatedCode(result) ?? null;
@@ -121,11 +122,12 @@ function onCommitted(details) {
     const { tabId, frameId } = details;
     if ( tabId < 0 ) { return; }
     let { url } = details;
-    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+    if ( frameId !== 0 && url.startsWith('about:') ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
     const hostname = hostnameFromURI(url);
+    if ( hostname === '' ) { return; }
     const entry = contentScriptDict.get(hostname);
     if ( Boolean(entry?.code) === false ) { return; }
     webext.tabs.executeScript(tabId, {
