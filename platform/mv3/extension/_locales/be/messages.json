@@ -380,7 +380,7 @@
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Падрабязныя звесткі аб рэжыме фільтрацыі",
+    "message": "Падрабязныя звесткі аб рэжыме фільтравання",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
