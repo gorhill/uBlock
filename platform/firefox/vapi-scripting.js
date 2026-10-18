@@ -21,6 +21,8 @@
 
 /* global browser */
 
+import { hostnameFromURI } from './uri-utils.js';
+
 /******************************************************************************/
 
 function uBO_legacyIsolatedWorldWrapper(details) {
@@ -103,22 +105,6 @@ function uBO_assembleLegacyCode(details) {
 
 /******************************************************************************/
 
-function registerLegacyContentScripts(details) {
-    const isolatedCode = uBO_assembleLegacyCode(details);
-    if ( Boolean(isolatedCode) === false ) { return; }
-    registerContentScripts.isolatedHandle = browser.contentScripts.register({
-        allFrames: true,
-        js: [ { code: isolatedCode } ],
-        matchAboutBlank: true,
-        matches: [ 'http://*/*', 'https://*/*' ],
-        runAt: 'document_start',
-    }).catch(( ) => {
-        registerContentScripts.isolatedHandle = undefined;
-    });
-}
-
-/******************************************************************************/
-
 function uBO_assembleCode(world, contentScriptCode, details) {
     if ( Boolean(contentScriptCode) === false ) { return; }
     const code = [ `(function uBO_${world}WorldWrapper() {` ];
@@ -132,52 +118,161 @@ function uBO_assembleCode(world, contentScriptCode, details) {
 
 /******************************************************************************/
 
-export function registerContentScripts(details) {
-    unregisterContentScripts();
-    if ( vAPI.webextFlavor.major < 128 ) {
-        return registerLegacyContentScripts(details);
+const CONTENTSCRIPT_DICT_MAX_LOW = 128;
+const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
+    (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
+const tabDict = new Map();
+const contentScriptDict = new Map();
+
+function getEffectiveURL(tabId, frameId) {
+    const tabData = tabDict.get(tabId);
+    if ( tabData === undefined ) { return; }
+    const { frameDict } = tabData;
+    let frameData = frameDict.get(frameId);
+    for (;;) {
+        if ( /^https?:/.test(frameData.url) ) { break; }
+        frameId = frameData.parentId;
+        if ( frameId === -1 ) { break; }
+        frameData = frameDict.get(frameId);
+        if ( Boolean(frameData) === false ) { return; }
     }
-    const isolatedCode = uBO_assembleCode('isolated', details.isolatedCode, details);
-    if ( isolatedCode ) {
-        registerContentScripts.isolatedHandle = browser.contentScripts.register({
-            allFrames: true,
-            js: [ { code: isolatedCode } ],
-            matchOriginAsFallback: true,
-            matches: [ 'http://*/*', 'https://*/*' ],
-            runAt: 'document_start',
-            world: 'ISOLATED',
-        }).catch(( ) => {
-            registerContentScripts.isolatedHandle = undefined;
-        });
+    return frameData.url;
+}
+
+function unregisterContentScript(hostname) {
+    const entry = contentScriptDict.get(hostname);
+    if ( entry === undefined ) { return; }
+    contentScriptDict.delete(hostname);
+    if ( entry.mainHandle ) {
+        if ( entry.mainHandle instanceof Promise ) {
+            entry.mainHandle.then(( ) => entry.mainHandle?.unregister());
+        } else {
+            entry.mainHandle.unregister();
+        }
     }
-    const mainCode = uBO_assembleCode('main', details.mainCode, details);
-    if ( mainCode ) {
-        registerContentScripts.mainHandle = browser.contentScripts.register({
-            allFrames: true,
-            js: [ { code: mainCode } ],
-            matchOriginAsFallback: true,
-            matches: [ 'http://*/*', 'https://*/*' ],
-            runAt: 'document_start',
-            world: 'MAIN',
-        }).catch(( ) => {
-            registerContentScripts.mainHandle = undefined;
-        });
+    if ( entry.isolatedHandle ) {
+        if ( entry.isolatedHandle instanceof Promise ) {
+            entry.isolatedHandle.then(( ) => entry.isolatedHandle?.unregister());
+        } else {
+            entry.isolatedHandle.unregister();
+        }
     }
 }
 
-export function unregisterContentScripts() {
-    if ( registerContentScripts.isolatedHandle ) {
-        registerContentScripts.isolatedHandle.then(handle => {
-            if ( Boolean(handle) === false ) { return; }
-            handle.unregister();
-        });
-        registerContentScripts.isolatedHandle = undefined;
+function onBeforeNavigate(details) {
+    const { tabId } = details;
+    if ( tabId < 0 ) { return; }
+    const tabData = tabDict.get(tabId) ?? { tabId };
+    if ( tabData.frameDict === undefined ) {
+        tabData.frameDict = new Map();
+        tabDict.set(tabId, tabData);
     }
-    if ( registerContentScripts.mainHandle ) {
-        registerContentScripts.mainHandle.then(handle => {
-            if ( Boolean(handle) === false ) { return; }
-            handle.unregister();
-        });
-        registerContentScripts.mainHandle = undefined;
+    const { frameDict } = tabData;
+    let { frameId, url } = details;
+    if ( frameId === 0 ) {
+        frameDict.clear();
+    }
+    let frameData = { frameId, parentId: details.parentFrameId, url };
+    frameDict.set(frameId, frameData);
+    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+        url = getEffectiveURL(tabId, frameId);
+        if ( url === undefined ) { return; }
+    }
+    const hostname = hostnameFromURI(url);
+    if ( contentScriptDict.has(hostname) ) { return; }
+    const result = onGetContentScripts.fn(url);
+    const entry = { t: Date.now() };
+    if ( vAPI.webextFlavor.major >= 128 ) {
+        const isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
+        if ( isolatedCode ) {
+            entry.isolatedHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: isolatedCode } ],
+                matchOriginAsFallback: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+                world: 'ISOLATED',
+            }).then(handle => {
+                entry.isolatedHandle = handle;
+            }).catch(( ) => {
+                entry.isolatedHandle = undefined;
+            });
+        }
+        const mainCode = uBO_assembleCode('main', result.mainCode, result);
+        if ( mainCode ) {
+            entry.mainHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: mainCode } ],
+                matchOriginAsFallback: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+                world: 'MAIN',
+            }).then(handle => {
+                entry.mainHandle = handle;
+            }).catch(( ) => {
+                entry.mainHandle = undefined;
+            });
+        }
+    } else {
+        const isolatedCode = uBO_assembleLegacyCode(details);
+        if ( isolatedCode ) {
+            entry.isolatedHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: isolatedCode } ],
+                matchAboutBlank: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+            }).then(handle => {
+                entry.isolatedHandle = handle;
+            }).catch(( ) => {
+                entry.isolatedHandle = undefined;
+            });
+        }
+    }
+    contentScriptDict.set(hostname, entry);
+}
+
+function onCommitted(details) {
+    const { tabId } = details;
+    if ( tabId < 0 ) { return; }
+    let { frameId, url } = details;
+    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+        url = getEffectiveURL(tabId, frameId);
+        if ( url === undefined ) { return; }
+    }
+    const hostname = hostnameFromURI(url);
+    const entry = contentScriptDict.get(hostname);
+    if ( entry === undefined ) { return; }
+    if ( Boolean(entry.mainHandle) === false ) {
+        if ( Boolean(entry.isolatedHandle) === false ) { return; }
+    }
+    entry.t = Date.now();
+    if ( contentScriptDict.size <= CONTENTSCRIPT_DICT_MAX_HIGH ) { return; }
+    const sortedKeys = Array.from(contentScriptDict.keys()).toSorted((a, b) =>
+        contentScriptDict.get(a).t - contentScriptDict.get(b).t
+    ).slice(0, -CONTENTSCRIPT_DICT_MAX_LOW);
+    for ( const key of sortedKeys ) {
+        unregisterContentScript(key);
+    }
+}
+
+function onTabRemoved(tabId) {
+    tabDict.delete(tabId);
+}
+
+/******************************************************************************/
+
+export function onGetContentScripts(fn) {
+    const initialized = Boolean(onGetContentScripts.fn);
+    onGetContentScripts.fn = fn;
+    if ( initialized ) { return; }
+    browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
+    browser.webNavigation.onCommitted.addListener(onCommitted);
+    browser.tabs.onRemoved.addListener(onTabRemoved);
+}
+
+export function reset() {
+    for ( const hostname of contentScriptDict.keys() ) {
+        unregisterContentScript(hostname);
     }
 }

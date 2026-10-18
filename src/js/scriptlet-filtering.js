@@ -26,15 +26,28 @@ import '../lib/regexanalyzer/regex.js';
 import * as makeScriptlets from './make-scriptlets.js';
 import * as scripting from './vapi-scripting.js';
 
+import { domainFromHostname, hostnameFromURI } from './uri-utils.js';
+
 import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
 import { builtinScriptlets } from './resources/scriptlets.js';
 import cacheStorage from './cachestorage.js';
-import { hostnameFromURI } from './uri-utils.js';
 import logger from './logger.js';
 import { onBroadcast } from './broadcast.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import µb from './background.js';
+
+/******************************************************************************/
+
+const [
+    templateBegin,
+    templateCore,
+    templateEnd,
+] = await Promise.all([
+    fetch('/js/scriptlet-begin.template.js').then(response => response.text()),
+    fetch('/js/scriptlet.template.js').then(response => response.text()),
+    fetch('/js/scriptlet-end.template.js').then(response => response.text()),
+]);
 
 /******************************************************************************/
 
@@ -116,42 +129,34 @@ function assembleMainWorldWrapper(mainCode, options) {
 export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     constructor() {
         super();
-        this.cacheKey = 'makescriptletsCommitResult';
         this.warOrigin = vAPI.getURL('/web_accessible_resources');
         this.warSecret = undefined;
         this.isDevBuild = undefined;
         this.logLevel = 1;
     }
 
-    reset() {
+    async reset() {
         super.reset();
-        cacheStorage.remove(this.cacheKey);
-        scripting.unregisterContentScripts();
+        cacheStorage.remove('makescriptletsCommitResult');
+        scripting.reset();
+        makeScriptlets.resetAll();
     }
 
     async freeze() {
         super.freeze();
-        const result = await this.compileContentScripts();
         this.#startListening();
-        return this.commitContentScripts(result);
+        scripting.reset();
+        await this.resetCompiler();
     }
 
     async fromSelfie(selfie) {
-        const r = await this.registerContentScripts();
-        if ( r !== true ) { return false; }
         this.#startListening();
+        scripting.reset();
+        await this.resetCompiler();
         return super.fromSelfie(selfie);
     }
 
-    async registerContentScripts() {
-        const bin = await cacheStorage.get(this.cacheKey);
-        if ( Boolean(bin?.[this.cacheKey]) === false ) { return false; }
-        await this.commitContentScripts(bin[this.cacheKey]);
-        return true;
-    }
-
-    async compileContentScripts() {
-        const map = this.scriptletDB.retrieveAll();
+    resetCompiler() {
         makeScriptlets.resetAll();
         makeScriptlets.init(builtinScriptlets);
         for ( const [ name, entry ] of redirectEngine.resources ) {
@@ -163,26 +168,24 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             });
             makeScriptlets.importScriptlet(details);
         }
+    }
+
+    getContentScripts(url) {
+        const hostname = hostnameFromURI(url);
+        const domain = domainFromHostname(hostname);
+        const map = this.scriptletDB.retrieveOne(hostname, domain);
+        makeScriptlets.reset();
         for ( const [ rawargs, details ] of map ) {
             details.args = JSON.parse(rawargs);
             details.trustedSource = true;
             makeScriptlets.compile('uBlock', details);
         }
-        const [
-            templateBegin,
-            templateCore,
-            templateEnd,
-        ] = await Promise.all([
-            fetch('/js/scriptlet-begin.template.js').then(response => response.text()),
-            fetch('/js/scriptlet.template.js').then(response => response.text()),
-            fetch('/js/scriptlet-end.template.js').then(response => response.text()),
-        ]);
         const secret = self.crypto.randomUUID();
         const resultCore = makeScriptlets.commit('uBlock', templateCore, secret);
         const resultFramework = makeScriptlets.commitFramework(templateBegin, templateEnd, secret);
-        const out = {};
+        const result = {};
         if ( resultCore.MAIN ) {
-            out.MAIN = {
+            result.MAIN = {
                 code: [
                     resultFramework.MAIN.beginCode,
                     resultCore.MAIN.code,
@@ -191,21 +194,13 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             };
         }
         if ( resultCore.ISOLATED ) {
-            out.ISOLATED = {
+            result.ISOLATED = {
                 code: [
                     resultFramework.ISOLATED.beginCode,
                     resultCore.ISOLATED.code,
                     resultFramework.ISOLATED.endCode,
                 ].join('\n'),
             };
-        }
-        await cacheStorage.set({ [this.cacheKey]: out });
-        return out;
-    }
-
-    commitContentScripts(result) {
-        if ( Boolean(result) === false ) {
-            return scripting.unregisterContentScripts();
         }
         if ( this.isDevBuild === undefined ) {
             this.isDevBuild = vAPI.webextFlavor.soup.has('devbuild') ||
@@ -249,7 +244,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             );
         }
         options.earlyBailoutCode = earlyBailoutCode.join('\n');
-        return scripting.registerContentScripts(options);
+        return options;
     }
 
     retrieve(request) {
@@ -283,14 +278,14 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.bc = onBroadcast(msg => {
             switch ( msg.what ) {
             case 'filteringBehaviorChanged':
-                this.registerContentScripts();
+                scripting.reset();
                 break;
             case 'hiddenSettingsChanged':
                 this.isDevBuild = undefined;
                 /* fall through */
             case 'loggerEnabled':
             case 'loggerDisabled':
-                this.registerContentScripts();
+                scripting.reset();
                 break;
             case 'loggerLevelChanged':
                 this.logLevel = msg.level;
@@ -308,7 +303,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                         });
                     }
                 });
-                this.registerContentScripts();
+                scripting.reset();
                 break;
             }
         });
@@ -318,6 +313,10 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
 /******************************************************************************/
 
 const scriptletFilteringEngine = new ScriptletFilteringEngineEx();
+
+scripting.onGetContentScripts(
+    scriptletFilteringEngine.getContentScripts.bind(scriptletFilteringEngine)
+);
 
 export default scriptletFilteringEngine;
 

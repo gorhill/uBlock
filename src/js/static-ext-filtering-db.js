@@ -67,6 +67,7 @@ export class StaticExtFilteringHostnameDB {
     }
 
     #hostnameToStringListMap = new Map();
+    #ancestorSlots;
     #matcherMap = new Map();
     #hostnameToMatcherListMap = new Map();
     #strSlots = [ '' ];     // Array of strings (selectors and pseudo-selectors)
@@ -117,6 +118,7 @@ export class StaticExtFilteringHostnameDB {
 
     clear() {
         this.#hostnameToStringListMap.clear();
+        this.#ancestorSlots = undefined;
         this.#matcherMap.clear();
         this.#hostnameToMatcherListMap.clear();
         this.#strSlots = [ '' ];
@@ -182,9 +184,10 @@ export class StaticExtFilteringHostnameDB {
         }
     }
 
-    retrieveAll() {
+    retrieveOne(hostname, domain) {
         const out = new Map();
         const processList = (hn, iList, out) => {
+            if ( iList === undefined ) { return; }
             for ( ; iList !== 0; iList = this.#linkedLists[iList+1] ) {
                 const s = this.#strSlots[this.#linkedLists[iList+0]];
                 const exception = s.charCodeAt(0) === 0x2D /* - */;
@@ -208,11 +211,35 @@ export class StaticExtFilteringHostnameDB {
                 }
             }
         };
-        for ( const [ hn, iList ] of this.#hostnameToStringListMap ) {
-            processList(hn !== '' ? hn : '*', iList, out);
+        let pos = domain.indexOf('.');
+        const etldLen = pos !== -1 ? domain.length - pos - 1 : 0;
+        pos = 0;
+        for (;;) {
+            const hn = hostname.slice(pos);
+            const iList = this.#hostnameToStringListMap.get(hn);
+            processList(hn, iList, out);
+            if ( etldLen && hn.length > etldLen ) {
+                const en = `${hn.slice(0, -etldLen)}*`;
+                const iList = this.#hostnameToStringListMap.get(en);
+                processList(en, iList, out);
+            }
+            pos = hostname.indexOf('.', pos) + 1;
+            if ( pos === 0 ) { break; }
         }
+        const iList = this.#hostnameToStringListMap.get('*');
+        processList('*', iList, out);
         for ( const [ hn, iSlot ] of this.#matcherMap ) {
             processList(hn, this.#matcherSlots[iSlot].iList, out);
+        }
+        if ( this.#ancestorSlots === undefined ) {
+            this.#ancestorSlots = [];
+            for ( const [ hn, iList ] of this.#hostnameToStringListMap ) {
+                if ( hn.endsWith('>>') === false ) { continue; }
+                this.#ancestorSlots.push(hn, iList);
+            }
+        }
+        for ( let i = 0; i < this.#ancestorSlots.length; i+=2 ) {
+            processList(this.#ancestorSlots[i+0], this.#ancestorSlots[i+1], out);
         }
         return out;
     }

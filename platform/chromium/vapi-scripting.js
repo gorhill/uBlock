@@ -21,6 +21,7 @@
 
 /* global browser */
 
+import { hostnameFromURI } from './uri-utils.js';
 import webext from './webext.js';
 
 /******************************************************************************/
@@ -69,44 +70,95 @@ function uBO_assembleIsolatedCode(details) {
 
 /******************************************************************************/
 
-let contentScriptCode;
+const CONTENTSCRIPT_DICT_MAX_LOW = 128;
+const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
+    (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
+const tabDict = new Map();
+const contentScriptDict = new Map();
 
-let onceFn = async ( ) => {
-    if ( Boolean(contentScriptCode) === false ) { return; }
-    const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
-    for ( const tab of tabs  ) {
-        if ( tab.discarded === true ) { continue; }
-        if ( tab.status === 'unloaded' ) { continue; }
-        if ( /^https?:/.test(tab.url) === false ) { continue; }
-        webext.tabs.executeScript(tab.id, {
-            allFrames: true,
-            matchAboutBlank: true,
-            runAt: 'document_start',
-            code: contentScriptCode,
-        });
+function getEffectiveURL(tabId, frameId) {
+    const tabData = tabDict.get(tabId);
+    if ( tabData === undefined ) { return; }
+    const { frameDict } = tabData;
+    let frameData = frameDict.get(frameId);
+    for (;;) {
+        if ( /^https?:/.test(frameData.url) ) { break; }
+        frameId = frameData.parentId;
+        if ( frameId === -1 ) { break; }
+        frameData = frameDict.get(frameId);
+        if ( Boolean(frameData) === false ) { return; }
     }
-};
-
-export function registerContentScripts(details) {
-    contentScriptCode = uBO_assembleIsolatedCode(details);
-    if ( onceFn === undefined ) { return; }
-    onceFn();
-    onceFn = undefined;
+    return frameData.url;
 }
 
-export function unregisterContentScripts() {
-    contentScriptCode = undefined;
+function onBeforeNavigate(details) {
+    const { tabId } = details;
+    if ( tabId < 0 ) { return; }
+    const tabData = tabDict.get(tabId) ?? { tabId };
+    if ( tabData.frameDict === undefined ) {
+        tabData.frameDict = new Map();
+        tabDict.set(tabId, tabData);
+    }
+    const { frameDict } = tabData;
+    let { frameId, url } = details;
+    if ( frameId === 0 ) {
+        frameDict.clear();
+    }
+    let frameData = { frameId, parentId: details.parentFrameId, url };
+    frameDict.set(frameId, frameData);
+    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+        url = getEffectiveURL(tabId, frameId);
+        if ( url === undefined ) { return; }
+    }
+    const hostname = hostnameFromURI(url);
+    if ( contentScriptDict.has(hostname) ) { return; }
+    const result = onGetContentScripts.fn(url);
+    const code = uBO_assembleIsolatedCode(result) ?? null;
+    contentScriptDict.set(hostname, { code, t: Date.now() });
+}
+
+function onCommitted(details) {
+    const { tabId, frameId } = details;
+    if ( tabId < 0 ) { return; }
+    let { url } = details;
+    if ( frameId !== 0 && /^https?:/.test(url) === false ) {
+        url = getEffectiveURL(tabId, frameId);
+        if ( url === undefined ) { return; }
+    }
+    const hostname = hostnameFromURI(url);
+    const entry = contentScriptDict.get(hostname);
+    if ( Boolean(entry?.code) === false ) { return; }
+    webext.tabs.executeScript(tabId, {
+        frameId,
+        matchAboutBlank: true,
+        runAt: 'document_start',
+        code: entry.code,
+    });
+    entry.t = Date.now();
+    if ( contentScriptDict.size <= CONTENTSCRIPT_DICT_MAX_HIGH ) { return; }
+    const sortedKeys = Array.from(contentScriptDict.keys()).toSorted((a, b) =>
+        contentScriptDict.get(a).t - contentScriptDict.get(b).t
+    ).slice(0, -CONTENTSCRIPT_DICT_MAX_LOW);
+    for ( const key of sortedKeys ) {
+        contentScriptDict.delete(key);
+    }
+}
+
+function onTabRemoved(tabId) {
+    tabDict.delete(tabId);
 }
 
 /******************************************************************************/
 
-browser.webNavigation.onCommitted.addListener(details => {
-    if ( /^https?:|^about:/.test(details.url) === false ) { return; }
-    if ( Boolean(contentScriptCode) === false ) { return; }
-    webext.tabs.executeScript(details.tabId, {
-        frameId: details.frameId,
-        matchAboutBlank: true,
-        runAt: 'document_start',
-        code: contentScriptCode,
-    });
-});
+export function onGetContentScripts(fn) {
+    const initialized = Boolean(onGetContentScripts.fn);
+    onGetContentScripts.fn = fn;
+    if ( initialized ) { return; }
+    browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
+    browser.webNavigation.onCommitted.addListener(onCommitted);
+    browser.tabs.onRemoved.addListener(onTabRemoved);
+}
+
+export function reset() {
+    contentScriptDict.clear();
+}
