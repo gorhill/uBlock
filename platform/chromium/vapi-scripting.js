@@ -75,6 +75,7 @@ const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
 const tabDict = new Map();
 const contentScriptDict = new Map();
+let getContentScripts;
 
 function getEffectiveURL(tabId, frameId) {
     const tabData = tabDict.get(tabId);
@@ -89,6 +90,16 @@ function getEffectiveURL(tabId, frameId) {
         if ( Boolean(frameData) === false ) { return; }
     }
     return frameData.url;
+}
+
+function registerContentScript(url) {
+    const hostname = hostnameFromURI(url);
+    if ( hostname === '' ) { return; }
+    if ( contentScriptDict.has(hostname) ) { return; }
+    const result = getContentScripts(url);
+    const code = uBO_assembleIsolatedCode(result) ?? null;
+    contentScriptDict.set(hostname, { code, t: Date.now() });
+    return code;
 }
 
 function onBeforeNavigate(details) {
@@ -110,12 +121,7 @@ function onBeforeNavigate(details) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
-    const hostname = hostnameFromURI(url);
-    if ( hostname === '' ) { return; }
-    if ( contentScriptDict.has(hostname) ) { return; }
-    const result = onGetContentScripts.fn(url);
-    const code = uBO_assembleIsolatedCode(result) ?? null;
-    contentScriptDict.set(hostname, { code, t: Date.now() });
+    registerContentScript(url);
 }
 
 function onCommitted(details) {
@@ -152,10 +158,50 @@ function onTabRemoved(tabId) {
 
 /******************************************************************************/
 
-export function onGetContentScripts(fn) {
-    const initialized = Boolean(onGetContentScripts.fn);
-    onGetContentScripts.fn = fn;
+export async function start(fn) {
+    const initialized = Boolean(getContentScripts);
+    getContentScripts = fn;
     if ( initialized ) { return; }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/129
+    //  Find out whether content scripts need to be injected
+    //  programmatically. This may be necessary for web pages which
+    //  were loaded before uBO launched.
+    const manifest = browser.runtime.getManifest();
+    const injectDeclarativeContentScripts = tabId => {
+        vAPI.tabs.executeScript(tabId, {
+            file: 'js/scriptlets/should-inject-contentscript.js'
+        }).then(result => {
+            if ( result !== true ) { return; }
+            for ( const contentScript of manifest.content_scripts ) {
+                for ( const file of contentScript.js ) {
+                    webext.tabs.executeScript(tabId, {
+                        file,
+                        allFrames: contentScript.all_frames,
+                        runAt: contentScript.run_at,
+                    });
+                }
+            }
+        });
+    };
+
+    const tabs = await browser.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
+    for ( const tab of tabs ) {
+        if ( tab.discarded ) { continue; }
+        if ( tab.status === 'unloaded' ) { continue; }
+        const { id, url } = tab;
+        const code = registerContentScript(url);
+        if ( code ) {
+            webext.tabs.executeScript(id, {
+                allFrames: true,
+                matchAboutBlank: true,
+                runAt: 'document_start',
+                code,
+            });
+        }
+        injectDeclarativeContentScripts(id);
+    }
+
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     browser.webNavigation.onCommitted.addListener(onCommitted);
     browser.tabs.onRemoved.addListener(onTabRemoved);

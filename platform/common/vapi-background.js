@@ -22,6 +22,8 @@
 
 // For background page
 
+/* global browser */
+
 /******************************************************************************/
 
 import { ubolog } from './console.js';

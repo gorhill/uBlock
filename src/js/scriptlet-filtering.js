@@ -135,24 +135,29 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.logLevel = 1;
     }
 
-    async reset() {
-        super.reset();
+    async start() {
         cacheStorage.remove('makescriptletsCommitResult');
+        await scripting.start((...args) =>
+            this.getContentScripts(...args)
+        );
+        this.#startListening();
+    }
+
+    reset() {
+        super.reset();
         scripting.reset();
         makeScriptlets.resetAll();
     }
 
-    async freeze() {
+    freeze() {
         super.freeze();
-        this.#startListening();
         scripting.reset();
-        await this.resetCompiler();
+        this.resetCompiler();
     }
 
-    async fromSelfie(selfie) {
-        this.#startListening();
+    fromSelfie(selfie) {
         scripting.reset();
-        await this.resetCompiler();
+        this.resetCompiler();
         return super.fromSelfie(selfie);
     }
 
@@ -313,10 +318,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
 /******************************************************************************/
 
 const scriptletFilteringEngine = new ScriptletFilteringEngineEx();
-
-scripting.onGetContentScripts(
-    scriptletFilteringEngine.getContentScripts.bind(scriptletFilteringEngine)
-);
 
 export default scriptletFilteringEngine;
 

@@ -123,6 +123,7 @@ const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
 const tabDict = new Map();
 const contentScriptDict = new Map();
+let getContentScripts;
 
 function getEffectiveURL(tabId, frameId) {
     const tabData = tabDict.get(tabId);
@@ -137,6 +138,62 @@ function getEffectiveURL(tabId, frameId) {
         if ( Boolean(frameData) === false ) { return; }
     }
     return frameData.url;
+}
+
+function registerContentScript(url) {
+    const hostname = hostnameFromURI(url);
+    if ( hostname === '' ) { return; }
+    if ( contentScriptDict.has(hostname) ) { return; }
+    const result = getContentScripts(url);
+    const entry = { t: Date.now() };
+    if ( vAPI.webextFlavor.major >= 128 ) {
+        const isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
+        if ( isolatedCode ) {
+            entry.isolatedHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: isolatedCode } ],
+                matchOriginAsFallback: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+                world: 'ISOLATED',
+            }).then(handle => {
+                entry.isolatedHandle = handle;
+            }).catch(( ) => {
+                entry.isolatedHandle = undefined;
+            });
+        }
+        const mainCode = uBO_assembleCode('main', result.mainCode, result);
+        if ( mainCode ) {
+            entry.mainHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: mainCode } ],
+                matchOriginAsFallback: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+                world: 'MAIN',
+            }).then(handle => {
+                entry.mainHandle = handle;
+            }).catch(( ) => {
+                entry.mainHandle = undefined;
+            });
+        }
+    } else {
+        const isolatedCode = uBO_assembleLegacyCode(result);
+        if ( isolatedCode ) {
+            entry.isolatedHandle = browser.contentScripts.register({
+                allFrames: true,
+                js: [ { code: isolatedCode } ],
+                matchAboutBlank: true,
+                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                runAt: 'document_start',
+            }).then(handle => {
+                entry.isolatedHandle = handle;
+            }).catch(( ) => {
+                entry.isolatedHandle = undefined;
+            });
+        }
+    }
+    contentScriptDict.set(hostname, entry);
 }
 
 function unregisterContentScript(hostname) {
@@ -172,65 +229,13 @@ function onBeforeNavigate(details) {
     if ( frameId === 0 ) {
         frameDict.clear();
     }
-    let frameData = { frameId, parentId: details.parentFrameId, url };
+    const frameData = { frameId, parentId: details.parentFrameId, url };
     frameDict.set(frameId, frameData);
     if ( frameId !== 0 && url.startsWith('about:') ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
-    const hostname = hostnameFromURI(url);
-    if ( hostname === '' ) { return; }
-    if ( contentScriptDict.has(hostname) ) { return; }
-    const result = onGetContentScripts.fn(url);
-    const entry = { t: Date.now() };
-    if ( vAPI.webextFlavor.major >= 128 ) {
-        const isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
-        if ( isolatedCode ) {
-            entry.isolatedHandle = browser.contentScripts.register({
-                allFrames: true,
-                js: [ { code: isolatedCode } ],
-                matchOriginAsFallback: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
-                runAt: 'document_start',
-                world: 'ISOLATED',
-            }).then(handle => {
-                entry.isolatedHandle = handle;
-            }).catch(( ) => {
-                entry.isolatedHandle = undefined;
-            });
-        }
-        const mainCode = uBO_assembleCode('main', result.mainCode, result);
-        if ( mainCode ) {
-            entry.mainHandle = browser.contentScripts.register({
-                allFrames: true,
-                js: [ { code: mainCode } ],
-                matchOriginAsFallback: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
-                runAt: 'document_start',
-                world: 'MAIN',
-            }).then(handle => {
-                entry.mainHandle = handle;
-            }).catch(( ) => {
-                entry.mainHandle = undefined;
-            });
-        }
-    } else {
-        const isolatedCode = uBO_assembleLegacyCode(details);
-        if ( isolatedCode ) {
-            entry.isolatedHandle = browser.contentScripts.register({
-                allFrames: true,
-                js: [ { code: isolatedCode } ],
-                matchAboutBlank: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
-                runAt: 'document_start',
-            }).then(handle => {
-                entry.isolatedHandle = handle;
-            }).catch(( ) => {
-                entry.isolatedHandle = undefined;
-            });
-        }
-    }
-    contentScriptDict.set(hostname, entry);
+    registerContentScript(url);
 }
 
 function onCommitted(details) {
@@ -264,10 +269,16 @@ function onTabRemoved(tabId) {
 
 /******************************************************************************/
 
-export function onGetContentScripts(fn) {
-    const initialized = Boolean(onGetContentScripts.fn);
-    onGetContentScripts.fn = fn;
+export async function start(fn) {
+    const initialized = Boolean(getContentScripts);
+    getContentScripts = fn;
     if ( initialized ) { return; }
+    const tabs = await browser.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
+    for ( const tab of tabs ) {
+        if ( tab.discarded ) { continue; }
+        if ( tab.status === 'unloaded' ) { continue; }
+        registerContentScript(tab.url);
+    }
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     browser.webNavigation.onCommitted.addListener(onCommitted);
     browser.tabs.onRemoved.addListener(onTabRemoved);
