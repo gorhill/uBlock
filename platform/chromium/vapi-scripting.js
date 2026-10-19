@@ -169,7 +169,7 @@ export async function start(fn) {
     //  were loaded before uBO launched.
     const manifest = browser.runtime.getManifest();
     const injectDeclarativeContentScripts = tabId => {
-        vAPI.tabs.executeScript(tabId, {
+        webext.tabs.executeScript(tabId, {
             file: 'js/scriptlets/should-inject-contentscript.js'
         }).then(result => {
             if ( result !== true ) { return; }
@@ -185,7 +185,7 @@ export async function start(fn) {
         });
     };
 
-    const tabs = await browser.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
+    const tabs = await webext.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
     for ( const tab of tabs ) {
         if ( tab.discarded ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
