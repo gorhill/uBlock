@@ -364,13 +364,13 @@
     "id": "irn-0",
     "group": "regions",
     "lang": "fa ps tg",
-    "name": "🇮🇷ir: PersianBlocker",
+    "name": "🇮🇷ir: فارسی (Persian)",
     "tags": "ads af ir persian pashto tajik tj",
     "enabled": false,
     "urls": [
-      "https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt"
+      "https://raw.githubusercontent.com/PersianBlocker/PersianBlocker/main/PersianBlocker.txt"
     ],
-    "homeURL": "https://github.com/MasterKia/PersianBlocker"
+    "homeURL": "https://github.com/PersianBlocker/PersianBlocker"
   },
   {
     "id": "isl-0",

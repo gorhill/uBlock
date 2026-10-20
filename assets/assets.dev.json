@@ -697,18 +697,16 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇮🇷ir: PersianBlocker",
+		"title": "🇮🇷ir: فارسی (Persian)",
 		"tags": "ads af ir persian pashto tajik tj",
 		"lang": "fa ps tg",
-		"contentURL": [
-			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
-			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
+		"contentURL": [			"https://raw.githubusercontent.com/PersianBlocker/PersianBlocker/main/PersianBlocker.txt",
+			"https://cdn.jsdelivr.net/gh/PersianBlocker/PersianBlocker@main/PersianBlocker.txt"
 		],
 		"cdnURLs": [
-			"https://cdn.jsdelivr.net/gh/MasterKia/PersianBlocker@main/PersianBlocker.txt",
-			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
+			"https://cdn.jsdelivr.net/gh/PersianBlocker/PersianBlocker@main/PersianBlocker.txt"
 		],
-		"supportURL": "https://github.com/MasterKia/PersianBlocker"
+		"supportURL": "https://github.com/PersianBlocker/PersianBlocker"
 	},
 	"ISL-0": {
 		"content": "filters",
