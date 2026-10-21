@@ -267,7 +267,16 @@ export function commitFramework(beginTemplate, endTemplate, secret) {
             `/* ${scriptletFunctions.size} */ [${Array.from(scriptletFunctions.keys()).join(',')}]`
         );
         beginCode = safeReplace(beginCode, 'self.$scriptletFunctions$',
-            Array.from(allFunctions.values()).sort().join('\n\n')
+            Array.from(allFunctions.values()).sort((a, b) => {
+                if ( a.startsWith('function zeta_') ) {
+                    if ( b.startsWith('function zeta_') ) {
+                        const amatch = /[^ ]+\n/.exec(a);
+                        const bmatch = /[^ ]+\n/.exec(b);
+                        return amatch[0].localeCompare(bmatch[0]);
+                    }
+                }
+                return a.localeCompare(b);
+            }).join('\n\n')
         );
         let endCode = safeReplace(endTemplate, 'self.$scriptletSecret$', JSON.stringify(secret));
         stats[world] = { beginCode, endCode };
