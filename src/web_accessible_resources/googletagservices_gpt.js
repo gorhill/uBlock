@@ -146,6 +146,7 @@
     gpt.pubads = function() { return pubAdsService; };
     gpt.pubadsReady = true;
     gpt.setAdIframeTitle = noopfn;
+    gpt.setConfig = noopfn;
     gpt.sizeMapping = function() { return new SizeMappingBuilder(); };
     window.googletag = gpt;
     while ( cmd.length !== 0 ) {
