@@ -31,8 +31,7 @@ function uBO_legacyIsolatedWorldWrapper(details) {
 
     (function isolatedCode(){})();
 
-    // Use a page world sentinel to verify that execution was
-    // successful
+    // Use a page world sentinel to verify that execution was successful
     if ( details.mainCode ) {
         const doc = document;
         const { sentinel } = details;
@@ -100,14 +99,17 @@ function uBO_assembleLegacyCode(details) {
             earlyBailoutCode +
             wrapperCode.slice(match.index + match[0].length);
     }
-    return `(${wrapperCode})(${JSON.stringify({ sentinel: vAPI.generateSecret(3), mainCode })});`;
+    return `// ${details.hostname}\n(${wrapperCode})(${JSON.stringify({ sentinel, mainCode })});`;
 }
 
 /******************************************************************************/
 
 function uBO_assembleCode(world, contentScriptCode, details) {
     if ( Boolean(contentScriptCode) === false ) { return; }
-    const code = [ `(function uBO_${world}WorldWrapper() {` ];
+    const code = [
+        `// ${details.hostname}`,
+        `(function uBO_${world}WorldWrapper() {`,
+    ];
     if ( details.earlyBailoutCode ) {
         code.push(details.earlyBailoutCode);
     }
@@ -121,6 +123,7 @@ function uBO_assembleCode(world, contentScriptCode, details) {
 const CONTENTSCRIPT_DICT_MAX_LOW = 128;
 const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
+const sentinel = self.crypto.randomUUID();
 const tabDict = new Map();
 const contentScriptDict = new Map();
 let getContentScripts;
@@ -216,6 +219,15 @@ function unregisterContentScript(hostname) {
     }
 }
 
+function onCreatedNavigationTarget(details) {
+    onBeforeNavigate({
+        tabId: details.tabId,
+        frameId: 0,
+        parentFrameId: -1,
+        url: details.url,
+    });
+}
+
 function onBeforeNavigate(details) {
     const { tabId } = details;
     if ( tabId < 0 ) { return; }
@@ -279,6 +291,7 @@ export async function start(fn) {
         if ( tab.status === 'unloaded' ) { continue; }
         registerContentScript(tab.url);
     }
+    browser.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     browser.webNavigation.onCommitted.addListener(onCommitted);
     browser.tabs.onRemoved.addListener(onTabRemoved);

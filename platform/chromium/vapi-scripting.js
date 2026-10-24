@@ -55,11 +55,18 @@ function uBO_assembleIsolatedCode(details) {
     if ( Boolean(isolatedCode) === false ) {
         if ( Boolean(mainCode) === false ) { return; }
     }
-    let code = [ '(function uBO_isolatedWorldWrapper() {' ];
+    let code = [
+        `// ${details.hostname}`,
+        '(function uBO_isolatedWorldWrapper() {',
+    ];
     if ( details.earlyBailoutCode ) {
         code.push(details.earlyBailoutCode);
     }
-    code.push(`(${uBO_isolatedCode.toString()})(`, JSON.stringify(mainCode), `);`);
+    code.push(
+        `(${uBO_isolatedCode.toString()})(`,
+        JSON.stringify(`// ${details.hostname}\n${mainCode}`),
+        `);`
+    );
     code.push('})();');
     code = code.join('\n');
     const match = /\(function isolatedCode\(\)\{\}\)\(\);/.exec(code);

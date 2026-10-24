@@ -213,6 +213,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         }
         this.warSecret = vAPI.warSecret.long(this.warSecret);
         const options = {
+            hostname,
             scriptletGlobals: {
                 warOrigin: this.warOrigin,
                 warSecret: this.warSecret,
