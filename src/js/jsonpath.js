@@ -585,7 +585,12 @@ export class JSONPath {
             if ( rval instanceof Object === false ) { return; }
             const lval = obj[key];
             if ( lval instanceof Object === false ) { return; }
-            if ( Array.isArray(lval) ) { return; }
+            if ( Array.isArray(lval) ) {
+                if ( Array.isArray(rval) ) {
+                    lval.push(...rval); break;
+                }
+                lval.push(rval); break;
+            }
             for ( const [ k, v ] of JSONPath.entries(rval) ) {
                 lval[k] = v;
             }
