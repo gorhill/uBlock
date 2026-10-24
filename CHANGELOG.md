@@ -1,3 +1,4 @@
+- [Improve `JSONPath`](https://github.com/gorhill/uBlock/commit/006dfc4da9)
 - [Improve `googletagservices_gpt.js` shim](https://github.com/gorhill/uBlock/commit/f609ebc5e9)
 - [Add `freestar_pubfig.js` shim](https://github.com/gorhill/uBlock/commit/341f23df9c)
 - [Fix parsing of `permissions` filter option](https://github.com/gorhill/uBlock/commit/bb2e13b3c6)
