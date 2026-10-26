@@ -1,3 +1,4 @@
+- [Improve `trusted-prevent-dom-bypass` scriptlet](https://github.com/gorhill/uBlock/commit/1492d7f979)
 - [Improve `JSONPath`](https://github.com/gorhill/uBlock/commit/006dfc4da9)
 - [Improve `googletagservices_gpt.js` shim](https://github.com/gorhill/uBlock/commit/f609ebc5e9)
 - [Add `freestar_pubfig.js` shim](https://github.com/gorhill/uBlock/commit/341f23df9c)
