@@ -123,7 +123,6 @@ export async function sessionAccessLevel(level) {
         browser.storage.session.setAccessLevel(level);
     } catch {
     }
-    
 }
 
 /******************************************************************************/
