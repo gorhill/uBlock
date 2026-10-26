@@ -1966,17 +1966,17 @@ function trustedSuppressNativeMethod(
  * of the intercepted calls are assumed to be HTMLElement, anything else will
  * be ignored.
  * 
- * @param [targetProp]
- * The method in the embedded context which should be delegated to the
- * parent context. If no method is specified, the embedded context becomes
- * the parent one, i.e. all  properties of the embedded context will be that
- * of the parent context.
+ * @param [targetProps]
+ * The space-separated methods in the embedded context which should be
+ * delegated to the parent context. If no method is specified, the embedded
+ * context becomes the parent one, i.e. all  properties of the embedded context
+ * will be that of the parent context.
  * 
  * @example
  * ##+js(trusted-prevent-dom-bypass, Element.prototype.append, open)
  * 
  * @example
- * ##+js(trusted-prevent-dom-bypass, Element.prototype.appendChild, XMLHttpRequest)
+ * ##+js(trusted-prevent-dom-bypass, Element.prototype.appendChild, XMLHttpRequest JSON.parse)
  * 
  * */
 
@@ -2009,16 +2009,18 @@ function trustedPreventDomBypass(
                     }
                 }
                 if ( targetProp !== '' ) {
+                    const chains = targetProp.split(/\s+/);
                     let me = self, it = elem.contentWindow;
-                    let chain = targetProp;
-                    for (;;) {
-                        const pos = chain.indexOf('.');
-                        if ( pos === -1 ) { break; }
-                        const prop = chain.slice(0, pos);
-                        me = me[prop]; it = it[prop];
-                        chain = chain.slice(pos+1);
+                    for ( let chain of chains ) {
+                        for (;;) {
+                            const pos = chain.indexOf('.');
+                            if ( pos === -1 ) { break; }
+                            const prop = chain.slice(0, pos);
+                            me = me[prop]; it = it[prop];
+                            chain = chain.slice(pos+1);
+                        }
+                        it[chain] = me[chain];
                     }
-                    it[chain] = me[chain];
                 } else {
                     Object.defineProperty(elem, 'contentWindow', { value: self });
                 }
