@@ -163,7 +163,7 @@ export class ScriptletFilteringEngine {
 
         // Wholly disable scriptlet injection?
         if ( all.has('-[]') ) {
-            return { filters: [ '#@#+js()' ] };
+            return [ '#@#+js()' ];
         }
 
         // Split filters in different groups

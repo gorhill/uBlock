@@ -226,8 +226,12 @@ export class StaticExtFilteringHostnameDB {
             pos = hostname.indexOf('.', pos) + 1;
             if ( pos === 0 ) { break; }
         }
-        const iList = this.#hostnameToStringListMap.get('*');
-        processList('*', iList, out);
+        if ( this.#hostnameToStringListMap.has('*') ) {
+            processList('*', this.#hostnameToStringListMap.get('*'), out);
+        }
+        if ( this.#hostnameToStringListMap.has('') ) {
+            processList('*', this.#hostnameToStringListMap.get(''), out);
+        }
         for ( const [ hn, iSlot ] of this.#matcherMap ) {
             processList(hn, this.#matcherSlots[iSlot].iList, out);
         }

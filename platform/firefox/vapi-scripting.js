@@ -149,6 +149,7 @@ function registerContentScript(url) {
     if ( contentScriptDict.has(hostname) ) { return; }
     const result = getContentScripts(url);
     const entry = { t: Date.now() };
+    entry.manuallyInjectedCode = uBO_assembleLegacyCode(result);
     if ( vAPI.webextFlavor.major >= 128 ) {
         const isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
         if ( isolatedCode ) {
@@ -162,7 +163,7 @@ function registerContentScript(url) {
             }).then(handle => {
                 entry.isolatedHandle = handle;
             }).catch(( ) => {
-                entry.isolatedHandle = undefined;
+                entry.isolatedHandle = null;
             });
         }
         const mainCode = uBO_assembleCode('main', result.mainCode, result);
@@ -177,26 +178,24 @@ function registerContentScript(url) {
             }).then(handle => {
                 entry.mainHandle = handle;
             }).catch(( ) => {
-                entry.mainHandle = undefined;
+                entry.mainHandle = null;
             });
         }
-    } else {
-        const isolatedCode = uBO_assembleLegacyCode(result);
-        if ( isolatedCode ) {
-            entry.isolatedHandle = browser.contentScripts.register({
-                allFrames: true,
-                js: [ { code: isolatedCode } ],
-                matchAboutBlank: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
-                runAt: 'document_start',
-            }).then(handle => {
-                entry.isolatedHandle = handle;
-            }).catch(( ) => {
-                entry.isolatedHandle = undefined;
-            });
-        }
+    } else if ( entry.manuallyInjectedCode ) {
+        entry.isolatedHandle = browser.contentScripts.register({
+            allFrames: true,
+            js: [ { code: entry.manuallyInjectedCode } ],
+            matchAboutBlank: true,
+            matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+            runAt: 'document_start',
+        }).then(handle => {
+            entry.isolatedHandle = handle;
+        }).catch(( ) => {
+            entry.isolatedHandle = null;
+        });
     }
     contentScriptDict.set(hostname, entry);
+    return entry;
 }
 
 function unregisterContentScript(hostname) {
@@ -217,6 +216,16 @@ function unregisterContentScript(hostname) {
             entry.isolatedHandle.unregister();
         }
     }
+}
+
+function manuallyInject(tabId, frameId, entry) {
+    if ( Boolean(entry.manuallyInjectedCode) === false ) { return; }
+    return browser.tabs.executeScript(tabId, {
+        frameId,
+        matchAboutBlank: true,
+        runAt: 'document_start',
+        code: entry.manuallyInjectedCode,
+    });
 }
 
 function onCreatedNavigationTarget(details) {
@@ -261,9 +270,16 @@ function onCommitted(details) {
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
     const entry = contentScriptDict.get(hostname);
-    if ( entry === undefined ) { return; }
-    if ( Boolean(entry.mainHandle) === false ) {
-        if ( Boolean(entry.isolatedHandle) === false ) { return; }
+    if ( entry === undefined ) {
+        const entry = registerContentScript(url);
+        if ( Boolean(entry.manuallyInjectedCode) === false ) { return; }
+        return manuallyInject(tabId, frameId, entry);
+    }
+    if ( Boolean(entry.isolatedHandle) === false ) {
+        if ( Boolean(entry.mainHandle) === false ) { return; }
+    }
+    if ( entry.isolatedHandle instanceof Promise || entry.mainHandle instanceof Promise ) {
+        manuallyInject(tabId, frameId, entry);
     }
     entry.t = Date.now();
     if ( contentScriptDict.size <= CONTENTSCRIPT_DICT_MAX_HIGH ) { return; }
