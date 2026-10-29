@@ -25,6 +25,7 @@ const publicSuffix = globalThis.browser?.publicSuffix;
 
 export default publicSuffix ? {
     getDomain(hostname) {
+        if ( hostname === '' ) { return ''; }
         try {
             return publicSuffix.getDomain(hostname, { allowUnknownSuffix: true }) ?? ''
         } catch {

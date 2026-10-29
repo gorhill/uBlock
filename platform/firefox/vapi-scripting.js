@@ -143,21 +143,34 @@ function getEffectiveURL(tabId, frameId) {
     return frameData.url;
 }
 
-function registerContentScript(url) {
+function prepareContentScript(url) {
     const hostname = hostnameFromURI(url);
-    if ( hostname === '' ) { return; }
-    if ( contentScriptDict.has(hostname) ) { return; }
-    const result = getContentScripts(url);
-    const entry = { t: Date.now() };
-    entry.manuallyInjectedCode = uBO_assembleLegacyCode(result);
+    const entry = contentScriptDict.get(hostname) ??
+        { t: Date.now(), hostname };
+    if ( hostname !== '' && entry.manuallyInjectedCode === undefined ) {
+        const result = getContentScripts(url);
+        entry.manuallyInjectedCode = uBO_assembleLegacyCode(result) ?? null;
+        if ( vAPI.webextFlavor.major >= 128 ) {
+            entry.isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
+            entry.mainCode = uBO_assembleCode('main', result.mainCode, result);
+        }
+    }
+    contentScriptDict.set(hostname, entry);
+    return entry;
+}
+
+function registerContentScript(entry) {
+    if ( entry.registered ) { return; }
+    entry.registered = true;
+    if ( Boolean(entry.manuallyInjectedCode) === false ) { return; }
+    const { hostname } = entry;
     if ( vAPI.webextFlavor.major >= 128 ) {
-        const isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
-        if ( isolatedCode ) {
+        if ( entry.isolatedCode ) {
             entry.isolatedHandle = browser.contentScripts.register({
                 allFrames: true,
-                js: [ { code: isolatedCode } ],
+                js: [ { code: entry.isolatedCode } ],
                 matchOriginAsFallback: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                matches: [ `http://${hostname}/*`, `https://${hostname}/*` ],
                 runAt: 'document_start',
                 world: 'ISOLATED',
             }).then(handle => {
@@ -165,14 +178,14 @@ function registerContentScript(url) {
             }).catch(( ) => {
                 entry.isolatedHandle = null;
             });
+            entry.isolatedCode = null;
         }
-        const mainCode = uBO_assembleCode('main', result.mainCode, result);
-        if ( mainCode ) {
+        if ( entry.mainCode ) {
             entry.mainHandle = browser.contentScripts.register({
                 allFrames: true,
-                js: [ { code: mainCode } ],
+                js: [ { code: entry.mainCode } ],
                 matchOriginAsFallback: true,
-                matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+                matches: [ `http://${hostname}/*`, `https://${hostname}/*` ],
                 runAt: 'document_start',
                 world: 'MAIN',
             }).then(handle => {
@@ -180,13 +193,14 @@ function registerContentScript(url) {
             }).catch(( ) => {
                 entry.mainHandle = null;
             });
+            entry.mainCode = null;
         }
     } else if ( entry.manuallyInjectedCode ) {
         entry.isolatedHandle = browser.contentScripts.register({
             allFrames: true,
             js: [ { code: entry.manuallyInjectedCode } ],
             matchAboutBlank: true,
-            matches: [ `http://${hostname}/*`, `https://*.${hostname}/*` ],
+            matches: [ `http://${hostname}/*`, `https://${hostname}/*` ],
             runAt: 'document_start',
         }).then(handle => {
             entry.isolatedHandle = handle;
@@ -194,8 +208,7 @@ function registerContentScript(url) {
             entry.isolatedHandle = null;
         });
     }
-    contentScriptDict.set(hostname, entry);
-    return entry;
+    entry.manuallyInjectedCode = null;
 }
 
 function unregisterContentScript(hostname) {
@@ -256,7 +269,7 @@ function onBeforeNavigate(details) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
-    registerContentScript(url);
+    prepareContentScript(url);
 }
 
 function onCommitted(details) {
@@ -269,17 +282,10 @@ function onCommitted(details) {
     }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
-    const entry = contentScriptDict.get(hostname);
-    if ( entry === undefined ) {
-        const entry = registerContentScript(url);
-        if ( Boolean(entry.manuallyInjectedCode) === false ) { return; }
-        return manuallyInject(tabId, frameId, entry);
-    }
-    if ( Boolean(entry.isolatedHandle) === false ) {
-        if ( Boolean(entry.mainHandle) === false ) { return; }
-    }
-    if ( entry.isolatedHandle instanceof Promise || entry.mainHandle instanceof Promise ) {
+    const entry = contentScriptDict.get(hostname) ?? prepareContentScript(url);
+    if ( entry.registered !== true ) {
         manuallyInject(tabId, frameId, entry);
+        registerContentScript(entry);
     }
     entry.t = Date.now();
     if ( contentScriptDict.size <= CONTENTSCRIPT_DICT_MAX_HIGH ) { return; }
@@ -305,7 +311,8 @@ export async function start(fn) {
     for ( const tab of tabs ) {
         if ( tab.discarded ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
-        registerContentScript(tab.url);
+        const entry = prepareContentScript(tab.url)
+        registerContentScript(entry);
     }
     browser.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
