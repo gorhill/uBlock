@@ -37,7 +37,6 @@ const textEncode = (( ) => {
         [ 'windows-1250', 'windows-1250' ],
         [ 'cp1250', 'windows-1250' ],
         [ 'x-cp1250', 'windows-1250' ],
-        [ 'iso-8859-2', 'windows-1250' ],
 
         [ 'windows-1251', 'windows-1251' ],
         [ 'cp1251', 'windows-1251' ],
@@ -60,6 +59,8 @@ const textEncode = (( ) => {
         [ 'latin1', 'windows-1252' ],
         [ 'us-ascii', 'windows-1252' ],
         [ 'x-cp1252', 'windows-1252' ],
+
+        [ 'iso-8859-2', 'iso-8859-2' ],
     ]);
 
     // http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1250.TXT
@@ -122,6 +123,24 @@ const textEncode = (( ) => {
     /* 0x2028 */ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     /* 0x2030 */ 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     /* 0x2038 */ 0x00, 0x8B, 0x9B, 0x00, 0x00, 0x00, 0x00, 0x00
+    ]);
+
+    const iso_8859_2 = new Map([
+        [ 0x0104, 0xA1 ], [ 0x02D8, 0xA2 ], [ 0x0141, 0xA3 ], [ 0x013D, 0xA5 ],
+        [ 0x015A, 0xA6 ], [ 0x0160, 0xA9 ], [ 0x015E, 0xAA ], [ 0x0164, 0xAB ],
+        [ 0x0179, 0xAC ], [ 0x017D, 0xAE ], [ 0x017B, 0xAF ], [ 0x0105, 0xB1 ],
+        [ 0x02DB, 0xB2 ], [ 0x0142, 0xB3 ], [ 0x013E, 0xB5 ], [ 0x015B, 0xB6 ],
+        [ 0x02C7, 0xB7 ], [ 0x0161, 0xB9 ], [ 0x015F, 0xBA ], [ 0x0165, 0xBB ],
+        [ 0x017A, 0xBC ], [ 0x02DD, 0xBD ], [ 0x017E, 0xBE ], [ 0x017C, 0xBF ],
+        [ 0x0154, 0xC0 ], [ 0x0102, 0xC3 ], [ 0x0139, 0xC5 ], [ 0x0106, 0xC6 ],
+        [ 0x010C, 0xC8 ], [ 0x0118, 0xCA ], [ 0x011A, 0xCC ], [ 0x010E, 0xCF ],
+        [ 0x0110, 0xD0 ], [ 0x0143, 0xD1 ], [ 0x0147, 0xD2 ], [ 0x0150, 0xD5 ],
+        [ 0x0158, 0xD8 ], [ 0x016E, 0xD9 ], [ 0x0170, 0xDB ], [ 0x0162, 0xDE ],
+        [ 0x0155, 0xE0 ], [ 0x0103, 0xE3 ], [ 0x013A, 0xE5 ], [ 0x0107, 0xE6 ],
+        [ 0x010D, 0xE8 ], [ 0x0119, 0xEA ], [ 0x011B, 0xEC ], [ 0x010F, 0xEF ],
+        [ 0x0111, 0xF0 ], [ 0x0144, 0xF1 ], [ 0x0148, 0xF2 ], [ 0x0151, 0xF5 ],
+        [ 0x0159, 0xF8 ], [ 0x016F, 0xF9 ], [ 0x0171, 0xFB ], [ 0x0163, 0xFE ],
+        [ 0x02D9, 0xFF ],
     ]);
 
     const encoders = {
@@ -247,7 +266,32 @@ const textEncode = (( ) => {
                 }
             }
             return buf.slice(0, o);
-        }
+        },
+        'iso-8859-2': function(buf) {
+            let i = 0, n = buf.byteLength, o = 0, c;
+            while ( i < n ) {
+                c = buf[i++];
+                if ( c < 0x80 ) {
+                    buf[o++] = c;
+                } else {
+                    if ( (c & 0xE0) === 0xC0 ) {
+                        c  = (c        & 0x1F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF0) === 0xE0 ) {
+                        c  = (c        & 0x0F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    } else if ( (c & 0xF8) === 0xF0 ) {
+                        c  = (c        & 0x07) << 18;
+                        c |= (buf[i++] & 0x3F) << 12;
+                        c |= (buf[i++] & 0x3F) << 6;
+                        c |= (buf[i++] & 0x3F);
+                    }
+                    buf[o++] = (iso_8859_2.get(c) ?? c) & 0xFF;
+                }
+            }
+            return buf.slice(0, o);
+        },
     };
 
     return {
