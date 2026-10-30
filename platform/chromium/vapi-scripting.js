@@ -80,6 +80,7 @@ function uBO_assembleIsolatedCode(details) {
 const CONTENTSCRIPT_DICT_MAX_LOW = 128;
 const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
+const reIsHTTP = /^https?:\/\//;
 const tabDict = new Map();
 const contentScriptDict = new Map();
 let getContentScripts;
@@ -124,10 +125,26 @@ function onBeforeNavigate(details) {
     }
     let frameData = { frameId, parentId: details.parentFrameId, url };
     frameDict.set(frameId, frameData);
+    // Every 64 frames, we rebuild to ensure no unbound growth as there is no
+    // API for removed frames
+    // TODO: spin off frames management to be reused across all of uBO
+    if ( (frameDict.size & 0b111111) === 0 ) {
+        const key = self.crypto.randomUUID();
+        tabData.gettingFrames = key;
+        webext.webNavigation.getAllFrames({ tabId }).then(frames => {
+            if ( tabData.gettingFrames !== key ) { return; }
+            if ( tabDict.has(tabId) === false ) { return; }
+            frameDict.clear();
+            for ( const { frameId, parentFrameId, url } of frames ) {
+                frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
+            }
+        });
+    }
     if ( frameId !== 0 && url.startsWith('about:') ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
+    if ( reIsHTTP.test(url) === false ) { return; }
     registerContentScript(url);
 }
 
@@ -139,6 +156,7 @@ function onCommitted(details) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
+    if ( reIsHTTP.test(url) === false ) { return; }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
     const entry = contentScriptDict.get(hostname);

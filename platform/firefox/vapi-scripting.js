@@ -124,6 +124,7 @@ const CONTENTSCRIPT_DICT_MAX_LOW = 128;
 const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
 const sentinel = self.crypto.randomUUID();
+const reIsHTTP = /^https?:\/\//;
 const tabDict = new Map();
 const contentScriptDict = new Map();
 let getContentScripts;
@@ -147,13 +148,16 @@ function prepareContentScript(url) {
     const hostname = hostnameFromURI(url);
     const entry = contentScriptDict.get(hostname) ??
         { t: Date.now(), hostname };
-    if ( hostname !== '' && entry.manuallyInjectedCode === undefined ) {
+    if ( entry.manuallyInjectedCode !== undefined ) { return entry; }
+    if ( hostname !== '' ) {
         const result = getContentScripts(url);
         entry.manuallyInjectedCode = uBO_assembleLegacyCode(result) ?? null;
         if ( vAPI.webextFlavor.major >= 128 ) {
             entry.isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
             entry.mainCode = uBO_assembleCode('main', result.mainCode, result);
         }
+    } else {
+        entry.manuallyInjectedCode = null;
     }
     contentScriptDict.set(hostname, entry);
     return entry;
@@ -263,12 +267,27 @@ function onBeforeNavigate(details) {
     if ( frameId === 0 ) {
         frameDict.clear();
     }
-    const frameData = { frameId, parentId: details.parentFrameId, url };
-    frameDict.set(frameId, frameData);
+    frameDict.set(frameId, { frameId, parentId: details.parentFrameId, url });
+    // Every 64 frames, we rebuild to ensure no unbound growth as there is no
+    // API for removed frames
+    // TODO: spin off frames management to be reused across all of uBO
+    if ( (frameDict.size & 0b111111) === 0 ) {
+        const key = self.crypto.randomUUID();
+        tabData.gettingFrames = key;
+        browser.webNavigation.getAllFrames({ tabId }).then(frames => {
+            if ( tabData.gettingFrames !== key ) { return; }
+            if ( tabDict.has(tabId) === false ) { return; }
+            frameDict.clear();
+            for ( const { frameId, parentFrameId, url } of frames ) {
+                frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
+            }
+        });
+    }
     if ( frameId !== 0 && url.startsWith('about:') ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
+    if ( reIsHTTP.test(url) === false ) { return; }
     prepareContentScript(url);
 }
 
@@ -280,6 +299,7 @@ function onCommitted(details) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
+    if ( reIsHTTP.test(url) === false ) { return; }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
     const entry = contentScriptDict.get(hostname) ?? prepareContentScript(url);
