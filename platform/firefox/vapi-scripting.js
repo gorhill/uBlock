@@ -176,7 +176,6 @@ function registerContentScript(entry) {
                 matchOriginAsFallback: true,
                 matches: [ `http://${hostname}/*`, `https://${hostname}/*` ],
                 runAt: 'document_start',
-                world: 'ISOLATED',
             }).then(handle => {
                 entry.isolatedHandle = handle;
             }).catch(( ) => {
@@ -283,7 +282,7 @@ function onBeforeNavigate(details) {
             }
         });
     }
-    if ( frameId !== 0 && url.startsWith('about:') ) {
+    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
@@ -295,7 +294,7 @@ function onCommitted(details) {
     const { tabId } = details;
     if ( tabId < 0 ) { return; }
     let { frameId, url } = details;
-    if ( frameId !== 0 && url.startsWith('about:') ) {
+    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }

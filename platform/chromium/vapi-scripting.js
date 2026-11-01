@@ -140,7 +140,7 @@ function onBeforeNavigate(details) {
             }
         });
     }
-    if ( frameId !== 0 && url.startsWith('about:') ) {
+    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
@@ -152,7 +152,7 @@ function onCommitted(details) {
     const { tabId, frameId } = details;
     if ( tabId < 0 ) { return; }
     let { url } = details;
-    if ( frameId !== 0 && url.startsWith('about:') ) {
+    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }

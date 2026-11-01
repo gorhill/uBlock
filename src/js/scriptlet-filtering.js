@@ -54,18 +54,26 @@ const [
 function isTrustedContext(fn, data) {
     const docloc = document.location;
     const origins = document.location.ancestorOrigins;
-    const url = origins?.length
-        ? new URL(origins.item(origins.length-1))
-        : docloc;
-    return Boolean(fn(data, url.href, url.hostname));
+    let topurl = docloc;
+    if ( origins?.length ) {
+        try {
+            topurl = new URL(origins.item(origins.length-1));
+        } catch {
+        }
+    }
+    return Boolean(fn(data, topurl.href, topurl.hostname));
 }
 
 function topFrameRulesMatcher(rules) {
     const docloc = document.location;
-    const href = docloc.ancestorOrigins?.length
-        ? docloc.ancestorOrigins.item(docloc.ancestorOrigins.length-1)
-        : docloc.href;
-    const topurl = new URL(href);
+    const origins = document.location.ancestorOrigins;
+    let topurl = docloc;
+    if ( origins?.length ) {
+        try {
+            topurl = new URL(origins.item(origins.length-1));
+        } catch {
+        }
+    }
     const hostname = topurl.hostname;
     let pos = 0;
     do {
