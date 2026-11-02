@@ -135,7 +135,7 @@ function getEffectiveURL(tabId, frameId) {
     const { frameDict } = tabData;
     let frameData = frameDict.get(frameId);
     for (;;) {
-        if ( /^https?:/.test(frameData.url) ) { break; }
+        if ( reIsHTTP.test(frameData.url) ) { break; }
         frameId = frameData.parentId;
         if ( frameId === -1 ) { break; }
         frameData = frameDict.get(frameId);
@@ -144,13 +144,23 @@ function getEffectiveURL(tabId, frameId) {
     return frameData.url;
 }
 
-function prepareContentScript(url) {
+function getTopOrigin(tabId) {
+    try {
+        const url = new URL(tabDict.get(tabId)?.frameDict.get(0)?.url);
+        return url.origin;
+    } catch {
+    }
+}
+
+function prepareContentScript(url, tabId = -1) {
     const hostname = hostnameFromURI(url);
     const entry = contentScriptDict.get(hostname) ??
         { t: Date.now(), hostname };
     if ( entry.manuallyInjectedCode !== undefined ) { return entry; }
     if ( hostname !== '' ) {
-        const result = getContentScripts(url);
+        const result = getContentScripts(url,
+            tabId !== -1 ? { topOrigin: getTopOrigin(tabId) } : undefined
+        );
         entry.manuallyInjectedCode = uBO_assembleLegacyCode(result) ?? null;
         if ( vAPI.webextFlavor.major >= 128 ) {
             entry.isolatedCode = uBO_assembleCode('isolated', result.isolatedCode, result);
@@ -287,7 +297,7 @@ function onBeforeNavigate(details) {
         if ( url === undefined ) { return; }
     }
     if ( reIsHTTP.test(url) === false ) { return; }
-    prepareContentScript(url);
+    prepareContentScript(url, tabId);
 }
 
 function onCommitted(details) {
@@ -301,7 +311,7 @@ function onCommitted(details) {
     if ( reIsHTTP.test(url) === false ) { return; }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
-    const entry = contentScriptDict.get(hostname) ?? prepareContentScript(url);
+    const entry = contentScriptDict.get(hostname) ?? prepareContentScript(url, tabId);
     if ( entry.registered !== true ) {
         manuallyInject(tabId, frameId, entry);
         registerContentScript(entry);

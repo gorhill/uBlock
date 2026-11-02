@@ -43,8 +43,13 @@ self.$scriptletFunctions$
 scriptletGlobals.origins = (( ) => {
     const docloc = document.location;
     const origins = [ docloc.origin ];
-    if ( docloc.ancestorOrigins ) {
-        origins.push(...docloc.ancestorOrigins);
+    if ( docloc.ancestorOrigins?.length ) {
+        const topOrigin = docloc.ancestorOrigins[docloc.ancestorOrigins.length-1];
+        if ( topOrigin !== 'null' ) {
+            origins.push(topOrigin);
+        } else if ( scriptletGlobals.topOrigin ) {
+            origins.push(scriptletGlobals.topOrigin);
+        }
     }
     const out = [];
     for ( let i = 0; i < origins.length; i++ ) {

@@ -1336,7 +1336,9 @@ onBroadcast(msg => {
     const load = async function() {
         if ( µb.selfieIsInvalid ) { return false; }
         try {
-            const results = await Promise.all([
+            let r = await µb.loadRedirectResources();
+            if ( r !== true ) { return r; }
+            r = await Promise.all([
                 loadMain(),
                 io.fromCache('selfie/staticExtFilteringEngine').then(selfie =>
                     staticExtFilteringEngine.fromSelfie(selfie)
@@ -1345,9 +1347,7 @@ onBroadcast(msg => {
                     staticNetFilteringEngine.fromSelfie(selfie)
                 ),
             ]);
-            if ( results.every(v => v) ) {
-                return µb.loadRedirectResources();
-            }
+            return r.every(v => v);
         }
         catch (reason) {
             ubolog(reason);

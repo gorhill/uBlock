@@ -91,7 +91,7 @@ function getEffectiveURL(tabId, frameId) {
     const { frameDict } = tabData;
     let frameData = frameDict.get(frameId);
     for (;;) {
-        if ( /^https?:/.test(frameData.url) ) { break; }
+        if ( reIsHTTP.test(frameData.url) ) { break; }
         frameId = frameData.parentId;
         if ( frameId === -1 ) { break; }
         frameData = frameDict.get(frameId);

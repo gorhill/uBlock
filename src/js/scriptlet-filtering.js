@@ -183,7 +183,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         }
     }
 
-    getContentScripts(url) {
+    getContentScripts(url, options = {}) {
         const hostname = hostnameFromURI(url);
         const domain = domainFromHostname(hostname);
         const map = this.scriptletDB.retrieveOne(hostname, domain);
@@ -219,25 +219,26 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             this.isDevBuild = vAPI.webextFlavor.soup.has('devbuild') ||
                 µb.hiddenSettings.filterAuthorMode;
         }
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
-        const options = {
-            hostname,
-            scriptletGlobals: {
-                warOrigin: this.warOrigin,
-                warSecret: this.warSecret,
-            },
+        const scriptletGlobals = {
+            warOrigin: this.warOrigin,
+            warSecret: this.warSecret,
         };
+        if ( options.topOrigin ) {
+            scriptletGlobals.topOrigin = options.topOrigin;
+        }
+        this.warSecret = vAPI.warSecret.long(this.warSecret);
+        const out = { hostname, scriptletGlobals };
         if ( logger.enabled ) {
-            options.scriptletGlobals.bcSecret = vAPI.generateSecret(3);
-            options.scriptletGlobals.logLevel = this.logLevel;
+            scriptletGlobals.bcSecret = vAPI.generateSecret(3);
+            scriptletGlobals.logLevel = this.logLevel;
         }
         if ( result.ISOLATED ) {
-            options.debug = µb.hiddenSettings.debugIsolatedScriptlets;
-            options.isolatedCode = assembleIsolatedWorldWrapper(result.ISOLATED.code, options);
+            out.debug = µb.hiddenSettings.debugIsolatedScriptlets;
+            out.isolatedCode = assembleIsolatedWorldWrapper(result.ISOLATED.code, out);
         }
         if ( result.MAIN ) {
-            options.debug = µb.hiddenSettings.debugMainScriptlets;
-            options.mainCode = assembleMainWorldWrapper(result.MAIN.code, options);
+            out.debug = µb.hiddenSettings.debugMainScriptlets;
+            out.mainCode = assembleMainWorldWrapper(result.MAIN.code, out);
         }
         const trustedSiteMatcher = µb.trustedSites.getMatcher();
         const earlyBailoutCode = [
@@ -257,8 +258,8 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 `if ( topFrameRulesMatcher(new Map(${JSON.stringify(topFrameRules)})) ) { return; }`,
             );
         }
-        options.earlyBailoutCode = earlyBailoutCode.join('\n');
-        return options;
+        out.earlyBailoutCode = earlyBailoutCode.join('\n');
+        return out;
     }
 
     retrieve(request) {
