@@ -896,9 +896,13 @@ const onPickerMessage = function(msg) {
 
 let pickerContentPort;
 
-globalThis.addEventListener('message', ev => {
+async function bootPicker(ev) {
     const msg = ev.data || {};
     if ( msg.what !== 'epickerStart' ) { return; }
+    const epickerPassword = await vAPI.messaging.send('elementPicker', {
+        what: 'elementPickerPassword'
+    });
+    if ( msg.password !== epickerPassword ) { return; }
     if ( Array.isArray(ev.ports) === false ) { return; }
     if ( ev.ports.length === 0 ) { return; }
     pickerContentPort = ev.ports[0];
@@ -911,7 +915,9 @@ globalThis.addEventListener('message', ev => {
     };
     startPicker();
     pickerContentPort.postMessage({ what: 'start' });
-}, { once: true });
+}
+
+globalThis.addEventListener('message', ev => { bootPicker(ev); }, { once: true });
 
 /******************************************************************************/
 
