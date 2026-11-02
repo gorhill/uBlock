@@ -63,6 +63,7 @@ export function safeSelf() {
         'JSON': self.JSON,
         'JSON_parse': Function.prototype.call.bind(self.JSON.parse, self.JSON),
         'JSON_stringify': Function.prototype.call.bind(self.JSON.stringify, self.JSON),
+        'structuredClone': Function.prototype.call.bind(self.structuredClone, self),
         'log': console.log.bind(console),
         // Properties
         logLevel: 0,
