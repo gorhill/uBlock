@@ -297,8 +297,8 @@ export function generateContentFn(trusted, directive) {
             warXHR.onloadend = ev => {
                 resolve(ev.target.responseText || '');
             };
-            warXHR.open('GET', fullpath.join(''));
-            warXHR.send();
+            safe.XMLHttpRequest_open(warXHR, 'GET', fullpath.join(''));
+            safe.XMLHttpRequest_send(warXHR);
         }).catch(( ) => '');
     }
     if ( directive.startsWith('join:') ) {
