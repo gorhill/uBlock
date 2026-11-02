@@ -1,3 +1,4 @@
+- [Avoid use of potentially tainted XHR methods in scriptlets](https://github.com/gorhill/uBlock/commit/bf69cf7405)
 - [Add support for iso-8850-2 in response body filtering code](https://github.com/gorhill/uBlock/commit/ca7aa6c55f)
 - [Improve `trusted-prevent-dom-bypass` scriptlet](https://github.com/gorhill/uBlock/commit/1492d7f979)
 - [Improve `JSONPath`](https://github.com/gorhill/uBlock/commit/006dfc4da9)
