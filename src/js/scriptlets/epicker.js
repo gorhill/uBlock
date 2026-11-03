@@ -1321,7 +1321,7 @@ const bootstrap = async ( ) => {
                 quitPicker();
             };
             iframe.contentWindow.postMessage(
-                { what: 'epickerStart' },
+                { what: 'epickerStart', password: pickerPassword },
                 url.href,
                 [ channel.port2 ]
             );
