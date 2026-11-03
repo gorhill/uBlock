@@ -91,6 +91,19 @@ vAPI.messaging.send('dashboard', {
 
 /******************************************************************************/
 
+function parseRawFilter(raw) {
+    const parser = staticFilteringParser;
+    parser.parse(raw);
+    if ( parser.isFilter() === false ) { return; }
+    if ( parser.hasError() ) { return; }
+    if ( parser.isExtendedFilter() ) {
+        if ( parser.isCosmeticFilter() === false ) { return; }
+    } else if ( parser.isNetworkFilter() === false ) { return; }
+    return raw;
+}
+
+/******************************************************************************/
+
 const rawFilterFromTextarea = function() {
     const text = cmEditor.getValue();
     const pos = text.indexOf('\n');
@@ -102,14 +115,7 @@ const rawFilterFromTextarea = function() {
 const filterFromTextarea = function() {
     const filter = rawFilterFromTextarea();
     if ( filter === '' ) { return ''; }
-    const parser = staticFilteringParser;
-    parser.parse(filter);
-    if ( parser.isFilter() === false ) { return '!'; }
-    if ( parser.isExtendedFilter() ) {
-        if ( parser.isCosmeticFilter() === false ) { return '!'; }
-    } else if ( parser.isNetworkFilter() === false ) {
-        return '!';
-    }
+    if ( parseRawFilter(filter) === undefined ) { return '!'; }
     return filter;
 };
 
@@ -164,6 +170,8 @@ const userFilterFromCandidate = function(filter) {
     if ( opts.length ) {
         filter += '$' + opts.join(',');
     }
+
+    if ( parseRawFilter(filter) === undefined ) { return; }
 
     return filter;
 };
@@ -480,15 +488,14 @@ const onPreviewClicked = function() {
 const onCreateClicked = function() {
     const candidate = filterFromTextarea();
     const filter = userFilterFromCandidate(candidate);
-    if ( filter !== undefined ) {
-        vAPI.messaging.send('elementPicker', {
-            what: 'createUserFilter',
-            autoComment: true,
-            filters: filter,
-            docURL: docURL.href,
-            killCache: reCosmeticAnchor.test(candidate) === false,
-        });
-    }
+    if ( filter === undefined ) { return; }
+    vAPI.messaging.send('elementPicker', {
+        what: 'createUserFilter',
+        autoComment: true,
+        filters: filter,
+        docURL: docURL.href,
+        killCache: reCosmeticAnchor.test(candidate) === false,
+    });
     pickerContentPort.postMessage({
         what: 'dialogCreate',
         filter: candidate,
