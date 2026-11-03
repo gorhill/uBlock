@@ -121,7 +121,7 @@ self.ubolOverlay = {
         }
     },
 
-    sendMessage(msg) {
+    async sendMessage(msg) {
         try {
             return this.webext.runtime.sendMessage(msg).catch(( ) => { });
         } catch {
@@ -314,49 +314,53 @@ self.ubolOverlay = {
     async install(file, onmessage) {
         this.file = file;
         const dynamicURL = new URL(this.webext.runtime.getURL(file));
-        return new Promise(resolve => {
-            const frame = document.createElement('iframe');
-            const secretAttr = this.secretAttr;
-            frame.setAttribute(secretAttr, '');
-            frame.style.visibility = 'hidden';
-            const onLoad = ( ) => {
-                frame.onload = null;
-                frame.setAttribute(`${secretAttr}-loaded`, '');
-                const channel = new MessageChannel();
-                const port = channel.port1;
-                port.onmessage = ev => {
-                    if ( Boolean(self.ubolOverlay) === false ) { return; }
-                    self.ubolOverlay.onMessage(ev.data || {});
-                };
-                port.onmessageerror = ( ) => {
-                    if ( Boolean(self.ubolOverlay) === false ) { return; }
-                    self.ubolOverlay.onMessage({ what: 'quitTool' });
-                };
-                const realURL = new URL(dynamicURL);
-                realURL.hostname =
-                    self.ubolOverlay.webext.i18n.getMessage('@@extension_id');
-                frame.contentWindow.postMessage(
-                    {
-                        what: 'startOverlay',
-                        url: document.baseURI,
-                        width: self.innerWidth,
-                        height: self.innerHeight,
-                    },
-                    realURL.origin,
-                    [ channel.port2 ]
-                );
-                frame.contentWindow.focus();
-                self.ubolOverlay.onmessage = onmessage;
-                self.ubolOverlay.port = port;
-                self.ubolOverlay.frame = frame;
-                resolve(true);
-            };
-            frame.onload = ( ) => {
-                frame.onload = onLoad;
-                frame.contentWindow.location = dynamicURL.href;
-            };
-            document.documentElement.append(frame);
+        const toolOverlaySecret = await this.sendMessage({
+            what: 'getToolOverlaySecret'
         });
+        const { promise, resolve } = Promise.withResolvers();
+        const frame = document.createElement('iframe');
+        const secretAttr = this.secretAttr;
+        frame.setAttribute(secretAttr, '');
+        frame.style.visibility = 'hidden';
+        const onLoad = ( ) => {
+            frame.onload = null;
+            frame.setAttribute(`${secretAttr}-loaded`, '');
+            const channel = new MessageChannel();
+            const port = channel.port1;
+            port.onmessage = ev => {
+                if ( Boolean(self.ubolOverlay) === false ) { return; }
+                self.ubolOverlay.onMessage(ev.data || {});
+            };
+            port.onmessageerror = ( ) => {
+                if ( Boolean(self.ubolOverlay) === false ) { return; }
+                self.ubolOverlay.onMessage({ what: 'quitTool' });
+            };
+            const realURL = new URL(dynamicURL);
+            realURL.hostname =
+                self.ubolOverlay.webext.i18n.getMessage('@@extension_id');
+            frame.contentWindow.postMessage(
+                {
+                    what: 'startOverlay',
+                    secret: toolOverlaySecret,
+                    url: document.baseURI,
+                    width: self.innerWidth,
+                    height: self.innerHeight,
+                },
+                realURL.origin,
+                [ channel.port2 ]
+            );
+            frame.contentWindow.focus();
+            self.ubolOverlay.onmessage = onmessage;
+            self.ubolOverlay.port = port;
+            self.ubolOverlay.frame = frame;
+            resolve(true);
+        };
+        frame.onload = ( ) => {
+            frame.onload = onLoad;
+            frame.contentWindow.location = dynamicURL.href;
+        };
+        document.documentElement.append(frame);
+        return promise;
     },
 };
 

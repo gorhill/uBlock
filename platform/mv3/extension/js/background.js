@@ -372,6 +372,12 @@ async function onMessage(request, sender) {
         if ( frameId === false ) { return; }
         return injectCustomFilters(tabId, frameId, request.hostname);
 
+    case 'getToolOverlaySecret':
+        if ( onMessage.toolOverlaySecret === undefined ) {
+            onMessage.toolOverlaySecret = self.crypto.randomUUID();
+        }
+        return onMessage.toolOverlaySecret;
+
     default:
         break;
     }
