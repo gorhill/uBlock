@@ -1,3 +1,4 @@
+- [Prevent `war:`-related filters for the time being](https://github.com/gorhill/uBlock/commit/150df125fd)
 - [Validate about to be created filter in element picker](https://github.com/gorhill/uBlock/commit/b1f7d27c87)
 - [Prevent re-entrancy with recursive operator in JSONPath](https://github.com/gorhill/uBlock/commit/b6fec9089f)
 - [Improve `[trusted-]edit-inbound-object` scriptlet](https://github.com/gorhill/uBlock/commit/a20cfcebd8)
