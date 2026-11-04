@@ -91,11 +91,11 @@ function getEffectiveURL(tabId, frameId) {
     const { frameDict } = tabData;
     let frameData = frameDict.get(frameId);
     for (;;) {
+        if ( Boolean(frameData) === false ) { return; }
         if ( reIsHTTP.test(frameData.url) ) { break; }
         frameId = frameData.parentId;
         if ( frameId === -1 ) { break; }
         frameData = frameDict.get(frameId);
-        if ( Boolean(frameData) === false ) { return; }
     }
     return frameData.url;
 }
