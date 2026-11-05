@@ -317,7 +317,7 @@ async function onMessage(request, sender) {
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
-            ubolErr(`insertCSS/${reason}`);
+            ubolLog(`insertCSS/${reason}`);
         });
 
     case 'removeCSS':
@@ -329,7 +329,7 @@ async function onMessage(request, sender) {
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
-            ubolErr(`removeCSS/${reason}`);
+            ubolLog(`removeCSS/${reason}`);
         });
 
     case 'injectCSSProceduralAPI':
@@ -338,7 +338,7 @@ async function onMessage(request, sender) {
             target: { tabId, frameIds: [ frameId ] },
             injectImmediately: true,
         }).catch(reason => {
-            ubolErr(`executeScript/${reason}`);
+            ubolLog(`executeScript/${reason}`);
         });
 
     default:
