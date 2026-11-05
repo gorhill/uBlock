@@ -110,9 +110,8 @@ function registerContentScript(url) {
     return code;
 }
 
-function onBeforeNavigate(details) {
+function rememberFrame(details) {
     const { tabId } = details;
-    if ( tabId < 0 ) { return; }
     const tabData = tabDict.get(tabId) ?? { tabId };
     if ( tabData.frameDict === undefined ) {
         tabData.frameDict = new Map();
@@ -123,23 +122,28 @@ function onBeforeNavigate(details) {
     if ( frameId === 0 ) {
         frameDict.clear();
     }
-    let frameData = { frameId, parentId: details.parentFrameId, url };
-    frameDict.set(frameId, frameData);
+    frameDict.set(frameId, { frameId, parentId: details.parentFrameId, url });
     // Every 64 frames, we rebuild to ensure no unbound growth as there is no
-    // API for removed frames
+    // API listener for removed frames
     // TODO: spin off frames management to be reused across all of uBO
-    if ( (frameDict.size & 0b111111) === 0 ) {
-        const key = self.crypto.randomUUID();
-        tabData.gettingFrames = key;
-        webext.webNavigation.getAllFrames({ tabId }).then(frames => {
-            if ( tabData.gettingFrames !== key ) { return; }
-            if ( tabDict.has(tabId) === false ) { return; }
-            frameDict.clear();
-            for ( const { frameId, parentFrameId, url } of frames ) {
-                frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
-            }
-        });
-    }
+    if ( (frameDict.size & 0b111111) !== 0 ) { return; }
+    const key = self.crypto.randomUUID();
+    tabData.gettingFrames = key;
+    webext.webNavigation.getAllFrames({ tabId }).then(frames => {
+        if ( tabData.gettingFrames !== key ) { return; }
+        if ( tabDict.has(tabId) === false ) { return; }
+        frameDict.clear();
+        for ( const { frameId, parentFrameId, url } of frames ) {
+            frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
+        }
+    });
+}
+
+function onBeforeNavigate(details) {
+    const { tabId, frameId } = details;
+    if ( tabId < 0 ) { return; }
+    rememberFrame(details);
+    let { url } = details;
     if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
@@ -151,6 +155,7 @@ function onBeforeNavigate(details) {
 function onCommitted(details) {
     const { tabId, frameId } = details;
     if ( tabId < 0 ) { return; }
+    rememberFrame(details);
     let { url } = details;
     if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
         url = getEffectiveURL(tabId, frameId);
@@ -215,6 +220,7 @@ export async function start(fn) {
         if ( tab.discarded ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
         const { id, url } = tab;
+        rememberFrame({ tabId: id, frameId: 0, parentFrameId: -1, url });
         const code = registerContentScript(url);
         if ( code ) {
             webext.tabs.executeScript(id, {
