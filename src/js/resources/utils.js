@@ -23,9 +23,6 @@
 import { registerScriptlet } from './base.js';
 import { safeSelf } from './safe-self.js';
 
-// Externally added to the private namespace in which scriptlets execute.
-/* global scriptletGlobals */
-
 /******************************************************************************/
 
 export function getRandomTokenFn() {
