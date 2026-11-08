@@ -18,6 +18,12 @@
 
 ----------
 
+# 1.75.4
+
+- [Launch element picker only with a verified secret token](https://github.com/gorhill/uBlock/commit/9859477ebc)
+
+----------
+
 # 1.75.2
 
 - [Avoid use of potentially tainted XHR methods in scriptlets](https://github.com/gorhill/uBlock/commit/9a083e7e54)
