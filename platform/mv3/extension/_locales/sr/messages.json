@@ -116,7 +116,7 @@
     "description": "Text label heading the import/export area of custom filters"
   },
   "customFiltersImportTextareaPlaceholder": {
-    "message": "Одређени козметички/скриптлет филтери које желите додати",
+    "message": "Специфични козметички филтери за додавање",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "userScriptsInfo": {

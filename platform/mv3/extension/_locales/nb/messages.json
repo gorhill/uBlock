@@ -64,7 +64,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupNoWebsite": {
-    "message": "not a website",
+    "message": "ikke en nettside",
     "description": "Used when popup panel is opened for a local web page"
   },
   "3pGroupDefault": {
@@ -104,11 +104,11 @@
     "description": "Text label heading the import area of custom filter lists"
   },
   "customListImportPlaceholder": {
-    "message": "URL of the filter list to add",
+    "message": "URL til filterlisten som skal legges til",
     "description": "Placeholder text which describes the purpose of the textarea widget"
   },
   "customListImportUserScriptsInfo": {
-    "message": "To enforce cosmetic or scriptlet filters from imported lists, you must grant uBO Lite permission to run user scripts.",
+    "message": "For å håndheve kosmetiske filtre eller «scriptlet»-filtre fra importerte lister, må du gi uBO Lite tillatelse til å kjøre brukerskript.",
     "description": "A notice to inform user that the enforcement of some filters requires permission to execute 'user scripts'"
   },
   "customFiltersImportExportLabel": {
