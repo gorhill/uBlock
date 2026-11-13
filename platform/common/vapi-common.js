@@ -22,6 +22,8 @@
 
 // For background page or non-background pages
 
+/* global browser */
+
 /******************************************************************************/
 
 vAPI.T0 = Date.now();
@@ -188,7 +190,7 @@ vAPI.webextFlavor = {
         soup.add('firefox')
             .add('html_filtering');
         const match = /Firefox\/(\d+)/.exec(ua);
-        flavor.major = match && parseInt(match[1], 10) || 115;
+        flavor.major = match && parseInt(match[1], 10) || 128;
     } else {
         const match = /\bChrom(?:e|ium)\/(\d+)/.exec(ua);
         if ( match !== null ) {
