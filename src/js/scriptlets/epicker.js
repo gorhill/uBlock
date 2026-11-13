@@ -1311,7 +1311,7 @@ const bootstrap = async ( ) => {
         iframe.setAttribute(pickerUniqueId, '');
         document.documentElement.append(iframe);
         iframe.addEventListener('load', ( ) => {
-            self.requestAnimationFrame(( ) => {
+            self.setTimeout(( ) => {
                 iframe.setAttribute(`${pickerUniqueId}-loaded`, '');
                 const channel = new MessageChannel();
                 pickerFramePort = channel.port1;
@@ -1327,7 +1327,7 @@ const bootstrap = async ( ) => {
                     [ channel.port2 ]
                 );
                 resolve(iframe);
-            });
+            }, 147);
         }, { once: true });
         iframe.contentWindow.location = url.href;
     });
