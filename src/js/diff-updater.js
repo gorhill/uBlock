@@ -182,8 +182,6 @@ async function applyPatchAndValidate(assetDetails, diffDetails) {
 
 async function fetchPatchDetailsFromCDNs(assetDetails) {
     const { patchPath, cdnURLs, patchURLs } = assetDetails;
-    if ( Array.isArray(cdnURLs) === false ) { return null; }
-    if ( cdnURLs.length === 0 ) { return null; }
     for ( const cdnURL of suffleArray(patchURLs || cdnURLs) ) {
         const patchURL = resolveURL(patchPath, cdnURL);
         if ( patchURL === undefined ) { continue; }
@@ -209,14 +207,16 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
 }
 
 async function fetchPatchDetails(assetDetails) {
-    const { patchPath } = assetDetails;
-    const patchFile = basename(patchPath);
-    if ( patchFile === '' ) { return null; }
-    if ( patches.has(patchFile) ) {
-        return patches.get(patchFile);
+    const { patchPath, cdnURLs, patchURLs } = assetDetails;
+    if ( Array.isArray(cdnURLs) === false ) { return null; }
+    if ( cdnURLs.length === 0 ) { return null; }
+    const canonicalPatchURL = resolveURL(patchPath, patchURLs?.[0] || cdnURLs[0]);
+    if ( Boolean(canonicalPatchURL) === false ) { return null; }
+    if ( patches.has(canonicalPatchURL) ) {
+        return patches.get(canonicalPatchURL);
     }
     const patchDetailsPromise = fetchPatchDetailsFromCDNs(assetDetails);
-    patches.set(patchFile, patchDetailsPromise);
+    patches.set(canonicalPatchURL, patchDetailsPromise);
     return patchDetailsPromise;
 }
 
