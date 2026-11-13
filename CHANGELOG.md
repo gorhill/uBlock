@@ -11,6 +11,7 @@
 
 # 1.76.0
 
+- [[security] "Universal XSS from website-driven element picker"](https://github.com/gorhill/uBlock/commit/cbb22a5eee)
 - [Prevent `war:`-related filters for the time being](https://github.com/gorhill/uBlock/commit/150df125fd)
 - [Validate about to be created filter in element picker](https://github.com/gorhill/uBlock/commit/b1f7d27c87)
 - [Prevent re-entrancy with recursive operator in JSONPath](https://github.com/gorhill/uBlock/commit/b6fec9089f)
