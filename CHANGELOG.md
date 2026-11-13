@@ -1,3 +1,6 @@
+- [[diff updater] Use canonical patch URL to prevent duplicate fetches](https://github.com/gorhill/uBlock/commit/736ef4d100)
+- [[element picker] Increase delay before establishing communication](https://github.com/gorhill/uBlock/commit/f00b8ae693)
+- [[firefox] Update fallback version extraction to 128](https://github.com/gorhill/uBlock/commit/3a0c64184d)
 - [Improve `json-edit` scriptlet](https://github.com/gorhill/uBlock/commit/d4d6e75001)
 
 ----------
