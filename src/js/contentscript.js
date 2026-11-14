@@ -1163,7 +1163,7 @@ vAPI.DOMFilterer = class {
             classesFromNode(document.body);
         }
         if ( newHashes.size !== 0 ) {
-            getSurveyResults(newHashes, true);
+            getSurveyResults(true);
         }
         addPendingList(qsa(document, '[id],[class]'));
         if ( hasPendingNodes() ) {
