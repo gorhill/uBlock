@@ -3749,7 +3749,7 @@ export class ExtSelectorCompiler {
             case 'TypeSelector': {
                 const s = this.astSerializePart(part);
                 if ( s === undefined ) { return; }
-                if ( s === '*' && out.length !== 0 ) {
+                if ( out.length !== 0 ) {
                     const before = out[out.length-1];
                     if ( before.endsWith(' ') === false ) { return; }
                 }
