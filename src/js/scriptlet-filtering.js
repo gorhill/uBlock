@@ -221,8 +221,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 µb.hiddenSettings.filterAuthorMode;
         }
         const scriptletGlobals = {
-            warOrigin: this.warOrigin,
-            warSecret: this.warSecret,
         };
         if ( options.topOrigin ) {
             scriptletGlobals.topOrigin = options.topOrigin;
