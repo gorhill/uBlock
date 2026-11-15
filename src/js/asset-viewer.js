@@ -32,9 +32,11 @@ import { dom, qs$ } from './dom.js';
     const assetKey = subscribeParams.get('url');
     if ( assetKey === null ) { return; }
 
-    const subscribeElem = subscribeParams.get('subscribe') !== null
-        ? qs$('#subscribe')
-        : null;
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=2091796
+    //  Disable ability to subscribe when embedded
+    const subscribeElem = self === self.top &&
+        subscribeParams.get('subscribe') !== null &&
+        qs$('#subscribe') || null;
     if ( subscribeElem !== null && subscribeURL.hash !== '#subscribed' ) {
         const title = subscribeParams.get('title');
         const promptElem = qs$('#subscribePrompt');

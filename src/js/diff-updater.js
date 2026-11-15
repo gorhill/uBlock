@@ -25,7 +25,6 @@
 
 const patches = new Map();
 const encoder = new TextEncoder();
-const reFileName = /([^/]+?)(?:#.+)?$/;
 const EMPTYLINE = '';
 
 /******************************************************************************/
@@ -38,11 +37,6 @@ const suffleArray = arr => {
         [ out[j], out[i] ] = [ out[i], out[j] ];
     }
     return out;
-};
-
-const basename = url => {
-    const match = reFileName.exec(url);
-    return match && match[1] || '';
 };
 
 const resolveURL = (path, url) => {
@@ -143,10 +137,18 @@ function applyPatch(text, diff) {
     return lines.join('\n');
 }
 
+function getCanonicalPatchURL(assetDetails) {
+    const { patchPath, cdnURLs, patchURLs } = assetDetails;
+    if ( Array.isArray(cdnURLs) === false ) { return; }
+    if ( cdnURLs.length === 0 ) { return; }
+    const canonicalPatchURL = resolveURL(patchPath, patchURLs?.[0] || cdnURLs[0]);
+    if ( Boolean(canonicalPatchURL) === false ) { return; }
+    return canonicalPatchURL.href.replace(/#.*$/, '');
+}
+
 function hasPatchDetails(assetDetails) {
-    const { patchPath } = assetDetails;
-    const patchFile = basename(patchPath);
-    return patchFile !== '' && patches.has(patchFile);
+    const canonicalPatchURL = getCanonicalPatchURL(assetDetails);
+    return canonicalPatchURL && patches.has(canonicalPatchURL);
 }
 
 /******************************************************************************/
@@ -156,6 +158,10 @@ function hasPatchDetails(assetDetails) {
 async function applyPatchAndValidate(assetDetails, diffDetails) {
     const { text } = assetDetails;
     const { diff, checksum } = diffDetails;
+    if ( typeof checksum !== 'string' || checksum.length < 10 ) {
+        assetDetails.error = 'badchecksum';
+        return false;
+    }
     const textAfter = applyPatch(text, diff);
     if ( typeof textAfter !== 'string' ) {
         assetDetails.error = 'baddiff';
@@ -207,10 +213,7 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
 }
 
 async function fetchPatchDetails(assetDetails) {
-    const { patchPath, cdnURLs, patchURLs } = assetDetails;
-    if ( Array.isArray(cdnURLs) === false ) { return null; }
-    if ( cdnURLs.length === 0 ) { return null; }
-    const canonicalPatchURL = resolveURL(patchPath, patchURLs?.[0] || cdnURLs[0]);
+    const canonicalPatchURL = getCanonicalPatchURL(assetDetails);
     if ( Boolean(canonicalPatchURL) === false ) { return null; }
     if ( patches.has(canonicalPatchURL) ) {
         return patches.get(canonicalPatchURL);
