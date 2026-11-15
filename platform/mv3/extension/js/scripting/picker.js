@@ -90,7 +90,7 @@ function candidatesAtPoint(x, y) {
 
     const partsDB = new Map();
     const listParts = [];
-    while ( elem && elem !== document.body ) {
+    while ( elem !== null ) {
         const tagName = elem.localName;
         const addressMajor = listParts.length << 12;
         partsDB.set(addressMajor, CSS.escape(tagName));
@@ -147,7 +147,7 @@ function candidatesAtPoint(x, y) {
     if ( listParts.length === 0 ) { return; }
 
     const sliderCandidates = [];
-    for ( let i = 0, n = listParts.length; i < n; i++ ) {
+    for ( let i = 0, n = Math.max(listParts.length-2, 0); i < n; i++ ) {
         sliderCandidates.push(listParts[i]);
         for ( let j = i + 1; j < n; j++ ) {
             sliderCandidates.push([
