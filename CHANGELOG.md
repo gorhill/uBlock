@@ -1,3 +1,7 @@
+----------
+
+# 1.76.4
+
 - [[security] Address remaining reported security issues](https://github.com/gorhill/uBlock/commit/5466554104)
 - [[generic cosmetic filtering] Fix extraneous function argument](https://github.com/gorhill/uBlock/commit/e8efba123b)
 - [[filter parser] Non-leading tag names must be preceded by whitespace](https://github.com/gorhill/uBlock/commit/a63712e39c)
