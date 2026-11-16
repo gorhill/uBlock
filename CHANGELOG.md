@@ -1,3 +1,5 @@
+- [[security] Conceal DOM of overlay-based tools inside a shadow DOM](https://github.com/gorhill/uBlock/commit/1765528bec)
+
 ----------
 
 # 1.76.4
