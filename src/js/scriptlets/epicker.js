@@ -29,12 +29,14 @@ if ( vAPI === null ) { return; }
 if ( vAPI.pickerFrame ) { return; }
 vAPI.pickerFrame = true;
 
-const pickerUniqueId = vAPI.randomToken();
+const pickerUniqueId = self.crypto.randomUUID().replaceAll('-', '').slice(16);
 
 const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
 
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
+
+let pickerContainer = null;
 
 let targetElements = [];
 let candidateElements = [];
@@ -542,10 +544,9 @@ const filtersFrom = function(x, y) {
     // https://www.reddit.com/r/uBlockOrigin/comments/qmjk36/
     //   Extract network candidates first.
     if ( typeof x === 'number' ) {
-        const magicAttr = `${pickerUniqueId}-clickblind`;
-        pickerFrame.setAttribute(magicAttr, '');
+        pickerFrame.setAttribute('clicked', '');
         const elems = document.elementsFromPoint(x, y);
-        pickerFrame.removeAttribute(magicAttr);
+        pickerFrame.removeAttribute('clicked');
         for ( const elem of elems ) {
             netFilterFromElement(elem);
         }
@@ -928,8 +929,7 @@ const elementFromPoint = (( ) => {
             return null;
         }
         if ( !pickerFrame ) { return null; }
-        const magicAttr = `${pickerUniqueId}-clickblind`;
-        pickerFrame.setAttribute(magicAttr, '');
+        pickerFrame.setAttribute('clicked', '');
         let elem = document.elementFromPoint(x, y);
         if (
             elem === null || /* to skip following tests */
@@ -943,7 +943,7 @@ const elementFromPoint = (( ) => {
             elem = null;
         }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/380
-        pickerFrame.removeAttribute(magicAttr);
+        pickerFrame.removeAttribute('clicked');
         return elem;
     };
 })();
@@ -1139,9 +1139,9 @@ const quitPicker = function() {
         pickerFramePort.close();
         pickerFramePort = null;
     }
-    if ( pickerFrame ) {
-        pickerFrame.remove();
-        pickerFrame = null;
+    if ( pickerContainer ) {
+        pickerContainer.remove();
+        pickerContainer = null;
     }
     vAPI.userStylesheet.remove(pickerCSS);
     vAPI.userStylesheet.apply();
@@ -1269,13 +1269,13 @@ const pickerCSSStyle = [
 
 
 const pickerCSS = `
-:root > [${pickerUniqueId}] {
+[${CSS.escape(pickerUniqueId)}] {
     ${pickerCSSStyle}
 }
-:root > [${pickerUniqueId}-loaded] {
+[${CSS.escape(pickerUniqueId)}][loaded] {
     visibility: visible !important;
 }
-:root [${pickerUniqueId}-clickblind] {
+[${CSS.escape(pickerUniqueId)}][clicked] {
     pointer-events: none !important;
 }
 `;
@@ -1307,12 +1307,18 @@ const bootstrap = async ( ) => {
         url.searchParams.set('zap', '1');
     }
     return new Promise(resolve => {
+        pickerContainer = document.createElement('div');
+        const shadowRoot = pickerContainer.attachShadow({
+            mode: 'closed',
+            delegatesFocus: true,
+        });
         const iframe = document.createElement('iframe');
         iframe.setAttribute(pickerUniqueId, '');
-        document.documentElement.append(iframe);
+        shadowRoot.append(iframe);
+        document.documentElement.append(pickerContainer);
         iframe.addEventListener('load', ( ) => {
             self.setTimeout(( ) => {
-                iframe.setAttribute(`${pickerUniqueId}-loaded`, '');
+                iframe.setAttribute('loaded', '');
                 const channel = new MessageChannel();
                 pickerFramePort = channel.port1;
                 pickerFramePort.onmessage = ev => {
@@ -1333,7 +1339,7 @@ const bootstrap = async ( ) => {
     });
 };
 
-let pickerFrame = await bootstrap();
+const pickerFrame = await bootstrap();
 if ( Boolean(pickerFrame) === false ) {
     quitPicker();
 }

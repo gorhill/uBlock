@@ -36,15 +36,7 @@ self.ubolOverlay = {
     url: new URL(document.baseURI),
     port: null,
     highlightedElements: [],
-    secretAttr: (( ) => {
-        let secret = String.fromCharCode((Math.random() * 26) + 97);
-        do {
-            secret += (Math.floor(Math.random() * 2147483647) + 2147483647)
-                .toString(36)
-                .slice(2);
-        } while ( secret.length < 8 );
-        return secret;
-    })(),
+    secretAttr: self.crypto.randomUUID().replaceAll('-', '').slice(16),
 
     start() {
         const cssStyle = [
@@ -75,10 +67,11 @@ self.ubolOverlay = {
             'z-index: 2147483647',
             ''
         ].join(' !important;\n');
+        const escapedSecretAttr = CSS.escape(this.secretAttr);
         this.pickerCSS = [
-            `:root > [${this.secretAttr}] { ${cssStyle} }`,
-            `:root > [${this.secretAttr}-loaded] { visibility: visible !important; }`,
-            `:root > [${this.secretAttr}-click] { pointer-events: none !important; }`,
+            `[${escapedSecretAttr}] { ${cssStyle} }`,
+            `[${escapedSecretAttr}][loaded] { visibility: visible !important; }`,
+            `[${escapedSecretAttr}][clicked] { pointer-events: none !important; }`,
         ].join('\n');
         self.addEventListener('scroll', this.onViewportChanged, { passive: true });
         self.addEventListener('resize', this.onViewportChanged, { passive: true });
@@ -94,6 +87,10 @@ self.ubolOverlay = {
         self.removeEventListener('scroll', this.onViewportChanged, { passive: true });
         self.removeEventListener('resize', this.onViewportChanged, { passive: true });
         self.removeEventListener('keydown', this.onKeyPressed, true);
+        if ( this.frameContainer ) {
+            this.frameContainer.remove();
+            this.frameContainer = null;
+        }
         if ( this.frame ) {
             this.frame.remove();
             this.frame = null;
@@ -286,14 +283,13 @@ self.ubolOverlay = {
         } else {
             return null;
         }
-        const magicAttr = `${this.secretAttr}-click`;
-        this.frame.setAttribute(magicAttr, '');
+        this.frame.setAttribute('clicked', '');
         let elem = document.elementFromPoint(x, y);
         if ( elem === document.body || elem === document.documentElement ) {
             elem = null;
         }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/380
-        this.frame.removeAttribute(magicAttr);
+        this.frame.removeAttribute('clicked');
         return elem;
     },
 
@@ -324,7 +320,7 @@ self.ubolOverlay = {
         frame.style.visibility = 'hidden';
         const onLoad = ( ) => {
             frame.onload = null;
-            frame.setAttribute(`${secretAttr}-loaded`, '');
+            frame.setAttribute('loaded', '');
             const channel = new MessageChannel();
             const port = channel.port1;
             port.onmessage = ev => {
@@ -359,7 +355,13 @@ self.ubolOverlay = {
             frame.onload = onLoad;
             frame.contentWindow.location = dynamicURL.href;
         };
-        document.documentElement.append(frame);
+        this.frameContainer = document.createElement('div');
+        const shadowRoot = this.frameContainer.attachShadow({
+            mode: 'closed',
+            delegatesFocus: true,
+        });
+        shadowRoot.append(frame);
+        document.documentElement.append(this.frameContainer);
         return promise;
     },
 };
