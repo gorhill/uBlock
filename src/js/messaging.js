@@ -68,6 +68,8 @@ import µb from './background.js';
 /******************************************************************************/
 /******************************************************************************/
 
+const browser = globalThis.browser ?? globalThis.chrome;
+
 // Default handler
 //      privileged
 
@@ -829,7 +831,21 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const epickerPassword = self.crypto.randomUUID();
+// Pairing content script with extension page (picker user interface):
+// 1. Content script requests pairing
+// 2. Main process receives request from content script and stores data
+//    required to message back content script directly
+// 3. Extension page (picker user interface) requests pairing
+// 4. Main process receives request from extension page: message back
+//    pending content script that the extension page is paired
+// 5. Content script established direct communication with extension page
+//    using unique one-time pairing password
+// This avoids having to rely on `onload` events to establish communication.
+const contextPairing = {
+    password: '',
+    tabId: 0,
+    frameId: 0,
+};
 
 const onMessage = function(request, sender, callback) {
     // Async
@@ -863,8 +879,20 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'elementPickerPassword':
-        response = epickerPassword;
+    case 'elementPickerPairing':
+        if ( contextPairing.password === '' ) {
+            contextPairing.password = self.crypto.randomUUID();
+            contextPairing.tabId = sender.tabId;
+            contextPairing.frameId = sender.frameId;
+            response = { password: contextPairing.password };
+        } else {
+            response = { password: contextPairing.password };
+            browser.tabs.sendMessage(contextPairing.tabId, {
+                what: 'elementPickerPairing',
+                password: contextPairing.password,
+            }, { frameId: contextPairing.frameId });
+            contextPairing.password = '';
+        };
         break;
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;

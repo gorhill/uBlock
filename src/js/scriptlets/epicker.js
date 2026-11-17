@@ -29,10 +29,9 @@ if ( vAPI === null ) { return; }
 if ( vAPI.pickerFrame ) { return; }
 vAPI.pickerFrame = true;
 
-const pickerUniqueId = self.crypto.randomUUID().replaceAll('-', '').slice(16);
-
+const browser = globalThis.browser ?? globalThis.chrome;
+const pickerUniqueId = `z${self.crypto.randomUUID().replaceAll('-', '').slice(16)}`;
 const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
-
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
 
@@ -1269,13 +1268,13 @@ const pickerCSSStyle = [
 
 
 const pickerCSS = `
-[${CSS.escape(pickerUniqueId)}] {
+[${pickerUniqueId}] {
     ${pickerCSSStyle}
 }
-[${CSS.escape(pickerUniqueId)}][loaded] {
+[${pickerUniqueId}][loaded] {
     visibility: visible !important;
 }
-[${CSS.escape(pickerUniqueId)}][clicked] {
+[${pickerUniqueId}][clicked] {
     pointer-events: none !important;
 }
 `;
@@ -1287,10 +1286,10 @@ let pickerBootArgs;
 let pickerFramePort = null;
 
 const bootstrap = async ( ) => {
-    const pickerPassword = await vAPI.messaging.send('elementPicker', {
-        what: 'elementPickerPassword'
+    const pickerPairing = await vAPI.messaging.send('elementPicker', {
+        what: 'elementPickerPairing'
     });
-    if ( typeof pickerPassword !== 'string' ) { return; }
+    if ( Boolean(pickerPairing?.password) === false ) { return; }
     pickerBootArgs = await vAPI.messaging.send('elementPicker', {
         what: 'elementPickerArguments'
     });
@@ -1315,26 +1314,28 @@ const bootstrap = async ( ) => {
         const iframe = document.createElement('iframe');
         iframe.setAttribute(pickerUniqueId, '');
         shadowRoot.append(iframe);
+        const onMessage = msg => {
+            browser.runtime.onMessage.removeListener(onMessage);
+            if ( msg.what !== 'elementPickerPairing' ) { return; }
+            if ( msg.password !== pickerPairing.password ) { return; }
+            iframe.setAttribute('loaded', '');
+            const channel = new MessageChannel();
+            pickerFramePort = channel.port1;
+            pickerFramePort.onmessage = ev => {
+                onDialogMessage(ev.data || {});
+            };
+            pickerFramePort.onmessageerror = ( ) => {
+                quitPicker();
+            };
+            iframe.contentWindow.postMessage(
+                { what: 'epickerStart', password: pickerPairing.password },
+                url.href,
+                [ channel.port2 ]
+            );
+            resolve(iframe);
+        };
+        browser.runtime.onMessage.addListener(onMessage);
         document.documentElement.append(pickerContainer);
-        iframe.addEventListener('load', ( ) => {
-            self.setTimeout(( ) => {
-                iframe.setAttribute('loaded', '');
-                const channel = new MessageChannel();
-                pickerFramePort = channel.port1;
-                pickerFramePort.onmessage = ev => {
-                    onDialogMessage(ev.data || {});
-                };
-                pickerFramePort.onmessageerror = ( ) => {
-                    quitPicker();
-                };
-                iframe.contentWindow.postMessage(
-                    { what: 'epickerStart', password: pickerPassword },
-                    url.href,
-                    [ channel.port2 ]
-                );
-                resolve(iframe);
-            }, 147);
-        }, { once: true });
         iframe.contentWindow.location = url.href;
     });
 };

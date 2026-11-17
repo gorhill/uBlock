@@ -906,10 +906,9 @@ let pickerContentPort;
 async function bootPicker(ev) {
     const msg = ev.data || {};
     if ( msg.what !== 'epickerStart' ) { return; }
-    const epickerPassword = await vAPI.messaging.send('elementPicker', {
-        what: 'elementPickerPassword'
-    });
-    if ( msg.password !== epickerPassword ) { return; }
+    const epickerPairing = await epickerPairingPromise;
+    if ( Boolean(epickerPairing?.password) === false ) { return; }
+    if ( msg.password !== epickerPairing.password ) { return; }
     if ( Array.isArray(ev.ports) === false ) { return; }
     if ( ev.ports.length === 0 ) { return; }
     pickerContentPort = ev.ports[0];
@@ -925,6 +924,10 @@ async function bootPicker(ev) {
 }
 
 globalThis.addEventListener('message', ev => { bootPicker(ev); }, { once: true });
+
+const epickerPairingPromise = vAPI.messaging.send('elementPicker', {
+    what: 'elementPickerPairing'
+});
 
 /******************************************************************************/
 
