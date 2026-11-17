@@ -887,11 +887,11 @@ const onMessage = function(request, sender, callback) {
             response = { password: contextPairing.password };
         } else {
             response = { password: contextPairing.password };
-            browser.tabs.sendMessage(contextPairing.tabId, {
-                what: 'elementPickerPairing',
-                password: contextPairing.password,
-            }, { frameId: contextPairing.frameId });
             contextPairing.password = '';
+            browser.tabs.sendMessage(contextPairing.tabId,
+                { what: 'elementPickerPairing' },
+                { frameId: contextPairing.frameId }
+            );
         };
         break;
     case 'elementPickerEprom':

@@ -1317,7 +1317,6 @@ const bootstrap = async ( ) => {
         const onMessage = msg => {
             browser.runtime.onMessage.removeListener(onMessage);
             if ( msg.what !== 'elementPickerPairing' ) { return; }
-            if ( msg.password !== pickerPairing.password ) { return; }
             iframe.setAttribute('loaded', '');
             const channel = new MessageChannel();
             pickerFramePort = channel.port1;

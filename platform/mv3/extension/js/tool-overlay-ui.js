@@ -33,14 +33,14 @@ export const toolOverlay = {
     port: null,
 
     start(onmessage) {
+        const toolOverlayPairingPromise = this.sendMessage({ what: 'toolOverlayPairing' });
         this.onmessage = onmessage;
         const onload = async ev => {
             const msg = ev.data || {};
             if ( msg.what !== 'startOverlay' ) { return; }
-            const toolOverlaySecret = await this.sendMessage({
-                what: 'getToolOverlaySecret'
-            });
-            if ( msg.secret !== toolOverlaySecret ) { return; }
+            const toolOverlayPairing = await toolOverlayPairingPromise;
+            if ( Boolean(toolOverlayPairing?.password) === false ) { return; }
+            if ( msg.password !== toolOverlayPairing.password ) { return; }
             if ( Array.isArray(ev.ports) === false ) { return; }
             if ( ev.ports.length === 0 ) { return; }
             toolOverlay.port = ev.ports[0];
