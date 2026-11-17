@@ -35,6 +35,8 @@ import './tab.js';
 import './ublock.js';
 import './utils.js';
 
+import * as frameManager from './vapi-contexts.js';
+
 import {
     permanentFirewall,
     permanentSwitches,
@@ -63,6 +65,8 @@ let thisVersionInt = 0;
 
 /******************************************************************************/
 
+vAPI.tabs = new vAPI.Tabs();
+
 vAPI.app.onShutdown = ( ) => {
     staticFilteringReverseLookup.shutdown();
     io.updateStop();
@@ -79,28 +83,6 @@ vAPI.app.onShutdown = ( ) => {
 vAPI.alarms.onAlarm.addListener(alarm => {
     µb.alarmQueue.push(alarm.name);
 });
-
-/******************************************************************************/
-
-// This is called only once, when everything has been loaded in memory after
-// the extension was launched. It can be used to inject content scripts
-// in already opened web pages, to remove whatever nuisance could make it to
-// the web pages before uBlock was ready.
-//
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c19
-//   Mind discarded tabs.
-
-const initializeTabs = async ( ) => {
-    const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
-    for ( const tab of tabs  ) {
-        if ( tab.discarded === true ) { continue; }
-        if ( tab.status === 'unloaded' ) { continue; }
-        const { id, url } = tab;
-        µb.tabContextManager.commit(id, url);
-        µb.bindTabToPageStore(id, 'tabCommitted', tab);
-    }
-    await scriptletFilteringEngine.start();
-};
 
 /******************************************************************************/
 
@@ -405,13 +387,12 @@ const createDefaultProps = ( ) => {
     }
 
     // Final initialization steps after all needed assets are in memory.
+    await scriptletFilteringEngine.start();
+    await frameManager.start();
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/974
     //   This can be used to defer filtering decision-making.
     µb.readyToFilter = true;
-
-    // Initialize internal state with maybe already existing tabs.
-    await initializeTabs();
 
     // Start network observers.
     webRequest.start();

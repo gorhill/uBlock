@@ -19,64 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
+/* global chrome */
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/1659
-//   Chromium fails to dispatch onCreatedNavigationTarget() events sometimes,
-//   so we synthetize these missing events when this happens.
-// https://github.com/uBlockOrigin/uAssets/issues/10323
-//   Also mind whether the new tab is launched from an external application.
-// https://github.com/uBlockOrigin/uBlock-issues/issues/2227
-//   Revert commit related to issue above.
-
-vAPI.Tabs = class extends vAPI.Tabs {
-    constructor() {
-        super();
-        this.tabIds = new Set();
-        browser.tabs.onCreated.addListener(tab => {
-            this.onCreatedHandler(tab);
-        });
-    }
-
-    onCreatedHandler(tab) {
-        if ( typeof tab.openerTabId === 'number' ) { return; }
-        if ( tab.index !== 0 ) { return; }
-        if ( tab.url !== '' ) { return; }
-        this.tabIds.add(tab.id);
-    }
-
-    onCreatedNavigationTargetHandler(details) {
-        this.tabIds.delete(details.tabId);
-        super.onCreatedNavigationTargetHandler(details);
-    }
-
-    onCommittedHandler(details) {
-        if ( details.frameId === 0 ) {
-            this.synthesizeNavigationTargetEvent(details);
-        }
-        super.onCommittedHandler(details);
-    }
-
-    onRemovedHandler(tabId, details) {
-        this.tabIds.delete(tabId);
-        super.onRemovedHandler(tabId, details);
-    }
-
-    synthesizeNavigationTargetEvent(details) {
-        if ( this.tabIds.has(details.tabId) === false ) { return; }
-        this.tabIds.delete(details.tabId);
-        const isClientRedirect =
-            Array.isArray(details.transitionQualifiers) &&
-            details.transitionQualifiers.includes('client_redirect');
-        if ( isClientRedirect === false ) { return; }
-        this.onCreatedNavigationTargetHandler({
-            tabId: details.tabId,
-            sourceTabId: details.tabId,
-            sourceFrameId: 0,
-            url: details.url,
-        });
-    }
-};
+import * as frameManager from './vapi-contexts.js';
 
 /******************************************************************************/
 
@@ -93,6 +38,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
 
     vAPI.Net = class extends vAPI.Net {
         normalizeDetails(details) {
+            details.tabUrl = frameManager.getTopURL(details.tabId);
             // Chromium 63+ supports the `initiator` property, which contains
             // the URL of the origin from which the network request was made
             if ( details.initiator && details.initiator !== 'null' ) {

@@ -23,6 +23,8 @@
 
 /******************************************************************************/
 
+import * as frameManager from './vapi-contexts.js';
+
 import {
     domainFromHostname,
     hostnameFromURI,
@@ -273,34 +275,25 @@ const µBlock = {  // jshint ignore:line
         return (new µBlock.FilteringContext(this));
     }
 
-    fromTabId(tabId) {
-        const tabContext = µBlock.tabContextManager.mustLookup(tabId);
-        this.tabOrigin = tabContext.origin;
-        this.tabHostname = tabContext.rootHostname;
-        this.tabDomain = tabContext.rootDomain;
-        this.tabId = tabContext.tabId;
+    fromTabId(tabId, tabUrl) {
+        this.tabId = tabId;
+        const url = tabUrl ?? frameManager.getTopURL(tabId) ?? 'https://behind-the-scene/';
+        this.setTabOriginFromURL(µBlock.normalizeTabURL(0, url));
         return this;
     }
 
     maybeFromDocumentURL(documentUrl) {
         if ( documentUrl === undefined ) { return; }
-        if ( documentUrl.startsWith(this.tabOrigin) ) { return; }
+        if ( documentUrl.startsWith(this.getTabOrigin()) ) { return; }
         this.tabOrigin = originFromURI(µBlock.normalizeTabURL(0, documentUrl));
-        this.tabHostname = hostnameFromURI(this.tabOrigin);
-        this.tabDomain = domainFromHostname(this.tabHostname);
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/459
     //   In case of a request for frame and if ever no context is specified,
     //   assume the origin of the context is the same as the request itself.
     fromWebrequestDetails(details) {
-        const tabId = details.tabId;
+        this.fromTabId(details.tabId, details.tabUrl);
         this.type = details.type;
-        const isMainFrame = this.itype === this.MAIN_FRAME;
-        if ( isMainFrame && tabId > 0 ) {
-            µBlock.tabContextManager.push(tabId, details.url);
-        }
-        this.fromTabId(tabId); // Must be called AFTER tab context management
         this.realm = '';
         this.setMethod(details.method);
         this.setURL(details.url);
@@ -317,22 +310,19 @@ const µBlock = {  // jshint ignore:line
         }
         if ( this.tabId > 0 ) {
             if ( this.docId === 0 ) {
-                if ( isMainFrame === false ) {
+                if ( this.itype !== this.MAIN_FRAME ) {
                     this.maybeFromDocumentURL(details.documentUrl);
                 }
-                this.docOrigin = this.tabOrigin;
-                this.docHostname = this.tabHostname;
-                this.docDomain = this.tabDomain;
+                this.setDocOrigin(this.getTabOrigin());
                 return this;
             }
             if ( details.documentUrl !== undefined ) {
                 this.setDocOriginFromURL(details.documentUrl);
                 return this;
             }
-            const pageStore = µBlock.pageStoreFromTabId(this.tabId);
-            const docStore = pageStore && pageStore.getFrameStore(this.docId);
-            if ( docStore ) {
-                this.setDocOriginFromURL(docStore.rawURL);
+            const url = frameManager.getEffectiveURL(this.tabId, this.docId);
+            if ( url ) {
+                this.setDocOriginFromURL(url);
             } else {
                 this.setDocOrigin(this.tabOrigin);
             }
@@ -354,10 +344,9 @@ const µBlock = {  // jshint ignore:line
 
     getTabOrigin() {
         if ( this.tabOrigin === undefined ) {
-            const tabContext = µBlock.tabContextManager.mustLookup(this.tabId);
-            this.tabOrigin = tabContext.origin;
-            this.tabHostname = tabContext.rootHostname;
-            this.tabDomain = tabContext.rootDomain;
+            this.setTabOriginFromURL(
+                frameManager.getTopURL(this.tabId) ?? 'https://behind-the-scene/'
+            );
         }
         return super.getTabOrigin();
     }

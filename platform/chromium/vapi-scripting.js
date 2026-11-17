@@ -21,6 +21,7 @@
 
 /* global browser */
 
+import * as frameManager from './vapi-contexts.js';
 import { hostnameFromURI } from './uri-utils.js';
 import webext from './webext.js';
 
@@ -80,91 +81,33 @@ function uBO_assembleIsolatedCode(details) {
 const CONTENTSCRIPT_DICT_MAX_LOW = 128;
 const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
-const reIsHTTP = /^https?:\/\//;
-const tabDict = new Map();
 const contentScriptDict = new Map();
 let getContentScripts;
-
-function getEffectiveURL(tabId, frameId) {
-    const tabData = tabDict.get(tabId);
-    if ( tabData === undefined ) { return; }
-    const { frameDict } = tabData;
-    let frameData = frameDict.get(frameId);
-    for (;;) {
-        if ( Boolean(frameData) === false ) { return; }
-        if ( reIsHTTP.test(frameData.url) ) { break; }
-        frameId = frameData.parentId;
-        if ( frameId === -1 ) { break; }
-        frameData = frameDict.get(frameId);
-    }
-    return frameData.url;
-}
 
 function registerContentScript(url) {
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
-    if ( contentScriptDict.has(hostname) ) { return; }
+    const entry = contentScriptDict.get(hostname) ??
+        { t: Date.now() };
+    if ( entry.code !== undefined ) { return entry; }
     const result = getContentScripts(url);
-    const code = uBO_assembleIsolatedCode(result) ?? null;
-    contentScriptDict.set(hostname, { code, t: Date.now() });
-    return code;
-}
-
-function rememberFrame(details) {
-    const { tabId } = details;
-    const tabData = tabDict.get(tabId) ?? { tabId };
-    if ( tabData.frameDict === undefined ) {
-        tabData.frameDict = new Map();
-        tabDict.set(tabId, tabData);
-    }
-    const { frameDict } = tabData;
-    let { frameId, url } = details;
-    if ( frameId === 0 ) {
-        frameDict.clear();
-    }
-    frameDict.set(frameId, { frameId, parentId: details.parentFrameId, url });
-    // Every 64 frames, we rebuild to ensure no unbound growth as there is no
-    // API listener for removed frames
-    // TODO: spin off frames management to be reused across all of uBO
-    if ( (frameDict.size & 0b111111) !== 0 ) { return; }
-    const key = self.crypto.randomUUID();
-    tabData.gettingFrames = key;
-    webext.webNavigation.getAllFrames({ tabId }).then(frames => {
-        if ( tabData.gettingFrames !== key ) { return; }
-        if ( tabDict.has(tabId) === false ) { return; }
-        frameDict.clear();
-        for ( const { frameId, parentFrameId, url } of frames ) {
-            frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
-        }
-    });
-}
-
-function onBeforeNavigate(details) {
-    const { tabId, frameId } = details;
-    if ( tabId < 0 ) { return; }
-    rememberFrame(details);
-    let { url } = details;
-    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
-        url = getEffectiveURL(tabId, frameId);
-        if ( url === undefined ) { return; }
-    }
-    if ( reIsHTTP.test(url) === false ) { return; }
-    registerContentScript(url);
+    entry.code = uBO_assembleIsolatedCode(result) ?? null;
+    contentScriptDict.set(hostname, entry);
+    return entry;
 }
 
 function onCommitted(details) {
     const { tabId, frameId } = details;
-    if ( tabId < 0 ) { return; }
-    rememberFrame(details);
     let { url } = details;
-    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
-        url = getEffectiveURL(tabId, frameId);
+    if ( frameId !== 0 && frameManager.isHTTP(url) === false ) {
+        url = frameManager.getEffectiveURL(tabId, frameId);
         if ( url === undefined ) { return; }
     }
-    if ( reIsHTTP.test(url) === false ) { return; }
+    if ( frameManager.isHTTP(url) === false ) { return; }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
-    const entry = contentScriptDict.get(hostname);
+    const entry = contentScriptDict.get(hostname) ??
+        registerContentScript(url);
     if ( Boolean(entry?.code) === false ) { return; }
     webext.tabs.executeScript(tabId, {
         frameId,
@@ -180,10 +123,6 @@ function onCommitted(details) {
     for ( const key of sortedKeys ) {
         contentScriptDict.delete(key);
     }
-}
-
-function onTabRemoved(tabId) {
-    tabDict.delete(tabId);
 }
 
 /******************************************************************************/
@@ -215,27 +154,22 @@ export async function start(fn) {
         });
     };
 
-    const tabs = await webext.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
-    for ( const tab of tabs ) {
-        if ( tab.discarded ) { continue; }
-        if ( tab.status === 'unloaded' ) { continue; }
-        const { id, url } = tab;
-        rememberFrame({ tabId: id, frameId: 0, parentFrameId: -1, url });
-        const code = registerContentScript(url);
+    for ( const [ tabId, tab ] of frameManager.tabDict ) {
+        const code = registerContentScript(tab.url);
         if ( code ) {
-            webext.tabs.executeScript(id, {
+            webext.tabs.executeScript(tabId, {
                 allFrames: true,
                 matchAboutBlank: true,
                 runAt: 'document_start',
                 code,
             });
         }
-        injectDeclarativeContentScripts(id);
+        injectDeclarativeContentScripts(tabId);
     }
-
-    browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
-    browser.webNavigation.onCommitted.addListener(onCommitted);
-    browser.tabs.onRemoved.addListener(onTabRemoved);
+    frameManager.addListener((type, details) => {
+        if ( type !== 'frame-committed' ) { return; }
+        onCommitted(details);
+    });
 }
 
 export function reset() {

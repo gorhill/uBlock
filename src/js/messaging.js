@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import * as frameManager from './vapi-contexts.js';
 import * as s14e from './s14e-serializer.js';
 import * as sfp from './static-filtering-parser.js';
 
@@ -201,7 +202,7 @@ const onMessage = function(request, sender, callback) {
     //   In case of document-blocked page, navigate to blocked URL instead
     //   of forcing a reload.
     case 'reloadTab': {
-        if ( vAPI.isBehindTheSceneTabId(request.tabId) ) { break; }
+        if ( request.tabId === frameManager.TAB_ID_NONE ) { break; }
         const { tabId, bypassCache, url, select } = request;
         vAPI.tabs.get(tabId).then(tab => {
             if ( url && tab && url !== tab.url ) {
@@ -344,8 +345,8 @@ const getFirewallRules = function(src, out) {
 };
 
 const popupDataFromTabId = function(tabId, tabTitle) {
-    const tabContext = µb.tabContextManager.mustLookup(tabId);
-    const rootHostname = tabContext.rootHostname;
+    const topURL = frameManager.getTopURL(tabId) ?? 'https://behind-the-scene/';
+    const rootHostname = hostnameFromURI(topURL);
     const µbus = µb.userSettings;
     const µbhs = µb.hiddenSettings;
     const r = {
@@ -361,10 +362,10 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         godMode: µbhs.filterAuthorMode,
         isTrustedSite: true,
         userFiltersAreEnabled: µb.userFiltersAreEnabled(),
-        rawURL: tabContext.rawURL,
-        pageURL: tabContext.normalURL,
+        rawURL: topURL,
+        pageURL: µb.normalizeTabURL(topURL),
         pageHostname: rootHostname,
-        pageDomain: tabContext.rootDomain,
+        pageDomain: domainFromHostname(rootHostname),
         popupBlockedCount: 0,
         popupPanelSections: µbus.popupPanelSections,
         popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
@@ -656,26 +657,25 @@ const retrieveContentScriptParameters = async function(sender, request) {
     // A content script may not always be able to successfully look up the
     // effective context, hence in such case we try again to look up here
     // using cached information about embedded frames.
-    if ( frameId !== 0 && request.url.startsWith('about:') ) {
-        request.url = pageStore.getEffectiveFrameURL(sender);
+    if ( frameId !== 0 ) {
+        request.url = frameManager.getEffectiveURL(tabId, frameId);
     }
 
-    const noSpecificCosmeticFiltering =
-        pageStore.shouldApplySpecificCosmeticFilters(frameId) === false;
-    const noGenericCosmeticFiltering =
-        pageStore.shouldApplyGenericCosmeticFilters(frameId) === false;
-
+    const cosmeticFiltering = pageStore.getCosmeticFiltering(frameId);
     const response = {
         collapseBlocked: µb.userSettings.collapseBlocked,
-        noGenericCosmeticFiltering,
-        noSpecificCosmeticFiltering,
+        noGenericCosmeticFiltering: cosmeticFiltering.generic !== true,
+        noSpecificCosmeticFiltering: cosmeticFiltering.specific !== true,
     };
 
     request.tabId = tabId;
     request.frameId = frameId;
     request.hostname = hostnameFromURI(request.url);
     request.domain = domainFromHostname(request.hostname);
-    request.ancestors = pageStore.getFrameAncestorDetails(frameId);
+    request.ancestors = frameManager.getAncestors({ tabId, frameId }).map(a => {
+        a.hostname = hostnameFromURI(a.url);
+        a.domain = domainFromHostname(a.hostname);
+    });
 
     const scf = response.specificCosmeticFilters =
         cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
@@ -708,10 +708,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
         if ( filters ) {
             scriptletFilteringEngine.toLogger(request, filters);
         }
-        if (
-            noSpecificCosmeticFiltering === false ||
-            noGenericCosmeticFiltering === false
-        ) {
+        if ( cosmeticFiltering.specific || cosmeticFiltering.generic ) {
             vAPI.tabs.executeScript(tabId, {
                 allFrames: false,
                 file: '/js/scriptlets/cosmetic-logger.js',
@@ -1207,9 +1204,10 @@ const getOriginHints = function() {
     const out = new Set();
     for ( const tabId of µb.pageStores.keys() ) {
         if ( tabId === -1 ) { continue; }
-        const tabContext = µb.tabContextManager.lookup(tabId);
-        if ( tabContext === null ) { continue; }
-        let { rootDomain, rootHostname } = tabContext;
+        const topURL = frameManager.getTopURL(tabId);
+        if ( Boolean(topURL) === false ) { continue; }
+        const rootHostname = hostnameFromURI(topURL);
+        const rootDomain = domainFromHostname(rootHostname);
         if ( rootDomain.endsWith('-scheme') ) { continue; }
         const isPunycode = rootHostname.includes('xn--');
         out.add(isPunycode ? punycode.toUnicode(rootDomain) : rootDomain);

@@ -21,6 +21,7 @@
 
 /* global browser */
 
+import * as frameManager from './vapi-contexts.js';
 import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
@@ -124,33 +125,8 @@ const CONTENTSCRIPT_DICT_MAX_LOW = 128;
 const CONTENTSCRIPT_DICT_MAX_HIGH = CONTENTSCRIPT_DICT_MAX_LOW +
     (CONTENTSCRIPT_DICT_MAX_LOW >>> 3);
 const sentinel = self.crypto.randomUUID();
-const reIsHTTP = /^https?:\/\//;
-const tabDict = new Map();
 const contentScriptDict = new Map();
 let getContentScripts;
-
-function getEffectiveURL(tabId, frameId) {
-    const tabData = tabDict.get(tabId);
-    if ( tabData === undefined ) { return; }
-    const { frameDict } = tabData;
-    let frameData = frameDict.get(frameId);
-    for (;;) {
-        if ( Boolean(frameData) === false ) { return; }
-        if ( reIsHTTP.test(frameData.url) ) { break; }
-        frameId = frameData.parentId;
-        if ( frameId === -1 ) { break; }
-        frameData = frameDict.get(frameId);
-    }
-    return frameData.url;
-}
-
-function getTopOrigin(tabId) {
-    try {
-        const url = new URL(tabDict.get(tabId)?.frameDict.get(0)?.url);
-        return url.origin;
-    } catch {
-    }
-}
 
 function prepareContentScript(url, tabId = -1, frameId = 0) {
     const hostname = hostnameFromURI(url);
@@ -159,7 +135,7 @@ function prepareContentScript(url, tabId = -1, frameId = 0) {
     if ( entry.manuallyInjectedCode !== undefined ) { return entry; }
     if ( hostname !== '' ) {
         const result = getContentScripts(url, frameId !== 0
-            ? { topOrigin: getTopOrigin(tabId) }
+            ? { topOrigin: frameManager.getTopOrigin(tabId) }
             : undefined
         );
         entry.manuallyInjectedCode = uBO_assembleLegacyCode(result) ?? null;
@@ -256,69 +232,29 @@ function manuallyInject(tabId, frameId, entry) {
     });
 }
 
-function rememberFrame(details) {
-    const { tabId } = details;
-    const tabData = tabDict.get(tabId) ?? { tabId };
-    if ( tabData.frameDict === undefined ) {
-        tabData.frameDict = new Map();
-        tabDict.set(tabId, tabData);
+function getEffectiveURL(details) {
+    const { tabId, frameId } = details;
+    let { url } = details;
+    if ( frameId !== 0 && frameManager.isHTTP(url) === false ) {
+        url = frameManager.getEffectiveURL(tabId, frameId);
+        if ( url === undefined ) { return; }
     }
-    const { frameDict } = tabData;
-    let { frameId, url } = details;
-    if ( frameId === 0 ) {
-        frameDict.clear();
-    }
-    frameDict.set(frameId, { frameId, parentId: details.parentFrameId, url });
-    // Every 64 frames, we rebuild to ensure no unbound growth as there is no
-    // API listener for removed frames
-    // TODO: spin off frames management to be reused across all of uBO
-    if ( (frameDict.size & 0b111111) !== 0 ) { return; }
-    const key = self.crypto.randomUUID();
-    tabData.gettingFrames = key;
-    browser.webNavigation.getAllFrames({ tabId }).then(frames => {
-        if ( tabData.gettingFrames !== key ) { return; }
-        if ( tabDict.has(tabId) === false ) { return; }
-        frameDict.clear();
-        for ( const { frameId, parentFrameId, url } of frames ) {
-            frameDict.set(frameId, { frameId, parentId: parentFrameId, url });
-        }
-    });
-}
-
-function onCreatedNavigationTarget(details) {
-    onBeforeNavigate({
-        tabId: details.tabId,
-        frameId: 0,
-        parentFrameId: -1,
-        url: details.url,
-    });
+    if ( frameManager.isHTTP(url) === false ) { return; }
+    return url;
 }
 
 function onBeforeNavigate(details) {
-    const { tabId, frameId } = details;
-    if ( tabId < 0 ) { return; }
-    rememberFrame(details);
-    let { url } = details;
-    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
-        url = getEffectiveURL(tabId, frameId);
-        if ( url === undefined ) { return; }
-    }
-    if ( reIsHTTP.test(url) === false ) { return; }
-    prepareContentScript(url, tabId, frameId);
+    const url = getEffectiveURL(details);
+    if ( frameManager.isHTTP(url) === false ) { return; }
+    prepareContentScript(url, details.tabId, details.frameId);
 }
 
 function onCommitted(details) {
-    const { tabId, frameId } = details;
-    if ( tabId < 0 ) { return; }
-    rememberFrame(details);
-    let { url } = details;
-    if ( frameId !== 0 && reIsHTTP.test(url) === false ) {
-        url = getEffectiveURL(tabId, frameId);
-        if ( url === undefined ) { return; }
-    }
-    if ( reIsHTTP.test(url) === false ) { return; }
+    const url = getEffectiveURL(details);
+    if ( frameManager.isHTTP(url) === false ) { return; }
     const hostname = hostnameFromURI(url);
     if ( hostname === '' ) { return; }
+    const { tabId, frameId } = details;
     const entry = contentScriptDict.get(hostname) ??
         prepareContentScript(url, tabId, frameId);
     if ( entry.registered !== true ) {
@@ -335,28 +271,27 @@ function onCommitted(details) {
     }
 }
 
-function onTabRemoved(tabId) {
-    tabDict.delete(tabId);
-}
-
 /******************************************************************************/
 
 export async function start(fn) {
     const initialized = Boolean(getContentScripts);
     getContentScripts = fn;
     if ( initialized ) { return; }
-    const tabs = await browser.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
-    for ( const tab of tabs ) {
-        if ( tab.discarded ) { continue; }
-        if ( tab.status === 'unloaded' ) { continue; }
-        rememberFrame({ tabId: tab.id, frameId: 0, parentFrameId: -1, url: tab.url });
-        const entry = prepareContentScript(tab.url)
+    for ( const { url } of frameManager.tabDict.values() ) {
+        const entry = prepareContentScript(url)
         registerContentScript(entry);
     }
-    browser.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
-    browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
-    browser.webNavigation.onCommitted.addListener(onCommitted);
-    browser.tabs.onRemoved.addListener(onTabRemoved);
+    frameManager.addListener((type, details) => {
+        switch ( type ) {
+        case 'before-tab-created':
+        case 'before-frame-committed':
+            onBeforeNavigate(details);
+            break;
+        case 'frame-committed':
+            onCommitted(details);
+            break;
+        }
+    });
 }
 
 export function reset() {

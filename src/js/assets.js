@@ -1250,23 +1250,26 @@ async function diffUpdater() {
     }
     if ( toHardUpdate.length === 0 ) { return; }
     ubolog('Diff updater: cycle start');
-    return new Promise(resolve => {
-        let pendingOps = 0;
+    const { promise, resolve } = Promise.withResolvers();
+    let pendingOps = 0;
+    const checkAndCorrectDiffPath = data => {
+        if ( typeof data.text !== 'string' ) { return; }
+        if ( data.text === '' ) { return; }
+        const metadata = extractMetadataFromList(data.text, [ 'Diff-Path' ]);
+        if ( metadata instanceof Object === false ) { return; }
+        if ( metadata.diffPath === data.patchPath ) { return; }
+        assetCacheSetDetails(data.assetKey, metadata);
+    };
+    try {
+        ubolog('Diff updater: new Worker()');
+        const worker = new Worker('js/diff-updater.js');
         const terminate = error => {
+            ubolog('Diff updater: cycle complete');
             worker.terminate();
             resolve();
             if ( typeof error !== 'string' ) { return; }
             ubolog(`Diff updater: terminate because ${error}`);
         };
-        const checkAndCorrectDiffPath = data => {
-            if ( typeof data.text !== 'string' ) { return; }
-            if ( data.text === '' ) { return; }
-            const metadata = extractMetadataFromList(data.text, [ 'Diff-Path' ]);
-            if ( metadata instanceof Object === false ) { return; }
-            if ( metadata.diffPath === data.patchPath ) { return; }
-            assetCacheSetDetails(data.assetKey, metadata);
-        };
-        const worker = new Worker('js/diff-updater.js');
         worker.onmessage = ev => {
             const data = ev.data || {};
             if ( data.what === 'ready' ) {
@@ -1274,6 +1277,7 @@ async function diffUpdater() {
                 while ( toHardUpdate.length !== 0 ) {
                     const assetDetails = toHardUpdate.shift();
                     assetDetails.fetch = true;
+                    ubolog('Diff updater: post message', assetDetails);
                     worker.postMessage(assetDetails);
                     pendingOps += 1;
                 }
@@ -1291,6 +1295,7 @@ async function diffUpdater() {
                     data.text = result.content || '';
                     data.status = undefined;
                     checkAndCorrectDiffPath(data);
+                    ubolog('Diff updater: post message', data);
                     worker.postMessage(data);
                 });
                 return;
@@ -1327,17 +1332,22 @@ async function diffUpdater() {
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
                 ubolog('Diff updater: soft updating', toSoftUpdate.map(v => v.assetKey).join());
                 while ( toSoftUpdate.length !== 0 ) {
-                    worker.postMessage(toSoftUpdate.shift());
+                    const assetDetails = toSoftUpdate.shift();
+                    ubolog('Diff updater: post message', data);
+                    worker.postMessage(assetDetails);
                     pendingOps += 1;
                 }
             }
             if ( pendingOps !== 0 ) { return; }
-            ubolog('Diff updater: cycle complete');
             terminate();
         };
-    }).catch(reason => {
-        ubolog(`Diff updater: ${reason}`);
-    });
+        ubolog('Diff updater: post message { what: "start" }');
+        worker.postMessage({ what: 'start' });
+    } catch (reason) {
+        ubolog(`Diff updater: cycle aborted because ${reason}`);
+        resolve();
+    }
+    return promise;
 }
 
 function updateFirst() {

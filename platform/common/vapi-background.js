@@ -26,6 +26,7 @@
 
 /******************************************************************************/
 
+import * as frameManager from './vapi-contexts.js';
 import { ubolog } from './console.js';
 import webext from './webext.js';
 
@@ -260,10 +261,6 @@ vAPI.browserSettings = (( ) => {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId < 0;
-};
-
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
 
@@ -278,40 +275,6 @@ const toTabId = function(tabId) {
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
 
 vAPI.Tabs = class {
-    constructor() {
-        browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
-            this.onCreatedNavigationTargetHandler(details);
-        });
-        browser.webNavigation.onCommitted.addListener(details => {
-            const { frameId, tabId } = details;
-            if ( frameId === 0 && tabId > 0 && details.transitionType === 'reload' ) {
-                if ( vAPI.net && vAPI.net.hasUnprocessedRequest(tabId) ) {
-                    vAPI.net.removeUnprocessedRequest(tabId);
-                }
-            }
-            this.onCommittedHandler(details);
-        });
-        browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            this.onUpdatedHandler(tabId, changeInfo, tab);
-        });
-        browser.tabs.onActivated.addListener(details => {
-            this.onActivated(details);
-        });
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/151
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/680#issuecomment-515215220
-        if ( browser.windows instanceof Object ) {
-            browser.windows.onFocusChanged.addListener(windowId => {
-                this.onFocusChangedHandler(windowId);
-            });
-        }
-        browser.tabs.onRemoved.addListener((tabId, details) => {
-            if ( vAPI.net && vAPI.net.hasUnprocessedRequest(tabId) ) {
-                vAPI.net.removeUnprocessedRequest(tabId);
-            }
-            this.onRemovedHandler(tabId, details);
-        });
-    }
-
     async executeScript(...args) {
         let result;
         try {
@@ -582,66 +545,6 @@ vAPI.Tabs = class {
         const s = url.slice(0, pos);
         if ( s.search(/\s/) === -1 ) { return url; }
         return s.replace(/\s+/, '') + url.slice(pos);
-    }
-
-    onCreatedNavigationTargetHandler(details) {
-        if ( typeof details.url !== 'string' ) {
-            details.url = '';
-        }
-        if ( /^https?:\/\//.test(details.url) === false ) {
-            details.frameId = 0;
-            details.url = this.sanitizeURL(details.url);
-            this.onNavigation(details);
-        }
-        this.onCreated(details);
-    }
-
-    onCommittedHandler(details) {
-        details.url = this.sanitizeURL(details.url);
-        this.onNavigation(details);
-    }
-
-    onUpdatedHandler(tabId, changeInfo, tab) {
-        // Ignore uninteresting update events
-        const { status = '', title = '', url = '' } = changeInfo;
-        if ( status === '' && title === '' && url === '' ) { return; }
-        // https://github.com/gorhill/uBlock/issues/3073
-        //   Fall back to `tab.url` when `changeInfo.url` is not set.
-        if ( url === '' ) {
-            changeInfo.url = tab && tab.url;
-        }
-        if ( changeInfo.url ) {
-            changeInfo.url = this.sanitizeURL(changeInfo.url);
-        }
-        this.onUpdated(tabId, changeInfo, tab);
-    }
-
-    onRemovedHandler(tabId, details) {
-        this.onClosed(tabId, details);
-    }
-
-    onFocusChangedHandler(windowId) {
-        if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
-        vAPI.tabs.query({ active: true, windowId }).then(tabs => {
-            if ( tabs.length === 0 ) { return; }
-            const tab = tabs[0];
-            this.onActivated({ tabId: tab.id, windowId: tab.windowId });
-        });
-    }
-
-    onActivated(/* details */) {
-    }
-
-    onClosed(/* tabId, details */) {
-    }
-
-    onCreated(/* details */) {
-    }
-
-    onNavigation(/* details */) {
-    }
-
-    onUpdated(/* tabId, changeInfo, tab */) {
     }
 };
 
@@ -1220,6 +1123,12 @@ vAPI.Net = class {
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
+                if ( details.tabId !== frameManager.TAB_ID_NONE ) {
+                    const { type } = details;
+                    if ( type === 'main_frame' || type === 'sub_frame' ) {
+                        frameManager.addFrame(details);
+                    }
+                }
                 this.normalizeDetails(details);
                 if ( this.suspendDepth !== 0 && details.tabId >= 0 ) {
                     return this.suspendOneRequest(details);
@@ -1229,6 +1138,27 @@ vAPI.Net = class {
             this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
             [ 'blocking' ]
         );
+
+        frameManager.addListener((type, details) => {
+            switch ( type ) {
+            case 'tab-removed': {
+                const { tabId } = details;
+                if ( this.hasUnprocessedRequest(tabId) === false ) { break; }
+                this.removeUnprocessedRequest(tabId);
+                break;
+            }
+            case 'frame-committed': {
+                const { tabId, frameId } = details;
+                if ( frameId !== 0 ) { break; }
+                if ( details.transitionType !== 'reload' ) { break; }
+                if ( this.hasUnprocessedRequest(tabId) === false ) { break; }
+                this.removeUnprocessedRequest(tabId);
+                break;
+            }
+            default:
+                break;
+            }
+        });
 
         vAPI.setDefaultIcon('-loading', '');
     }

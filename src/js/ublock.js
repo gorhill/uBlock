@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import * as frameManager from './vapi-contexts.js';
+
 import {
     broadcast,
     filteringBehaviorChanged,
@@ -199,7 +201,7 @@ import µb from './background.js';
     targetElement,
     zap = false,
 ) {
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+    if ( tabId === frameManager.TAB_ID_NONE ) { return; }
 
     this.epickerArgs.target = targetElement || '';
     this.epickerArgs.zap = zap;

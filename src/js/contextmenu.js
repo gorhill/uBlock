@@ -205,7 +205,8 @@ const update = function(tabId = undefined) {
         const pageStore = tabId && µb.pageStoreFromTabId(tabId) || null;
         if ( pageStore?.isNotTrusted() ) {
             if ( µb.userFiltersAreEnabled() ) {
-                if ( pageStore.shouldApplySpecificCosmeticFilters(0) ) {
+                const cosmeticFiltering = pageStore.getCosmeticFiltering(0);
+                if ( cosmeticFiltering.specific ) {
                     newBits |= BLOCK_ELEMENT_BIT;
                 } else {
                     newBits |= BLOCK_RESOURCE_BIT;

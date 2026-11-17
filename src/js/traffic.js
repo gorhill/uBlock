@@ -24,6 +24,7 @@
 /******************************************************************************/
 
 import * as fc from  './filtering-context.js';
+import * as frameManager from './vapi-contexts.js';
 import * as sfp from './static-filtering-parser.js';
 import {
     sessionFirewall,
@@ -73,12 +74,14 @@ function onBeforeRequest(details) {
     // Lookup the page store associated with this tab id.
     let pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) {
-        const tabContext = µb.tabContextManager.mustLookup(tabId);
-        if ( tabContext.tabId < 0 ) {
+        const url = frameManager.getTopURL(tabId);
+        if ( Boolean(url) === false ) {
             return onBeforeBehindTheSceneRequest(fctxt);
         }
-        vAPI.tabs.onNavigation({ tabId, frameId: 0, url: tabContext.rawURL });
-        pageStore = µb.pageStoreFromTabId(tabId);
+        pageStore = µb.bindTabToPageStore(tabId, 'beforeRequest');
+        if ( pageStore === null ) {
+            return onBeforeBehindTheSceneRequest(fctxt);
+        }
     }
 
     const result = pageStore.filterRequest(fctxt);
@@ -108,7 +111,7 @@ function onBeforeRequest(details) {
         details.parentFrameId !== -1 &&
         details.aliasURL === undefined
     ) {
-        pageStore.setFrameURL(details);
+        frameManager.addFrame(details);
     }
 
     if ( result === 2 ) {

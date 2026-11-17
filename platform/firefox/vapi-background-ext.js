@@ -19,6 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global browser */
+
+import * as frameManager from './vapi-contexts.js';
+
 import {
     domainFromHostname,
     hostnameFromNetworkURL,
@@ -103,6 +107,9 @@ vAPI.Net = class extends vAPI.Net {
     }
 
     normalizeDetails(details) {
+        details.tabUrl = details.frameAncestors?.length
+            ? details.frameAncestors.at(-1).url
+            : frameManager.getTopURL(details.tabId);
         // https://github.com/uBlockOrigin/uBlock-issues/issues/3379
         if ( skipDNS(details.proxyInfo) && details.ip === '0.0.0.0' ) {
             details.ip = null;
