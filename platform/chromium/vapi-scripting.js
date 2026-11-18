@@ -33,18 +33,17 @@ function uBO_isolatedCode(mainCode) {
     (function isolatedCode(){})();
 
     if ( mainCode ) {
-        let script;
+        const doc = document;
+        const container = doc.createElement('div');
+        const shadowRoot = container.attachShadow({ mode: 'closed' });
         try {
-            const doc = document;
-            script = doc.createElement('script');
+            const script = doc.createElement('script');
             script.appendChild(doc.createTextNode(mainCode));
-            (doc.head || doc.documentElement).appendChild(script);
+            shadowRoot.append(script);
+            (doc.head || doc.documentElement).appendChild(container);
         } catch {
         }
-        if ( script ) {
-            script.remove();
-            script.textContent = '';
-        }
+        container.remove();
     }
 
     return 0;
