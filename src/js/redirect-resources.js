@@ -184,6 +184,8 @@ export default new Map([
         alias: [ 'noop-vmap1.0.xml', 'noopvmap-1.0' ],
         data: 'text',
     } ],
+    [ 'optimizely.js', {
+    } ],
     [ 'outbrain-widget.js', {
         alias: 'widgets.outbrain.com/outbrain.js',
     } ],
