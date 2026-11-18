@@ -35,6 +35,8 @@ function uBO_legacyIsolatedWorldWrapper(details) {
     if ( details.mainCode ) {
         const doc = document;
         const { sentinel } = details;
+        const container = doc.createElement('div');
+        const shadowRoot = container.attachShadow({ mode: 'closed' });
         let script;
         try {
             const code = [
@@ -43,12 +45,13 @@ function uBO_legacyIsolatedWorldWrapper(details) {
             ].join('\n');
             script = doc.createElement('script');
             script.appendChild(doc.createTextNode(code));
-            (doc.head || doc.documentElement).appendChild(script);
+            shadowRoot.append(script);
+            (doc.head || doc.documentElement).appendChild(container);
         } catch {
         }
+        container.remove();
         if ( script ) {
             script.remove();
-            script.textContent = '';
             script = undefined;
         }
         if ( self.wrappedJSObject[sentinel] ) {
@@ -68,11 +71,16 @@ function uBO_legacyIsolatedWorldWrapper(details) {
             script = doc.createElement('script');
             script.async = false;
             script.src = url;
-            (doc.head || doc.documentElement || doc).append(script);
+            shadowRoot.append(script);
+            (doc.head || doc.documentElement || doc).append(container);
         } catch {
         }
+        container.remove();
+        if ( script ) {
+            script.remove();
+            script = undefined;
+        }
         if ( url ) {
-            if ( script ) { script.remove(); }
             self.URL.revokeObjectURL(url);
         }
     }
