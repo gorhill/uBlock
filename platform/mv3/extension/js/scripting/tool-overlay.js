@@ -70,7 +70,7 @@ self.ubolOverlay = {
         this.pickerCSS = [
             `[${this.secretAttr}] { ${cssStyle} }`,
             `[${this.secretAttr}][loaded] { visibility: visible !important; }`,
-            `[${this.secretAttr}][clicked] { pointer-events: none !important; }`,
+            `[${this.secretAttr}][clicked] { cursor: crosshair !important; pointer-events: none !important; }`,
         ].join('\n');
         self.addEventListener('scroll', this.onViewportChanged, { passive: true });
         self.addEventListener('resize', this.onViewportChanged, { passive: true });

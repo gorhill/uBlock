@@ -1275,6 +1275,7 @@ const pickerCSS = `
     visibility: visible !important;
 }
 [${pickerUniqueId}][clicked] {
+    cursor: crosshair !important;
     pointer-events: none !important;
 }
 `;
