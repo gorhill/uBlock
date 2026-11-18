@@ -1,3 +1,4 @@
+- [[security] Use shadow DOM when programmatically injecting scriptlets](https://github.com/gorhill/uBlock/commit/e743ee760f)
 - [[shim] Add `optimizely.js` redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
 - [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
 - [[picker] Improve reliability of element picker launch](https://github.com/gorhill/uBlock/commit/73b2bb6e29)
