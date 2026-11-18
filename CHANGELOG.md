@@ -1,3 +1,5 @@
+- [[shim] Add `optimizely.js` redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
+- [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
 - [[picker] Improve reliability of element picker launch](https://github.com/gorhill/uBlock/commit/73b2bb6e29)
 - [[security] Conceal DOM of overlay-based tools inside a shadow DOM](https://github.com/gorhill/uBlock/commit/1765528bec)
 
