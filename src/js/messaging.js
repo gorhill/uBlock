@@ -363,7 +363,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         isTrustedSite: true,
         userFiltersAreEnabled: µb.userFiltersAreEnabled(),
         rawURL: topURL,
-        pageURL: µb.normalizeTabURL(topURL),
+        pageURL: µb.normalizeTabURL(tabId, topURL),
         pageHostname: rootHostname,
         pageDomain: domainFromHostname(rootHostname),
         popupBlockedCount: 0,
