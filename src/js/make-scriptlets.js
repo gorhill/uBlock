@@ -51,6 +51,42 @@ const worldFrameworks = {
 
 /******************************************************************************/
 
+function escapeForRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/******************************************************************************/
+
+function compileRegexOrPathTarget(target) {
+    const isRegex = target.charCodeAt(0) === 0x2F /* / */;
+    if ( isRegex === false ) {
+        const pathPos = target.indexOf('/');
+        const hn = target.slice(0, pathPos);
+        const pn = target.slice(pathPos);
+        return {
+            needle: hn,
+            hn: `(?:^|\\.)${escapeForRegex(hn)}$`,
+            pn: `^${escapeForRegex(pn)}`,
+        };
+    }
+    const pathPos = target.indexOf('\\/');
+    if ( pathPos !== -1 ) {
+        const hnregex = `${target.slice(1, pathPos)}$`;
+        return {
+            needle: literalStrFromRegex(hnregex),
+            hn: hnregex,
+            pn: `^${target.slice(pathPos, -1)}`,
+        };
+    }
+    const hnregex = target.slice(1, -1);
+    return {
+        needle: literalStrFromRegex(hnregex),
+        hn: hnregex,
+    };
+}
+
+/******************************************************************************/
+
 function createScriptletCoreCode(allFunctions, resourceEntry) {
     allFunctions.set(resourceEntry.name, resourceEntry.code);
     if ( Boolean(resourceEntry.dependencies?.length) === false ) { return; }
@@ -209,15 +245,10 @@ export function commit(rulesetId, template, secret) {
             hostnameCompare(a[0], b[0])
         ).map(a => ([ a[0], JSON.stringify(Array.from(a[1]).map(a => JSON.parse(a))).slice(1,-1)]));
         const scriptletFromRegexes = Array.from(worldDetails.regexesOrPaths)
-            .filter(a => a[0].startsWith('/') && a[0].endsWith('/'))
-            .map(a => {
-                const restr = a[0].slice(1,-1);
-                return [
-                    literalStrFromRegex(restr).slice(0,8),
-                    restr,
-                    JSON.stringify(Array.from(a[1])).slice(1,-1),
-                ];
-            }).flat();
+            .map(a => [
+                compileRegexOrPathTarget(a[0]),
+                JSON.stringify(Array.from(a[1])).slice(1,-1),
+            ]).flat();
         if ( hostnames.length === 0 && scriptletFromRegexes.length === 0 ) { continue; }
         let content = safeReplace(template, 'self.$scriptletSecret$', JSON.stringify(secret));
         content = safeReplace(content, 'self.$hasHostnames$', JSON.stringify(hostnames.length !== 0));

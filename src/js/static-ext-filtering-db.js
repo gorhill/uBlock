@@ -99,7 +99,7 @@ export class StaticExtFilteringHostnameDB {
     }
 
     #storeMatcher(target, iStr) {
-        const iMatcher = this.#matcherMap.get(target) ||
+        const iMatcher = this.#matcherMap.get(target) ??
             this.#matcherSlots.length;
         if ( iMatcher === this.#matcherSlots.length ) {
             const { isRegex, hn, pn } = extractSubTargets(target);

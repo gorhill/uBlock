@@ -41,6 +41,7 @@ export function tokenizableStrFromRegex(reStr) {
 export function literalStrFromRegex(reStr) {
     let literals = tokenizableStrFromRegex(reStr)
         .split(/[\x00\x01]+/)
+        .filter(a => a.length !== 0)
         .sort((a, b) => b.length - a.length);
     if ( literals.length > 1 ) {
         literals = literals.filter(a => (/^(\.?com|\.?net|www\.?)$/).test(a) === false);
