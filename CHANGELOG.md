@@ -1,3 +1,5 @@
+- [[scriptlets] Add (back) support for path-based targets](https://github.com/gorhill/uBlock/commit/a23b117141)
+- [[picker] Fix unpleasant flickering of mouse cursor in picking mode](https://github.com/gorhill/uBlock/commit/765c51daa1)
 - [[security] Use shadow DOM when programmatically injecting scriptlets](https://github.com/gorhill/uBlock/commit/e743ee760f)
 - [[shim] Add `optimizely.js` redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
 - [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
