@@ -38,24 +38,23 @@ function uBO_legacyIsolatedWorldWrapper(details) {
         const { sentinel } = details;
         const container = doc.createElement('div');
         const shadowRoot = container.attachShadow({ mode: 'closed' });
-        let script;
+        try {
+            (doc.head || doc.documentElement).appendChild(container);
+        } catch {
+            return 0;
+        }
         try {
             const code = [
                 `self['${sentinel}'] = true;`,
                 details.mainCode,
             ].join('\n');
-            script = doc.createElement('script');
+            const script = doc.createElement('script');
             script.appendChild(doc.createTextNode(code));
             shadowRoot.append(script);
-            (doc.head || doc.documentElement).appendChild(container);
         } catch {
         }
-        container.remove();
-        if ( script ) {
-            script.remove();
-            script = undefined;
-        }
         if ( self.wrappedJSObject[sentinel] ) {
+            container.remove();
             delete self.wrappedJSObject[sentinel];
             return 0;
         }
@@ -69,18 +68,13 @@ function uBO_legacyIsolatedWorldWrapper(details) {
                 { type: 'text/javascript; charset=utf-8' }
             );
             url = self.URL.createObjectURL(blob);
-            script = doc.createElement('script');
+            const script = doc.createElement('script');
             script.async = false;
             script.src = url;
             shadowRoot.append(script);
-            (doc.head || doc.documentElement || doc).append(container);
         } catch {
         }
         container.remove();
-        if ( script ) {
-            script.remove();
-            script = undefined;
-        }
         if ( url ) {
             self.URL.revokeObjectURL(url);
         }
