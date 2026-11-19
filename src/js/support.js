@@ -163,7 +163,7 @@ async function showSupportData() {
     const supportData = await vAPI.messaging.send('dashboard', {
         what: 'getSupportData',
     });
-    const shownData = JSON.parse(JSON.stringify(supportData));
+    const shownData = structuredClone(supportData);
     uselessKeys.forEach(prop => { removeKey(shownData, prop); });
     const redacted = true;
     if ( redacted ) {

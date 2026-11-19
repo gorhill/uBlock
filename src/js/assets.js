@@ -1107,7 +1107,7 @@ assets.metadata = async function() {
         getAssetCacheRegistry(),
     ]);
 
-    const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
+    const assetDict = structuredClone(assetSourceRegistry);
     const cacheDict = assetCacheRegistry;
     const now = Date.now();
     for ( const assetKey in assetDict ) {

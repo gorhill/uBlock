@@ -27,7 +27,7 @@
 //   the title as a substring.
 
 function orphanizeString(s) {
-    return JSON.parse(JSON.stringify(s));
+    return structuredClone(s);
 }
 
 /******************************************************************************/
