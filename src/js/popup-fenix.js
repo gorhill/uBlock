@@ -327,7 +327,7 @@ const expandHostnameStats = ( ) => {
         const { allowed: hnAllowed, blocked: hnBlocked } = counts;
         if ( isDomain ) {
             dnDetails = hnDetails;
-            dnDetails.totals = JSON.parse(JSON.stringify(dnDetails.counts));
+            dnDetails.totals = structuredClone(dnDetails.counts);
         } else {
             const { allowed: dnAllowed, blocked: dnBlocked } = dnDetails.totals;
             dnAllowed.any += hnAllowed.any;
