@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import './logger-ui-inspector.js';
+
 import { dom, qs$, qsa$ } from './dom.js';
 import { i18n, i18n$ } from './i18n.js';
 import { broadcast } from './broadcast.js';
