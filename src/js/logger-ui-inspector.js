@@ -27,7 +27,6 @@ import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
-const logger = self.logger;
 const showdomButton = qs$('#showdom');
 const inspector = qs$('#domInspector');
 const domTree = qs$('#domTree');
@@ -183,7 +182,7 @@ const appendListItem = (ul, li) => {
 const renderDOMFull = response => {
     const domTreeParent = domTree.parentElement;
     let ul = domTreeParent.removeChild(domTree);
-    logger.removeAllChildren(domTree);
+    self.logger.removeAllChildren(domTree);
 
     filterToIdMap.clear();
 
@@ -431,7 +430,7 @@ const startDialog = (( ) => {
     };
 
     const start = function() {
-        dialog = logger.modalDialog.create('#cosmeticFilteringDialog', stop);
+        dialog = self.logger.modalDialog.create('#cosmeticFilteringDialog', stop);
         textarea = qs$(dialog, 'textarea');
         hideSelectors = [];
         for ( const node of qsa$(domTree, 'code.off') ) {
@@ -454,7 +453,7 @@ const startDialog = (( ) => {
         textarea.addEventListener('input', onInputChanged);
         dialog.addEventListener('click', onClicked, true);
         showCommitted();
-        logger.modalDialog.show();
+        self.logger.modalDialog.show();
     };
 
     const stop = function() {
@@ -562,7 +561,7 @@ const onMouseOver = (( ) => {
 
 const currentTabId = ( ) => {
     if ( dom.cl.has(showdomButton, 'active') === false ) { return 0; }
-    return logger.tabIdFromPageSelector();
+    return self.logger.tabIdFromPageSelector();
 };
 
 /******************************************************************************/
@@ -588,7 +587,7 @@ const injectInspector = (( ) => {
 
 const shutdownInspector = ( ) => {
     contentInspectorChannel.disconnect();
-    logger.removeAllChildren(domTree);
+    self.logger.removeAllChildren(domTree);
     dom.cl.remove(inspector, 'vExpanded');
     inspectedTabId = 0;
 };
@@ -689,6 +688,7 @@ const toggleOff = ( ) => {
 /******************************************************************************/
 
 const toggle = ( ) => {
+    if ( Boolean(self.logger) === false ) { return; }
     if ( dom.cl.toggle(showdomButton, 'active') ) {
         toggleOn();
     } else {
