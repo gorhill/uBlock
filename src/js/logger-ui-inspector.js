@@ -27,6 +27,7 @@ import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
+const browser = globalThis.browser ?? globalThis.chrome;
 const showdomButton = qs$('#showdom');
 const inspector = qs$('#domInspector');
 const domTree = qs$('#domTree');
