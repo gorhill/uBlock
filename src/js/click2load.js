@@ -31,6 +31,7 @@ if ( typeof vAPI !== 'object' ) { return; }
 const url = new URL(self.location.href);
 const actualURL = url.searchParams.get('url');
 const frameURL = url.searchParams.get('aliasURL') || actualURL;
+if ( /^https?:\/\//.test(frameURL) === false ) { return; }
 const frameURLElem = document.getElementById('frameURL');
 
 frameURLElem.children[0].textContent = actualURL;
