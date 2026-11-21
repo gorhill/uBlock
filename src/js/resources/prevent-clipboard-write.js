@@ -69,6 +69,7 @@ function preventClipboardWrite(matches = '', ...varargs) {
             const code = doc.createElement('code');
             const styles = [
                 'background-color: #ddc',
+                'color: inherit',
                 'display: inline-block',
                 'font-family: monospace',
                 'font-size: 100%',
