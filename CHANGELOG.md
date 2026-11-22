@@ -1,8 +1,16 @@
-- [[regression] Fix broken DOM inspector](https://github.com/gorhill/uBlock/commit/3028a92bdb)
-- [Use `structuredClone(...)` instead of `JSON.parse(JSON.stringify(...))`](https://github.com/gorhill/uBlock/commit/2e7c2d4e52)
-- [[shim] Add `optimizely.js` redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
+- [Remove per-tab network request journaling](https://github.com/gorhill/uBlock/commit/080ecbd3d6)
 - [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
 - [[picker] Improve reliability of element picker launch](https://github.com/gorhill/uBlock/commit/73b2bb6e29)
+
+----------
+
+# 1.77.0
+
+- [[security] Disallow non-HTTP URLs in click2load resource](https://github.com/gorhill/uBlock/commit/5934db2a04)
+- [Fix text color of code in `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/e1aa62030d)
+- [[regression] Fix broken DOM inspector](https://github.com/gorhill/uBlock/commit/3028a92bdb)
+- [Use `structuredClone(...)` instead of `JSON.parse(JSON.stringify(...))`](https://github.com/gorhill/uBlock/commit/2e7c2d4e52)
+- [[shim] Add optimizely.js redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
 
 ----------
 
