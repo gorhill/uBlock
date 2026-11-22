@@ -37,7 +37,7 @@ const relaxBlockingMode = (( ) => {
     return function(tab) {
         if ( tab instanceof Object === false || tab.id <= 0 ) { return; }
 
-        const normalURL = µb.normalizeTabURL(tab.id, tab.url);
+        const normalURL = µb.normalizeTabURL(tab.url, tab.id);
 
         if ( µb.isTrustedSite(normalURL) ) { return; }
 
@@ -164,13 +164,13 @@ vAPI.commands.onCommand.addListener(async command => {
     case 'toggle-cosmetic-filtering':
         µb.toggleHostnameSwitch({
             name: 'no-cosmetic-filtering',
-            hostname: hostnameFromURI(µb.normalizeTabURL(tab.id, tab.url)),
+            hostname: hostnameFromURI(µb.normalizeTabURL(tab.url, tab.id)),
         });
         break;
     case 'toggle-javascript':
         µb.toggleHostnameSwitch({
             name: 'no-scripting',
-            hostname: hostnameFromURI(µb.normalizeTabURL(tab.id, tab.url)),
+            hostname: hostnameFromURI(µb.normalizeTabURL(tab.url, tab.id)),
         });
         vAPI.tabs.reload(tab.id);
         break;

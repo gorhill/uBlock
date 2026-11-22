@@ -52,34 +52,27 @@ import µb from './background.js';
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-µb.normalizeTabURL = (( ) => {
-    const tabURLNormalizer = new URL('about:blank');
+const tabURLNormalizer = new URL('about:blank');
 
-    return (tabId, tabURL) => {
-        if ( tabId < 0 ) {
-            return 'https://behind-the-scene/';
-        }
-        try {
-            tabURLNormalizer.href = tabURL;
-        } catch {
-            return tabURL;
-        }
-        const protocol = tabURLNormalizer.protocol.slice(0, -1);
-        if ( protocol === 'https' || protocol === 'http' ) {
-            return tabURLNormalizer.href;
-        }
-
-        let fakeHostname = protocol + '-scheme';
-
-        if ( tabURLNormalizer.hostname !== '' ) {
-            fakeHostname = tabURLNormalizer.hostname + '.' + fakeHostname;
-        } else if ( protocol === 'about' && protocol.pathname !== '' ) {
-            fakeHostname = tabURLNormalizer.pathname + '.' + fakeHostname;
-        }
-
-        return `http://${fakeHostname}/`;
-    };
-})();
+µb.normalizeTabURL = (tabURL, tabId = 0) => {
+    if ( tabId < 0 ) {
+        return 'https://behind-the-scene/';
+    }
+    if ( frameManager.isHTTP(tabURL) ) { return tabURL; }
+    try {
+        tabURLNormalizer.href = tabURL;
+    } catch {
+        return tabURL;
+    }
+    const protocol = tabURLNormalizer.protocol.slice(0, -1);
+    if ( tabURLNormalizer.hostname !== '' ) {
+        return `https://${tabURLNormalizer.hostname}.${protocol}-scheme`;
+    }
+    if ( protocol === 'about' && tabURLNormalizer.pathname !== '' ) {
+        return `https://${tabURLNormalizer.pathname}.${protocol}-scheme`;
+    }
+    return `https://${protocol}-scheme/`;
+};
 
 /******************************************************************************/
 
@@ -167,9 +160,9 @@ import µb from './background.js';
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1616
         //   Don't block if uBO is turned off in popup's context
         if ( µb.isTrustedSite(targetURL) ) { return 0; }
-        if ( µb.isTrustedSite(µb.normalizeTabURL(0, targetURL)) ) { return 0; }
+        if ( µb.isTrustedSite(µb.normalizeTabURL(targetURL)) ) { return 0; }
 
-        fctxt.setTabOriginFromURL(rootOpenerURL)
+        fctxt.setTabURL(rootOpenerURL)
              .setDocOriginFromURL(localOpenerURL || rootOpenerURL)
              .setURL(targetURL)
              .setType('popup');
@@ -387,7 +380,7 @@ import µb from './background.js';
         if ( µb.isTrustedSite(rootOpenerURL) ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/1538
-        if ( µb.isTrustedSite(µb.normalizeTabURL(openerTabId, rootOpenerURL)) ) { return; }
+        if ( µb.isTrustedSite(µb.normalizeTabURL(rootOpenerURL, openerTabId)) ) { return; }
 
         // If the page URL is that of our document-blocked URL, extract the URL
         // of the page which was blocked.
@@ -426,12 +419,12 @@ import µb from './background.js';
             if ( popupType === 'popup' ) {
                 fctxt.setURL(targetURL)
                      .setTabId(openerTabId)
-                     .setTabOriginFromURL(rootOpenerURL)
+                     .setTabURL(rootOpenerURL)
                      .setDocOriginFromURL(localOpenerURL || rootOpenerURL);
             } else {
                 fctxt.setURL(rootOpenerURL)
                      .setTabId(targetTabId)
-                     .setTabOriginFromURL(targetURL)
+                     .setTabURL(targetURL)
                      .setDocOriginFromURL(targetURL);
             }
             fctxt.toLogger();
@@ -519,9 +512,7 @@ frameManager.addListener((type, details) => {
     switch ( type ) {
     case 'frame-committed': {
         if ( details.frameId !== 0 ) { break; }
-        const pageStore = µb.bindTabToPageStore(tabId, 'tabCommitted', details);
-        if ( pageStore === null ) { break; }
-        pageStore.journalAddRootFrame('committed', details.url);
+        µb.bindTabToPageStore(tabId, 'tabCommitted', details);
         break;
     }
     case 'tab-removed':
@@ -644,8 +635,9 @@ frameManager.addListener((type, details) => {
 
 {
     const tabIdToDetails = new Map();
+    let timer;
 
-    const computeBadgeColor = (bits) => {
+    const computeBadgeColor = bits => {
         let color = µb.blockingProfileColorCache.get(bits);
         if ( color !== undefined ) { return color; }
         let max = 0;
@@ -662,60 +654,51 @@ frameManager.addListener((type, details) => {
         return color;
     };
 
-    const updateBadge = (tabId) => {
-        let parts = tabIdToDetails.get(tabId);
-        tabIdToDetails.delete(tabId);
-
-        let state = 0;
-        let badge = '';
-        let color = '#666';
-
-        const pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore !== null ) {
-            state = pageStore.isNotTrusted() ? 1 : 0;
-            if ( state === 1 ) {
-                if ( (parts & 0b0010) !== 0 ) {
-                    const blockCount = pageStore.counts.blocked.any;
-                    if ( blockCount !== 0 ) {
-                        badge = µb.formatCount(blockCount);
+    const updateBadges = ( ) => {
+        const { showBadge } = µb.userSettings;
+        for ( let [ tabId, parts ] of tabIdToDetails ) {
+            let state = 0;
+            let badge = '';
+            let color = '#666';
+            const pageStore = µb.pageStoreFromTabId(tabId);
+            if ( pageStore !== null ) {
+                state = pageStore.isNotTrusted() ? 1 : 0;
+                if ( state === 1 ) {
+                    if ( (parts & 0b0010) !== 0 ) {
+                        const blockCount = pageStore.counts.blocked.any;
+                        if ( blockCount !== 0 ) {
+                            badge = µb.formatCount(blockCount);
+                        }
+                    }
+                    if ( (parts & 0b0100) !== 0 ) {
+                        color = computeBadgeColor(
+                            µb.blockingModeFromHostname(pageStore.tabHostname)
+                        );
                     }
                 }
-                if ( (parts & 0b0100) !== 0 ) {
-                    color = computeBadgeColor(
-                        µb.blockingModeFromHostname(pageStore.tabHostname)
-                    );
-                }
             }
+            // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
+            if ( showBadge === false ) {
+                parts |= 0b1000;
+            }
+            vAPI.setIcon(tabId, { parts, state, badge, color });
         }
-
-        // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
-        if ( µb.userSettings.showIconBadge === false ) {
-            parts |= 0b1000;
-        }
-
-        vAPI.setIcon(tabId, { parts, state, badge, color });
+        tabIdToDetails.clear();
+        timer = undefined;
     };
 
-    // parts: bit 0 = icon
-    //        bit 1 = badge text
-    //        bit 2 = badge color
-    //        bit 3 = hide badge
+    // parts:
+    // bit 3         bit 2         bit 1         bit 0
+    // |             |             |             |
+    // +-hide badge  +-badge color +-badge text  +-icon
 
     µb.updateToolbarIcon = function(tabId, newParts = 0b0111) {
         if ( this.readyToFilter === false ) { return; }
         if ( typeof tabId !== 'number' ) { return; }
         if ( tabId === frameManager.TAB_ID_NONE ) { return; }
-        const currentParts = tabIdToDetails.get(tabId);
-        if ( currentParts === newParts ) { return; }
-        if ( currentParts === undefined ) {
-            self.requestIdleCallback(
-                ( ) => updateBadge(tabId),
-                { timeout: 701 }
-            );
-        } else {
-            newParts |= currentParts;
-        }
-        tabIdToDetails.set(tabId, newParts);
+        tabIdToDetails.set(tabId, newParts | (tabIdToDetails.get(tabId) ?? 0));
+        if ( timer ) { return; }
+        timer = self.requestIdleCallback(updateBadges, { timeout: 701 });
     };
 }
 

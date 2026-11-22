@@ -346,7 +346,8 @@ const getFirewallRules = function(src, out) {
 
 const popupDataFromTabId = function(tabId, tabTitle) {
     const topURL = frameManager.getTopURL(tabId) ?? 'https://behind-the-scene/';
-    const rootHostname = hostnameFromURI(topURL);
+    const normalizedURL = µb.normalizeTabURL(topURL, tabId);
+    const rootHostname = hostnameFromURI(normalizedURL);
     const µbus = µb.userSettings;
     const µbhs = µb.hiddenSettings;
     const r = {
@@ -363,7 +364,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         isTrustedSite: true,
         userFiltersAreEnabled: µb.userFiltersAreEnabled(),
         rawURL: topURL,
-        pageURL: µb.normalizeTabURL(tabId, topURL),
+        pageURL: normalizedURL,
         pageHostname: rootHostname,
         pageDomain: domainFromHostname(rootHostname),
         popupBlockedCount: 0,

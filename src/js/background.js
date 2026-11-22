@@ -84,7 +84,6 @@ const hiddenSettingsDefault = {
     popupPanelHeightMode: 0,
     popupPanelLockedSections: 0,
     popupPanelOrientation: 'unset',
-    requestJournalProcessPeriod: 1000,
     requestStatsDisabled: false,
     selfieDelayInSeconds: 53,
     strictBlockingBypassDuration: 120,
@@ -278,14 +277,14 @@ const µBlock = {  // jshint ignore:line
     fromTabId(tabId, tabUrl) {
         this.tabId = tabId;
         const url = tabUrl ?? frameManager.getTopURL(tabId) ?? 'https://behind-the-scene/';
-        this.setTabOriginFromURL(µBlock.normalizeTabURL(0, url));
+        this.setTabURL(url);
         return this;
     }
 
     maybeFromDocumentURL(documentUrl) {
         if ( documentUrl === undefined ) { return; }
         if ( documentUrl.startsWith(this.getTabOrigin()) ) { return; }
-        this.tabOrigin = originFromURI(µBlock.normalizeTabURL(0, documentUrl));
+        this.setTabURL(documentUrl);
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/459
@@ -324,27 +323,19 @@ const µBlock = {  // jshint ignore:line
             if ( url ) {
                 this.setDocOriginFromURL(url);
             } else {
-                this.setDocOrigin(this.tabOrigin);
+                this.setDocOrigin(this.getTabOrigin());
             }
             return this;
         }
-        if ( details.documentUrl !== undefined ) {
-            const origin = originFromURI(
-                µBlock.normalizeTabURL(0, details.documentUrl)
-            );
-            this.setDocOrigin(origin).setTabOrigin(origin);
-            return this;
-        }
-        const origin = this.isDocument()
-            ? originFromURI(this.url)
-            : this.tabOrigin;
-        this.setDocOrigin(origin).setTabOrigin(origin);
+        // tabless request
+        const url = µBlock.normalizeTabURL(details.documentUrl ?? this.url);
+        this.setTabURL(url).setDocOrigin(originFromURI(url));
         return this;
     }
 
     getTabOrigin() {
         if ( this.tabOrigin === undefined ) {
-            this.setTabOriginFromURL(
+            this.setTabURL(
                 frameManager.getTopURL(this.tabId) ?? 'https://behind-the-scene/'
             );
         }

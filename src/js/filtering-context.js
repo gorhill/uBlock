@@ -147,6 +147,7 @@ export const FilteringContext = class {
         this.docHostname = undefined;
         this.docDomain = undefined;
         this.tabId = undefined;
+        this.tabURL = undefined;
         this.tabOrigin = undefined;
         this.tabHostname = undefined;
         this.tabDomain = undefined;
@@ -188,6 +189,7 @@ export const FilteringContext = class {
         this.docHostname = other.docHostname;
         this.docDomain = other.docDomain;
         this.tabId = other.tabId;
+        this.tabURL = other.tabURL;
         this.tabOrigin = other.tabOrigin;
         this.tabHostname = other.tabHostname;
         this.tabDomain = other.tabDomain;
@@ -340,7 +342,18 @@ export const FilteringContext = class {
         return this;
     }
 
+    setTabURL(a) {
+        if ( a !== this.tabURL ) {
+            this.tabURL = a;
+            this.setTabOriginFromURL(a);
+        }
+        return this;
+    }
+
     getTabOrigin() {
+        if ( this.tabOrigin === undefined ) {
+            this.tabOrigin = originFromURI(this.tabURL);
+        }
         return this.tabOrigin;
     }
 

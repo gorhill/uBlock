@@ -21,6 +21,7 @@
 
 /******************************************************************************/
 
+import * as fc from './filtering-context.js';
 import * as frameManager from './vapi-contexts.js';
 
 import {
@@ -200,6 +201,7 @@ const HostnameDetails = class {
         this.init(hostname);
     }
     init(hostname) {
+        this.pristine = true;
         this.hostname = hostname;
         this.cname = vAPI.net.canonicalNameFromHostname(hostname);
         this.counts.reset();
@@ -238,15 +240,9 @@ const HostnameDetailsMap = class extends Map {
 const PageStore = class {
     constructor(tabId, details) {
         this.extraData = new Map();
-        this.journal = [];
-        this.journalLastCommitted = this.journalLastUncommitted = -1;
-        this.journalLastUncommittedOrigin = undefined;
         this.netFilteringCache = NetFilteringResultCache.factory();
         this.hostnameDetailsMap = new HostnameDetailsMap();
         this.counts = new CountDetails();
-        this.journalTimer = vAPI.defer.create(( ) => {
-            this.journalProcess();
-        });
         this.largeMediaTimer = vAPI.defer.create(( ) => {
             this.injectLargeMediaElementScriptlet();
         });
@@ -454,91 +450,35 @@ const PageStore = class {
     journalAddRequest(fctxt, result) {
         const hostname = fctxt.getHostname();
         if ( hostname === '' ) { return; }
-        this.journal.push(hostname, result, fctxt.itype);
-        this.journalTimer.on(µb.hiddenSettings.requestJournalProcessPeriod);
-    }
-
-    journalAddRootFrame(type, url) {
-        if ( type === 'committed' ) {
-            this.journalLastCommitted = this.journal.length;
-            if (
-                this.journalLastUncommitted !== -1 &&
-                this.journalLastUncommitted < this.journalLastCommitted &&
-                this.journalLastUncommittedOrigin === hostnameFromURI(url)
-            ) {
-                this.journalLastCommitted = this.journalLastUncommitted;
-            }
-        } else if ( type === 'uncommitted' ) {
-            const newOrigin = hostnameFromURI(url);
-            if (
-                this.journalLastUncommitted === -1 ||
-                this.journalLastUncommittedOrigin !== newOrigin
-            ) {
-                this.journalLastUncommitted = this.journal.length;
-                this.journalLastUncommittedOrigin = newOrigin;
-            }
+        const hnDetails = this.hostnameDetailsMap.get(hostname) ??
+            HostnameDetails.factory(hostname);
+        if ( hnDetails.pristine ) {
+            this.hostnameDetailsMap.set(hostname, hnDetails);
+            hnDetails.pristine = false;
         }
-        this.journalTimer.offon(µb.hiddenSettings.requestJournalProcessPeriod);
-    }
-
-    journalProcess() {
-        this.journalTimer.off();
-
-        const journal = this.journal;
-        const pivot = Math.max(0, this.journalLastCommitted);
-        const now = Date.now();
-        const { SCRIPT, SUB_FRAME, OBJECT } = µb.FilteringContext;
-        let aggregateAllowed = 0;
-        let aggregateBlocked = 0;
-
-        // Everything after pivot originates from current page.
-        for ( let i = pivot; i < journal.length; i += 3 ) {
-            const hostname = journal[i+0];
-            let hnDetails = this.hostnameDetailsMap.get(hostname);
-            if ( hnDetails === undefined ) {
-                hnDetails = HostnameDetails.factory(hostname);
-                this.hostnameDetailsMap.set(hostname, hnDetails);
-                this.contentLastModified = now;
-            }
-            const blocked = journal[i+1] === 1;
-            const itype = journal[i+2];
-            if ( itype === SCRIPT ) {
-                hnDetails.counts.inc(blocked, 'script');
-                this.counts.inc(blocked, 'script');
-            } else if ( itype === SUB_FRAME || itype === OBJECT ) {
-                hnDetails.counts.inc(blocked, 'frame');
-                this.counts.inc(blocked, 'frame');
-            } else {
-                hnDetails.counts.inc(blocked);
-                this.counts.inc(blocked);
-            }
-            if ( blocked ) {
-                aggregateBlocked += 1;
-            } else {
-                aggregateAllowed += 1;
-            }
+        const blocked = result === 1;
+        const { itype } = fctxt;
+        if ( itype === fc.SCRIPT ) {
+            hnDetails.counts.inc(blocked, 'script');
+            this.counts.inc(blocked, 'script');
+        } else if ( itype === fc.SUB_FRAME || itype === fc.OBJECT ) {
+            hnDetails.counts.inc(blocked, 'frame');
+            this.counts.inc(blocked, 'frame');
+        } else {
+            hnDetails.counts.inc(blocked);
+            this.counts.inc(blocked);
         }
-        this.journalLastUncommitted = this.journalLastCommitted = -1;
-
-        // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
-        //   No point updating the badge if it's not being displayed.
-        if ( aggregateBlocked !== 0 && µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(this.tabId, 0x02);
+        this.contentLastModified = Date.now();
+        if ( blocked === false ) {
+            return µb.incrementRequestStats(0, 1);
         }
-
-        // Everything before pivot does not originate from current page -- we
-        // still need to bump global blocked/allowed counts.
-        for ( let i = 0; i < pivot; i += 3 ) {
-            if ( journal[i+1] === 1 ) {
-                aggregateBlocked += 1;
-            } else {
-                aggregateAllowed += 1;
-            }
-        }
-        if ( aggregateAllowed || aggregateBlocked ) {
-            µb.incrementRequestStats(aggregateBlocked, aggregateAllowed);
-        }
-        journal.length = 0;
+        µb.incrementRequestStats(1, 0);
+        if ( µb.userSettings.showIconBadge !== true ) { return; }
+        if ( this.badgeTimer ) { return; }
+        this.badgeTimer = self.requestAnimationFrame(( ) => {
+            this.badgeTimer = undefined;
+            µb.updateToolbarIcon(fctxt.tabId, 0b0010);
+        });
     }
 
     filterRequest(fctxt) {
@@ -548,21 +488,21 @@ const PageStore = class {
         if ( this.isTrusted(fctxt) ) { return 0; }
 
         if (
-            fctxt.itype === fctxt.CSP_REPORT &&
+            fctxt.itype === fc.CSP_REPORT &&
             this.filterCSPReport(fctxt) === 1
         ) {
             return 1;
         }
 
         if (
-            (fctxt.itype & fctxt.FONT_ANY) !== 0 &&
+            (fctxt.itype & fc.FONT_ANY) !== 0 &&
             this.filterFont(fctxt) === 1 )
         {
             return 1;
         }
 
         if (
-            fctxt.itype === fctxt.SCRIPT &&
+            fctxt.itype === fc.SCRIPT &&
             this.filterScripting(fctxt, false) === 1
         ) {
             return 1;
@@ -648,7 +588,7 @@ const PageStore = class {
         //   Redirect blocked request?
         // https://github.com/uBlockOrigin/uBlock-issues/issues/760
         //   Redirect non-blocked request?
-        if ( (fctxt.itype & fctxt.INLINE_ANY) === 0 ) {
+        if ( (fctxt.itype & fc.INLINE_ANY) === 0 ) {
             if ( result === 1 ) {
                 this.redirectBlockedRequest(fctxt);
             } else {
@@ -773,7 +713,7 @@ const PageStore = class {
     }
 
     filterFont(fctxt) {
-        if ( fctxt.itype === fctxt.FONT ) {
+        if ( fctxt.itype === fc.FONT ) {
             this.remoteFontCount += 1;
         }
         if (
@@ -810,7 +750,7 @@ const PageStore = class {
             return 0;
         }
         // XHR-based streaming is never blocked but we want to prevent autoplay
-        if ( fctxt.itype === fctxt.XMLHTTPREQUEST ) {
+        if ( fctxt.itype === fc.XMLHTTPREQUEST ) {
             const ctype = headers.contentType;
             if ( ctype.startsWith('audio/') || ctype.startsWith('video/') ) {
                 this.largeMediaTimer.on(500);
@@ -818,7 +758,7 @@ const PageStore = class {
             return 0;
         }
         if ( Date.now() < this.allowLargeMediaElementsUntil ) {
-            if ( fctxt.itype === fctxt.MEDIA ) {
+            if ( fctxt.itype === fc.MEDIA ) {
                 const sources = this.allowLargeMediaElementsRegex instanceof RegExp
                     ? [ this.allowLargeMediaElementsRegex.source ]
                     : [];
@@ -836,7 +776,7 @@ const PageStore = class {
             return 0;
         }
         // Regardless of whether a media is blocked, we want to prevent autoplay
-        if ( fctxt.itype === fctxt.MEDIA ) {
+        if ( fctxt.itype === fc.MEDIA ) {
             this.largeMediaTimer.on(500);
         }
         const size = headers.contentLength;
@@ -872,7 +812,7 @@ const PageStore = class {
     }
 
     getBlockedResources(request, response) {
-        const normalURL = µb.normalizeTabURL(this.tabId, request.frameURL);
+        const normalURL = µb.normalizeTabURL(request.frameURL, this.tabId);
         const resources = request.resources;
         const fctxt = µb.filteringContext;
         fctxt.fromTabId(this.tabId)
@@ -895,23 +835,23 @@ const PageStore = class {
     }
 
     cacheableResults = new Set([
-        µb.FilteringContext.SUB_FRAME
+        fc.SUB_FRAME
     ]);
 
     collapsibleResources = new Set([
-        µb.FilteringContext.IMAGE,
-        µb.FilteringContext.MEDIA,
-        µb.FilteringContext.OBJECT,
-        µb.FilteringContext.SUB_FRAME,
+        fc.IMAGE,
+        fc.MEDIA,
+        fc.OBJECT,
+        fc.SUB_FRAME,
     ]);
 
     urlSkippableResources = new Set([
-        µb.FilteringContext.IMAGE,
-        µb.FilteringContext.MAIN_FRAME,
-        µb.FilteringContext.MEDIA,
-        µb.FilteringContext.OBJECT,
-        µb.FilteringContext.OTHER,
-        µb.FilteringContext.SUB_FRAME,
+        fc.IMAGE,
+        fc.MAIN_FRAME,
+        fc.MEDIA,
+        fc.OBJECT,
+        fc.OTHER,
+        fc.SUB_FRAME,
     ]);
 };
 

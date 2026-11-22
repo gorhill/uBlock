@@ -29,7 +29,6 @@ export const tabDict = new Map();
 export const TAB_ID_NONE = browser.tabs.TAB_ID_NONE
 
 const listeners = new Set();
-const uboOrigin = vAPI.getURL('').replace(/\/$/, '');
 const reIsHTTP = /^https?:\/\//;
 
 /******************************************************************************/
@@ -81,8 +80,12 @@ function onTabCreated(tab) {
     return tabDict.get(tab.id);
 }
 
-function onTabActivated(details) {
-    if ( tabDict.has(details.tabId) === false ) { return; }
+async function onTabActivated(details) {
+    const { tabId } = details;
+    if ( tabDict.has(tabId) === false ) {
+        const tab = await browser.tabs.get(tabId);
+        onTabCreated(tab);
+    }
     for ( const listener of listeners ) {
         listener('tab-activated', details);
     }
@@ -100,9 +103,6 @@ function onWindowFocused(windowId) {
 }
 
 function onTabUpdated(tabId, changeInfo, tab) {
-    if ( isHTTP(tab.url) === false ) {
-        if ( tab.url.startsWith(uboOrigin) === false ) { return; }
-    }
     const changedProps = Object.keys(changeInfo).filter(a =>
         onTabUpdated.filters.includes(a)
     );
@@ -234,9 +234,8 @@ export function getTopOrigin(tabId) {
 /******************************************************************************/
 
 export async function start() {
-    const tabs = await webext.tabs.query({ url: [ 'http://*/*', 'https://*/*', `${uboOrigin}/*` ] });
+    const tabs = await webext.tabs.query({ discarded: false });
     for ( const tab of tabs ) {
-        if ( tab.discarded ) { continue; }
         if ( tab.status === 'unloaded' ) { continue; }
         onTabCreated(tab);
     }
@@ -247,6 +246,7 @@ export async function start() {
     if ( browser?.windows?.onFocusChanged ) {
         browser.windows.onFocusChanged.addListener(onWindowFocused);
     }
+    browser.tabs.onCreated.addListener(onTabCreated);
     browser.tabs.onUpdated.addListener(onTabUpdated);
     browser.tabs.onRemoved.addListener(onTabRemoved);
 }

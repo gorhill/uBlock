@@ -175,7 +175,6 @@ function onBeforeRootFrameRequest(fctxt) {
 
     const pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     if ( pageStore !== null ) {
-        pageStore.journalAddRootFrame('uncommitted', requestURL);
         pageStore.journalAddRequest(fctxt, result);
     }
 
@@ -383,10 +382,10 @@ function onBeforeBehindTheSceneRequest(fctxt) {
     //   Not especially elegant but for now this accomplishes the purpose of
     //   not dealing with network requests fired from a synthetic scope,
     //   that is unless advanced user mode is enabled.
-
+    const tabOrigin = fctxt.getTabOrigin();
     if (
-        fctxt.tabOrigin.endsWith('-scheme') === false &&
-        isNetworkURI(fctxt.tabOrigin) ||
+        tabOrigin.endsWith('-scheme') === false &&
+        isNetworkURI(tabOrigin) ||
         µb.userSettings.advancedUserEnabled ||
         fctxt.itype === fctxt.CSP_REPORT
     ) {
@@ -1158,7 +1157,7 @@ function injectPP(fctxt, pageStore, responseHeaders) {
 
     if ( permissions.length === 0 ) { return; }
 
-    µb.updateToolbarIcon(fctxt.tabId, 0x02);
+    µb.updateToolbarIcon(fctxt.tabId, 0b0010);
 
     responseHeaders.push({
         name: 'permissions-policy',

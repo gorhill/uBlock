@@ -291,7 +291,7 @@ export async function benchmarkDynamicNetFiltering() {
     const t0 = performance.now();
     for ( const request of requests ) {
         fctxt.setURL(request.url);
-        fctxt.setTabOriginFromURL(request.frameUrl);
+        fctxt.setTabURL(request.frameUrl);
         fctxt.setType(request.cpt);
         sessionFirewall.evaluateCellZY(
             fctxt.getTabHostname(),
