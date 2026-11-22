@@ -1,3 +1,13 @@
+- [[security] Disallow non-HTTP URLs in click2load resource](https://github.com/gorhill/uBlock/commit/5934db2a04)
+- [Fix text color of code in `prevent-clipboard-write` scriptlet](https://github.com/gorhill/uBlock/commit/e1aa62030d)
+- [[regression] Fix broken DOM inspector](https://github.com/gorhill/uBlock/commit/3028a92bdb)
+- [Use `structuredClone(...)` instead of `JSON.parse(JSON.stringify(...))`](https://github.com/gorhill/uBlock/commit/2e7c2d4e52)
+- [[shim] Add optimizely.js redirect resource](https://github.com/gorhill/uBlock/commit/e68e05cde0) by @ryanbr
+
+----------
+
+# 1.76.6
+
 - [[picker] Fix unpleasant flickering of mouse cursor in picking mode](https://github.com/gorhill/uBlock/commit/765c51daa1)
 - [[scriptlets] Add (back) support for path-based targets](https://github.com/gorhill/uBlock/commit/a23b117141)
 - [[security] Use shadow DOM when programmatically injecting scriptlets](https://github.com/gorhill/uBlock/commit/e743ee760f)
