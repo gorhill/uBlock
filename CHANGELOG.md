@@ -1,3 +1,4 @@
+- [[regression] Use JSON.stringify() to eliminate undefined values](https://github.com/gorhill/uBlock/commit/b51ee2a989)
 - [Remove per-tab network request journaling](https://github.com/gorhill/uBlock/commit/080ecbd3d6)
 - [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
 - [[picker] Improve reliability of element picker launch](https://github.com/gorhill/uBlock/commit/73b2bb6e29)
