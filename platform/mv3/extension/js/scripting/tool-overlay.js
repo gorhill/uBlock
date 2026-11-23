@@ -45,6 +45,7 @@ self.ubolOverlay = {
             'border-radius: 0',
             'box-shadow: none',
             'color-scheme: light dark',
+            'cursor: crosshair',
             'display: block',
             'filter: none',
             'height: 100vh',
@@ -319,12 +320,6 @@ self.ubolOverlay = {
         const secretAttr = this.secretAttr;
         frame.setAttribute(secretAttr, '');
         frame.style.visibility = 'hidden';
-        this.frameContainer = document.createElement('div');
-        document.documentElement.append(this.frameContainer);
-        const shadowRoot = this.frameContainer.attachShadow({
-            mode: 'closed',
-            delegatesFocus: true,
-        });
         const onMessage = msg => {
             this.webext.runtime.onMessage.removeListener(onMessage);
             if ( msg?.what !== 'toolOverlayPairing' || msg?.succeed !== true ) {
@@ -362,7 +357,17 @@ self.ubolOverlay = {
             resolve(true);
         };
         this.webext.runtime.onMessage.addListener(onMessage);
-        shadowRoot.append(frame);
+        if ( dynamicURL.href.startsWith('safari-web-extension:') ) {
+            document.documentElement.append(frame);
+        } else {
+            this.frameContainer = document.createElement('div');
+            document.documentElement.append(this.frameContainer);
+            const shadowRoot = this.frameContainer.attachShadow({
+                mode: 'closed',
+                delegatesFocus: true,
+            });
+            shadowRoot.append(frame);
+        }
         frame.contentWindow.location = dynamicURL.href;
         return promise;
     },
