@@ -28,6 +28,10 @@ import { faIconsInit } from './fa-icons.js';
 const messaging = vAPI.messaging;
 const details = {};
 
+if ( self !== self.top ) {
+    throw new URIError('Not allowed');
+}
+
 {
     const matches = /details=([^&]+)/.exec(window.location.search);
     if ( matches !== null ) {
