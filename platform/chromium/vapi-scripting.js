@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global browser */
-
 import * as frameManager from './vapi-contexts.js';
 import { hostnameFromURI } from './uri-utils.js';
 import webext from './webext.js';
@@ -130,41 +128,6 @@ export async function start(fn) {
     const initialized = Boolean(getContentScripts);
     getContentScripts = fn;
     if ( initialized ) { return; }
-
-    // https://github.com/chrisaljoudi/uBlock/issues/129
-    //  Find out whether content scripts need to be injected
-    //  programmatically. This may be necessary for web pages which
-    //  were loaded before uBO launched.
-    const manifest = browser.runtime.getManifest();
-    const injectDeclarativeContentScripts = tabId => {
-        webext.tabs.executeScript(tabId, {
-            file: 'js/scriptlets/should-inject-contentscript.js'
-        }).then(result => {
-            if ( result !== true ) { return; }
-            for ( const contentScript of manifest.content_scripts ) {
-                for ( const file of contentScript.js ) {
-                    webext.tabs.executeScript(tabId, {
-                        file,
-                        allFrames: contentScript.all_frames,
-                        runAt: contentScript.run_at,
-                    });
-                }
-            }
-        });
-    };
-
-    for ( const [ tabId, tab ] of frameManager.tabDict ) {
-        const code = registerContentScript(tab.url);
-        if ( code ) {
-            webext.tabs.executeScript(tabId, {
-                allFrames: true,
-                matchAboutBlank: true,
-                runAt: 'document_start',
-                code,
-            });
-        }
-        injectDeclarativeContentScripts(tabId);
-    }
     frameManager.addListener((type, details) => {
         if ( type !== 'frame-committed' ) { return; }
         onCommitted(details);

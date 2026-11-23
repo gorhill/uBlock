@@ -234,11 +234,30 @@ export function getTopOrigin(tabId) {
 /******************************************************************************/
 
 export async function start() {
+    // https://github.com/chrisaljoudi/uBlock/issues/129
+    //  Inject content scripts programmatically. This may be necessary for web
+    // pages which were loaded before uBO launched.
+    const manifest = browser.runtime.getManifest();
+    const injectDeclarativeContentScripts = tabId => {
+        for ( const contentScript of manifest.content_scripts ) {
+            for ( const file of contentScript.js ) {
+                browser.tabs.executeScript(tabId, {
+                    file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at,
+                });
+            }
+        }
+    };
+
     const tabs = await webext.tabs.query({ discarded: false });
     for ( const tab of tabs ) {
         if ( tab.status === 'unloaded' ) { continue; }
         onTabCreated(tab);
+        if ( isHTTP(tab.url) === false ) { continue; }
+        injectDeclarativeContentScripts(tab.id);
     }
+
     browser.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     browser.webNavigation.onCommitted.addListener(onCommitted);

@@ -386,13 +386,13 @@ const createDefaultProps = ( ) => {
         }
     }
 
-    // Final initialization steps after all needed assets are in memory.
     await scriptletFilteringEngine.start();
-    await frameManager.start();
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/974
     //   This can be used to defer filtering decision-making.
     µb.readyToFilter = true;
+
+    await frameManager.start();
 
     // Start network observers.
     webRequest.start();
