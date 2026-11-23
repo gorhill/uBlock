@@ -655,7 +655,7 @@ frameManager.addListener((type, details) => {
     };
 
     const updateBadges = ( ) => {
-        const { showBadge } = µb.userSettings;
+        const { showIconBadge } = µb.userSettings;
         for ( let [ tabId, parts ] of tabIdToDetails ) {
             let state = 0;
             let badge = '';
@@ -678,7 +678,7 @@ frameManager.addListener((type, details) => {
                 }
             }
             // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
-            if ( showBadge === false ) {
+            if ( showIconBadge === false ) {
                 parts |= 0b1000;
             }
             vAPI.setIcon(tabId, { parts, state, badge, color });
