@@ -1,3 +1,4 @@
+- [[regression] Restore behavior of injecting content scripts at launch](https://github.com/gorhill/uBlock/commit/75acc73223)
 - [[picker] Improve pairing logic and ensure dependencies are present](https://github.com/gorhill/uBlock/commit/1d70d4a1c6)
 - [[regression] Use JSON.stringify() to eliminate undefined values](https://github.com/gorhill/uBlock/commit/b51ee2a989)
 - [Remove per-tab network request journaling](https://github.com/gorhill/uBlock/commit/080ecbd3d6)
