@@ -192,28 +192,6 @@ export async function start(fn) {
     getContentScripts = fn;
     if ( initialized ) { return; }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/129
-    //  Find out whether content scripts need to be injected
-    //  programmatically. This may be necessary for web pages which
-    //  were loaded before uBO launched.
-    const manifest = browser.runtime.getManifest();
-    const injectDeclarativeContentScripts = tabId => {
-        webext.tabs.executeScript(tabId, {
-            file: 'js/scriptlets/should-inject-contentscript.js'
-        }).then(result => {
-            if ( result !== true ) { return; }
-            for ( const contentScript of manifest.content_scripts ) {
-                for ( const file of contentScript.js ) {
-                    webext.tabs.executeScript(tabId, {
-                        file,
-                        allFrames: contentScript.all_frames,
-                        runAt: contentScript.run_at,
-                    });
-                }
-            }
-        });
-    };
-
     const tabs = await webext.tabs.query({ url: [ 'http://*/*', 'https://*/*' ] });
     for ( const tab of tabs ) {
         if ( tab.discarded ) { continue; }
@@ -229,7 +207,6 @@ export async function start(fn) {
                 code,
             });
         }
-        injectDeclarativeContentScripts(id);
     }
 
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);

@@ -91,6 +91,22 @@ vAPI.alarms.onAlarm.addListener(alarm => {
 //   Mind discarded tabs.
 
 const initializeTabs = async ( ) => {
+    // https://github.com/chrisaljoudi/uBlock/issues/129
+    //  Inject content scripts programmatically. This may be necessary for web
+    //  pages which were loaded before uBO launched.
+    const manifest = browser.runtime.getManifest();
+    const injectDeclarativeContentScripts = tabId => {
+        for ( const contentScript of manifest.content_scripts ) {
+            for ( const file of contentScript.js ) {
+                browser.tabs.executeScript(tabId, {
+                    file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at,
+                });
+            }
+        }
+    };
+    await scriptletFilteringEngine.start();
     const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
     for ( const tab of tabs  ) {
         if ( tab.discarded === true ) { continue; }
@@ -98,8 +114,9 @@ const initializeTabs = async ( ) => {
         const { id, url } = tab;
         µb.tabContextManager.commit(id, url);
         µb.bindTabToPageStore(id, 'tabCommitted', tab);
+        if ( /^https?:\/\//.test(url) === false ) { continue; }
+        injectDeclarativeContentScripts(id);
     }
-    await scriptletFilteringEngine.start();
 };
 
 /******************************************************************************/
