@@ -1288,7 +1288,8 @@ let pickerFramePort = null;
 
 const bootstrap = async ( ) => {
     const pickerPairing = await vAPI.messaging.send('elementPicker', {
-        what: 'elementPickerPairing'
+        what: 'elementPickerPairing',
+        contentScript: true,
     });
     if ( Boolean(pickerPairing?.password) === false ) { return; }
     pickerBootArgs = await vAPI.messaging.send('elementPicker', {
@@ -1308,16 +1309,18 @@ const bootstrap = async ( ) => {
     }
     return new Promise(resolve => {
         pickerContainer = document.createElement('div');
+        document.documentElement.append(pickerContainer);
         const shadowRoot = pickerContainer.attachShadow({
             mode: 'closed',
             delegatesFocus: true,
         });
         const iframe = document.createElement('iframe');
         iframe.setAttribute(pickerUniqueId, '');
-        shadowRoot.append(iframe);
         const onMessage = msg => {
             browser.runtime.onMessage.removeListener(onMessage);
-            if ( msg.what !== 'elementPickerPairing' ) { return; }
+            if ( msg?.what !== 'elementPickerPairing' || msg?.succeed !== true ) {
+                return quitPicker();
+            }
             iframe.setAttribute('loaded', '');
             const channel = new MessageChannel();
             pickerFramePort = channel.port1;
@@ -1335,7 +1338,7 @@ const bootstrap = async ( ) => {
             resolve(iframe);
         };
         browser.runtime.onMessage.addListener(onMessage);
-        document.documentElement.append(pickerContainer);
+        shadowRoot.append(iframe);
         iframe.contentWindow.location = url.href;
     });
 };

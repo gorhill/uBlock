@@ -843,6 +843,7 @@ const contextPairing = {
     password: '',
     tabId: 0,
     frameId: 0,
+    time: 0
 };
 
 const onMessage = function(request, sender, callback) {
@@ -877,21 +878,26 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'elementPickerPairing':
-        if ( contextPairing.password === '' ) {
+    case 'elementPickerPairing': {
+        const now = Date.now();
+        if ( request.contentScript ) {
             contextPairing.password = self.crypto.randomUUID();
             contextPairing.tabId = sender.tabId;
             contextPairing.frameId = sender.frameId;
+            contextPairing.time = now;
             response = { password: contextPairing.password };
         } else {
-            response = { password: contextPairing.password };
-            contextPairing.password = '';
+            const succeed = (now - contextPairing.time) < 2000;
+            if ( succeed ) {
+                response = { password: contextPairing.password };
+            }
             browser.tabs.sendMessage(contextPairing.tabId,
-                { what: 'elementPickerPairing' },
+                { what: 'elementPickerPairing', succeed },
                 { frameId: contextPairing.frameId }
             );
-        };
+        }
         break;
+    }
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;

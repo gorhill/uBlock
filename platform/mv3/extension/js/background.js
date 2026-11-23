@@ -374,22 +374,19 @@ async function onMessage(request, sender) {
 
     case 'toolOverlayPairing': {
         if ( frameId === false ) { return; }
-        const pairing = onMessage.toolOverlayPairing ?? {
-            password: self.crypto.randomUUID(),
-            tabId,
-            frameId,
-        };
-        if ( pairing.started !== true ) {
-            pairing.started = true;
-            onMessage.toolOverlayPairing = pairing;
-            return { password: pairing.password };
+        const time = Date.now();
+        if ( request.contentScript ) {
+            const password = self.crypto.randomUUID();
+            onMessage.toolOverlayPairing = { password, tabId, frameId, time };
+            return { password };
         }
-        const response = { password: pairing.password };
+        const pairing = onMessage.toolOverlayPairing;
+        const succeed = (time - (pairing.time ?? 0)) < 2000;
+        const response = succeed ? { password: pairing.password } : undefined;
         browser.tabs.sendMessage(pairing.tabId,
-            { what: 'toolOverlayPairing' },
+            { what: 'toolOverlayPairing', succeed },
             { frameId: pairing.frameId }
         );
-        onMessage.toolOverlayPairing = undefined;
         return response;
     }
 

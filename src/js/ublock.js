@@ -203,13 +203,31 @@ import µb from './background.js';
 ) {
     if ( tabId === frameManager.TAB_ID_NONE ) { return; }
 
+    // Element picker's dependencies: may not be present when uBO is restarted
+    // outside of browser launch context.
+    await vAPI.tabs.executeScript(tabId, {
+        file: '/js/vapi.js',
+        frameId,
+        runAt: 'document_start'
+    }),
+    await vAPI.tabs.executeScript(tabId, {
+        file: '/js/vapi-client.js',
+        frameId,
+        runAt: 'document_start'
+    }),
+    await vAPI.tabs.executeScript(tabId, {
+        file: '/js/contentscript.js',
+        frameId,
+        runAt: 'document_start'
+    }),
+
     this.epickerArgs.target = targetElement || '';
     this.epickerArgs.zap = zap;
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/40
     //   The element picker needs this library
     if ( zap !== true ) {
-        vAPI.tabs.executeScript(tabId, {
+        await vAPI.tabs.executeScript(tabId, {
             file: '/lib/diff/swatinem_diff.js',
             runAt: 'document_end',
         });
