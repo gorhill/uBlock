@@ -236,7 +236,10 @@
         observeSelector(selector, resolve, { once: true });
     });
     const urlChangeHandlers = new Map();
-    let historyPatched = false;
+    // The wrappers installed for the current subscriptions; `active` is
+    // cleared on the last unsubscription, so a wrapper which stays wrapped
+    // by another script only calls the method and does not notify again.
+    let historyPatch = null;
     let nativePushState = null;
     let nativeReplaceState = null;
     let ourPushState = null;
@@ -257,20 +260,30 @@
         if ( first ) {
             w.addEventListener('popstate', notifyUrlChange);
             w.addEventListener('hashchange', notifyUrlChange);
-            if ( historyPatched === false ) {
-                nativePushState = w.history.pushState;
-                nativeReplaceState = w.history.replaceState;
+            if ( historyPatch === null ) {
+                const patch = { active: true };
+                // Captured for these wrappers only: the shared variables are
+                // set again by the next subscription, possibly to a wrapper of
+                // another script which calls these wrappers.
+                const pushState = w.history.pushState;
+                const replaceState = w.history.replaceState;
+                nativePushState = pushState;
+                nativeReplaceState = replaceState;
                 w.history.pushState = function() {
-                    nativePushState.apply(w.history, arguments);
-                    notifyUrlChange();
+                    pushState.apply(w.history, arguments);
+                    if ( patch.active ) {
+                        notifyUrlChange();
+                    }
                 };
                 w.history.replaceState = function() {
-                    nativeReplaceState.apply(w.history, arguments);
-                    notifyUrlChange();
+                    replaceState.apply(w.history, arguments);
+                    if ( patch.active ) {
+                        notifyUrlChange();
+                    }
                 };
                 ourPushState = w.history.pushState;
                 ourReplaceState = w.history.replaceState;
-                historyPatched = true;
+                historyPatch = patch;
             }
         }
         return ( ) => {
@@ -278,7 +291,8 @@
             if ( urlChangeHandlers.size !== 0 ) { return; }
             w.removeEventListener('popstate', notifyUrlChange);
             w.removeEventListener('hashchange', notifyUrlChange);
-            if ( historyPatched ) {
+            if ( historyPatch !== null ) {
+                historyPatch.active = false;
                 // Put the natives back only while ours are still the ones
                 // installed. Another script may have wrapped history after
                 // us, and restoring over that would unhook it - theirs
@@ -291,7 +305,7 @@
                 }
                 ourPushState = null;
                 ourReplaceState = null;
-                historyPatched = false;
+                historyPatch = null;
             }
         };
     };
