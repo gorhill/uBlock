@@ -40,6 +40,8 @@ export default [ includeIgnoreFile(gitignorePath), {
         "no-empty": "off",
         "sort-imports": "error",
         "strict": "error",
+        "semi": ["error", "always"],
+        "no-extra-semi": "error",
     },
 }, {
     files: ["**/*.json"],
