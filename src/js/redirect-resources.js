@@ -80,6 +80,8 @@ export default new Map([
     [ 'freestar_pubfig.js', {
         data: 'text',
     } ],
+    [ 'fundingchoices-reject.js', {
+    } ],
     [ 'google-analytics_analytics.js', {
         alias: [
             'google-analytics.com/analytics.js',
@@ -206,5 +208,7 @@ export default new Map([
     } ],
     [ 'sensors-analytics.js', {
         data: 'text',
+    } ],
+    [ 'transcend-reject.js', {
     } ],
 ]);
