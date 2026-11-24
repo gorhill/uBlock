@@ -53,7 +53,7 @@ vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 vAPI.shutdown = {
     jobs: [],
-    add: function(job) {
+    add(job) {
         this.jobs.push(job);
     },
     exec() {
