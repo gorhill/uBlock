@@ -1319,7 +1319,7 @@ const bootstrap = async ( ) => {
         const onMessage = msg => {
             browser.runtime.onMessage.removeListener(onMessage);
             if ( msg?.what !== 'elementPickerPairing' || msg?.succeed !== true ) {
-                return quitPicker();
+                return resolve();
             }
             iframe.setAttribute('loaded', '');
             const channel = new MessageChannel();

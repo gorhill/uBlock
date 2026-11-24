@@ -323,6 +323,7 @@ self.ubolOverlay = {
         const onMessage = msg => {
             this.webext.runtime.onMessage.removeListener(onMessage);
             if ( msg?.what !== 'toolOverlayPairing' || msg?.succeed !== true ) {
+                resolve(false);
                 return stop();
             }
             frame.setAttribute('loaded', '');
