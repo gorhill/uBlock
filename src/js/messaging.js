@@ -77,108 +77,79 @@ const browser = globalThis.browser ?? globalThis.chrome;
 {
 // >>>>> start of local scope
 
-const clickToLoad = function(request, sender) {
+function clickToLoad(request, sender) {
     const { tabId, frameId } = sender;
     if ( tabId === undefined || frameId === undefined ) { return false; }
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) { return false; }
     pageStore.clickToLoad(frameId, request.frameURL);
     return true;
-};
+}
 
-const getDomainNames = function(targets) {
+function getDomainNames(targets) {
     return targets.map(target => {
         if ( typeof target !== 'string' ) { return ''; }
         return target.indexOf('/') !== -1
             ? domainFromURI(target) || ''
             : domainFromHostname(target) || target;
     });
-};
+}
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request, sender) {
     switch ( request.what ) {
-    case 'getAssetContent':
-        // https://github.com/chrisaljoudi/uBlock/issues/417
-        io.get(request.url, {
+    case 'getAssetContent': {
+        const result = await io.get(request.url, {
             dontCache: true,
             needSourceURL: true,
-        }).then(result => {
-            result.trustedSource = µb.isTrustedList(result.assetKey);
-            callback(result);
         });
-        return;
-
-    case 'listsFromNetFilter':
-        staticFilteringReverseLookup.fromNetFilter(
-            request.rawFilter
-        ).then(response => {
-            callback(response);
-        });
-        return;
-
-    case 'listsFromCosmeticFilter':
-        staticFilteringReverseLookup.fromExtendedFilter(
-            request
-        ).then(response => {
-            callback(response);
-        });
-        return;
-
-    case 'reloadAllFilters':
-        µb.loadFilterLists().then(( ) => { callback(); });
-        return;
-
-    case 'scriptlet':
-        vAPI.tabs.executeScript(request.tabId, {
-            file: `/js/scriptlets/${request.scriptlet}.js`
-        }).then(result => {
-            callback(result);
-        });
-        return;
-
-    default:
-        break;
+        result.trustedSource = µb.isTrustedList(result.assetKey);
+        return result;
     }
 
-    // Sync
-    let response;
+    case 'listsFromNetFilter':
+        return staticFilteringReverseLookup.fromNetFilter(request.rawFilter);
 
-    switch ( request.what ) {
+    case 'listsFromCosmeticFilter':
+        return staticFilteringReverseLookup.fromExtendedFilter(request);
+
+    case 'reloadAllFilters':
+        await µb.loadFilterLists();
+        return;
+
+    case 'scriptlet': {
+        return vAPI.tabs.executeScript(request.tabId, {
+            file: `/js/scriptlets/${request.scriptlet}.js`
+        });
+    }
+
     case 'applyFilterListSelection':
-        response = µb.applyFilterListSelection(request);
-        break;
+        return µb.applyFilterListSelection(request);
 
     case 'clickToLoad':
-        response = clickToLoad(request, sender);
-        break;
+        return clickToLoad(request, sender);
 
     case 'createUserFilter':
         µb.createUserFilters(request);
         break;
 
     case 'getAppData':
-        response = {
+        return {
             name: self.browser.runtime.getManifest().name,
             version: vAPI.app.version,
             canBenchmark: µb.hiddenSettings.benchmarkDatasetURL !== 'unset',
         };
-        break;
 
     case 'getDomainNames':
-        response = getDomainNames(request.targets);
-        break;
+        return getDomainNames(request.targets);
 
     case 'getTrustedTokens':
-        response = Array.from(getTrustedTokens());
-        break;
+        return Array.from(getTrustedTokens());
 
     case 'getWhitelist':
-        response = {
+        return {
             whitelist: µb.trustedSites.toLines(),
             whitelistDefault: µb.defaultTrustedSiteDirectives,
         };
-        break;
 
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
@@ -195,8 +166,7 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'readyToFilter':
-        response = µb.readyToFilter;
-        break;
+        return µb.readyToFilter;
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1954
     //   In case of document-blocked page, navigate to blocked URL instead
@@ -204,13 +174,12 @@ const onMessage = function(request, sender, callback) {
     case 'reloadTab': {
         if ( request.tabId === frameManager.TAB_ID_NONE ) { break; }
         const { tabId, bypassCache, url, select } = request;
-        vAPI.tabs.get(tabId).then(tab => {
-            if ( url && tab && url !== tab.url ) {
-                vAPI.tabs.replace(tabId, url);
-            } else {
-                vAPI.tabs.reload(tabId, bypassCache === true);
-            }
-        });
+        const tab = await vAPI.tabs.get(tabId);
+        if ( url && tab && url !== tab.url ) {
+            vAPI.tabs.replace(tabId, url);
+        } else {
+            vAPI.tabs.reload(tabId, bypassCache === true);
+        }
         if ( select && vAPI.tabs.select ) {
             vAPI.tabs.select(tabId);
         }
@@ -231,17 +200,16 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'uiStyles':
-        response = {
+        return {
             uiAccentCustom: µb.userSettings.uiAccentCustom,
             uiAccentCustom0: µb.userSettings.uiAccentCustom0,
             uiAccentStylesheet: µb.uiAccentStylesheet,
             uiStyles: µb.hiddenSettings.uiStyles,
             uiTheme: µb.userSettings.uiTheme,
         };
-        break;
 
-    case 'userSettings':
-        response = µb.changeUserSettings(request.name, request.value);
+    case 'userSettings': {
+        const response = µb.changeUserSettings(request.name, request.value);
         if ( response instanceof Object ) {
             if ( vAPI.net.canUncloakCnames !== true ) {
                 response.cnameUncloakEnabled = undefined;
@@ -249,14 +217,13 @@ const onMessage = function(request, sender, callback) {
             response.canLeakLocalIPAddresses =
                 vAPI.browserSettings.canLeakLocalIPAddresses === true;
         }
-        break;
+        return response;
+    }
 
     default:
         return vAPI.messaging.UNHANDLED;
     }
-
-    callback(response);
-};
+}
 
 vAPI.messaging.setup(onMessage);
 
@@ -273,14 +240,14 @@ vAPI.messaging.setup(onMessage);
 {
 // >>>>> start of local scope
 
-const createCounts = ( ) => {
+function createCounts() {
     return {
         blocked: { any: 0, frame: 0, script: 0 },
         allowed: { any: 0, frame: 0, script: 0 },
     };
-};
+}
 
-const getHostnameDict = function(hostnameDetailsMap, out) {
+function getHostnameDict(hostnameDetailsMap, out) {
     const hnDict = Object.create(null);
     const cnMap = [];
 
@@ -306,7 +273,7 @@ const getHostnameDict = function(hostnameDetailsMap, out) {
 
     out.hostnameDict = hnDict;
     out.cnameMap = cnMap;
-};
+}
 
 const firewallRuleTypes = [
     '*',
@@ -318,7 +285,7 @@ const firewallRuleTypes = [
     '3p-frame',
 ];
 
-const getFirewallRules = function(src, out) {
+function getFirewallRules(src, out) {
     const ruleset = out.firewallRules = {};
     const df = sessionFirewall;
 
@@ -342,9 +309,9 @@ const getFirewallRules = function(src, out) {
         r = df.lookupRuleData(src, des, '*');
         if ( r !== undefined ) { ruleset[`. ${des} *`] = r; }
     }
-};
+}
 
-const popupDataFromTabId = function(tabId, tabTitle) {
+function popupDataFromTabId(tabId, tabTitle) {
     const topURL = frameManager.getTopURL(tabId) ?? 'https://behind-the-scene/';
     const normalizedURL = µb.normalizeTabURL(topURL, tabId);
     const rootHostname = hostnameFromURI(normalizedURL);
@@ -431,9 +398,9 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         ) === false;
     }
     return r;
-};
+}
 
-const popupDataFromRequest = async function(request) {
+async function popupDataFromRequest(request) {
     if ( request.tabId ) {
         return popupDataFromTabId(request.tabId, '');
     }
@@ -447,9 +414,9 @@ const popupDataFromRequest = async function(request) {
         tabTitle = tab.title || '';
     }
     return popupDataFromTabId(tabId, tabTitle);
-};
+}
 
-const getElementCount = async function(tabId, what) {
+async function getElementCount(tabId, what) {
     const results = await vAPI.tabs.executeScript(tabId, {
         allFrames: true,
         file: `/js/scriptlets/dom-survey-${what}.js`,
@@ -464,9 +431,9 @@ const getElementCount = async function(tabId, what) {
     }
 
     return total;
-};
+}
 
-const launchReporter = async function(request) {
+async function launchReporter(request) {
     const pageStore = µb.pageStoreFromTabId(request.tabId);
     if ( pageStore === null ) { return; }
     if ( pageStore.hasUnprocessedRequest ) {
@@ -511,37 +478,19 @@ const launchReporter = async function(request) {
         supportURL.searchParams.set('shouldUpdateLists', JSON.stringify(shouldUpdateLists));
     }
     return supportURL.href;
-};
+}
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request) {
     switch ( request.what ) {
     case 'getHiddenElementCount':
-        getElementCount(request.tabId, 'elements').then(count => {
-            callback(count);
-        });
-        return;
+        return getElementCount(request.tabId, 'elements');
 
     case 'getScriptCount':
-        getElementCount(request.tabId, 'scripts').then(count => {
-            callback(count);
-        });
-        return;
+        return getElementCount(request.tabId, 'scripts');
 
     case 'getPopupData':
-        popupDataFromRequest(request).then(popupData => {
-            callback(popupData);
-        });
-        return;
+        return popupDataFromRequest(request);
 
-    default:
-        break;
-    }
-
-    // Sync
-    let response;
-
-    switch ( request.what ) {
     case 'dismissUnprocessedRequest':
         vAPI.net.removeUnprocessedRequest(request.tabId);
         µb.updateToolbarIcon(request.tabId, 0b110);
@@ -550,8 +499,7 @@ const onMessage = function(request, sender, callback) {
     case 'hasPopupContentChanged': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
         const lastModified = pageStore ? pageStore.contentLastModified : 0;
-        response = lastModified !== request.contentLastModified;
-        break;
+        return lastModified !== request.contentLastModified;
     }
 
     case 'launchReporter': {
@@ -579,8 +527,7 @@ const onMessage = function(request, sender, callback) {
             'net'
         );
         µb.updateToolbarIcon(request.tabId, 0b100);
-        response = popupDataFromTabId(request.tabId);
-        break;
+        return popupDataFromTabId(request.tabId);
 
     case 'saveFirewallRules':
         // TODO: use Set() to message around sets of hostnames
@@ -605,13 +552,11 @@ const onMessage = function(request, sender, callback) {
 
     case 'toggleHostnameSwitch':
         µb.toggleHostnameSwitch(request);
-        response = popupDataFromTabId(request.tabId);
-        break;
+        return popupDataFromTabId(request.tabId);
 
     case 'toggleFirewallRule':
         µb.toggleFirewallRule(request);
-        response = popupDataFromTabId(request.tabId);
-        break;
+        return popupDataFromTabId(request.tabId);
 
     case 'toggleTrustedStatus': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
@@ -624,12 +569,9 @@ const onMessage = function(request, sender, callback) {
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'popupPanel',
+vAPI.messaging.listen({ name: 'popupPanel',
     listener: onMessage,
     privileged: true,
 });
@@ -647,7 +589,7 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const retrieveContentScriptParameters = async function(sender, request) {
+async function retrieveContentScriptParameters(sender, request) {
     if ( µb.readyToFilter !== true ) { return; }
     const { tabId, frameId } = sender;
     if ( tabId === undefined || frameId === undefined ) { return; }
@@ -721,28 +663,15 @@ const retrieveContentScriptParameters = async function(sender, request) {
     }
 
     return response;
-};
+}
 
-const onMessage = function(request, sender, callback) {
-    // Async
-    switch ( request.what ) {
-    case 'retrieveContentScriptParameters':
-        return retrieveContentScriptParameters(
-            sender,
-            request
-        ).then(response => {
-            callback(response);
-        });
-    default:
-        break;
-    }
-
+async function onMessage(request, sender) {
     const pageStore = µb.pageStoreFromTabId(sender.tabId);
 
-    // Sync
-    let response;
-
     switch ( request.what ) {
+    case 'retrieveContentScriptParameters':
+        return retrieveContentScriptParameters(sender, request);
+
     case 'cosmeticFiltersInjected':
         cosmeticFilteringEngine.addToSelectorCache(request);
         break;
@@ -751,8 +680,8 @@ const onMessage = function(request, sender, callback) {
         cosmeticFilteringEngine.disableSurveyor(request);
         break;
 
-    case 'getCollapsibleBlockedRequests':
-        response = {
+    case 'getCollapsibleBlockedRequests': {
+        const response = {
             id: request.id,
             hash: request.hash,
             netSelectorCacheCountMax:
@@ -763,7 +692,8 @@ const onMessage = function(request, sender, callback) {
                 pageStore.getBlockedResources(request, response);
             }
         }
-        break;
+        return response;
+    }
 
     case 'maybeGoodPopup':
         µb.maybeGoodPopup.tabId = sender.tabId;
@@ -799,20 +729,16 @@ const onMessage = function(request, sender, callback) {
     case 'retrieveGenericCosmeticSelectors':
         request.tabId = sender.tabId;
         request.frameId = sender.frameId;
-        response = {
+        return {
             result: cosmeticFilteringEngine.retrieveGenericSelectors(request),
         };
-        break;
 
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'contentscript',
+vAPI.messaging.listen({ name: 'contentscript',
     listener: onMessage,
 });
 
@@ -846,38 +772,31 @@ const contextPairing = {
     time: 0
 };
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request, sender) {
     switch ( request.what ) {
     // The procedural filterer must be present in case the user wants to
     // type-in custom filters.
-    case 'elementPickerArguments':
-        return vAPI.tabs.executeScript(sender.tabId, {
+    case 'elementPickerArguments': {
+        await vAPI.tabs.executeScript(sender.tabId, {
             allFrames: false,
             file: '/js/contentscript-extra.js',
             frameId: sender.frameId,
             matchAboutBlank: true,
             runAt: 'document_start',
-        }).then(( ) => {
-            callback({
-                target: µb.epickerArgs.target,
-                mouse: µb.epickerArgs.mouse,
-                zap: µb.epickerArgs.zap,
-                eprom: µb.epickerArgs.eprom,
-                pickerURL: vAPI.getURL(
-                    `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret.short()}`
-                ),
-            });
-            µb.epickerArgs.target = '';
         });
-    default:
-        break;
+        const response = {
+            target: µb.epickerArgs.target,
+            mouse: µb.epickerArgs.mouse,
+            zap: µb.epickerArgs.zap,
+            eprom: µb.epickerArgs.eprom,
+            pickerURL: vAPI.getURL(
+                `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret.short()}`
+            ),
+        };
+        µb.epickerArgs.target = '';
+        return response;
     }
 
-    // Sync
-    let response;
-
-    switch ( request.what ) {
     case 'elementPickerPairing': {
         const now = Date.now();
         if ( request.contentScript ) {
@@ -885,18 +804,15 @@ const onMessage = function(request, sender, callback) {
             contextPairing.tabId = sender.tabId;
             contextPairing.frameId = sender.frameId;
             contextPairing.time = now;
-            response = { password: contextPairing.password };
-        } else {
-            const succeed = (now - contextPairing.time) < 2000;
-            if ( succeed ) {
-                response = { password: contextPairing.password };
-            }
-            browser.tabs.sendMessage(contextPairing.tabId,
-                { what: 'elementPickerPairing', succeed },
-                { frameId: contextPairing.frameId }
-            );
+            return { password: contextPairing.password };
         }
-        break;
+        const succeed = (now - contextPairing.time) < 2000;
+        if ( succeed === false ) { return; }
+        browser.tabs.sendMessage(contextPairing.tabId,
+            { what: 'elementPickerPairing', succeed },
+            { frameId: contextPairing.frameId }
+        );
+        return { password: contextPairing.password };
     }
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
@@ -905,12 +821,9 @@ const onMessage = function(request, sender, callback) {
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'elementPicker',
+vAPI.messaging.listen({ name: 'elementPicker',
     listener: onMessage,
 });
 
@@ -927,7 +840,7 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const fromBase64 = function(encoded) {
+function fromBase64(encoded) {
     if ( typeof encoded !== 'string' ) {
         return Promise.resolve(encoded);
     }
@@ -937,27 +850,21 @@ const fromBase64 = function(encoded) {
     } catch {
     }
     return Promise.resolve(u8array !== undefined ? u8array : encoded);
-};
+}
 
-const onMessage = function(request, sender, callback) {
+async function onMessage(request) {
     // Cloud storage support is optional.
-    if ( µb.cloudStorageSupported !== true ) {
-        callback();
-        return;
+    if ( µb.cloudStorageSupported !== true ) { return; }
+
+    switch ( request.what ) {
+    case 'cloudGetOptions': {
+        const options = vAPI.cloud.getOptions();
+        options.enabled = µb.userSettings.cloudStorageEnabled === true;
+        return options;
     }
 
-    // Async
-    switch ( request.what ) {
-    case 'cloudGetOptions':
-        vAPI.cloud.getOptions(function(options) {
-            options.enabled = µb.userSettings.cloudStorageEnabled === true;
-            callback(options);
-        });
-        return;
-
     case 'cloudSetOptions':
-        vAPI.cloud.setOptions(request.options, callback);
-        return;
+        return vAPI.cloud.setOptions(request.options);
 
     case 'cloudPull':
         request.decode = encoded => {
@@ -967,9 +874,7 @@ const onMessage = function(request, sender, callback) {
             // Legacy decoding: needs to be kept around for the foreseeable future.
             return lz4Codec.decode(encoded, fromBase64);
         };
-        return vAPI.cloud.pull(request).then(result => {
-            callback(result);
-        });
+        return vAPI.cloud.pull(request);
 
     case 'cloudPush':
         request.encode = data => {
@@ -979,38 +884,17 @@ const onMessage = function(request, sender, callback) {
             };
             return s14e.serializeAsync(data, options);
         };
-        return vAPI.cloud.push(request).then(result => {
-            callback(result);
-        });
+        return vAPI.cloud.push(request);
 
     case 'cloudUsed':
-        return vAPI.cloud.used(request.datakey).then(result => {
-            callback(result);
-        });
-
-    default:
-        break;
-    }
-
-    // Sync
-    let response;
-
-    switch ( request.what ) {
-    // For when cloud storage is disabled.
-    case 'cloudPull':
-        // fallthrough
-    case 'cloudPush':
-        break;
+        return vAPI.cloud.used(request.datakey);
 
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'cloudWidget',
+vAPI.messaging.listen({ name: 'cloudWidget',
     listener: onMessage,
     privileged: true,
 });
@@ -1029,15 +913,15 @@ vAPI.messaging.listen({
 // >>>>> start of local scope
 
 // Settings
-const getLocalData = async function() {
+async function getLocalData() {
     const data = Object.assign({}, µb.restoreBackupSettings);
     data.storageUsed = await µb.getBytesInUse();
     data.cloudStorageSupported = µb.cloudStorageSupported;
     data.privacySettingsSupported = µb.privacySettingsSupported;
     return data;
-};
+}
 
-const backupUserData = async function() {
+async function backupUserData() {
     const userFilters = await µb.loadUserFilters();
 
     const userData = {
@@ -1065,9 +949,9 @@ const backupUserData = async function() {
     const localData = await getLocalData();
 
     return { localData, userData };
-};
+}
 
-const restoreUserData = async function(request) {
+async function restoreUserData(request) {
     const userData = request.userData;
 
     // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
@@ -1149,11 +1033,11 @@ const restoreUserData = async function(request) {
     }
 
     vAPI.app.restart();
-};
+}
 
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
-const resetUserData = async function() {
+async function resetUserData() {
     await Promise.all([
         cacheStorage.clear(),
         vAPI.storage.clear(),
@@ -1162,10 +1046,10 @@ const resetUserData = async function() {
     await µb.saveLocalSettings();
 
     vAPI.app.restart();
-};
+}
 
 // Filter lists
-const prepListEntries = function(entries) {
+function prepListEntries(entries) {
     for ( const k in entries ) {
         if ( Object.hasOwn(entries, k) === false ) { continue; }
         const entry = entries[k];
@@ -1177,9 +1061,9 @@ const prepListEntries = function(entries) {
             entry.supportName = domainFromHostname(hn);
         }
     }
-};
+}
 
-const getLists = async function(callback) {
+async function getLists() {
     const r = {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
@@ -1201,13 +1085,13 @@ const getLists = async function(callback) {
     prepListEntries(r.available);
     r.cache = metadata;
     prepListEntries(r.cache);
-    callback(r);
-};
+    return r;
+}
 
 // My filters
 
 // TODO: also return origin of embedded frames?
-const getOriginHints = function() {
+function getOriginHints() {
     const out = new Set();
     for ( const tabId of µb.pageStores.keys() ) {
         if ( tabId === -1 ) { continue; }
@@ -1222,10 +1106,10 @@ const getOriginHints = function() {
         out.add(isPunycode ? punycode.toUnicode(rootHostname) : rootHostname);
     }
     return Array.from(out);
-};
+}
 
 // My rules
-const getRules = function() {
+function getRules() {
     return {
         permanentRules:
             permanentFirewall.toArray().concat(
@@ -1239,9 +1123,9 @@ const getRules = function() {
             ),
         pslSelfie: publicSuffixList.toSelfie?.(),
     };
-};
+}
 
-const modifyRuleset = function(details) {
+function modifyRuleset(details) {
     let swRuleset, hnRuleset, urlRuleset;
     if ( details.permanent ) {
         swRuleset = permanentSwitches;
@@ -1286,10 +1170,10 @@ const modifyRuleset = function(details) {
             urlRuleset.changed = false;
         }
     }
-};
+}
 
 // Support
-const getSupportData = async function() {
+async function getSupportData() {
     const diffArrays = function(modified, original) {
         const modifiedSet = new Set(modified);
         const originalSet = new Set(original);
@@ -1440,39 +1324,30 @@ const getSupportData = async function() {
         'hiddenSettings': modifiedHiddenSettings,
         supportStats: µb.supportStats,
     };
-};
+}
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request) {
     switch ( request.what ) {
     case 'backupUserData':
-        return backupUserData().then(data => {
-            callback(data);
-        });
+        return backupUserData();
 
     case 'getLists':
-        return µb.isReadyPromise.then(( ) => {
-            getLists(callback);
-        });
+        await µb.isReadyPromise;
+        return getLists();
 
     case 'getLocalData':
-        return getLocalData().then(localData => {
-            callback(localData);
-        });
+        return getLocalData();
 
     case 'getSupportData': {
-        getSupportData().then(response => {
-            callback(response);
-        });
-        return;
+        return getSupportData();
     }
 
-    case 'readUserFilters':
-        return µb.loadUserFilters().then(result => {
-            result.enabled = µb.selectedFilterLists.includes(µb.userFiltersPath);
-            result.trusted = µb.isTrustedList(µb.userFiltersPath);
-            callback(result);
-        });
+    case 'readUserFilters': {
+        const result = await µb.loadUserFilters();
+        result.enabled = µb.selectedFilterLists.includes(µb.userFiltersPath);
+        result.trusted = µb.isTrustedList(µb.userFiltersPath);
+        return result;
+    }
 
     case 'writeUserFilters':
         if ( request.enabled ) {
@@ -1486,26 +1361,13 @@ const onMessage = function(request, sender, callback) {
             });
         }
         µb.changeUserSettings('userFiltersTrusted', request.trusted || false);
-        return µb.saveUserFilters(request.content).then(result => {
-            callback(result);
-        });
+        return µb.saveUserFilters(request.content);
 
-    default:
-        break;
-    }
-
-    // Sync
-    let response;
-
-    switch ( request.what ) {
     case 'dashboardConfig':
-        response = {
-            noDashboard: µb.noDashboard,
-        };
-        break;
+        return { noDashboard: µb.noDashboard };
 
-    case 'getAutoCompleteDetails':
-        response = {};
+    case 'getAutoCompleteDetails': {
+        const response = {};
         if ( (request.hintUpdateToken || 0) === 0 ) {
             response.redirectResources = redirectEngine.getResourceDetails();
             response.preparseDirectiveEnv = vAPI.webextFlavor.env.slice();
@@ -1515,18 +1377,17 @@ const onMessage = function(request, sender, callback) {
             response.originHints = getOriginHints();
             response.hintUpdateToken = µb.pageStoresToken;
         }
-        break;
+        return response;
+    }
 
     case 'getRules':
-        response = getRules();
-        break;
+        return getRules();
 
     case 'modifyRuleset':
         // https://github.com/chrisaljoudi/uBlock/issues/772
         cosmeticFilteringEngine.removeFromSelectorCache('*');
         modifyRuleset(request);
-        response = getRules();
-        break;
+        return getRules();
 
     case 'supportUpdateNow': {
         const { assetKeys } = request;
@@ -1549,12 +1410,11 @@ const onMessage = function(request, sender, callback) {
     }
 
     case 'readHiddenSettings':
-        response = {
+        return {
             'default': µb.hiddenSettingsDefault,
             'admin': µb.hiddenSettingsAdmin,
             'current': µb.hiddenSettings,
         };
-        break;
 
     case 'restoreUserData':
         restoreUserData(request);
@@ -1575,12 +1435,9 @@ const onMessage = function(request, sender, callback) {
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'dashboard',
+vAPI.messaging.listen({ name: 'dashboard',
     listener: onMessage,
     privileged: true,
 });
@@ -1601,7 +1458,7 @@ vAPI.messaging.listen({
 const extensionOriginURL = vAPI.getURL('');
 const documentBlockedURL = vAPI.getURL('document-blocked.html');
 
-const getLoggerData = async function(details, activeTabId, callback) {
+async function getLoggerData(details, activeTabId) {
     const response = {
         activeTabId,
         colorBlind: µb.userSettings.colorBlindFriendly,
@@ -1645,10 +1502,10 @@ const getLoggerData = async function(details, activeTabId, callback) {
             }));
         }
     }
-    callback(response);
-};
+    return response;
+}
 
-const getURLFilteringData = function(details) {
+function getURLFilteringData(details) {
     const colors = {};
     const response = {
         dirty: false,
@@ -1679,38 +1536,25 @@ const getURLFilteringData = function(details) {
         response.dirty = colorEntry.own !== pown || colorEntry.r !== puf.r;
     }
     return response;
-};
+}
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request) {
     switch ( request.what ) {
-    case 'readAll':
+    case 'readAll': {
         if ( logger.ownerId !== undefined && logger.ownerId !== request.ownerId ) {
-            return callback({ unavailable: true });
+            return { unavailable: true };
         }
-        vAPI.tabs.getCurrent().then(tab => {
-            getLoggerData(request, tab && tab.id, callback);
-        });
-        return;
+        const tab = await vAPI.tabs.getCurrent();
+        return getLoggerData(request, tab && tab.id);
+    }
 
-    case 'toggleInMemoryFilter': {
-        const promise = µb.hasInMemoryFilter(request.filter)
+    case 'toggleInMemoryFilter':
+        return µb.hasInMemoryFilter(request.filter)
             ? µb.removeInMemoryFilter(request.filter)
             : µb.addInMemoryFilter(request.filter);
-        promise.then(status => { callback(status); });
-        return;
-    }
-    default:
-        break;
-    }
 
-    // Sync
-    let response;
-
-    switch ( request.what ) {
     case 'hasInMemoryFilter':
-        response = µb.hasInMemoryFilter(request.filter);
-        break;
+        return µb.hasInMemoryFilter(request.filter);
 
     case 'releaseView':
         if ( request.ownerId !== logger.ownerId ) { break; }
@@ -1718,8 +1562,8 @@ const onMessage = function(request, sender, callback) {
         µb.clearInMemoryFilters();
         break;
 
-    case 'saveURLFilteringRules':
-        response = permanentURLFiltering.copyRules(
+    case 'saveURLFilteringRules': {
+        const response = permanentURLFiltering.copyRules(
             sessionURLFiltering,
             request.context,
             request.urls,
@@ -1728,25 +1572,22 @@ const onMessage = function(request, sender, callback) {
         if ( response ) {
             µb.savePermanentURLFilteringRules();
         }
-        break;
+        return response;
+    }
 
     case 'setURLFilteringRule':
         µb.toggleURLFilteringRule(request);
         break;
 
     case 'getURLFilteringData':
-        response = getURLFilteringData(request);
-        break;
+        return getURLFilteringData(request);
 
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'loggerUI',
+vAPI.messaging.listen({ name: 'loggerUI',
     listener: onMessage,
     privileged: true,
 });
@@ -1764,40 +1605,29 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const onMessage = (request, sender, callback) => {
-    // Async
-    switch ( request.what ) {
-    default:
-        break;
-    }
-    // Sync
-    let response;
+async function onMessage(request, sender) {
     switch ( request.what ) {
     case 'getInspectorArgs': {
         const bc = new globalThis.BroadcastChannel('contentInspectorChannel');
         bc.postMessage({
             what: 'contentInspectorChannel',
-            tabId: sender.tabId || 0,
-            frameId: sender.frameId || 0,
+            tabId: sender.tabId ?? 0,
+            frameId: sender.frameId ?? 0,
         });
-        response = {
+        return {
             inspectorURL: vAPI.getURL(
                 `/web_accessible_resources/dom-inspector.html?secret=${vAPI.warSecret.short()}`
             ),
         };
-        break;
     }
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'domInspectorContent',
+vAPI.messaging.listen({ name: 'domInspectorContent',
     listener: onMessage,
-    privileged: false,
+    rivileged: false,
 });
 
 // <<<<< end of local scope
@@ -1813,17 +1643,8 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const onMessage = function(request, sender, callback) {
-    const tabId = sender.tabId || 0;
-
-    // Async
-    switch ( request.what ) {
-    default:
-        break;
-    }
-
-    // Sync
-    let response;
+async function onMessage(request, sender) {
+    const tabId = sender.tabId ?? 0;
 
     switch ( request.what ) {
     case 'closeThisTab':
@@ -1837,12 +1658,9 @@ const onMessage = function(request, sender, callback) {
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'documentBlocked',
+vAPI.messaging.listen({ name: 'documentBlocked',
     listener: onMessage,
     privileged: true,
 });
@@ -1860,45 +1678,32 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const onMessage = function(request, sender, callback) {
-    // Async
+async function onMessage(request) {
     switch ( request.what ) {
-    case 'purgeAllCaches':
-        µb.getBytesInUse().then(bytesInUseBefore =>
-            io.remove(/./).then(( ) =>
-                µb.getBytesInUse().then(bytesInUseAfter => {
-                    callback([
-                        `Storage used before: ${µb.formatCount(bytesInUseBefore)}B`,
-                        `Storage used after: ${µb.formatCount(bytesInUseAfter)}B`,
-                    ].join('\n'));
-                })
-            )
-        );
-        return;
+    case 'purgeAllCaches': {
+        const bytesInUseBefore = await µb.getBytesInUse();
+        await io.remove(/./);
+        const bytesInUseAfter = await µb.getBytesInUse();
+        return [
+            `Storage used before: ${µb.formatCount(bytesInUseBefore)}B`,
+            `Storage used after: ${µb.formatCount(bytesInUseAfter)}B`,
+        ].join('\n');
+    }
 
-    case 'snfeBenchmark':
-        import('/js/benchmarks.js').then(module => {
-            module.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
-                callback(result);
-            });
-        });
-        return;
+    case 'snfeBenchmark': {
+        const module = await import('/js/benchmarks.js');
+        return module.benchmarkStaticNetFiltering({ redirectEngine });
+    }
 
-    case 'cfeBenchmark':
-        import('/js/benchmarks.js').then(module => {
-            module.benchmarkCosmeticFiltering().then(result => {
-                callback(result);
-            });
-        });
-        return;
+    case 'cfeBenchmark': {
+        const module = await import('/js/benchmarks.js');
+        return module.benchmarkCosmeticFiltering();
+    }
 
-    case 'sfeBenchmark':
-        import('/js/benchmarks.js').then(module => {
-            module.benchmarkScriptletFiltering().then(result => {
-                callback(result);
-            });
-        });
-        return;
+    case 'sfeBenchmark': {
+        const module = await import('/js/benchmarks.js');
+        return module.benchmarkScriptletFiltering();
+    }
 
     case 'snfeToDNR': {
         const listPromises = [];
@@ -1925,49 +1730,31 @@ const onMessage = function(request, sender, callback) {
             ),
             env: vAPI.webextFlavor.env,
         };
-        import('./static-dnr-filtering.js').then(module => {
-            const t0 = Date.now();
-            module.dnrRulesetFromRawLists(listPromises, options).then(dnrdata => {
-                dnrdata.listNames = listNames;
-                dnrdata.runtime = Date.now() - t0;
-                callback(s14e.serialize(dnrdata));
-            })
-        }).catch(reason => {
-            callback(reason);
-        });
-        return;
-    }
-    default:
-        break;
+        const module = await import('./static-dnr-filtering.js');
+        const t0 = Date.now();
+        const dnrdata = await module.dnrRulesetFromRawLists(listPromises, options);
+        dnrdata.listNames = listNames;
+        dnrdata.runtime = Date.now() - t0;
+        return s14e.serialize(dnrdata);
     }
 
-    // Sync
-    let response;
-
-    switch ( request.what ) {
     case 'snfeDump':
-        response = staticNetFilteringEngine.dump();
-        break;
+        return staticNetFilteringEngine.dump();
 
     case 'snfeQuery':
-        response = staticNetFilteringEngine.test(
+        return staticNetFilteringEngine.test(
             Object.assign({ redirectEngine }, request.query)
         );
-        break;
 
     case 'cfeDump':
-        response = cosmeticFilteringEngine.dump();
-        break;
+        return cosmeticFilteringEngine.dump();
 
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'devTools',
+vAPI.messaging.listen({ name: 'devTools',
     listener: onMessage,
     privileged: true,
 });
@@ -1985,7 +1772,7 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-const logCosmeticFilters = function(tabId, details) {
+function logCosmeticFilters(tabId, details) {
     if ( logger.enabled === false ) { return; }
 
     const filter = { source: 'cosmetic', raw: '' };
@@ -2000,9 +1787,9 @@ const logCosmeticFilters = function(tabId, details) {
         filter.raw = selector;
         fctxt.toLogger();
     }
-};
+}
 
-const logCSPViolations = function(pageStore, request) {
+function logCSPViolations(pageStore, request) {
     if ( logger.enabled === false || pageStore === null ) {
         return false;
     }
@@ -2074,7 +1861,7 @@ const logCSPViolations = function(pageStore, request) {
     }
 
     return true;
-};
+}
 
 logCSPViolations.policyDirectiveToTypeMap = new Map([
     [ 'img-src', 'image' ],
@@ -2091,18 +1878,9 @@ logCSPViolations.policyDirectiveToTypeMap = new Map([
     [ 'style-src-elem', 'stylesheet' ],
 ]);
 
-const onMessage = function(request, sender, callback) {
-    const tabId = sender.tabId || 0;
+async function onMessage(request, sender) {
+    const tabId = sender.tabId ?? 0;
     const pageStore = µb.pageStoreFromTabId(tabId);
-
-    // Async
-    switch ( request.what ) {
-    default:
-        break;
-    }
-
-    // Sync
-    let response;
 
     switch ( request.what ) {
     case 'inlinescriptFound':
@@ -2123,13 +1901,11 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'securityPolicyViolation':
-        response = logCSPViolations(pageStore, request);
-        break;
+        return logCSPViolations(pageStore, request);
 
     case 'temporarilyAllowLargeMediaElement':
-        if ( pageStore !== null ) {
-            pageStore.allowLargeMediaElementsUntil = Date.now() + 5000;
-        }
+        if ( pageStore === null ) { break; }
+        pageStore.allowLargeMediaElementsUntil = Date.now() + 5000;
         break;
 
     case 'subscribeTo': {
@@ -2166,12 +1942,9 @@ const onMessage = function(request, sender, callback) {
     default:
         return vAPI.messaging.UNHANDLED;
     }
+}
 
-    callback(response);
-};
-
-vAPI.messaging.listen({
-    name: 'scriptlets',
+vAPI.messaging.listen({ name: 'scriptlets',
     listener: onMessage,
 });
 

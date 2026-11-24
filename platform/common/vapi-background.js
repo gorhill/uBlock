@@ -819,12 +819,6 @@ browser.browserAction.onClicked.addListener(function(tab) {
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/710
-//   uBO uses only ports to communicate with its auxiliary pages and
-//   content scripts. Whether a message can trigger a privileged operation is
-//   decided based on whether the port from which a message is received is
-//   privileged, which is a status evaluated once, at port connection time.
-//
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1992
 //   If present, use MessageSender.origin to determine whether the port is
 //   from a privileged page, otherwise use MessageSender.url.
@@ -832,92 +826,45 @@ browser.browserAction.onClicked.addListener(function(tab) {
 //   compromised renderer.
 
 vAPI.messaging = {
-    ports: new Map(),
     listeners: new Map(),
     defaultHandler: null,
-    PRIVILEGED_ORIGIN: vAPI.getURL('').slice(0, -1),
-    NOOPFUNC: function(){},
+    PRIVILEGED_ORIGIN: vAPI.getURL('').replace(/\/$/, ''),
     UNHANDLED: 'vAPI.messaging.notHandled',
 
-    listen: function(details) {
+    listen(details) {
         this.listeners.set(details.name, {
             fn: details.listener,
             privileged: details.privileged === true
         });
     },
 
-    onPortDisconnect: function(port) {
-        this.ports.delete(port.name);
-        void browser.runtime.lastError;
-    },
-
-    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
-    //   port.sender is always present for onConnect() listeners.
-    onPortConnect: function(port) {
-        port.onDisconnect.addListener(port =>
-            this.onPortDisconnect(port)
-        );
-        port.onMessage.addListener((request, port) =>
-            this.onPortMessage(request, port)
-        );
-        const portDetails = { port };
-        const sender = port.sender;
-        const { origin, tab, url } = sender;
-        portDetails.frameId = sender.frameId;
-        portDetails.frameURL = url;
-        portDetails.privileged = origin !== undefined
-            ? origin === this.PRIVILEGED_ORIGIN
-            : url.startsWith(this.PRIVILEGED_ORIGIN);
-        if ( tab ) {
-            portDetails.tabId = tab.id;
-            portDetails.tabURL = tab.url;
-        }
-        this.ports.set(port.name, portDetails);
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c24
-        port.sender = undefined;
-    },
-
-    setup: function(defaultHandler) {
+    setup(defaultHandler) {
         if ( this.defaultHandler !== null ) { return; }
-
         if ( typeof defaultHandler !== 'function' ) {
             defaultHandler = function() {
                 return this.UNHANDLED;
             };
         }
         this.defaultHandler = defaultHandler;
-
-        browser.runtime.onConnect.addListener(
-            port => this.onPortConnect(port)
-        );
-
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1392067
-        //   Workaround: manually remove ports matching removed tab.
-        if (
-            vAPI.webextFlavor.soup.has('firefox') &&
-            vAPI.webextFlavor.major < 61
-        ) {
-            browser.tabs.onRemoved.addListener(tabId => {
-                for ( const { port, tabId: portTabId } of this.ports.values() ) {
-                    if ( portTabId !== tabId ) { continue; }
-                    this.onPortDisconnect(port);
-                }
-            });
-        }
     },
 
-    onFrameworkMessage: function(request, port, callback) {
-        const portDetails = this.ports.get(port.name) || {};
-        const tabId = portDetails.tabId;
+    isPrivilegedContext(sender) {
+        const { origin } = sender;
+        if ( origin ) {
+            return origin === this.PRIVILEGED_ORIGIN;
+        }
+        return sender.url.startsWith(this.PRIVILEGED_ORIGIN);
+    },
+
+    async onFrameworkMessage(request, sender) {
+        const tabId = sender.tabId;
         const msg = request.msg;
         switch ( msg.what ) {
         case 'localStorage': {
-            if ( portDetails.privileged !== true ) { break; }
-            const args = msg.args || [];
-            vAPI.localStorage[msg.fn](...args).then(result => {
-                callback(result);
-            });
-            break;
+            const fromPrivilegedContext = this.isPrivilegedContext(sender);
+            if ( fromPrivilegedContext !== true ) { break; }
+            const args = msg.args ?? [];
+            return vAPI.localStorage[msg.fn](...args);
         }
         case 'userCSS': {
             if ( tabId === undefined ) { break; }
@@ -925,7 +872,7 @@ vAPI.messaging = {
             if ( msg.add ) {
                 const details = {
                     code: undefined,
-                    frameId: portDetails.frameId,
+                    frameId: sender.frameId,
                     matchAboutBlank: true,
                     runAt: 'document_start',
                 };
@@ -937,7 +884,7 @@ vAPI.messaging = {
             if ( msg.remove ) {
                 const details = {
                     code: undefined,
-                    frameId: portDetails.frameId,
+                    frameId: sender.frameId,
                     matchAboutBlank: true,
                 };
                 for ( const cssText of msg.remove ) {
@@ -945,9 +892,7 @@ vAPI.messaging = {
                     promises.push(vAPI.tabs.removeCSS(tabId, details));
                 }
             }
-            Promise.all(promises).then(( ) => {
-                callback();
-            });
+            await Promise.all(promises);
             break;
         }
         default:
@@ -955,87 +900,44 @@ vAPI.messaging = {
         }
     },
 
-    // Use a wrapper to avoid closure and to allow reuse.
-    CallbackWrapper: class {
-        constructor(messaging, port, msgId) {
-            this.messaging = messaging;
-            this.callback = this.proxy.bind(this); // bind once
-            this.init(port, msgId);
+    async onDispatch(request, sender) {
+        const { tab } = sender;
+        if ( tab?.id ) {
+            sender.tabId = tab.id;
         }
-        init(port, msgId) {
-            this.port = port;
-            this.msgId = msgId;
-            return this;
-        }
-        proxy(response) {
-            // https://github.com/chrisaljoudi/uBlock/issues/383
-            try {
-                this.port.postMessage({
-                    msgId: this.msgId,
-                    msg: response !== undefined ? response : null,
-                });
-            } catch {
-                this.messaging.onPortDisconnect(this.port);
-            }
-            // Store for reuse
-            this.port = null;
-            this.messaging.callbackWrapperJunkyard.push(this);
-        }
-    },
-
-    callbackWrapperJunkyard: [],
-
-    callbackWrapperFactory: function(port, msgId) {
-        return this.callbackWrapperJunkyard.length !== 0
-            ? this.callbackWrapperJunkyard.pop().init(port, msgId)
-            : new this.CallbackWrapper(this, port, msgId);
-    },
-
-    onPortMessage: function(request, port) {
-        // prepare response
-        let callback = this.NOOPFUNC;
-        if ( request.msgId !== undefined ) {
-            callback = this.callbackWrapperFactory(port, request.msgId).callback;
-        }
-
-        // Content process to main process: framework handler.
         if ( request.channel === 'vapi' ) {
-            this.onFrameworkMessage(request, port, callback);
-            return;
+            return this.onFrameworkMessage(request, sender);
         }
-
-        // Auxiliary process to main process: specific handler
-        const portDetails = this.ports.get(port.name);
-        if ( portDetails === undefined ) { return; }
-
+        const fromPrivilegedContext = this.isPrivilegedContext(sender);
         const listenerDetails = this.listeners.get(request.channel);
-        let r = this.UNHANDLED;
-        if (
-            (listenerDetails !== undefined) &&
-            (listenerDetails.privileged === false || portDetails.privileged)
-            
-        ) {
-            r = listenerDetails.fn(request.msg, portDetails, callback);
+        if ( listenerDetails ) {
+            if ( listenerDetails.privileged ) {
+                if ( fromPrivilegedContext !== true ) { return; }
+            }
+            const r = await listenerDetails.fn(request.msg, sender);
+            if ( r !== this.UNHANDLED ) { return r; }
         }
-        if ( r !== this.UNHANDLED ) { return; }
-
-        // Auxiliary process to main process: default handler
-        if ( portDetails.privileged ) {
-            r = this.defaultHandler(request.msg, portDetails, callback);
-            if ( r !== this.UNHANDLED ) { return; }
-        }
-
-        // Auxiliary process to main process: no handler
-        ubolog(
-            `vAPI.messaging.onPortMessage > unhandled request: ${JSON.stringify(request.msg)}`,
-            request
-        );
-
-        // Need to callback anyways in case caller expected an answer, or
-        // else there is a memory leak on caller's side
-        callback();
+        if ( fromPrivilegedContext !== true ) { return; }
+        const r = await this.defaultHandler(request.msg, sender);
+        if ( r !== this.UNHANDLED ) { return r; }
+        ubolog(`vAPI.messaging.onDispatch: unhandled request ${JSON.stringify(request.msg)}`);
     },
+
+    onMessage(request, sender, callback) {
+        this.onDispatch(request, sender).then(response => {
+            callback(response);
+        }).catch(( ) => {
+            callback();
+        });
+        return true;
+    },
+
+    start() {
+        browser.runtime.onMessage.addListener(this.onMessage.bind(this));
+    }
 };
+
+vAPI.messaging.start();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1686,20 +1588,18 @@ vAPI.cloud = (( ) => {
         return { used: results[0], total: results[1], max: QUOTA_BYTES };
     };
 
-    const getOptions = function(callback) {
-        if ( typeof callback !== 'function' ) { return; }
-        callback(options);
+    const getOptions = function() {
+        return options;
     };
 
-    const setOptions = function(details, callback) {
+    const setOptions = function(details) {
         if ( typeof details !== 'object' || details === null ) { return; }
 
         if ( typeof details.deviceName === 'string' ) {
             vAPI.localStorage.setItem('deviceName', details.deviceName);
             options.deviceName = details.deviceName;
         }
-
-        getOptions(callback);
+        return getOptions();
     };
 
     return { push, pull, used, getOptions, setOptions };

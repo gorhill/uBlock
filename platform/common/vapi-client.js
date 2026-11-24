@@ -33,6 +33,8 @@ if (
     vAPI.randomToken instanceof Function === false
 ) {
 
+const browser = globalThis.browser ?? globalThis.chrome;
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -54,7 +56,7 @@ vAPI.shutdown = {
     add: function(job) {
         this.jobs.push(job);
     },
-    exec: function() {
+    exec() {
         // Shutdown asynchronously, to ensure shutdown jobs are called from
         // the top context.
         self.requestIdleCallback(( ) => {
@@ -65,7 +67,7 @@ vAPI.shutdown = {
             }
         });
     },
-    remove: function(job) {
+    remove(job) {
         let pos;
         while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
             this.jobs.splice(pos, 1);
@@ -76,149 +78,44 @@ vAPI.shutdown = {
 /******************************************************************************/
 
 vAPI.messaging = {
-    port: null,
-    portTimer: null,
-    portTimerDelay: 10000,
     msgIdGenerator: 1,
-    pending: new Map(),
+    pending: new Set(),
     waitStartTime: 0,
-    shuttingDown: false,
 
-    shutdown: function() {
-        this.shuttingDown = true;
-        this.destroyPort();
+    shutdown() {
     },
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/403
-    //   Spurious disconnection can happen, so do not consider such events
-    //   as world-ending, i.e. stay around. Except for embedded frames.
-
-    disconnectListener: function() {
-        void browser.runtime.lastError;
-        this.port = null;
-        if ( window !== window.top ) {
-            vAPI.shutdown.exec();
-        } else {
-            this.destroyPort();
-        }
-    },
-    disconnectListenerBound: null,
-
-    // 2020-09-01:
-    //   In Firefox, `details instanceof Object` resolves to `false` despite
-    //   `details` being a valid object. Consequently, falling back to use
-    //   `typeof details`.
-    //   This is an issue which surfaced when the element picker code was
-    //   revisited to isolate the picker dialog DOM from the page DOM.
-    messageListener: function(details) {
-        if ( typeof details !== 'object' || details === null ) { return; }
-        if ( details.msgId === undefined ) { return; }
-        const resolver = this.pending.get(details.msgId);
-        if ( resolver === undefined ) { return; }
-        this.pending.delete(details.msgId);
-        resolver(details.msg);
-    },
-    messageListenerBound: null,
-
-    canDestroyPort: function() {
-        return this.pending.size === 0;
-    },
-
-    portPoller: function() {
-        this.portTimer = null;
-        if ( this.port !== null && this.canDestroyPort() ) {
-            return this.destroyPort();
-        }
-        this.portTimer = vAPI.setTimeout(this.portPollerBound, this.portTimerDelay);
-        this.portTimerDelay = Math.min(this.portTimerDelay * 2, 60 * 60 * 1000);
-    },
-    portPollerBound: null,
-
-    destroyPort: function() {
-        if ( this.portTimer !== null ) {
-            clearTimeout(this.portTimer);
-            this.portTimer = null;
-        }
-        const port = this.port;
-        if ( port !== null ) {
-            port.disconnect();
-            port.onMessage.removeListener(this.messageListenerBound);
-            port.onDisconnect.removeListener(this.disconnectListenerBound);
-            this.port = null;
-        }
-        // service pending callbacks
-        if ( this.pending.size !== 0 ) {
-            const pending = this.pending;
-            this.pending = new Map();
-            for ( const resolver of pending.values() ) {
-                resolver();
-            }
-        }
-    },
-
-    createPort: function() {
-        if ( this.shuttingDown ) { return null; }
-        if ( this.messageListenerBound === null ) {
-            this.messageListenerBound = this.messageListener.bind(this);
-            this.disconnectListenerBound = this.disconnectListener.bind(this);
-            this.portPollerBound = this.portPoller.bind(this);
-        }
-        try {
-            this.port = browser.runtime.connect({name: vAPI.sessionId}) || null;
-        } catch {
-            this.port = null;
-        }
-        // Not having a valid port at this point means the main process is
-        // not available: no point keeping the content scripts alive.
-        if ( this.port === null ) {
-            vAPI.shutdown.exec();
-            return null;
-        }
-        this.port.onMessage.addListener(this.messageListenerBound);
-        this.port.onDisconnect.addListener(this.disconnectListenerBound);
-        this.portTimerDelay = 10000;
-        if ( this.portTimer === null ) {
-            this.portTimer = vAPI.setTimeout(
-                this.portPollerBound,
-                this.portTimerDelay
-            );
-        }
-        return this.port;
-    },
-
-    getPort: function() {
-        return this.port !== null ? this.port : this.createPort();
-    },
-
-    send: function(channel, msg) {
+    async send(channel, msg) {
         // Too large a gap between the last request and the last response means
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pending.size > 64 ) {
-            if ( (Date.now() - this.waitStartTime) > 60000 ) {
-                vAPI.shutdown.exec();
-            }
-        }
-        const port = this.getPort();
-        if ( port === null ) {
-            return Promise.resolve();
-        }
         if ( this.pending.size === 0 ) {
             this.waitStartTime = Date.now();
+        } else if ( this.pending.size > 64 ) {
+            if ( (Date.now() - this.waitStartTime) > 60000 ) {
+                return vAPI.shutdown.exec();
+            }
         }
         const msgId = this.msgIdGenerator++;
-        const promise = new Promise(resolve => {
-            this.pending.set(msgId, resolve);
-        });
-        port.postMessage({ channel, msgId, msg });
-        return promise;
+        this.pending.add(msgId);
+        try {
+            return browser.runtime.sendMessage({
+                channel,
+                msgId,
+                msg,
+            }).then(response => {
+                this.pending.delete(msgId);
+                return response;
+            });
+        } catch {
+        }
     },
 };
 
 vAPI.shutdown.add(( ) => {
     vAPI.messaging.shutdown();
-    window.vAPI = undefined;
+    self.vAPI = undefined;
 });
 
 /******************************************************************************/
