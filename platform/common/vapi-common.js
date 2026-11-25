@@ -257,27 +257,27 @@ vAPI.closePopup = function() {
 //   Convert into asynchronous access API.
 
 vAPI.localStorage = {
-    clear: function() {
+    clear() {
         vAPI.messaging.send('vapi', {
             what: 'localStorage',
             fn: 'clear',
         });
     },
-    getItemAsync: function(key) {
+    getItemAsync(key) {
         return vAPI.messaging.send('vapi', {
             what: 'localStorage',
             fn: 'getItemAsync',
             args: [ key ],
-        });
+        }).then(v => v ?? null);
     },
-    removeItem: function(key) {
+    removeItem(key) {
         return vAPI.messaging.send('vapi', {
             what: 'localStorage',
             fn: 'removeItem',
             args: [ key ],
         });
     },
-    setItem: function(key, value = undefined) {
+    setItem(key, value = undefined) {
         return vAPI.messaging.send('vapi', {
             what: 'localStorage',
             fn: 'setItem',

@@ -1346,19 +1346,19 @@ vAPI.adminStorage = (( ) => {
 //       implementation at this point, but we override with the
 //       background-side implementation.
 vAPI.localStorage = {
-    start: async function() {
-        if ( this.cache instanceof Promise ) { return this.cache; }
-        if ( this.cache instanceof Object ) { return this.cache; }
-        this.cache = vAPI.storage.get('localStorage').then(bin => {
-            this.cache = bin && bin.localStorage || {};
-        });
+    async start() {
+        if ( this.cache === undefined ) {
+            this.cache = vAPI.storage.get('localStorage').then(bin => {
+                this.cache = bin && bin.localStorage || {};
+            });
+        }
         return this.cache;
     },
-    clear: function() {
+    clear() {
         this.cache = {};
         return vAPI.storage.set({ localStorage: this.cache });
     },
-    getItem: function(key) {
+    getItem(key) {
         if ( this.cache instanceof Object === false ) {
             console.info(`localStorage.getItem('${key}') not ready`);
             return null;
@@ -1366,15 +1366,15 @@ vAPI.localStorage = {
         const value = this.cache[key];
         return value !== undefined ? value : null;
     },
-    getItemAsync: async function(key) {
+    async getItemAsync(key) {
         await this.start();
         const value = this.cache[key];
-        return value !== undefined ? value : null;
+        return value ?? null;
     },
-    removeItem: async function(key) {
-        this.setItem(key);
+    removeItem(key) {
+        return this.setItem(key);
     },
-    setItem: async function(key, value = undefined) {
+    async setItem(key, value = undefined) {
         await this.start();
         if ( value === this.cache[key] ) { return; }
         this.cache[key] = value;
