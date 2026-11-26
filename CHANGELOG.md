@@ -1,3 +1,4 @@
+- [[chromium] Raise minimum supported version to 118](https://github.com/gorhill/uBlock/commit/161b187dc3)
 - [Refactor messaging-related code](https://github.com/gorhill/uBlock/commit/88c8238bb6)
 - [[regression] Restore behavior of injecting content scripts at launch](https://github.com/gorhill/uBlock/commit/75acc73223)
 - [[picker] Improve pairing logic and ensure dependencies are present](https://github.com/gorhill/uBlock/commit/1d70d4a1c6)
@@ -5,6 +6,7 @@
 - [Remove per-tab network request journaling](https://github.com/gorhill/uBlock/commit/080ecbd3d6)
 - [Refactor contexts (tabs/frames) management](https://github.com/gorhill/uBlock/commit/0b5d131ea7)
 - [[picker] Improve reliability of element picker launch](https://github.com/gorhill/uBlock/commit/73b2bb6e29)
+- [[firefox] Set minimum version of Firefox to 128.0](https://github.com/gorhill/uBlock/commit/7abf6543c0)
 
 ----------
 
