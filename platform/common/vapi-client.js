@@ -78,34 +78,24 @@ vAPI.shutdown = {
 /******************************************************************************/
 
 vAPI.messaging = {
-    msgIdGenerator: 1,
-    pending: new Set(),
+    msgCounter: 0,
     waitStartTime: 0,
 
     shutdown() {
     },
 
     async send(channel, msg) {
-        // Too large a gap between the last request and the last response means
-        // the main process is no longer reachable: memory leaks and bad
-        // performance become a risk -- especially for long-lived, dynamic
-        // pages. Guard against this.
-        if ( this.pending.size === 0 ) {
+        if ( this.msgCounter === 0 ) {
             this.waitStartTime = Date.now();
-        } else if ( this.pending.size > 64 ) {
+        } else if ( this.msgCounter > 64 ) {
             if ( (Date.now() - this.waitStartTime) > 60000 ) {
                 return vAPI.shutdown.exec();
             }
         }
-        const msgId = this.msgIdGenerator++;
-        this.pending.add(msgId);
+        this.msgCounter += 1;
         try {
-            return browser.runtime.sendMessage({
-                channel,
-                msgId,
-                msg,
-            }).then(response => {
-                this.pending.delete(msgId);
+            return browser.runtime.sendMessage({ channel, msg }).then(response => {
+                this.msgCounter -= 1;
                 return response;
             });
         } catch {
