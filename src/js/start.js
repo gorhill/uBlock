@@ -100,13 +100,6 @@ const onVersionReady = async lastVersion => {
         version: vAPI.app.version,
         versionUpdateTime: Date.now(),
     });
-
-    // Special case: first installation
-    if ( lastVersionInt === 0 ) {
-        vAPI.net.unsuspend({ all: true, discard: true });
-        return;
-    }
-
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
     redirectEngine.invalidateResourcesSelfie(io);
