@@ -212,9 +212,6 @@ vAPI.Net = class {
             this.suspendDepth -= 1;
         }
         if ( this.suspendDepth !== 0 ) { return; }
-        if ( Boolean(this.suspendableListener) === false ) {
-            throw new Error('not allowed');
-        }
         const unprocessedTabs = this.unprocessedTabs;
         if ( clear ) {
             this.unprocessedTabs = new Map();
