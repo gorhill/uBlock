@@ -29,7 +29,7 @@ if ( vAPI === null ) { return; }
 if ( vAPI.pickerFrame ) { return; }
 vAPI.pickerFrame = true;
 
-const pickerUniqueId = self.crypto.randomUUID().replaceAll('-', '').slice(16);
+const pickerUniqueId = `z${self.crypto.randomUUID().replaceAll('-', '').slice(16)}`;
 
 const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
 
@@ -1269,13 +1269,13 @@ const pickerCSSStyle = [
 
 
 const pickerCSS = `
-[${CSS.escape(pickerUniqueId)}] {
+[${pickerUniqueId}] {
     ${pickerCSSStyle}
 }
-[${CSS.escape(pickerUniqueId)}][loaded] {
+[${pickerUniqueId}][loaded] {
     visibility: visible !important;
 }
-[${CSS.escape(pickerUniqueId)}][clicked] {
+[${pickerUniqueId}][clicked] {
     cursor: crosshair !important;
     pointer-events: none !important;
 }
