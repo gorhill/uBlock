@@ -21,101 +21,133 @@
 
 /* global chrome */
 
+import './vapi-network.js';
 import * as frameManager from './vapi-contexts.js';
 
 /******************************************************************************/
 
-{
-    const extToTypeMap = new Map([
-        ['eot','font'],['otf','font'],['ttf','font'],['woff','font'],['woff2','font'],
-        ['mp3','media'],['mp4','media'],['webm','media'],
-        ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['svg','image'],['webp','image']
-    ]);
+const extToTypeMap = new Map([
+    ['eot','font'],['otf','font'],['ttf','font'],['woff','font'],
+        ['woff2','font'],
+    ['mp3','media'],['mp4','media'],['webm','media'],
+    ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],
+        ['png','image'],['svg','image'],['webp','image']
+]);
 
-    const parsedURL = new URL('https://www.example.org/');
+const parsedURL = new URL('https://www.example.org/');
 
-    // Extend base class to normalize as per platform
+// Extend base class to normalize as per platform
 
-    vAPI.Net = class extends vAPI.Net {
-        normalizeDetails(details) {
-            details.tabUrl = frameManager.getTopURL(details.tabId);
-            // Chromium 63+ supports the `initiator` property, which contains
-            // the URL of the origin from which the network request was made
-            if ( details.initiator && details.initiator !== 'null' ) {
-                details.documentUrl = details.initiator;
+vAPI.Net = class extends vAPI.Net {
+    normalizeDetails(details) {
+        details.tabUrl = frameManager.getTopURL(details.tabId);
+        // Chromium 63+ supports the `initiator` property, which contains
+        // the URL of the origin from which the network request was made
+        if ( details.initiator && details.initiator !== 'null' ) {
+            details.documentUrl = details.initiator;
+        }
+        const type = details.type;
+        if ( type === 'imageset' ) {
+            details.type = 'image';
+            return;
+        }
+        if ( type !== 'other' ) { return; }
+        // Try to map known "extension" part of URL to request type
+        if ( details.responseHeaders === undefined ) {
+            parsedURL.href = details.url;
+            const path = parsedURL.pathname;
+            const pos = path.indexOf('.', path.length - 6);
+            if ( pos !== -1 ) {
+                details.type = extToTypeMap.get(path.slice(pos + 1)) || type;
             }
-            const type = details.type;
-            if ( type === 'imageset' ) {
-                details.type = 'image';
-                return;
+            return;
+        }
+        // Try to extract type from response headers
+        const ctype = this.headerValue(details.responseHeaders, 'content-type');
+        if ( ctype.startsWith('font/') ) {
+            details.type = 'font';
+        } else if ( ctype.startsWith('image/') ) {
+            details.type = 'image';
+        } else if ( ctype.startsWith('audio/') || ctype.startsWith('video/') ) {
+            details.type = 'media';
+        }
+    }
+
+    // https://www.reddit.com/r/uBlockOrigin/comments/9vcrk3/
+    //   Some types can be mapped from 'other', thus include 'other' if and
+    //   only if the caller is interested in at least one of those types
+    denormalizeTypes(types) {
+        if ( types.length === 0 ) {
+            return Array.from(this.validTypes);
+        }
+        const out = new Set();
+        for ( const type of types ) {
+            if ( this.validTypes.has(type) ) {
+                out.add(type);
             }
-            if ( type !== 'other' ) { return; }
-            // Try to map known "extension" part of URL to request type
-            if ( details.responseHeaders === undefined ) {
-                parsedURL.href = details.url;
-                const path = parsedURL.pathname;
-                const pos = path.indexOf('.', path.length - 6);
-                if ( pos !== -1 ) {
-                    details.type = extToTypeMap.get(path.slice(pos + 1)) || type;
+        }
+        if ( out.has('other') === false ) {
+            for ( const type of extToTypeMap.values() ) {
+                if ( out.has(type) ) {
+                    out.add('other');
+                    break;
                 }
-                return;
-            }
-            // Try to extract type from response headers
-            const ctype = this.headerValue(details.responseHeaders, 'content-type');
-            if ( ctype.startsWith('font/') ) {
-                details.type = 'font';
-            } else if ( ctype.startsWith('image/') ) {
-                details.type = 'image';
-            } else if ( ctype.startsWith('audio/') || ctype.startsWith('video/') ) {
-                details.type = 'media';
             }
         }
+        return Array.from(out);
+    }
 
-        // https://www.reddit.com/r/uBlockOrigin/comments/9vcrk3/
-        //   Some types can be mapped from 'other', thus include 'other' if and
-        //   only if the caller is interested in at least one of those types
-        denormalizeTypes(types) {
-            if ( types.length === 0 ) {
-                return Array.from(this.validTypes);
-            }
-            const out = new Set();
-            for ( const type of types ) {
-                if ( this.validTypes.has(type) ) {
-                    out.add(type);
-                }
-            }
-            if ( out.has('other') === false ) {
-                for ( const type of extToTypeMap.values() ) {
-                    if ( out.has(type) ) {
-                        out.add('other');
-                        break;
-                    }
-                }
-            }
-            return Array.from(out);
-        }
+    getWarURL(warName = '') {
+        const url = super.getWarURL(warName);
+        url.searchParams.set('uid', this.#generateSecret());
+        return url;
+    }
 
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/2063
-        //   Do not interfere with root document
-        suspendOneRequest(details) {
-            this.onBeforeSuspendableRequest(details);
-            if ( details.type === 'main_frame' ) { return; }
-            return { cancel: true };
-        }
+    reuseWarURL(warURL) {
+        const url = super.reuseWarURL(warURL);
+        url.searchParams.set('uid', this.#generateSecret());
+        return url;
+    }
 
-        unsuspendAllRequests(discard = false) {
-            if ( discard === true ) { return; }
-            const toReload = [];
-            for ( const tabId of this.unprocessedTabs.keys() ) {
-                toReload.push(tabId);
-            }
-            this.removeUnprocessedRequest();
-            for ( const tabId of toReload ) {
-                vAPI.tabs.reload(tabId);
-            }
+    onBeforeWarRequest(details) {
+        const url = new URL(details.url);
+        const uid = url.searchParams.get('uid') ?? '_';
+        const apos = this.#warSecrets.indexOf(uid);
+        if ( apos === -1 ) { return { cancel: true }; }
+        this.#warSecrets.splice(apos, 1);
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2063
+    //   Do not interfere with root document
+    suspendOneRequest(defer, details) {
+        if ( details.type === 'main_frame' ) { return; }
+        return defer
+            ? { details, outcome: { cancel: true } }
+            : { details };
+    }
+
+    unsuspendManyRequests(tabId, entries, discard = false) {
+        if ( discard ) {
+            return entries.forEach(a => { a.outcome = undefined; });
         }
-    };
-}
+        if ( entries.some(a => a.outcome) === false ) { return; }
+        vAPI.tabs.reload(tabId);
+    }
+
+    #generateSecret() {
+        if ( this.#warSecrets.length > 1024 ) {
+            this.#warSecrets = this.#warSecrets.slice(-1024);
+        }
+        const uid = vAPI.generateSecret();
+        this.#warSecrets.push(uid);
+        return uid;
+    }
+
+    #warSecrets = [];
+};
+
+vAPI.net = new vAPI.Net();
+vAPI.net.start();
 
 /******************************************************************************/
 

@@ -146,7 +146,7 @@ const onUserSettingsReady = fetched => {
         vAPI.Net.canSuspend() &&
         fetched.suspendUntilListsAreLoaded === false
     ) {
-        vAPI.net.unsuspend({ all: true, discard: true });
+        vAPI.net.unsuspend({ all: true, discard: true, clear: false });
         ubolog(`Unsuspend network activity listener at ${tnow} ms`);
         µb.supportStats.unsuspendAfter = `${tnow} ms`;
     } else if (
@@ -395,7 +395,15 @@ const createDefaultProps = ( ) => {
     await frameManager.start();
 
     // Start network observers.
-    webRequest.start();
+    const suspended = µb.userSettings.suspendUntilListsAreLoaded;
+    if ( suspended !== true ) {
+        for ( const [ tabId, pageStore ] of µb.pageStores ) {
+            if ( pageStore.isTrusted() ) { continue; }
+            if ( vAPI.net.hasUnprocessedRequest(tabId) === false ) { continue; }
+            pageStore.hasUnprocessedRequest = true;
+        }
+    }
+    webRequest.start({ discard: suspended !== true });
 
     // Force an update of the context menu according to the currently
     // active tab.

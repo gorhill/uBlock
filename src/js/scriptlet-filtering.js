@@ -137,8 +137,6 @@ function assembleMainWorldWrapper(mainCode, options) {
 export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     constructor() {
         super();
-        this.warOrigin = vAPI.getURL('/web_accessible_resources');
-        this.warSecret = vAPI.warSecret.long();
         this.isDevBuild = undefined;
         this.logLevel = 1;
     }
@@ -153,7 +151,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
 
     reset() {
         super.reset();
-        this.warSecret = vAPI.warSecret.long(this.warSecret);
         scripting.reset();
         makeScriptlets.resetAll();
     }
@@ -247,14 +244,16 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             JSON.stringify(Array.from(trustedSiteMatcher.data).filter(a => a[0] !== '#')),
             ')) ) { return; }',
         ];
-        const topFrameRules = sessionFirewall.export1stPartyRules().filter(a =>
-            a[1] !== 'behind-the-scene'
-        );
-        if ( topFrameRules?.length ) {
-            earlyBailoutCode.push(
-                topFrameRulesMatcher.toString(),
-                `if ( topFrameRulesMatcher(new Map(${JSON.stringify(topFrameRules)})) ) { return; }`,
+        if ( µb.userSettings.advancedUserEnabled ) {
+            const topFrameRules = sessionFirewall.export1stPartyRules().filter(a =>
+                a[1] !== 'behind-the-scene'
             );
+            if ( topFrameRules?.length ) {
+                earlyBailoutCode.push(
+                    topFrameRulesMatcher.toString(),
+                    `if ( topFrameRulesMatcher(new Map(${JSON.stringify(topFrameRules)})) ) { return; }`,
+                );
+            }
         }
         out.earlyBailoutCode = earlyBailoutCode.join('\n');
         return out;

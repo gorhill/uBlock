@@ -26,7 +26,8 @@ import webext from './webext.js';
 /******************************************************************************/
 
 export const tabDict = new Map();
-export const TAB_ID_NONE = browser.tabs.TAB_ID_NONE
+export const TAB_ID_NONE = browser.tabs.TAB_ID_NONE;
+export let activeTabId = 0;
 
 const listeners = new Set();
 const reIsHTTP = /^https?:\/\//;
@@ -72,6 +73,7 @@ function onFrameRemoved(tabId, frameId) {
 
 function onTabCreated(tab) {
     const details = { tabId: tab.id, frameId: 0, parentFrameId: -1, url: tab.url };
+    if ( tab.active ) { activeTabId = details.tabId; }
     addFrame(details);
     for ( const listener of listeners ) {
         listener('tab-created', details);
@@ -82,6 +84,7 @@ function onTabCreated(tab) {
 
 async function onTabActivated(details) {
     const { tabId } = details;
+    activeTabId = tabId;
     if ( tabDict.has(tabId) === false ) {
         const tab = await browser.tabs.get(tabId);
         onTabCreated(tab);
@@ -98,6 +101,7 @@ function onWindowFocused(windowId) {
     webext.tabs.query({ active: true, windowId }).then(tabs => {
         if ( tabs.length === 0 ) { return; }
         const tabId = tabs[0].id;
+        activeTabId = tabId;
         onTabActivated({ tabId, windowId });
     });
 }
@@ -116,6 +120,9 @@ function onTabUpdated(tabId, changeInfo, tab) {
     }
     if ( changeInfo.url ) {
         tabData.frameDict.get(0).url = tab.url;
+    }
+    if ( tab.active ) {
+        activeTabId = tabId;
     }
     const details = Object.assign({ tabId, changeInfo }, tab);
     for ( const listener of listeners ) {

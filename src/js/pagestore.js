@@ -142,20 +142,13 @@ const NetFilteringResultCache = class {
 
     lookupResult(fctxt) {
         const entry = this.results.get(
-            fctxt.getDocHostname() + ' ' +
-            fctxt.type + ' ' +
-            fctxt.url
+            `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`
         );
         if ( entry === undefined ) { return; }
         // We need to use a new WAR secret if one is present since WAR secrets
         // can only be used once.
-        if (
-            entry.redirectURL !== undefined &&
-            entry.redirectURL.startsWith(this.extensionOriginURL)
-        ) {
-            const redirectURL = new URL(entry.redirectURL);
-            redirectURL.searchParams.set('secret', vAPI.warSecret.short());
-            entry.redirectURL = redirectURL.href;
+        if ( entry.redirectURL?.startsWith(vAPI.Net.warOrigin) ) {
+            entry.redirectURL = `${vAPI.net.reuseWarURL(entry.redirectURL)}`;
         }
         return entry;
     }
@@ -287,14 +280,11 @@ const PageStore = class {
 
         this.frameAddCount = 0;
         this.clickedToLoad = new Set();
+        this.hasUnprocessedRequest = false;
 
         if ( this.titleFromDetails(details) === false ) {
             this.title = topURL;
         }
-
-        // Remember if the webpage was potentially improperly filtered, for
-        // reporting purpose.
-        this.hasUnprocessedRequest = vAPI.net.hasUnprocessedRequest(tabId);
 
         return this;
     }
@@ -444,9 +434,6 @@ const PageStore = class {
         });
     }
 
-    // https://github.com/gorhill/uBlock/issues/2053
-    //   There is no way around using journaling to ensure we deal properly with
-    //   potentially out of order navigation events vs. network request events.
     journalAddRequest(fctxt, result) {
         const hostname = fctxt.getHostname();
         if ( hostname === '' ) { return; }

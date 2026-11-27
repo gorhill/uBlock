@@ -654,34 +654,57 @@ frameManager.addListener((type, details) => {
         return color;
     };
 
+    const clearWarning = async tabId => {
+        await vAPI.defer.once({ sec: µb.hiddenSettings.toolbarWarningTimeout });
+        const pageStore = µb.pageStoreFromTabId(tabId);
+        if ( Boolean(pageStore?.hasUnprocessedRequest) === false ) { return; }
+        pageStore.hasUnprocessedRequest = false;
+        µb.updateToolbarIcon(tabId, 0b0110);
+    };
+
     const updateBadges = ( ) => {
         const { showIconBadge } = µb.userSettings;
         for ( let [ tabId, parts ] of tabIdToDetails ) {
-            let state = 0;
-            let badge = '';
-            let color = '#666';
-            const pageStore = µb.pageStoreFromTabId(tabId);
-            if ( pageStore !== null ) {
-                state = pageStore.isNotTrusted() ? 1 : 0;
-                if ( state === 1 ) {
-                    if ( (parts & 0b0010) !== 0 ) {
-                        const blockCount = pageStore.counts.blocked.any;
-                        if ( blockCount !== 0 ) {
-                            badge = µb.formatCount(blockCount);
-                        }
-                    }
-                    if ( (parts & 0b0100) !== 0 ) {
-                        color = computeBadgeColor(
-                            µb.blockingModeFromHostname(pageStore.tabHostname)
-                        );
-                    }
-                }
-            }
             // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
             if ( showIconBadge === false ) {
                 parts |= 0b1000;
             }
-            vAPI.setIcon(tabId, { parts, state, badge, color });
+            const details = { parts, state: 0, badge: '', color: '#666' };
+            const pageStore = µb.pageStoreFromTabId(tabId);
+            if ( pageStore === null ) {
+                vAPI.setIcon(tabId, details);
+                continue;
+            }
+            details.state = pageStore.isNotTrusted() ? 1 : 0;
+            if ( details.state === 0 ) {
+                vAPI.setIcon(tabId, details);
+                continue;
+            }
+            if ( pageStore.hasUnprocessedRequest ) {
+                if ( (parts & 0b0010) !== 0 ) {
+                    details.badge = '!';
+                }
+                if ( (parts & 0b0100) !== 0 ) {
+                    details.color = '#FC0';
+                }
+                vAPI.setIcon(tabId, details);
+                if ( tabId === frameManager.activeTabId ) {
+                    clearWarning(tabId);
+                }
+                continue;
+            }
+            if ( (parts & 0b0010) !== 0 ) {
+                const blockCount = pageStore.counts.blocked.any;
+                if ( blockCount !== 0 ) {
+                    details.badge = µb.formatCount(blockCount);
+                }
+            }
+            if ( (parts & 0b0100) !== 0 ) {
+                details.color = computeBadgeColor(
+                    µb.blockingModeFromHostname(pageStore.tabHostname)
+                );
+            }
+            vAPI.setIcon(tabId, details);
         }
         tabIdToDetails.clear();
         timer = undefined;

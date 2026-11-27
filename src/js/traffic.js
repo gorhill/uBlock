@@ -117,7 +117,7 @@ function onBeforeRequest(details) {
     if ( result === 2 ) {
         return { cancel: false };
     }
-};
+}
 
 /******************************************************************************/
 
@@ -1341,32 +1341,17 @@ const requestHeadersManager = {
 const webRequest = {
     onBeforeRequest,
 
-    start: (( ) => {
-        vAPI.net = new vAPI.Net();
-        if ( vAPI.Net.canSuspend() ) {
-            vAPI.net.suspend();
-        }
+    start(details = {}) {
+        vAPI.net.setSuspendableListener(onBeforeRequest);
+        vAPI.net.addListener('onHeadersReceived', onHeadersReceived, {
+            urls: [ 'http://*/*', 'https://*/*' ]
+        }, [ 'blocking', 'responseHeaders' ]);
+        onResponseStarted.start();
+        requestHeadersManager.start();
+        vAPI.net.unsuspend({ all: true, discard: details.discard });
+    },
 
-        return ( ) => {
-            vAPI.net.setSuspendableListener(onBeforeRequest);
-            vAPI.net.addListener('onHeadersReceived', onHeadersReceived, {
-                urls: [ 'http://*/*', 'https://*/*' ]
-            }, [ 'blocking', 'responseHeaders' ]);
-            onResponseStarted.start();
-            requestHeadersManager.start();
-            vAPI.defer.once({ sec: µb.hiddenSettings.toolbarWarningTimeout }).then(( ) => {
-                if ( vAPI.net.hasUnprocessedRequest() === false ) { return; }
-                vAPI.net.removeUnprocessedRequest();
-                return vAPI.tabs.getCurrent();
-            }).then(tab => {
-                if ( tab instanceof Object === false ) { return; }
-                µb.updateToolbarIcon(tab.id, 0b0110);
-            });
-            vAPI.net.unsuspend({ all: true });
-        };
-    })(),
-
-    strictBlockBypass: hostname => {
+    strictBlockBypass(hostname) {
         strictBlockBypasser.bypass(hostname);
     },
 };

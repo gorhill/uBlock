@@ -59,15 +59,7 @@ const removeTopCommentBlock = text => {
     return text.replace(/^\/\*[\S\s]+?\*\/\s*/g, '');
 };
 
-// vAPI.warSecret is optional, it could be absent in some environments,
-// i.e. nodejs for example. Probably the best approach is to have the
-// "web_accessible_resources secret" added outside by the client of this
-// module, but for now I just want to remove an obstacle to modularization.
-const warSecret = typeof vAPI === 'object' && vAPI !== null
-    ? vAPI.warSecret.short
-    : ( ) => '';
-
-const RESOURCES_SELFIE_VERSION = 7;
+const RESOURCES_SELFIE_VERSION = 8;
 const RESOURCES_SELFIE_NAME = 'selfie/redirectEngine/resources';
 
 /******************************************************************************/
@@ -77,7 +69,7 @@ class RedirectEntry {
     constructor() {
         this.mime = '';
         this.data = '';
-        this.warURL = undefined;
+        this.warName = undefined;
         this.params = undefined;
         this.requiresTrust = false;
         this.world = 'MAIN';
@@ -94,26 +86,20 @@ class RedirectEntry {
 
     toURL(fctxt, asDataURI = false) {
         if (
-            this.warURL !== undefined &&
+            this.warName !== undefined &&
             asDataURI !== true &&
             fctxt instanceof Object &&
             fctxt.type !== 'xmlhttprequest'
         ) {
-            const params = [];
-            const secret = warSecret();
-            if ( secret !== '' ) { params.push(`secret=${secret}`); }
+            const url = vAPI.net.getWarURL(this.warName);
             if ( this.params !== undefined ) {
                 for ( const name of this.params ) {
                     const value = fctxt[name];
                     if ( value === undefined ) { continue; }
-                    params.push(`${name}=${encodeURIComponent(value)}`);
+                    url.searchParams.append(name, value);
                 }
             }
-            let url = `${this.warURL}`;
-            if ( params.length !== 0 ) {
-                url += `?${params.join('&')}`;
-            }
-            return url;
+            return url.href;
         }
         if ( this.data === undefined ) { return; }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/701
@@ -181,8 +167,8 @@ class RedirectEngine {
     tokenToDNR(token) {
         const entry = this.resources.get(this.aliases.get(token) || token);
         if ( entry === undefined ) { return; }
-        if ( entry.warURL === undefined ) { return; }
-        return entry.warURL;
+        if ( entry.warName === undefined ) { return; }
+        return entry.warName;
     }
 
     hasToken(token) {
@@ -341,7 +327,7 @@ class RedirectEngine {
             const entry = RedirectEntry.fromDetails({
                 mime: mimeFromName(name),
                 data,
-                warURL: `/web_accessible_resources/${name}`,
+                warName: name,
                 params: details.params,
                 origin: 'war',
             });
@@ -375,7 +361,7 @@ class RedirectEngine {
         };
 
         const processWAR = result => {
-            const match = /^\/web_accessible_resources\/([^?]+)/.exec(result.url);
+            const match = /\/([^/?]+)(?:\?|$)/.exec(result.url);
             if ( match === null ) { return; }
             const name = match[1];
             return result.content instanceof Blob
@@ -389,7 +375,7 @@ class RedirectEngine {
                 continue;
             }
             fetches.push(
-                fetcher(`/web_accessible_resources/${name}`, {
+                fetcher(`${vAPI.net.getWarURL(name)}`, {
                     responseType: details.data
                 }).then(
                     result => processWAR(result)
@@ -407,9 +393,9 @@ class RedirectEngine {
         for ( const [ name, entry ] of this.resources ) {
             out.set(name, {
                 canInject: typeof entry.data === 'string',
-                canRedirect: Boolean(entry.warURL ?? entry.data),
+                canRedirect: Boolean(entry.warName ?? entry.data),
                 aliasOf: '',
-                extensionPath: entry.warURL,
+                extensionPath: `/web_accessible_resources/${entry.warName}`,
             });
         }
         for ( const [ alias, name ] of this.aliases ) {

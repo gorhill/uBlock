@@ -26,17 +26,13 @@
 
 /******************************************************************************/
 
-import * as frameManager from './vapi-contexts.js';
 import { ubolog } from './console.js';
 import webext from './webext.js';
 
 /******************************************************************************/
 
+const EXTENSION_ORIGIN = vAPI.getURL('').replace(/\/$/, '');
 const manifest = browser.runtime.getManifest();
-
-vAPI.cantWebsocket =
-    browser.webRequest.ResourceType instanceof Object === false  ||
-    browser.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
 vAPI.canWASM = vAPI.webextFlavor.soup.has('chromium') === false;
 if ( vAPI.canWASM === false ) {
@@ -755,11 +751,7 @@ if ( webext.browserAction instanceof Object ) {
         const tab = await vAPI.tabs.get(tabId);
         if ( tab === null ) { return; }
 
-        const hasUnprocessedRequest = vAPI.net && vAPI.net.hasUnprocessedRequest(tabId);
-        const { parts, state } = details;
-        const { badge, color } = hasUnprocessedRequest
-            ? { badge: '!', color: '#FC0' }
-            : details;
+        const { parts, state, badge, color } = details;
 
         if ( browserAction.setIcon !== undefined ) {
             if ( parts === undefined || (parts & 0b0001) !== 0 ) {
@@ -795,19 +787,25 @@ if ( webext.browserAction instanceof Object ) {
 
     vAPI.setDefaultIcon = function(flavor, text) {
         if ( browserAction.setIcon === undefined ) { return; }
-        browserAction.setIcon({
-            path: {
-                '16': `img/icon_16${flavor}.png`,
-                '32': `img/icon_32${flavor}.png`,
-                '64': `img/icon_64${flavor}.png`,
-            }
-        });
-        browserAction.setBadgeText({ text });
-        browserAction.setBadgeBackgroundColor({
-            color: text === '!' ? '#FC0' : '#666'
-        });
+        if ( typeof flavor === 'string' ) {
+            browserAction.setIcon({
+                path: {
+                    '16': `img/icon_16${flavor}.png`,
+                    '32': `img/icon_32${flavor}.png`,
+                    '64': `img/icon_64${flavor}.png`,
+                }
+            });
+        }
+        if ( typeof text === 'string' ) {
+            browserAction.setBadgeText({ text });
+            browserAction.setBadgeBackgroundColor({
+                color: text === '!' ? '#FC0' : '#666'
+            });
+        }
     };
 }
+
+vAPI.setDefaultIcon('-loading', '');
 
 browser.browserAction.onClicked.addListener(function(tab) {
     vAPI.tabs.open({
@@ -828,7 +826,6 @@ browser.browserAction.onClicked.addListener(function(tab) {
 vAPI.messaging = {
     listeners: new Map(),
     defaultHandler: null,
-    PRIVILEGED_ORIGIN: vAPI.getURL('').replace(/\/$/, ''),
     UNHANDLED: 'vAPI.messaging.notHandled',
 
     listen(details) {
@@ -851,9 +848,9 @@ vAPI.messaging = {
     isPrivilegedContext(sender) {
         const { origin } = sender;
         if ( origin ) {
-            return origin === this.PRIVILEGED_ORIGIN;
+            return origin === EXTENSION_ORIGIN;
         }
-        return sender.url.startsWith(this.PRIVILEGED_ORIGIN);
+        return sender.url.startsWith(EXTENSION_ORIGIN);
     },
 
     async onFrameworkMessage(request, sender) {
@@ -938,290 +935,6 @@ vAPI.messaging = {
 };
 
 vAPI.messaging.start();
-
-/******************************************************************************/
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/3474
-// https://github.com/gorhill/uBlock/issues/2823
-//   Foil ability of web pages to identify uBO through
-//   its web accessible resources.
-// https://github.com/gorhill/uBlock/issues/3497
-//   Prevent web pages from interfering with uBO's element picker
-// https://github.com/uBlockOrigin/uBlock-issues/issues/550
-//   Support using a new secret for every network request.
-
-{
-    const root = vAPI.getURL('/');
-    const reSecret = /\?secret=(\w+)/;
-    const shortSecrets = [];
-    let lastShortSecretTime = 0;
-
-    // Long secrets are valid until revoked or uBO restarts. The realm is one
-    // value out of 36^18 = over 10^28 values.
-    const longSecrets = new Set();
-
-    const guard = details => {
-        const match = reSecret.exec(details.url);
-        if ( match === null ) { return { cancel: true }; }
-        const secret = match[1];
-        if ( longSecrets.has(secret) ) { return; }
-        const pos = shortSecrets.indexOf(secret);
-        if ( pos === -1 ) { return { cancel: true }; }
-        shortSecrets.splice(pos, 1);
-    };
-
-    browser.webRequest.onBeforeRequest.addListener(
-        guard,
-        {
-            urls: [ root + 'web_accessible_resources/*' ]
-        },
-        [ 'blocking' ]
-    );
-
-    vAPI.warSecret = {
-        short: ( ) => {
-            if ( shortSecrets.length !== 0 ) {
-                if ( (Date.now() - lastShortSecretTime) > 5000 ) {
-                    shortSecrets.splice(0);
-                } else if ( shortSecrets.length > 256 ) {
-                    shortSecrets.splice(0, shortSecrets.length - 192);
-                }
-            }
-            lastShortSecretTime = Date.now();
-            const secret = vAPI.generateSecret();
-            shortSecrets.push(secret);
-            return secret;
-        },
-        long: previous => {
-            if ( previous !== undefined ) {
-                longSecrets.delete(previous);
-            }
-            const secret = vAPI.generateSecret(3);
-            longSecrets.add(secret);
-            return secret;
-        },
-    };
-}
-
-/******************************************************************************/
-
-vAPI.Net = class {
-    constructor() {
-        this.validTypes = new Set();
-        {
-            const wrrt = browser.webRequest.ResourceType;
-            for ( const typeKey in wrrt ) {
-                if ( Object.hasOwn(wrrt, typeKey) ) {
-                    this.validTypes.add(wrrt[typeKey]);
-                }
-            }
-        }
-        this.suspendableListener = undefined;
-        this.deferredSuspendableListener = undefined;
-        this.listenerMap = new WeakMap();
-        this.suspendDepth = 0;
-        this.unprocessedTabs = new Map();
-
-        browser.webRequest.onBeforeRequest.addListener(
-            details => {
-                if ( details.tabId !== frameManager.TAB_ID_NONE ) {
-                    const { type } = details;
-                    if ( type === 'main_frame' || type === 'sub_frame' ) {
-                        frameManager.addFrame(details);
-                    }
-                }
-                this.normalizeDetails(details);
-                if ( this.suspendDepth !== 0 && details.tabId >= 0 ) {
-                    return this.suspendOneRequest(details);
-                }
-                return this.onBeforeSuspendableRequest(details);
-            },
-            this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
-            [ 'blocking' ]
-        );
-
-        frameManager.addListener((type, details) => {
-            switch ( type ) {
-            case 'tab-removed': {
-                const { tabId } = details;
-                if ( this.hasUnprocessedRequest(tabId) === false ) { break; }
-                this.removeUnprocessedRequest(tabId);
-                break;
-            }
-            case 'frame-committed': {
-                const { tabId, frameId } = details;
-                if ( frameId !== 0 ) { break; }
-                if ( details.transitionType !== 'reload' ) { break; }
-                if ( this.hasUnprocessedRequest(tabId) === false ) { break; }
-                this.removeUnprocessedRequest(tabId);
-                break;
-            }
-            default:
-                break;
-            }
-        });
-
-        vAPI.setDefaultIcon('-loading', '');
-    }
-    setOptions(/* options */) {
-    }
-    normalizeDetails(/* details */) {
-    }
-    denormalizeFilters(filters) {
-        const urls = filters.urls || [ '<all_urls>' ];
-        let types = filters.types;
-        if ( Array.isArray(types) ) {
-            types = this.denormalizeTypes(types);
-        }
-        if (
-            (this.validTypes.has('websocket')) &&
-            (types === undefined || types.indexOf('websocket') !== -1) &&
-            (urls.indexOf('<all_urls>') === -1)
-        ) {
-            if ( urls.indexOf('ws://*/*') === -1 ) {
-                urls.push('ws://*/*');
-            }
-            if ( urls.indexOf('wss://*/*') === -1 ) {
-                urls.push('wss://*/*');
-            }
-        }
-        return { types, urls };
-    }
-    denormalizeTypes(types) {
-        return types;
-    }
-    canonicalNameFromHostname(/* hn */) {
-    }
-    addListener(which, clientListener, filters, options) {
-        const actualFilters = this.denormalizeFilters(filters);
-        const actualListener = this.makeNewListenerProxy(clientListener);
-        browser.webRequest[which].addListener(
-            actualListener,
-            actualFilters,
-            options
-        );
-    }
-    onBeforeSuspendableRequest(details) {
-        if ( this.suspendableListener !== undefined ) {
-            return this.suspendableListener(details);
-        }
-        this.onUnprocessedRequest(details);
-    }
-    setSuspendableListener(listener) {
-        for ( const [ tabId, requests ] of this.unprocessedTabs ) {
-            let i = requests.length;
-            while ( i-- ) {
-                const r = listener(requests[i]);
-                if ( r === undefined || r.cancel !== true ) {
-                    requests.splice(i, 1);
-                }
-            }
-            if ( requests.length !== 0 ) { continue; }
-            this.unprocessedTabs.delete(tabId);
-        }
-        if ( this.unprocessedTabs.size !== 0 ) {
-            this.deferredSuspendableListener = listener;
-            listener = details => {
-                const { tabId, type  } = details;
-                if ( type === 'main_frame' && this.unprocessedTabs.has(tabId) ) {
-                    if ( this.removeUnprocessedRequest(tabId) ) {
-                        return this.suspendableListener(details);
-                    }
-                }
-                return this.deferredSuspendableListener(details);
-            };
-        }
-        this.suspendableListener = listener;
-        vAPI.setDefaultIcon('', '');
-    }
-    removeListener(which, clientListener) {
-        const actualListener = this.listenerMap.get(clientListener);
-        if ( actualListener === undefined ) { return; }
-        this.listenerMap.delete(clientListener);
-        browser.webRequest[which].removeListener(actualListener);
-    }
-    makeNewListenerProxy(clientListener) {
-        const actualListener = details => {
-            this.normalizeDetails(details);
-            return clientListener(details);
-        };
-        this.listenerMap.set(clientListener, actualListener);
-        return actualListener;
-    }
-    handlerBehaviorChanged() {
-        browser.webRequest.handlerBehaviorChanged();
-    }
-    onUnprocessedRequest(details) {
-        const { tabId } = details;
-        if ( tabId === -1 ) { return; }
-        if ( this.unprocessedTabs.size === 0 ) {
-            vAPI.setDefaultIcon('-loading', '!');
-        }
-        let requests = this.unprocessedTabs.get(tabId);
-        if ( requests === undefined ) {
-            this.unprocessedTabs.set(tabId, (requests = []));
-        }
-        requests.push(Object.assign({}, details));
-    }
-    hasUnprocessedRequest(tabId) {
-        if ( this.unprocessedTabs.size === 0 ) { return false; }
-        if ( tabId === undefined ) { return true; }
-        return this.unprocessedTabs.has(tabId);
-    }
-    removeUnprocessedRequest(tabId) {
-        if ( this.deferredSuspendableListener === undefined ) {
-            this.unprocessedTabs.clear();
-            return true;
-        }
-        if ( tabId !== undefined ) {
-            this.unprocessedTabs.delete(tabId);
-        } else {
-            this.unprocessedTabs.clear();
-        }
-        if ( this.unprocessedTabs.size !== 0 ) { return false; }
-        this.suspendableListener = this.deferredSuspendableListener;
-        this.deferredSuspendableListener = undefined;
-        return true;
-    }
-    suspendOneRequest() {
-    }
-    unsuspendAllRequests() {
-    }
-    suspend() {
-        this.suspendDepth += 1;
-    }
-    unsuspend({ all = false, discard = false } = {}) {
-        if ( this.suspendDepth === 0 ) { return; }
-        if ( all ) {
-            this.suspendDepth = 0;
-        } else {
-            this.suspendDepth -= 1;
-        }
-        if ( this.suspendDepth !== 0 ) { return; }
-        this.unsuspendAllRequests(discard);
-    }
-    headerValue(headers, name) {
-        for ( const header of headers ) {
-            if ( header.name.toLowerCase() === name ) {
-                return header.value.trim();
-            }
-        }
-        return '';
-    }
-    static canSuspend() {
-        return false;
-    }
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
-// To be defined by platform-specific code.
-
-vAPI.scriptletsInjector = (( ) => {
-    self.uBO_scriptletsInjected = '';
-}).toString();
 
 /******************************************************************************/
 /******************************************************************************/

@@ -21,6 +21,7 @@
 
 /* global browser */
 
+import './vapi-network.js';
 import * as frameManager from './vapi-contexts.js';
 
 import {
@@ -39,7 +40,7 @@ const dnsAPI = browser.dns || {
 const isPromise = o => o instanceof Promise;
 const isResolvedObject = o => o instanceof Object &&
     o instanceof Promise === false;
-const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/
+const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/;
 const skipDNS = proxyInfo =>
     proxyInfo && (proxyInfo.proxyDNS || proxyInfo.type?.charCodeAt(0) === 0x68 /* h */);
 
@@ -212,7 +213,7 @@ vAPI.Net = class extends vAPI.Net {
             }
         }
         if ( dnsEntry.ip && details.ip !== dnsEntry.ip ) {
-            details.ip = dnsEntry.ip
+            details.ip = dnsEntry.ip;
             proceed = true;
         }
         if ( proceed === false ) { return; }
@@ -326,28 +327,27 @@ vAPI.Net = class extends vAPI.Net {
         return addresses.join('\n');
     }
 
-    suspendOneRequest(details) {
-        const pending = {
-            details: Object.assign({}, details),
-            resolve: undefined,
-            promise: undefined
-        };
-        pending.promise = new Promise(resolve => {
-            pending.resolve = resolve;
-        });
-        this.pendingRequests.push(pending);
-        return pending.promise;
+    suspendOneRequest(defer, details) {
+        if ( defer === false ) { return { details }; }
+        const { promise, resolve } = Promise.withResolvers();
+        return { details, resolve, outcome: promise };
     }
 
-    unsuspendAllRequests(discard = false) {
-        const pendingRequests = this.pendingRequests;
-        this.pendingRequests = [];
-        for ( const entry of pendingRequests ) {
-            entry.resolve(
-                discard !== true
-                    ? this.onBeforeSuspendableRequest(entry.details)
-                    : undefined
-            );
+    unsuspendManyRequests(tabId, entries, discard = false) {
+        for ( const entry of entries ) {
+            const { resolve } = entry;
+            if ( resolve === undefined ) { continue; }
+            if ( discard ) {
+                resolve();
+                entry.outcome = undefined;
+                continue;
+            }
+            let r;
+            try {
+                r = this.onBeforeSuspendableRequest(entry.details);
+            } catch {
+            }
+            resolve(r);
         }
     }
 
@@ -356,3 +356,8 @@ vAPI.Net = class extends vAPI.Net {
     }
 };
 
+vAPI.net = new vAPI.Net();
+vAPI.net.start();
+vAPI.net.suspend();
+
+/******************************************************************************/

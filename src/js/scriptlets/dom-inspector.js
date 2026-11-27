@@ -33,8 +33,8 @@ if ( vAPI.domFilterer instanceof Object === false ) { return; }
 if ( vAPI.inspectorFrame ) { return; }
 vAPI.inspectorFrame = true;
 
+const browser = globalThis.browser ?? globalThis.chrome;
 const inspectorUniqueId = vAPI.randomToken();
-
 const nodeToIdMap = new WeakMap(); // No need to iterate
 
 let blueNodes = [];
@@ -820,6 +820,7 @@ const contentInspectorChannel = (( ) => {
         });
         if ( typeof inspectorArgs !== 'object' ) { return; }
         if ( inspectorArgs === null ) { return; }
+        const url = new URL(inspectorArgs.url);
         return new Promise(resolve => {
             const iframe = document.createElement('iframe');
             iframe.setAttribute(inspectorUniqueId, '');
@@ -834,12 +835,12 @@ const contentInspectorChannel = (( ) => {
                 };
                 iframe.contentWindow.postMessage(
                     { what: 'startInspector' },
-                    inspectorArgs.inspectorURL,
+                    url.origin,
                     [ channel.port2 ]
                 );
                 resolve(iframe);
             }, { once: true });
-            iframe.contentWindow.location = inspectorArgs.inspectorURL;
+            iframe.contentWindow.location = url.href;
         });
     };
 

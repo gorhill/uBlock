@@ -48,11 +48,11 @@ import µb from './background.js';
 
 µb.isTrustedSite = function(url) {
     return this.trustedSites.isTrusted(url);
-}
+};
 
 µb.isNotTrustedSite = function(url) {
     return this.trustedSites.isTrusted(url) === false;
-}
+};
 
 µb.toggleTrustedStatus = function(url, scope, state) {
     const r = µb.trustedSites.toggle(url, scope, state);
@@ -60,7 +60,7 @@ import µb from './background.js';
     µb.saveWhitelist();
     filteringBehaviorChanged({ hostname: hostnameFromURI(url) });
     return r;
-}
+};
 
 /******************************************************************************/
 
@@ -108,6 +108,7 @@ import µb from './background.js';
         if ( value === true ) {
             us.popupPanelSections |= 0b11111;
         }
+        filteringBehaviorChanged();
         break;
     case 'autoUpdate':
         this.scheduleAssetUpdater({ updateDelay: value ? 2000 : 0 });

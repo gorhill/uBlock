@@ -343,7 +343,6 @@ function popupDataFromTabId(tabId, tabTitle) {
         tabId,
         tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled,
-        hasUnprocessedRequest: vAPI.net && vAPI.net.hasUnprocessedRequest(tabId),
     };
 
     if ( µbhs.uiPopupConfig !== 'unset' ) {
@@ -352,6 +351,7 @@ function popupDataFromTabId(tabId, tabTitle) {
 
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
+        r.hasUnprocessedRequest = pageStore.hasUnprocessedRequest;
         r.pageCounts = pageStore.counts;
         r.isTrustedSite = pageStore.isTrusted();
         getHostnameDict(pageStore.getAllHostnameDetails(), r);
@@ -491,14 +491,17 @@ async function onMessage(request) {
     case 'getPopupData':
         return popupDataFromRequest(request);
 
-    case 'dismissUnprocessedRequest':
-        vAPI.net.removeUnprocessedRequest(request.tabId);
+    case 'dismissUnprocessedRequest': {
+        const pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore === null ) { break; }
+        pageStore.hasUnprocessedRequest = false;
         µb.updateToolbarIcon(request.tabId, 0b110);
         break;
+    }
 
     case 'hasPopupContentChanged': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
-        const lastModified = pageStore ? pageStore.contentLastModified : 0;
+        const lastModified = pageStore?.contentLastModified ?? 0;
         return lastModified !== request.contentLastModified;
     }
 
@@ -789,9 +792,7 @@ async function onMessage(request, sender) {
             mouse: µb.epickerArgs.mouse,
             zap: µb.epickerArgs.zap,
             eprom: µb.epickerArgs.eprom,
-            pickerURL: vAPI.getURL(
-                `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret.short()}`
-            ),
+            url: `${vAPI.net.getWarURL('epicker-ui.html')}`,
         };
         µb.epickerArgs.target = '';
         return response;
@@ -1615,9 +1616,7 @@ async function onMessage(request, sender) {
             frameId: sender.frameId ?? 0,
         });
         return {
-            inspectorURL: vAPI.getURL(
-                `/web_accessible_resources/dom-inspector.html?secret=${vAPI.warSecret.short()}`
-            ),
+            url: `${vAPI.net.getWarURL('dom-inspector.html')}`,
         };
     }
     default:

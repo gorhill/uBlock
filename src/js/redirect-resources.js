@@ -157,6 +157,7 @@ export default new Map([
     } ],
     [ 'noop.html', {
         alias: 'noopframe',
+        data: 'text',
     } ],
     [ 'noop.js', {
         alias: [ 'noopjs', 'abp-resource:blank-js' ],
