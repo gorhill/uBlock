@@ -903,7 +903,6 @@ onBroadcast(msg => {
         staticNetFilteringEngine.freeze();
         staticExtFilteringEngine.freeze();
         redirectEngine.freeze();
-        vAPI.net.unsuspend();
         filteringBehaviorChanged();
 
         ubolog(`loadFilterLists() All filters ready at ${elapsed()}`);
@@ -955,9 +954,6 @@ onBroadcast(msg => {
 
         µb.availableFilterLists = lists;
 
-        if ( vAPI.Net.canSuspend() ) {
-            vAPI.net.suspend();
-        }
         staticExtFilteringEngine.reset();
         staticNetFilteringEngine.reset();
         µb.selfieManager.destroy();
