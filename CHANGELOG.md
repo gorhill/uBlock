@@ -1,3 +1,4 @@
+- [[shims] Add `fundingchoices-reject.js` and `transcend-reject.js` resources](https://github.com/gorhill/uBlock/commit/32a67660da) by @ryanbr
 - [[chromium] Raise minimum supported version to 118](https://github.com/gorhill/uBlock/commit/161b187dc3)
 - [Refactor messaging-related code](https://github.com/gorhill/uBlock/commit/88c8238bb6)
 - [[picker] Improve pairing logic and ensure dependencies are present](https://github.com/gorhill/uBlock/commit/1d70d4a1c6)
