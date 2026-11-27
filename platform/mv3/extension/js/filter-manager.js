@@ -33,7 +33,10 @@ import {
     subtractHostnameIters,
 } from './utils.js';
 
-import { ubolErr } from './debug.js';
+import {
+    ubolErr,
+    ubolLog,
+} from './debug.js';
 
 /******************************************************************************/
 
@@ -154,7 +157,7 @@ export function startCustomFilters(tabId, frameId) {
         injectImmediately: true,
     }).catch(reason => {
         ubolErr(`startCustomFilters/${reason}`);
-    })
+    });
 }
 
 export function terminateCustomFilters(tabId, frameId) {
@@ -164,7 +167,7 @@ export function terminateCustomFilters(tabId, frameId) {
         injectImmediately: true,
     }).catch(reason => {
         ubolErr(`terminateCustomFilters/${reason}`);
-    })
+    });
 }
 
 /******************************************************************************/
@@ -181,7 +184,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 origin: 'USER',
                 target: { tabId, frameIds: [ frameId ] },
             }).catch(reason => {
-                ubolErr(`injectCustomFilters/insertCSS/${reason}`);
+                ubolLog(`injectCustomFilters/insertCSS/${reason}`);
             })
         );
     }
@@ -196,7 +199,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 target: { tabId, frameIds: [ frameId ] },
                 injectImmediately: true,
             }).catch(reason => {
-                ubolErr(`injectCustomFilters/executeScript/${reason}`);
+                ubolLog(`injectCustomFilters/executeScript/${reason}`);
             })
         );
     }
@@ -318,5 +321,5 @@ export function setSandboxFilters(text = '') {
     text = text.trim();
     return text !== ''
         ? localWrite('sandboxFilters', text)
-        : localRemove('sandboxFilters')
+        : localRemove('sandboxFilters');
 }
